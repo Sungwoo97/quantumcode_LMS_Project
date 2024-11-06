@@ -6,6 +6,6 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>1.01차 커밋</h1>
+  <h1>2차 커밋 굿</h1>
 </body>
 </html>
