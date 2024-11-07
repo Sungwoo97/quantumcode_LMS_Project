@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Text Style */
+body {
+  font-family: 'Noto Sans KR', 'Roboto', 'Apple SD Gothic Neo',  'Pretendard', 'Malgun Gothic', sans-serif;
+  font-weight: 500;
+  overflow-x: hidden;
+  background-color: #757575;
+}
+.main_tt{
+  font: 36/40px "Noto Sans KR", sans-serif;
+  font-weight: 900;
+}
+.sub_tt{
+  font: 28/40px "Noto Sans KR", sans-serif;
+  font-weight: 700;
+}
+.tt_01{
+  font: 24/40px "Noto Sans KR", sans-serif;
+  font-weight: 700;
+}
+.tt_02{
+  font: 20/29px "Noto Sans KR", sans-serif;
+}
+.tt_03{
+  font: 18/22px "Noto Sans KR", sans-serif;
+}
+.tt_04{
+  font: 18/20px "Noto Sans KR", sans-serif;
+}
+.tt_05{
+  font: 14/20px "Noto Sans KR", sans-serif;
+}
+
+/* NAV */
+
+nav{
+  width: 300px;
+  height: 100vh;
+  border-right: solid 1px #C2C2C2;
+  position: fixed;
+  background-color: #fff;
+}
+.nav_aside_menu{
+  align-items: center;
+}
+.accordion{
+  width: 100%;
+}
+.accordion-header button{
+  padding:0 69px 0 39px;
+  height: 48px;
+  align-items: center;
+}
+.top_logo a img{
+  width: 128px;
+  margin: 36px 0 53.5px 0; 
+}
+
+.nav_header{
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  border-bottom: solid 1px #C2C2C2;
+}
+.nav_header h2{
+  position: relative;
+  left: 360px;
+  line-height: 120px;
+  
+}
+/* page_wapper */
+
+.page_wapper{
+  padding: 204px 0 84px 384px;
+}
+.page_wapper .content{
+
+}
