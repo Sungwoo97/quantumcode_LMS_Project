@@ -1,9 +1,9 @@
 <?php
 // 그냥 확인용으로 넣어봄. 확인 후 변경할것
 $hostname = 'localhost';
-$username = 'qtest';
+$username = 'quantumcode';
 $dbpassword = '12345';
-$dbname = 'qtest';
+$dbname = 'quantumcode';
 
 $mysqli = new mysqli($hostname, $username, $dbpassword, $dbname);
 
