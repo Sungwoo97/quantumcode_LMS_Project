@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-07 08:24
+-- 생성 시간: 24-11-07 09:32
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -48,6 +48,30 @@ CREATE TABLE `admins` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`idx`);
+
+--
+-- 테이블의 인덱스 `event_board`
+--
+ALTER TABLE `event_board`
+  ADD PRIMARY KEY (`pid`);
+
+--
+-- 테이블의 인덱스 `free_board`
+--
+ALTER TABLE `free_board`
+  ADD PRIMARY KEY (`pid`);
+
+--
+-- 테이블의 인덱스 `notice_board`
+--
+ALTER TABLE `notice_board`
+  ADD PRIMARY KEY (`pid`);
+
+--
+-- 테이블의 인덱스 `qna_board`
+--
+ALTER TABLE `qna_board`
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 덤프된 테이블의 AUTO_INCREMENT
