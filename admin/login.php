@@ -8,7 +8,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
   <h1>로그인</h1>
   <div class="row">
     <div class="col-md-6">
-      <h2>관리자 로그인</h2>
+      <h2>관리자 로그인!</h2>
       <form action="login_ok.php" method="POST">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="userid" name="userid" placeholder="User ID">
