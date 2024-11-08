@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-08 08:53
+-- 생성 시간: 24-11-08 09:50
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -204,6 +204,52 @@ CREATE TABLE `lecture_video` (
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
 
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `members`
+--
+
+CREATE TABLE `members` (
+  `m_idx` int(11) NOT NULL,
+  `id` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `number` varchar(20) NOT NULL,
+  `thumbmail` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `level` varchar(45) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `rating` decimal(3,2) DEFAULT 0.00,
+  `progress` decimal(5,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `t_idx` int(11) NOT NULL,
+  `id` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `number` varchar(20) NOT NULL,
+  `thumbmail` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `t_level` varchar(45) DEFAULT NULL,
+  `expertise` varchar(100) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `rating` decimal(3,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- 덤프된 테이블의 인덱스
 --
@@ -269,6 +315,18 @@ ALTER TABLE `lecture_video`
   ADD PRIMARY KEY (`lvid`);
 
 --
+-- 테이블의 인덱스 `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`m_idx`);
+
+--
+-- 테이블의 인덱스 `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`t_idx`);
+
+--
 -- 덤프된 테이블의 AUTO_INCREMENT
 --
 
@@ -331,6 +389,18 @@ ALTER TABLE `lecture_list`
 --
 ALTER TABLE `lecture_video`
   MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호';
+
+--
+-- 테이블의 AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `m_idx` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `t_idx` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
