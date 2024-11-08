@@ -5,11 +5,16 @@
 바로 프로젝트를 실행해서 이렇게 실행됩니다. 
 */
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
+if (!isset($title)) {
+  $title = '';
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +25,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>  -->
   <!-- <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script> -->
-  
+
 </head>
+
 <body>
+  <h2><?= $title ?> </h2>
