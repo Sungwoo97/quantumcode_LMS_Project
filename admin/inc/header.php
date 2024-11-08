@@ -16,16 +16,3 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
   
 </head>
 <body>
-
-<nav>
-  <div>
-    <h2 class="">대시보드</h2>
-  </div>
-
-  <div class="nav_aside_menu">
-    <h1 class="logo"><a href="http://localhost/admin/index.php">quantumcode</a></h1>
-    <div class="category_side_menu">
-      <!-- 부트스트랩 아코디언 가져오기 -->
-    </div>
-  </div>
-</nav>

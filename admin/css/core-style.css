@@ -26,15 +26,19 @@ body {
 }
 .tt_02{
   font: 20/29px "Noto Sans KR", sans-serif;
+  font-weight: 500;
 }
 .tt_03{
   font: 18/22px "Noto Sans KR", sans-serif;
+  font-weight: 500;
 }
 .tt_04{
   font: 18/20px "Noto Sans KR", sans-serif;
+  font-weight: 500;
 }
 .tt_05{
   font: 14/20px "Noto Sans KR", sans-serif;
+  font-weight: 500;
 }
 
 /* NAV */
@@ -47,7 +51,7 @@ nav{
   background-color: #fff;
 }
 .nav_aside_menu{
-  align-items: center;
+  width: 100%;
 }
 .accordion{
   width: 100%;
@@ -63,16 +67,40 @@ nav{
 }
 
 .nav_header{
-  position: absolute;
+  position: fixed;
   left: 0; right: 0; top: 0;
   border-bottom: solid 1px #C2C2C2;
+  background-color: #fff;
 }
 .nav_header h2{
   position: relative;
   left: 360px;
   line-height: 120px;
-  
 }
+.admin_account{
+  margin-bottom: 60px;
+}
+.admin_account p{
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: 700;
+}
+.nav_aside_menu ul{
+  padding:0;
+  margin:3px 0 3px 0;
+}
+.nav_aside_menu ul li{
+  text-align: center;
+  list-style: none;
+}
+.nav_aside_menu ul li a{
+  color: var(--bs-gray-600);
+  text-decoration: none;
+  line-height: 36px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
 /* page_wapper */
 
 .page_wapper{
