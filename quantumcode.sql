@@ -1,9 +1,9 @@
-Z-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-08 08:32
+-- 생성 시간: 24-11-08 08:53
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -184,6 +184,7 @@ CREATE TABLE `lecture_list` (
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
   `difficult` varchar(11) NOT NULL COMMENT '난이도',
+  `lecture tag` varchar(250) DEFAULT NULL COMMENT '강의 관련된 스킬 태그',
   `pr_video` varchar(100) DEFAULT NULL COMMENT '홍보 영상',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
   `status` tinyint(4) NOT NULL COMMENT '상태'
