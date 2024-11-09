@@ -1,56 +1,164 @@
 <?php
 $title = '강의 등록';
+$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.css\" rel=\"stylesheet\">;";
+$summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
+$summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 ?>
 <h4> lecture_insert</h4>
 <div class="container">
   <Form action="">
-    <div class="row">
-      <div class="col-4 ">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
+    <div class="row lecture">
+      <div class="col-4 mb-5">
+        <h6>커버 이미지 등록</h6>
+        <div class="lecture_coverImg mb-3">
+          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
         </div>
-        <input type="file" accept="image/*">
+        <div class="input-group">
+          <input type="file" class="form-control" accept="image/*" id="cover_image" >
+        </div>
       </div>
-      <div class="col-8 ">
+      <div class="col-8 mt-3">
         <table class="table">
-          <thead>
+          <thead class="visually-hidden">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">구분</th>
+              <th scope="col">내용</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+            <tr scope="row">
+              <th scope="row" class="insert_name">강의명</th>
+              <td colspan="3">
+                <input type=" text" class="form-control" name="lecture_title" id="lecture_title" placeholder="강의명을 입력해주세요">
+              </td>
+            </tr>
+            <tr scope="row">
+              <th scope="row">카테고리 선택</th>
+              <td colspan="3">
+                <div class="d-flex gap-3">
+                    <select class="form-select" name="platforms">
+                      <option selected>Platforms</option>
+                      <!-- <option value="1">One</option> -->
+                    </select>
+                    <select class="form-select"  name="development">
+                      <option selected>Development</option>
+                      <!-- <option value="1">One</option> -->
+                    </select>
+                    <select class="form-select" name="technologies">
+                      <option selected>Technologies</option>
+                      <!-- <option value="1">One</option> -->
+                    </select>
+                </div>
+              </td>
             </tr>
             <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
+              <th scope="row">수강료</th>
+              <td class="twoculumn_table">
+                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="">
+                <span></span>
+              </td>
+              <th scope="row" class="insert_name">할인 수강료</th>
+              <td>
+                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="">
+              </td>
             </tr>
             <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
+              <th scope="row">등록일</th>
+              <td class="twoculumn_table">
+                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="">
+                <span></span>
+              </td>
+              <th scope="row" class="insert_name">난이도</th>
+              <td>
+              <select class="form-select " name="difficult">
+                    <option selected>난이도</option>
+                    <option value="1">입문</option>
+                    <option value="2">초급</option>
+                    <option value="3">중급</option>
+                    <option value="4">고급</option>
+                    <option value="5">전문가</option>
+                  </select>
+              </td>
+            </tr>
+            <tr scope="row" >
+              <th scope="row" class="insert_name">노출옵션</th>
+              <td colspan="3">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center flex-grow-1 justify-content-start">
+                    <input class="form-check-input me-2" type="checkbox" name="ispremium" value="" id="ispremium">
+                    <label class="form-check-label" for="ispremium">프리미엄</label>
+                  </div>
+                  <div class="d-flex align-items-center flex-grow-1 justify-content-start">
+                    <input class="form-check-input me-2" type="checkbox" name="ispopular" value="" id="ispopular">
+                    <label class="form-check-label" for="ispopular">인기 강의</label>
+                  </div>
+                  <div class="d-flex align-items-center flex-grow-1 justify-content-start">
+                    <input class="form-check-input me-2" type="checkbox" name="isrecom" value="" id="isrecom">
+                    <label class="form-check-label" for="isrecom">추천 강의</label>
+                  </div>
+                  <div class="d-flex align-items-center flex-grow-1 justify-content-start">
+                    <input class="form-check-input me-2" type="checkbox" name="isfree" value="" id="isfree">
+                    <label class="form-check-label" for="isfree">무료 강의</label>
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <div class="col-4 ">
+        <h6>홍보영상 등록</h6>
+        <div class="lecture_coverImg mb-3">
+          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
+        </div>
+        <input type="file" class="form-control" accept="image/*" id="pr_video" >
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="pr_videoAddon">URL</span>
+          <input type="text" class="form-control" name="pr_videoUrl" id="pr_videoUrl" >
+        </div>
+      </div>
+      <div class="col-8 ">
+        <div class="d-flex flex-column gap-2">
+          <label for="sub_title" class="bold">강의 요약</label>
+          <textarea class="form-control" placeholder="강의 요약" name="sub_title" id="sub_title"></textarea>
+        </div >
+      </div>
+      <div>
+        <h6>강의 상세 설명</h6>
+        <div id="lecture_desc"></div>
+      </div>
+      <div class="col-4 ">
+        <h6>강의 영상 등록</h6>
+        <div class="lecture_coverImg mb-3">
+          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
+        </div>
+        <input type="file" class="form-control" accept="image/*" name="add_videos" id="add_videos" >
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="add_videosAddon">URL</span>
+          <input type="text" class="form-control" name="add_videosUrl" id="add_videosUrl" >
+        </div>
+      </div>
+      <div class="col-8 ">
+        <div class="d-flex flex-column gap-2">
+          <label for="lucture_objectives" class="bold">강의 목표</label>
+          <textarea class="form-control" placeholder="강의 목표" name="lucture_objectives" id="lucture_objectives"></textarea>
+        </div>
+        <div class="d-flex flex-column gap-2">
+          <label for="lucture_tag" class="bold">강의 태그</label>
+          <textarea class="form-control" placeholder="강의 태그" name="lucture_tag" id="lucture_tag"></textarea>
+        </div>
+      </div>
     </div>
   </Form>
 </div>
+<script>
+ $('#lecture_desc').summernote({
+    placeholder: 'Hello Bootstrap 4',
+    tabsize: 2,
+    height: 500
+  });
+</script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/footer.php');
 ?>
