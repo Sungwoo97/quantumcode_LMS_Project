@@ -1,0 +1,44 @@
+.lecture_coverImg { 
+  width: 100%;
+  height: 220px;
+  background: #ebebeb;
+}
+
+.lecture_coverImg img{
+  width: 100%;
+  object-fit: cover;
+}
+
+/* .table>:not(caption)>*>*{
+  padding:0;
+  margin-bottom: .5rem;
+} */
+
+.twoculumn_table{
+  display: flex !important; 
+  align-items: center !important;
+}
+
+tbody, td, tfoot, th, thead, tr{
+  border: none;
+}
+
+table tr td span {
+  margin-right: 120px;
+}
+
+table tr td {
+  padding: 0.5rem !important;  
+}
+
+ textarea#sub_title{
+  height: 300px;
+}
+
+textarea#lucture_objectives, textarea#lucture_tag{
+  height: 150px;
+}
+
+.lecture h3, .lecture h4, .lecture h5, .lecture h6{
+  font-weight: 600;
+}
