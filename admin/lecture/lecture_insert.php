@@ -7,7 +7,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 ?>
 <h4> lecture_insert</h4>
 <div class="container">
-  <Form action="">
+  <Form action="lecture_insert_ok" method="POST">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
@@ -15,7 +15,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
           <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
         </div>
         <div class="input-group">
-          <input type="file" class="form-control" accept="image/*" id="cover_image" >
+          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >
         </div>
       </div>
       <div class="col-8 mt-3">
@@ -30,7 +30,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="lecture_title" id="lecture_title" placeholder="강의명을 입력해주세요">
+                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요">
               </td>
             </tr>
             <tr scope="row">
@@ -66,7 +66,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr>
               <th scope="row">등록일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="">
+                <input type="date" class="form-control" name="dis_tuition" id="regist_day" placeholder="">
                 <span></span>
               </td>
               <th scope="row" class="insert_name">난이도</th>
@@ -112,7 +112,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
         <div class="lecture_coverImg mb-3">
           <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
         </div>
-        <input type="file" class="form-control" accept="image/*" id="pr_video" >
+        <input type="file" class="form-control" accept="video/*" name="pr_video" id="pr_video" >
         <div class="input-group mb-3">
           <span class="input-group-text" id="pr_videoAddon">URL</span>
           <input type="text" class="form-control" name="pr_videoUrl" id="pr_videoUrl" >
@@ -126,14 +126,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
       </div>
       <div>
         <h6>강의 상세 설명</h6>
-        <div id="lecture_desc"></div>
+        <div id="desc"></div>
       </div>
       <div class="col-4 ">
         <h6>강의 영상 등록</h6>
         <div class="lecture_coverImg mb-3">
           <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
         </div>
-        <input type="file" class="form-control" accept="image/*" name="add_videos" id="add_videos" >
+        <input type="file" class="form-control" accept="video/*" name="add_videos[]" id="add_videos" >
         <div class="input-group mb-3">
           <span class="input-group-text" id="add_videosAddon">URL</span>
           <input type="text" class="form-control" name="add_videosUrl" id="add_videosUrl" >
@@ -141,19 +141,22 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
       </div>
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
-          <label for="lucture_objectives" class="bold">강의 목표</label>
-          <textarea class="form-control" placeholder="강의 목표" name="lucture_objectives" id="lucture_objectives"></textarea>
+          <label for="objectives" class="bold">강의 목표</label>
+          <textarea class="form-control" placeholder="강의 목표" name="objectives" id="objectives"></textarea>
         </div>
         <div class="d-flex flex-column gap-2">
-          <label for="lucture_tag" class="bold">강의 태그</label>
-          <textarea class="form-control" placeholder="강의 태그" name="lucture_tag" id="lucture_tag"></textarea>
+          <label for="tag" class="bold">강의 태그</label>
+          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag"></textarea>
         </div>
       </div>
+    </div>
+    <div class="mt-3 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">등록</button>
     </div>
   </Form>
 </div>
 <script>
- $('#lecture_desc').summernote({
+ $('#desc').summernote({
     placeholder: 'Hello Bootstrap 4',
     tabsize: 2,
     height: 500
