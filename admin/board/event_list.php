@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-<h1>자유 게시판</h1>
+<h1>이벤트 게시판</h1>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -18,26 +18,27 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
   </thead>
   <tbody>
     <?php
-    $sql = "SELECT * FROM board_free ORDER BY fb_pid DESC LIMIT 10";
+    $sql = "SELECT * FROM board_event ORDER BY eb_pid DESC LIMIT 10";
 
     $result = $mysqli->query($sql);
     
     $list = '';
     while($data = $result -> fetch_object()){
-      $fb_title = $data->fb_title;
+      $eb_title = $data->eb_title;
+      
 
-      if(iconv_strlen($fb_title)>10){
-        $fb_title = $fb_title = iconv_substr($fb_title, 0, 10) . '...';
+      if(iconv_strlen($eb_title)>10){
+        $eb_title = iconv_substr($eb_title, 0, 10) . '...';
       }
    ?>
       <tr>
-        <th scope="row"><?=$data->fb_pid ?></th>
-        <td><?=$fb_title ?></td>
-        <td><?=$data->fb_user_id ?></td>
-        <td><?=$data->fb_content ?></td>
-        <td><?=$data->fb_date ?></td>
-        <td><?=$data->fb_like ?></td>
-        <td><?=$data->fb_hit ?></td>
+        <th scope="row"><?=$data->eb_pid ?></th>
+        <td><?=$eb_title ?></td>
+        <td><?=$data->eb_user_id ?></td>
+        <td><?=$data->eb_content ?></td>
+        <td><?=$data->eb_date ?></td>
+        <td><?=$data->eb_like ?></td>
+        <td><?=$data->eb_hit ?></td>
         <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
@@ -69,7 +70,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 </nav>
 
 <div class=" d-flex justify-content-end">
-  <a class="btn btn-primary" href="#" role="button">글등록</a>
+  <a class="btn btn-primary" href="board_write.php" role="button">글등록</a>
+  <a class="btn btn-danger" href="#" role="button">글삭제</a>
 </div>
 
 
