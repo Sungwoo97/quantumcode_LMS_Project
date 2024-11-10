@@ -32,7 +32,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
    ?>
       <tr>
         <th scope="row"><?=$data->qb_pid ?></th>
-        <td><?=$qb_title ?></td>
+        <td><a href="read.php?idx=<?=$data->qb_pid?>"><?=$qb_title ?></a></td>
         <td><?=$data->qb_user_id ?></td>
         <td><?=$data->qb_content ?></td>
         <td><?=$data->qb_date ?></td>

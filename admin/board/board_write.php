@@ -5,7 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 
 
 <form action="board_write_ok.php" method="POST">
-  <select class="form-select" name="category" aria-label="Default select example">
+  <select class="form-select" name="category" aria-label="Default select example" required >
     <option selected>카테고리 선택</option>
     <option value="notice">공지사항</option>
     <option value="free">자유게시판</option>
