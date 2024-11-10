@@ -38,7 +38,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
         <td><?=$data->fb_date ?></td>
         <td><?=$data->fb_like ?></td>
         <td><?=$data->fb_hit ?></td>
-        <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <td><a href="board_modify.php?idx=<?=$data->fb_pid?>&category=free"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
     }
