@@ -39,7 +39,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
         <td><?=$data->eb_date ?></td>
         <td><?=$data->eb_like ?></td>
         <td><?=$data->eb_hit ?></td>
-        <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <td><a href="board_modify.php?idx=<?=$data->eb_pid?>$catecory=event"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
     }

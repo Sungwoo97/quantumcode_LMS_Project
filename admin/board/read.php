@@ -4,6 +4,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 $category = $_GET['category'];
 $idx = $_GET['idx']; 
 
+
+
 // 카테고리에 맞는 테이블과 컬럼 설정
 $table = '';
 $pid_column = '';  // 각 카테고리에 맞는 ID 컬럼명 추가
@@ -75,6 +77,7 @@ $date = $data->{$date_column};
 
 $hitSql = "UPDATE $table SET $hit_column=$hit WHERE $pid_column = $idx";
 $mysqli->query($hitSql);
+
 ?>
 
 <h1>게시물 상세보기</h1>
@@ -91,11 +94,13 @@ $mysqli->query($hitSql);
 <div class="d-flex justify-content-end">
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
-    <a href="free_list.php" class="btn btn-info">추천</a>
+    <button id="like" class="btn btn-info">추천</button>
     <a href="board_modify.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="delete.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
+
+
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
 ?>

@@ -38,7 +38,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
         <td><?=$data->nb_date ?></td>
         <td><?=$data->nb_like ?></td>
         <td><?=$data->nb_hit ?></td>
-        <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <td><a href="board_modify.php?idx=<?=$data->nb_pid?>&category=notice"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
     }
