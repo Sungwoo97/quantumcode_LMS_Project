@@ -36,7 +36,7 @@ switch ($category) {
         $redirect_url = '/admin/board/free_list.php';
         break;
     default:
-        die("유효하지 않은 카테고리입니다.");
+        die("카테고리를 선택 해주세요.");
 }
 
 $sql = "INSERT INTO $table ($title_column, $content_column) VALUES ('$title','$content')";

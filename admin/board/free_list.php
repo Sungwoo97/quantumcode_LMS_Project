@@ -32,7 +32,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
    ?>
       <tr>
         <th scope="row"><?=$data->fb_pid ?></th>
-        <td><?=$fb_title ?></td>
+        <td><a href="read.php?idx=<?=$data->fb_pid?>&category=free"><?=$fb_title ?></a></td>
         <td><?=$data->fb_user_id ?></td>
         <td><?=$data->fb_content ?></td>
         <td><?=$data->fb_date ?></td>
