@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-
+<h1>게시판 글등록</h1>
 
 <form action="board_write_ok.php" method="POST">
   <select class="form-select" name="category" aria-label="Default select example" required >
