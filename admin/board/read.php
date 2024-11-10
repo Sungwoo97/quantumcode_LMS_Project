@@ -23,6 +23,7 @@ switch ($category) {
         $hit_column = 'qb_hit'; 
         $date_column = 'qb_date'; 
         $content_column = 'qb_content';
+        $redirect_url = '/admin/board/qna_list.php'; 
         break;
     case 'notice':
         $table = 'board_notice';
@@ -33,6 +34,7 @@ switch ($category) {
         $hit_column = 'nb_hit'; 
         $date_column = 'nb_date'; 
         $content_column = 'nb_content';
+        $redirect_url = '/admin/board/notice_list.php';
         break;
     case 'event':
         $table = 'board_event';
@@ -43,6 +45,7 @@ switch ($category) {
         $hit_column = 'eb_hit'; 
         $date_column = 'eb_date';  
         $content_column = 'eb_content';
+        $redirect_url = '/admin/board/event_list.php';
         break;
     case 'free':
         $table = 'board_free';
@@ -53,6 +56,7 @@ switch ($category) {
         $hit_column = 'fb_hit'; 
         $date_column = 'fb_date';  
         $content_column = 'fb_content';
+        $redirect_url = '/admin/board/free_list.php';
         break;
     default:
         die("유효하지 않은 카테고리입니다.");
@@ -86,7 +90,7 @@ $mysqli->query($hitSql);
 
 <div class="d-flex justify-content-end">
   <p>
-    <a href="free_list.php" class="btn btn-secondary">목록</a>
+    <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="free_list.php" class="btn btn-info">추천</a>
     <a href="free_list.php" class="btn btn-primary">수정</a>
     <a href="delete.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
