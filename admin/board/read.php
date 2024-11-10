@@ -92,7 +92,7 @@ $mysqli->query($hitSql);
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="free_list.php" class="btn btn-info">추천</a>
-    <a href="free_list.php" class="btn btn-primary">수정</a>
+    <a href="board_modify.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="delete.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
