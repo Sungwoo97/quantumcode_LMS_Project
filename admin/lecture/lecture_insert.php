@@ -4,18 +4,26 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.cs
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
+
+$sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
+$result = $mysqli->query($sql);
+$data = $result->fetch_object();
+
 ?>
 <h4> lecture_insert</h4>
 <div class="container">
-  <Form action="lecture_insert_ok" method="POST">
+  <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
+    <input type="hidden" id="lecture_description" name="lecture_description" value="">
+    <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
+    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid===null ? 1 : $data->last_lid ?>">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
+          <img src="" id="coverImg" alt="">
         </div>
         <div class="input-group">
-          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >
+          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
         </div>
       </div>
       <div class="col-8 mt-3">
@@ -30,24 +38,24 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요">
+                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요" required >
               </td>
             </tr>
             <tr scope="row">
               <th scope="row">카테고리 선택</th>
               <td colspan="3">
                 <div class="d-flex gap-3">
-                    <select class="form-select" name="platforms">
-                      <option selected>Platforms</option>
-                      <!-- <option value="1">One</option> -->
+                    <select class="form-select" name="platforms" required>
+                      <option value="" selected>Platforms</option>
+                      <option value="A0001">Web</option>
                     </select>
-                    <select class="form-select"  name="development">
-                      <option selected>Development</option>
-                      <!-- <option value="1">One</option> -->
+                    <select class="form-select"  name="development" required>
+                      <option value="" selected>Development</option>
+                      <option value="B0001">Front-End</option>
                     </select>
-                    <select class="form-select" name="technologies">
-                      <option selected>Technologies</option>
-                      <!-- <option value="1">One</option> -->
+                    <select class="form-select" name="technologies" required>
+                      <option value="" selected>Technologies</option>
+                      <option value="C0001">React</option>
                     </select>
                 </div>
               </td>
@@ -55,7 +63,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr>
               <th scope="row">수강료</th>
               <td class="twoculumn_table">
-                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="">
+                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">할인 수강료</th>
@@ -66,13 +74,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr>
               <th scope="row">등록일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="dis_tuition" id="regist_day" placeholder="">
+                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">난이도</th>
               <td>
-              <select class="form-select " name="difficult">
-                    <option selected>난이도</option>
+              <select class="form-select " name="difficult" required>
+                    <option value="0" selected>난이도</option>
                     <option value="1">입문</option>
                     <option value="2">초급</option>
                     <option value="3">중급</option>
@@ -86,19 +94,19 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
               <td colspan="3">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispremium" value="" id="ispremium">
+                    <input class="form-check-input me-2" type="checkbox" name="ispremium" value="1" id="ispremium">
                     <label class="form-check-label" for="ispremium">프리미엄</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispopular" value="" id="ispopular">
+                    <input class="form-check-input me-2" type="checkbox" name="ispopular" value="1" id="ispopular">
                     <label class="form-check-label" for="ispopular">인기 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isrecom" value="" id="isrecom">
+                    <input class="form-check-input me-2" type="checkbox" name="isrecom" value="1" id="isrecom">
                     <label class="form-check-label" for="isrecom">추천 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isfree" value="" id="isfree">
+                    <input class="form-check-input me-2" type="checkbox" name="isfree" value="1" id="isfree">
                     <label class="form-check-label" for="isfree">무료 강의</label>
                   </div>
                 </div>
@@ -109,13 +117,17 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
       </div>
       <div class="col-4 ">
         <h6>홍보영상 등록</h6>
-        <div class="lecture_coverImg mb-3">
-          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
+        <div class="lecture_prVideo mb-3">
+          <video src="" id="pr_video"></video>
+          <select class="form-select w-25" name="prVideo_type" id="prVideo_type" >                            
+            <option value="1" selected>파일</option>
+            <option value="2">URL</option>
+          </select>
         </div>
-        <input type="file" class="form-control" accept="video/*" name="pr_video" id="pr_video" >
+        <input type="file" class="form-control" accept="video/*" name="pr_video" id="pr_videoFile" >
         <div class="input-group mb-3">
           <span class="input-group-text" id="pr_videoAddon">URL</span>
-          <input type="text" class="form-control" name="pr_videoUrl" id="pr_videoUrl" >
+          <input type="url" class="form-control" name="pr_videoUrl" id="pr_videoUrl" >
         </div>
       </div>
       <div class="col-8 ">
@@ -130,10 +142,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
       </div>
       <div class="col-4 ">
         <h6>강의 영상 등록</h6>
-        <div class="lecture_coverImg mb-3">
-          <!-- <img src="../img/core-img/Large Logo.svg" alt=""> -->
+        <div class="lecture_video mb-3 d-flex">
+          <!-- <video src="" id="lecture_addVideo"></video> -->
+          <select class="form-select w-25" name="addVideo_type" id="addVideo_type" >                            
+            <option value="1" selected>파일</option>
+            <option value="2">URL</option>
+          </select>
         </div>
-        <input type="file" class="form-control" accept="video/*" name="add_videos[]" id="add_videos" >
+        <input type="file" class="form-control visually-hidden" accept="video/*" name="add_videos[]" id="add_videos" multiple>
+        <button type="button" class="btn btn-primary btn-sm" id="addVideo">영상 추가</button>
+        <div id="addVideos" class="d-flex gap-3"></div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="add_videosAddon">URL</span>
           <input type="text" class="form-control" name="add_videosUrl" id="add_videosUrl" >
@@ -151,16 +169,151 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
       </div>
     </div>
     <div class="mt-3 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="submit" class="btn btn-primary" >등록</button>
     </div>
   </Form>
 </div>
 <script>
- $('#desc').summernote({
-    placeholder: 'Hello Bootstrap 4',
-    tabsize: 2,
-    height: 500
+
+  function addCover(file, cover){
+    let coverImage = file;
+    coverImage.on('change',(e)=>{
+      let file = e.target.files[0];
+      let target = cover;
+      if(file){
+        const reader = new FileReader(); 
+        reader.onloadend = (e)=>{ 
+          let attachment = e.target.result;
+          console.log(attachment);
+          if(attachment){
+            target.attr('src', attachment);
+          }
+        }
+        reader.readAsDataURL(file); 
+      }else{
+        target.attr('src', '');
+      }
+    });
+  }
+  addCover($('#cover_image'), $('#coverImg') );
+  addCover($('#pr_videoFile'), $('#pr_video') );
+
+  function videoToggle(select, target1, target2){
+    target2.prop('disabled', true);
+    select.change(function(){
+      let value = $(this).val();
+      target1.prop('disabled', true);
+      target2.prop('disabled', true);
+      if(value == 1){
+        target1.prop('disabled', true).prop('disabled', false);
+      } else{
+        target2.prop('disabled', false);
+      }
+    });
+  }
+  videoToggle( $('#prVideo_type'), $('#pr_videoFile'), $('#pr_videoUrl'));
+  videoToggle( $('#addVideo_type'), $('#add_videos'), $('#add_videosUrl'));
+
+  
+
+  function attachFile(file){
+
+    let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
+    formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+    formData.append('lid', $('#lid').val());
+
+    $.ajax({
+      url:'lecture_add_video.php',
+      data:formData,   
+      cache: false, //이미지 정보를 브라우저 저장, 안한다
+      contentType:false, //전송되는 데이터 타입지정, 안한다.
+      processData:false, //전송되는 데이터 처리(해석), 안한다.
+      dataType:'json', //lecture_addVideo.php이 반환하는 값의 타입
+      type:'POST', //파일 정보를 전달하는 방법
+      success:function(returned_data){ //lecture_addVideo.php과 연결(성공)되면 할일
+        console.log(returned_data);
+
+        if(returned_data.result === 'size'){
+          alert('10MB 이하만 첨부할 수 있습니다.');
+          return;
+        } else if(returned_data.result === 'image'){
+          alert('이미지만 첨부할 수 있습니다.');
+          return;   
+        } else if(returned_data.result === 'error'){
+          alert('첨부실패, 관리자에게 문의하세요');
+          return;
+        } else{ //파일 첨부가 성공하면
+          let vidids = $('#lecture_videoId').val() + returned_data.vidid + ',';
+          $('#lecture_videoId').val(vidids);
+          let html = `
+            <div class="card" style="width: 9rem;" id="${returned_data.vidid}">
+              <video src="${returned_data.savefile}" class="card-img-top" alt="..."> </video>
+              <div class="card-body">                
+                <button type="button" class="btn btn-danger btn-sm">삭제</button>
+              </div>
+            </div>
+          `;
+          $('.lecture_video').append(html);
+        }
+      }
+    })
+  } //Attachfile
+
+  $('#addVideo').click(function(){
+    $('#add_videos').trigger('click');
   });
+
+  $('#add_videos').change(function(){
+    let files = $(this).prop('files');
+    console.log(files);
+
+    for(let i = 0; i<files.length; i++){
+      attachFile(files[i]);
+    }
+
+  });
+
+  let lecture_desc = $('#desc');
+  lecture_desc.summernote({
+    height: 500,
+    popover: {
+      image: [
+        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+        ['remove', ['removeMedia']]
+      ],
+      link: [
+        ['link', ['linkDialogShow', 'unlink']]
+      ],
+      table: [
+        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+      ],
+      air: [
+        ['color', ['color']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['para', ['ul', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture']]
+      ]
+    }
+  });
+
+  $('#lecture_submit').submit(function(e){
+    console.log($('#lecture_submit'));
+    if (lecture_desc.summernote('isEmpty')) { 
+      e.preventDefault();
+      alert('상품 설명을 작성해주세요');
+      lecture_desc.summernote('focus');      
+    }
+
+  var markup = lecture_desc.summernote('code');
+  let content = encodeURIComponent(markup);
+  $('#lecture_description').val(markup);
+  });
+
+  
+
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/footer.php');
