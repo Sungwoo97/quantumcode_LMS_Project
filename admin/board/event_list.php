@@ -33,7 +33,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
    ?>
       <tr>
         <th scope="row"><?=$data->eb_pid ?></th>
-        <td><?=$eb_title ?></td>
+        <td><a href="read.php?idx=<?=$data->eb_pid?>&category=event"><?=$eb_title ?></td>
         <td><?=$data->eb_user_id ?></td>
         <td><?=$data->eb_content ?></td>
         <td><?=$data->eb_date ?></td>
