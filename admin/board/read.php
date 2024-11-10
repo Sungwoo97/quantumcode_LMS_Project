@@ -83,7 +83,7 @@ $mysqli->query($hitSql);
 <h1>게시물 상세보기</h1>
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$title?></h2>
-  <span>글쓴이:<?=$user_id?> 추천수:<?=$like?> 조회수:<?=$hit?> 등록일자:<?=$date?></span>
+  <span>글쓴이:<?=$user_id?> <span id="like-count">추천수:<?=$like?></span> 조회수:<?=$hit?> 등록일자:<?=$date?></span>
 </div>
 
 
@@ -94,13 +94,38 @@ $mysqli->query($hitSql);
 <div class="d-flex justify-content-end">
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
-    <button id="like" class="btn btn-info">추천</button>
+    <button id="likeCount" class="btn btn-info">추천</button>
     <a href="board_modify.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="delete.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
 
+<script>
+  document.querySelector('#likeCount').addEventListener('click', function(event) {
+    event.preventDefault();  // 페이지 이동 방지
 
+    let category = '<?=$category?>';  // 카테고리 값
+    let idx = '<?=$idx?>';  // 게시물 ID 값
+
+    // AJAX 요청
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'like_up.php?category=' + category + '&idx=' + idx, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        let response = JSON.parse(xhr.responseText);
+        
+        // 서버에서 성공 응답이 오면 추천수 업데이트
+        if (response.status == 'success') {
+          document.querySelector('#like-count').innerHTML = '추천수:' + response.likes;
+          alert('추천 완료');
+        } else {
+          alert(response.message);
+        }
+      }
+    };
+    xhr.send();
+  });
+</script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
 ?>
