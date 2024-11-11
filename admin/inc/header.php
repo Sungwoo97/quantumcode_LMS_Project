@@ -4,11 +4,10 @@
 경우에는 DOCUMENT_ROOT가 htdocs이지만 우리의 경우, DOCUMENT_ROOT가 3nd_projecct 이후 별도의 폴더 없이
 바로 프로젝트를 실행해서 이렇게 실행됩니다. 
 */
+session_start();
+// print_r($_SESSION); Array ( [AUID] => admin [AUNAME] => 관리자 [AULEVEL] => 100 ) 
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
-if (!isset($title)) {
-  $title = '';
-}
 
 ?>
 
