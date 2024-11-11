@@ -13,12 +13,12 @@ if (!isset($title)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Title -->
-    <title>대시보드 - quantumcode</title>
+    <title><?= $title; ?>  - quantumcode</title>
 
     <!-- Favicon -->
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST'];?>/3ND_PROJECT/css/core-style.css">
+    <link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST'];?>/admin/css/core-style.css">
 
     <!-- Bootstrap, jQuery -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
@@ -30,7 +30,7 @@ if (!isset($title)) {
   <nav class="z-1 d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="/admin/index.php"><img src="../img/core-img/Normal_Logo.svg" alt="탑 로고"></a>
+        <a href="/admin/index.php"><img src="/admin/img/core-img/Normal_Logo.svg" alt="탑 로고"></a>
       </h1>
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
@@ -98,7 +98,7 @@ if (!isset($title)) {
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li><a href="http://<?= $_SERVER['HTTP_HOST']?>/admin/coupon/couponlist.php">쿠폰 목록</a></li>
-            <li><a href="">쿠폰 등록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST']?>/admin/coupon/coupon_regis.php">쿠폰 등록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -111,14 +111,14 @@ if (!isset($title)) {
             <li><a href="">공지사항</a></li>
             <li><a href="">FAQ</a></li>
             <li><a href="">Q&A</a></li>
-            <li><a href="">자유게시판</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST']?>/admin/board/free_board.php">자유게시판</a></li>
           </ul>
         </div>
       </div>
     </div>
 
     <div class="admin_account d-flex gap-3 align-items-center">
-      <img src="../img/core-img/어드민_이미지.png" alt="">
+      <img src="/admin/img/core-img/어드민_이미지.png" alt="">
       <p class="tt_02">Admin</p>
     </div>
   </nav>
