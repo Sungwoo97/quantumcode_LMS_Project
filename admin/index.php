@@ -8,9 +8,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-<div>
   <h1>관리자단 페이지입니다. </h1>
-</div>
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
