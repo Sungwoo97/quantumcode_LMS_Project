@@ -18,7 +18,7 @@ if (!isset($title)) {
     <!-- Favicon -->
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST'];?>.'admin/css/core-style.css'">
+    <link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST'];?>/3ND_PROJECT/css/core-style.css">
 
     <!-- Bootstrap, jQuery -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
@@ -97,7 +97,7 @@ if (!isset($title)) {
             </button>
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">쿠폰 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST']?>/admin/coupon/couponlist.php">쿠폰 목록</a></li>
             <li><a href="">쿠폰 등록</a></li>
           </ul>
         </div>
