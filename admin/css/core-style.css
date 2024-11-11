@@ -57,7 +57,7 @@ nav{
   width: 100%;
 }
 .accordion-header button{
-  padding:0 69px 0 39px;
+  padding:0 39px 0 69px;
   height: 48px;
   align-items: center;
 }
