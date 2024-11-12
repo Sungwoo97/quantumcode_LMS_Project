@@ -15,6 +15,7 @@ $like_column = '';  // 추천수 컬럼
 $hit_column = '';  // 조회수 컬럼
 $date_column = '';  // 등록일자 컬럼
 $content_column = '';  // 컨텐츠 컬럼
+
 switch ($category) {
     case 'qna':
         $table = 'board_qna';
