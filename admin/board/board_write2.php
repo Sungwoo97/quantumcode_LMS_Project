@@ -1,8 +1,8 @@
 <?php
+$title = '게시판 글등록';
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-<h1>게시판 글등록</h1>
 
 <form action="board_write2_ok.php" method="POST">
   <select class="form-select" name="category" aria-label="Default select example" required >
@@ -22,9 +22,15 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
   </div>
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary">등록</button>
-    <button class="btn btn-danger">취소</button>
+    <button id="cancle" class="btn btn-danger">취소</button>
   </div  d-flex justify-content-end>
 </form>
+<script>
+  // 취소 버튼 클릭 시 이전 페이지로 돌아가기
+  document.getElementById('cancle').addEventListener('click', function() {
+    window.history.back();  // 이전 페이지로 돌아가기
+  });
+</script>
  
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
