@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-<h1>질문과 답변</h1>
+<h1>공지사항</h1>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -18,27 +18,27 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
   </thead>
   <tbody>
     <?php
-    $sql = "SELECT * FROM board_qna ORDER BY qb_pid DESC LIMIT 10";
+    $sql = "SELECT * FROM board_notice ORDER BY nb_pid DESC LIMIT 10";
 
     $result = $mysqli->query($sql);
     
     $list = '';
     while($data = $result -> fetch_object()){
-      $qb_title = $data->qb_title;
+      $nb_title = $data->nb_title;
 
-      if(iconv_strlen($qb_title)>10){
-        $qb_title = iconv_substr($qb_title, 0, 10) . '...';
+      if(iconv_strlen($nb_title)>10){
+        $nb_title = iconv_substr($nb_title, 0, 10) . '...';
       }
    ?>
       <tr>
-        <th scope="row"><?=$data->qb_pid ?></th>
-        <td><a href="read.php?idx=<?=$data->qb_pid?>&category=qna"><?=$qb_title ?></a></td>
-        <td><?=$data->qb_user_id ?></td>
-        <td><?=$data->qb_content ?></td>
-        <td><?=$data->qb_date ?></td>
-        <td><?=$data->qb_like ?></td>
-        <td><?=$data->qb_hit ?></td>
-        <td><a href="board_modify.php?idx=<?=$data->qb_pid?>&category=qna"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <th scope="row"><?=$data->nb_pid ?></th>
+        <td><a href="read.php?idx=<?=$data->nb_pid?>&category=notice"><?=$nb_title ?></td>
+        <td><?=$data->nb_user_id ?></td>
+        <td><?=$data->nb_content ?></td>
+        <td><?=$data->nb_date ?></td>
+        <td><?=$data->nb_like ?></td>
+        <td><?=$data->nb_hit ?></td>
+        <td><a href="board_modify.php?idx=<?=$data->nb_pid?>&category=notice"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
     }

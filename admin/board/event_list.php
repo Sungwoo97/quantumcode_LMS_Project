@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 ?>
 
-<h1>질문과 답변</h1>
+<h1>이벤트 게시판</h1>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -18,27 +18,28 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
   </thead>
   <tbody>
     <?php
-    $sql = "SELECT * FROM board_qna ORDER BY qb_pid DESC LIMIT 10";
+    $sql = "SELECT * FROM board_event ORDER BY eb_pid DESC LIMIT 10";
 
     $result = $mysqli->query($sql);
     
     $list = '';
     while($data = $result -> fetch_object()){
-      $qb_title = $data->qb_title;
+      $eb_title = $data->eb_title;
+      
 
-      if(iconv_strlen($qb_title)>10){
-        $qb_title = iconv_substr($qb_title, 0, 10) . '...';
+      if(iconv_strlen($eb_title)>10){
+        $eb_title = iconv_substr($eb_title, 0, 10) . '...';
       }
    ?>
       <tr>
-        <th scope="row"><?=$data->qb_pid ?></th>
-        <td><a href="read.php?idx=<?=$data->qb_pid?>&category=qna"><?=$qb_title ?></a></td>
-        <td><?=$data->qb_user_id ?></td>
-        <td><?=$data->qb_content ?></td>
-        <td><?=$data->qb_date ?></td>
-        <td><?=$data->qb_like ?></td>
-        <td><?=$data->qb_hit ?></td>
-        <td><a href="board_modify.php?idx=<?=$data->qb_pid?>&category=qna"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <th scope="row"><?=$data->eb_pid ?></th>
+        <td><a href="read.php?idx=<?=$data->eb_pid?>&category=event"><?=$eb_title ?></td>
+        <td><?=$data->eb_user_id ?></td>
+        <td><?=$data->eb_content ?></td>
+        <td><?=$data->eb_date ?></td>
+        <td><?=$data->eb_like ?></td>
+        <td><?=$data->eb_hit ?></td>
+        <td><a href="board_modify.php?idx=<?=$data->eb_pid?>$catecory=event"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
    <?php
     }
