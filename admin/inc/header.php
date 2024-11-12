@@ -30,13 +30,13 @@ if (!isset($title)) {
   <nav class="z-1 d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="/admin/index.php"><img src="/admin/img/core-img/Normal_Logo.svg" alt="탑 로고"></a>
+        <a href="/admin/index.php"><img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/core-img/Normal_Logo.svg" alt="탑 로고"></a>
       </h1>
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_dashboard" aria-expanded="false" aria-controls="nav_cate_dashboard" onclick="location.href='/admin/index.php'">
-              <img src="../img/icon-img/SquaresFour.svg" alt="대시보드 아이콘"> 대시보드
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/SquaresFour.svg" alt="대시보드 아이콘"> 대시보드
             </button>
           </h2>
           <ul id="nav_cate_dashboard" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -46,7 +46,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_Sales" aria-expanded="false" aria-controls="nav_cate_Sales">
-              <img src="../img/icon-img/ChartLineUp.svg" alt="매출관리 아이콘"> 매출관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/ChartLineUp.svg" alt="매출관리 아이콘"> 매출관리
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -56,7 +56,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_lecture" aria-expanded="false" aria-controls="nav_cate_lecture">
-              <img src="../img/icon-img/Book.svg" alt="강의 관리 아이콘"> 강의 관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/Book.svg" alt="강의 관리 아이콘"> 강의 관리
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -69,7 +69,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_member" aria-expanded="false" aria-controls="nav_cate_member">
-              <img src="../img/icon-img/UsersFour.svg" alt="회원 관리 아이콘"> 회원 관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/UsersFour.svg" alt="회원 관리 아이콘"> 회원 관리
             </button>
           </h2>
           <ul id="nav_cate_member" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -81,7 +81,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_instructor" aria-expanded="false" aria-controls="nav_cate_instructor">
-              <img src="../img/icon-img/ChalkboardSimple.svg" alt="강사 관리 아이콘"> 강사 관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/ChalkboardSimple.svg" alt="강사 관리 아이콘"> 강사 관리
             </button>
           </h2>
           <ul id="nav_cate_instructor" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -93,7 +93,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_coupon" aria-expanded="false" aria-controls="nav_cate_coupon">
-              <img src="../img/icon-img/Ticket.svg" alt="쿠폰 관리 아이콘"> 쿠폰 관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/Ticket.svg" alt="쿠폰 관리 아이콘"> 쿠폰 관리
             </button>
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -104,7 +104,7 @@ if (!isset($title)) {
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_board" aria-expanded="false" aria-controls="nav_cate_board">
-              <img src="../img/icon-img/Article.svg" alt="게시판 관리 아이콘"> 게시판 관리
+              <img src="http://<?=$_SERVER['HTTP_HOST'];?>/admin/img/icon-img/Article.svg" alt="게시판 관리 아이콘"> 게시판 관리
             </button>
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
