@@ -86,7 +86,7 @@ INSERT INTO `board` (`pid`, `title`, `content`, `name`, `pw`, `date`, `updated_d
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `board_event`
+-- 테이블 구조 `coupons_list`
 --
 
 CREATE TABLE `board_event` (
@@ -99,24 +99,22 @@ CREATE TABLE `board_event` (
   `eb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `eb_like` int(11) DEFAULT NULL,
   `eb_hit` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  )
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `board_free`
+-- 테이블 구조 `coupons_usercp`
 --
 
-CREATE TABLE `board_free` (
-  `fb_pid` int(11) NOT NULL,
-  `fb_title` varchar(255) NOT NULL,
-  `fb_content` text NOT NULL,
-  `fb_user_id` varchar(10) DEFAULT NULL,
-  `fb_pw` varchar(50) NOT NULL,
-  `fb_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `fb_hit` int(11) DEFAULT NULL,
-  `fb_like` int(11) DEFAULT NULL
+CREATE TABLE `free_board` (
+  `pid` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `user_id` varchar(10) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -130,7 +128,7 @@ INSERT INTO `board_free` (`fb_pid`, `fb_title`, `fb_content`, `fb_user_id`, `fb_
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `board_notice`
+-- 테이블 구조 `notice_board`
 --
 
 CREATE TABLE `board_notice` (
@@ -154,7 +152,7 @@ INSERT INTO `board_notice` (`nb_pid`, `nb_title`, `nb_content`, `nb_user_id`, `n
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `board_qna`
+-- 테이블 구조 `qna_board`
 --
 
 CREATE TABLE `board_qna` (
@@ -287,26 +285,26 @@ ALTER TABLE `board`
 --
 -- 테이블의 인덱스 `board_event`
 --
-ALTER TABLE `board_event`
-  ADD PRIMARY KEY (`eb_pid`);
+ALTER TABLE `event_board`
+  ADD PRIMARY KEY (`pid`);
 
 --
--- 테이블의 인덱스 `board_free`
+-- 테이블의 인덱스 `free_board`
 --
-ALTER TABLE `board_free`
-  ADD PRIMARY KEY (`fb_pid`);
+ALTER TABLE `free_board`
+  ADD PRIMARY KEY (`pid`);
 
 --
--- 테이블의 인덱스 `board_notice`
+-- 테이블의 인덱스 `notice_board`
 --
-ALTER TABLE `board_notice`
-  ADD PRIMARY KEY (`nb_pid`);
+ALTER TABLE `notice_board`
+  ADD PRIMARY KEY (`pid`);
 
 --
--- 테이블의 인덱스 `board_qna`
+-- 테이블의 인덱스 `qna_board`
 --
-ALTER TABLE `board_qna`
-  ADD PRIMARY KEY (`qb_pid`);
+ALTER TABLE `qna_board`
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 테이블의 인덱스 `coupons_list`
@@ -357,23 +355,23 @@ ALTER TABLE `board`
 --
 -- 테이블의 AUTO_INCREMENT `board_event`
 --
-ALTER TABLE `board_event`
-  MODIFY `eb_pid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `event_board`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 테이블의 AUTO_INCREMENT `board_free`
+-- 테이블의 AUTO_INCREMENT `free_board`
 --
 ALTER TABLE `board_free`
   MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 테이블의 AUTO_INCREMENT `board_notice`
+-- 테이블의 AUTO_INCREMENT `notice_board`
 --
 ALTER TABLE `board_notice`
   MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- 테이블의 AUTO_INCREMENT `board_qna`
+-- 테이블의 AUTO_INCREMENT `qna_board`
 --
 ALTER TABLE `board_qna`
   MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
