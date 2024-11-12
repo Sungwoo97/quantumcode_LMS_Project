@@ -1,9 +1,10 @@
 <?php
 session_start();
 // print_r($_SESSION); Array ( [AUID] => admin [AUNAME] => 관리자 [AULEVEL] => 100 ) 
-
+if (!isset($title)) {
+  $title = '';
+}
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
-
 ?>
 
 <!DOCTYPE html>
