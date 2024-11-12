@@ -250,9 +250,10 @@ CREATE TABLE `lecture_list` (
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
   `difficult` varchar(11) NOT NULL COMMENT '난이도',
+  `lecture_tag` varchar(250) DEFAULT NULL COMMENT '강의관련 스킬',
   `pr_video` varchar(100) DEFAULT NULL COMMENT '홍보 영상',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
-  `status` tinyint(4) NOT NULL COMMENT '상태'
+  `status` tinyint(4) DEFAULT NULL COMMENT '상태'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
 
 -- --------------------------------------------------------
