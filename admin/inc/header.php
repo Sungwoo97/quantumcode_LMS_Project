@@ -17,11 +17,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
-    <title><?= $title; ?> - quantumcode</title>
+    <title> <?= $title; ?> - quantumcode</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/admin/css/common.css">
     <?php
     if (isset($summernote_css)) {
       echo $summernote_css;
@@ -30,30 +31,26 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
       echo $lecture_css;
     }
     ?>
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/admin/css/core-style.css">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <?php
-    if (isset($summernote_js)) {
-      echo $summernote_js;
-    }
-    ?>
   </head>
   <!-- Favicon -->
-  <!-- Core Style CSS -->
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/admin/css/core-style.css">
+
 
   <!-- Bootstrap, jQuery -->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+  <?php
+  if (isset($summernote_js)) {
+    echo $summernote_js;
+  }
+  ?>
 </head>
 
 <body>
 
-  <nav class="z-1 d-flex flex-column align-items-center justify-content-between">
+  <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
         <a href="/admin/index.php"><img src="http://<?= $_SERVER['HTTP_HOST']; ?>/admin/img/core-img/Normal_Logo.svg" alt="탑 로고"></a>
@@ -150,7 +147,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
   </nav>
 
   <div class="nav_header">
-    <h2 class="main_tt">대시보드</h2>
+    <h2 class="main_tt"> <?= $title ?></h2>
   </div>
 
   <div class="page_wapper">

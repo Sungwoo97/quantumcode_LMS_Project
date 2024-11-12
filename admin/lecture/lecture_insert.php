@@ -1,21 +1,22 @@
 <?php
 $title = '강의 등록';
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.css\" rel=\"stylesheet\">;";
+$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 
 $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
-$result = $mysqli->query($sql);
-$data = $result->fetch_object();
+if ($result = $mysqli->query($sql)) {
+  $data = $result->fetch_object();
+}
+
 
 ?>
-<h4> lecture_insert</h4>
 <div class="container">
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
     <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
-    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid===null ? 1 : $data->last_lid ?>">
+    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid ?>">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
@@ -38,25 +39,25 @@ $data = $result->fetch_object();
             <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요" required >
+                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요" required>
               </td>
             </tr>
             <tr scope="row">
               <th scope="row">카테고리 선택</th>
               <td colspan="3">
                 <div class="d-flex gap-3">
-                    <select class="form-select" name="platforms" required>
-                      <option value="" selected>Platforms</option>
-                      <option value="A0001">Web</option>
-                    </select>
-                    <select class="form-select"  name="development" required>
-                      <option value="" selected>Development</option>
-                      <option value="B0001">Front-End</option>
-                    </select>
-                    <select class="form-select" name="technologies" required>
-                      <option value="" selected>Technologies</option>
-                      <option value="C0001">React</option>
-                    </select>
+                  <select class="form-select" name="platforms" required>
+                    <option value="" selected>Platforms</option>
+                    <option value="A0001">Web</option>
+                  </select>
+                  <select class="form-select" name="development" required>
+                    <option value="" selected>Development</option>
+                    <option value="B0001">Front-End</option>
+                  </select>
+                  <select class="form-select" name="technologies" required>
+                    <option value="" selected>Technologies</option>
+                    <option value="C0001">React</option>
+                  </select>
                 </div>
               </td>
             </tr>
@@ -79,17 +80,17 @@ $data = $result->fetch_object();
               </td>
               <th scope="row" class="insert_name">난이도</th>
               <td>
-              <select class="form-select " name="difficult" required>
-                    <option value="0" selected>난이도</option>
-                    <option value="1">입문</option>
-                    <option value="2">초급</option>
-                    <option value="3">중급</option>
-                    <option value="4">고급</option>
-                    <option value="5">전문가</option>
-                  </select>
+                <select class="form-select " name="difficult" required>
+                  <option value="0" selected>난이도</option>
+                  <option value="1">입문</option>
+                  <option value="2">초급</option>
+                  <option value="3">중급</option>
+                  <option value="4">고급</option>
+                  <option value="5">전문가</option>
+                </select>
               </td>
             </tr>
-            <tr scope="row" >
+            <tr scope="row">
               <th scope="row" class="insert_name">노출옵션</th>
               <td colspan="3">
                 <div class="d-flex justify-content-between">
@@ -119,22 +120,22 @@ $data = $result->fetch_object();
         <h6>홍보영상 등록</h6>
         <div class="lecture_prVideo mb-3">
           <video src="" id="pr_video"></video>
-          <select class="form-select w-25" name="prVideo_type" id="prVideo_type" >                            
+          <select class="form-select w-25" name="prVideo_type" id="prVideo_type">
             <option value="1" selected>파일</option>
             <option value="2">URL</option>
           </select>
         </div>
-        <input type="file" class="form-control" accept="video/*" name="pr_video" id="pr_videoFile" >
+        <input type="file" class="form-control" accept="video/*" name="pr_video" id="pr_videoFile">
         <div class="input-group mb-3">
           <span class="input-group-text" id="pr_videoAddon">URL</span>
-          <input type="url" class="form-control" name="pr_videoUrl" id="pr_videoUrl" >
+          <input type="url" class="form-control" name="pr_videoUrl" id="pr_videoUrl">
         </div>
       </div>
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="sub_title" class="bold">강의 요약</label>
           <textarea class="form-control" placeholder="강의 요약" name="sub_title" id="sub_title"></textarea>
-        </div >
+        </div>
       </div>
       <div>
         <h6>강의 상세 설명</h6>
@@ -144,18 +145,12 @@ $data = $result->fetch_object();
         <h6>강의 영상 등록</h6>
         <div class="lecture_video mb-3 d-flex">
           <!-- <video src="" id="lecture_addVideo"></video> -->
-          <select class="form-select w-25" name="addVideo_type" id="addVideo_type" >                            
-            <option value="1" selected>파일</option>
-            <option value="2">URL</option>
-          </select>
+
         </div>
         <input type="file" class="form-control visually-hidden" accept="video/*" name="add_videos[]" id="add_videos" multiple>
         <button type="button" class="btn btn-primary btn-sm" id="addVideo">영상 추가</button>
         <div id="addVideos" class="d-flex gap-3"></div>
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="add_videosAddon">URL</span>
-          <input type="text" class="form-control" name="add_videosUrl" id="add_videosUrl" >
-        </div>
+
       </div>
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
@@ -169,80 +164,81 @@ $data = $result->fetch_object();
       </div>
     </div>
     <div class="mt-3 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary" >등록</button>
+      <button type="submit" class="btn btn-primary">등록</button>
     </div>
   </Form>
 </div>
 <script>
-
-  function addCover(file, cover){
+  function addCover(file, cover) {
     let coverImage = file;
-    coverImage.on('change',(e)=>{
+    coverImage.on('change', (e) => {
       let file = e.target.files[0];
       let target = cover;
-      if(file){
-        const reader = new FileReader(); 
-        reader.onloadend = (e)=>{ 
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
           let attachment = e.target.result;
           console.log(attachment);
-          if(attachment){
+          if (attachment) {
             target.attr('src', attachment);
           }
         }
-        reader.readAsDataURL(file); 
-      }else{
+        reader.readAsDataURL(file);
+      } else {
         target.attr('src', '');
       }
     });
   }
-  addCover($('#cover_image'), $('#coverImg') );
-  addCover($('#pr_videoFile'), $('#pr_video') );
 
-  function videoToggle(select, target1, target2){
+  addCover($('#cover_image'), $('#coverImg'));
+
+  addCover($('#pr_videoFile'), $('#pr_video'));
+
+  function videoToggle(select, target1, target2) {
     target2.prop('disabled', true);
-    select.change(function(){
+    select.change(function() {
       let value = $(this).val();
       target1.prop('disabled', true);
       target2.prop('disabled', true);
-      if(value == 1){
+      if (value == 1) {
         target1.prop('disabled', true).prop('disabled', false);
-      } else{
+      } else {
         target2.prop('disabled', false);
       }
     });
   }
-  videoToggle( $('#prVideo_type'), $('#pr_videoFile'), $('#pr_videoUrl'));
-  videoToggle( $('#addVideo_type'), $('#add_videos'), $('#add_videosUrl'));
+  videoToggle($('#prVideo_type'), $('#pr_videoFile'), $('#pr_videoUrl'));
+  videoToggle($('#addVideo_type'), $('#add_videos'), $('#add_videosUrl'));
 
-  
 
-  function attachFile(file){
+
+  function attachFile(file) {
 
     let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
-    formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+    formData.append('savefile', file); //<input type="file" name="savefile" value="file"> 이미지 첨부
     formData.append('lid', $('#lid').val());
 
     $.ajax({
-      url:'lecture_add_video.php',
-      data:formData,   
+      url: 'lecture_add_video.php',
+      data: formData,
       cache: false, //이미지 정보를 브라우저 저장, 안한다
-      contentType:false, //전송되는 데이터 타입지정, 안한다.
-      processData:false, //전송되는 데이터 처리(해석), 안한다.
-      dataType:'json', //lecture_addVideo.php이 반환하는 값의 타입
-      type:'POST', //파일 정보를 전달하는 방법
-      success:function(returned_data){ //lecture_addVideo.php과 연결(성공)되면 할일
+      contentType: false, //전송되는 데이터 타입지정, 안한다.
+      processData: false, //전송되는 데이터 처리(해석), 안한다.
+      dataType: 'json', //lecture_addVideo.php이 반환하는 값의 타입
+      type: 'POST', //파일 정보를 전달하는 방법
+      success: function(returned_data) { //lecture_addVideo.php과 연결(성공)되면 할일
         console.log(returned_data);
 
-        if(returned_data.result === 'size'){
+        if (returned_data.result === 'size') {
           alert('10MB 이하만 첨부할 수 있습니다.');
           return;
-        } else if(returned_data.result === 'image'){
+        } else if (returned_data.result === 'image') {
           alert('이미지만 첨부할 수 있습니다.');
-          return;   
-        } else if(returned_data.result === 'error'){
+          return;
+        } else if (returned_data.result === 'error') {
           alert('첨부실패, 관리자에게 문의하세요');
           return;
-        } else{ //파일 첨부가 성공하면
+        } else { //파일 첨부가 성공하면
           let vidids = $('#lecture_videoId').val() + returned_data.vidid + ',';
           $('#lecture_videoId').val(vidids);
           let html = `
@@ -259,15 +255,14 @@ $data = $result->fetch_object();
     })
   } //Attachfile
 
-  $('#addVideo').click(function(){
+  $('#addVideo').click(function() {
     $('#add_videos').trigger('click');
   });
 
-  $('#add_videos').change(function(){
+  $('#add_videos').change(function() {
     let files = $(this).prop('files');
-    console.log(files);
 
-    for(let i = 0; i<files.length; i++){
+    for (let i = 0; i < files.length; i++) {
       attachFile(files[i]);
     }
 
@@ -299,21 +294,18 @@ $data = $result->fetch_object();
     }
   });
 
-  $('#lecture_submit').submit(function(e){
+  $('#lecture_submit').submit(function(e) {
     console.log($('#lecture_submit'));
-    if (lecture_desc.summernote('isEmpty')) { 
+    if (lecture_desc.summernote('isEmpty')) {
       e.preventDefault();
       alert('상품 설명을 작성해주세요');
-      lecture_desc.summernote('focus');      
+      lecture_desc.summernote('focus');
     }
 
-  var markup = lecture_desc.summernote('code');
-  let content = encodeURIComponent(markup);
-  $('#lecture_description').val(markup);
+    var markup = lecture_desc.summernote('code');
+    let content = encodeURIComponent(markup);
+    $('#lecture_description').val(markup);
   });
-
-  
-
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/footer.php');

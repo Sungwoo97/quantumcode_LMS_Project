@@ -6,6 +6,7 @@
 
 .lecture_coverImg img, .lecture_prVideo video, .lecture_video video {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -41,4 +42,17 @@ textarea#objectives, textarea#tag{
 
 .lecture h3, .lecture h4, .lecture h5, .lecture h6{
   font-weight: 600;
+}
+
+.lecture input{
+  z-index: 0;
+}
+.lecture_prVideo {
+  position: relative;
+  z-index: 0;
+}
+
+#prVideo_type{
+  position: absolute;
+  bottom: 0;
 }
