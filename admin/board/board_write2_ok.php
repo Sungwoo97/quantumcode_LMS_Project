@@ -3,11 +3,40 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
 
 // board_write_ok.php 예시
 $category = $_POST['category'];
-$title = $_POST['title'];
+$title1 = $_POST['title'];
 $content = $_POST['content'];
 
-$sql = "INSERT INTO posts (category, title, content) VALUES ('$category', '$title', '$content')";
+$sql = "INSERT INTO board (category, title, content) VALUES ('$category', '$title1', '$content')";
 $result = $mysqli->query($sql);
 
 
+switch ($category) {
+  case 'qna':
+      $redirect_url = '/admin/board/board_list.php?category=qna';
+      break;
+  case 'notice':
+      $redirect_url = '/admin/board/board_list.php?category=notice';
+      break;
+  case 'event':
+      $redirect_url = '/admin/board/board_list.php?category=event';
+      break;
+  case 'free':
+      $redirect_url = '/admin/board/board_list.php?category=free';
+      break;
+  default:
+      die("카테고리를 선택 해주세요.");
+}
+
+
+if($result){
+  echo "<script>
+    alert('글 작성 완료');
+    location.href='$redirect_url';
+    </script>";
+}else{
+  echo "<script>
+  alert('글 작성 실패');
+   history.back();
+  </script>";
+}
 ?>
