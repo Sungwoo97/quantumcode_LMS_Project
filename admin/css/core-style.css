@@ -10,7 +10,7 @@ body {
   font-family: 'Noto Sans KR', 'Roboto', 'Apple SD Gothic Neo',  'Pretendard', 'Malgun Gothic', sans-serif;
   font-weight: 500;
   overflow-x: hidden;
-  background-color: #757575;
+  /* background-color: #757575; */
 }
 .main_tt{
   font: 36/40px "Noto Sans KR", sans-serif;
@@ -43,12 +43,13 @@ body {
 
 /* NAV */
 
-nav{
+body > nav{
   width: 300px;
   height: 100vh;
   border-right: solid 1px #C2C2C2;
   position: fixed;
   background-color: #fff;
+  z-index: 9999;
 }
 .nav_aside_menu{
   width: 100%;
@@ -70,6 +71,7 @@ nav{
   left: 0; right: 0; top: 0;
   border-bottom: solid 1px #C2C2C2;
   background-color: #fff;
+  z-index: 100;
 }
 .nav_header h2{
   position: relative;
