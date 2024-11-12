@@ -108,13 +108,16 @@ CREATE TABLE `board_event` (
 -- 테이블 구조 `coupons_usercp`
 --
 
-CREATE TABLE `free_board` (
-  `pid` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `user_id` varchar(10) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `board_free` (
+  `fb_pid` int(11) NOT NULL,
+  `fb_title` varchar(255) NOT NULL,
+  `fb_content` text NOT NULL,
+  `fb_user_id` varchar(10) DEFAULT NULL,
+  `fb_pw` int(50) DEFAULT NULL,
+  `fb_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `fb_hit` int(11) DEFAULT NULL,
+  `fb_like` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -285,26 +288,26 @@ ALTER TABLE `board`
 --
 -- 테이블의 인덱스 `board_event`
 --
-ALTER TABLE `event_board`
-  ADD PRIMARY KEY (`pid`);
+ALTER TABLE `board_event`
+  ADD PRIMARY KEY (`eb_pid`);
 
 --
--- 테이블의 인덱스 `free_board`
+-- 테이블의 인덱스 `board_free`
 --
-ALTER TABLE `free_board`
-  ADD PRIMARY KEY (`pid`);
+ALTER TABLE `board_free`
+  ADD PRIMARY KEY (`fb_pid`);
 
 --
--- 테이블의 인덱스 `notice_board`
+-- 테이블의 인덱스 `board_notice`
 --
-ALTER TABLE `notice_board`
-  ADD PRIMARY KEY (`pid`);
+ALTER TABLE `board_notice`
+  ADD PRIMARY KEY (`nb_pid`);
 
 --
--- 테이블의 인덱스 `qna_board`
+-- 테이블의 인덱스 `board_qna`
 --
-ALTER TABLE `qna_board`
-  ADD PRIMARY KEY (`pid`);
+ALTER TABLE `board_qna`
+  ADD PRIMARY KEY (`qb_pid`);
 
 --
 -- 테이블의 인덱스 `coupons_list`
@@ -355,8 +358,8 @@ ALTER TABLE `board`
 --
 -- 테이블의 AUTO_INCREMENT `board_event`
 --
-ALTER TABLE `event_board`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `board_event`
+  MODIFY `eb_pid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 테이블의 AUTO_INCREMENT `free_board`
