@@ -31,6 +31,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
     if (isset($lecture_css)) {
       echo $lecture_css;
     }
+    if (isset($teacher_css)) {
+      echo $teacher_css;
+    }
+    if (isset($member_css)) {
+      echo $member_css;
+    }
     ?>
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/admin/css/core-style.css">
@@ -97,9 +103,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_member" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">회원 목록</a></li>
-            <li><a href="">회원 등록</a></li>
-            <li><a href="">회원 총괄</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/members/member_list.php">회원 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/members/member_insert.php">회원 등록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/members/member_overview.php">회원 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -109,9 +115,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_instructor" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">강사 목록</a></li>
-            <li><a href="">강사 등록</a></li>
-            <li><a href="">강사 총괄</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/teachers/teacher_list.php">강사 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/teachers/teacher_insert.php">강사 등록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/teachers/teacher_overview.php">강사 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
