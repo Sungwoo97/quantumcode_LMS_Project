@@ -26,7 +26,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <th scope="row">강사등급 선택</th>
             <td colspan="3">
               <div class="d-flex gap-3">
-                <select class="form-select mt-3" name="platforms" required>
+                <select class="form-select mt-3" name="grade" required>
                   <option value="" selected>등급을 선택해주세요</option>
                   <option value="A0001">Blonze</option>
                   <option value="A0001">Silver</option>

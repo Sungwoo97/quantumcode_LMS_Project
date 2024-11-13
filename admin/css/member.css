@@ -5,26 +5,17 @@
   font-weight: bold;
 }
 
-.member_coverImg,
-.member_prVideo,
-.member_video {
+.member_coverImg {
   width: 100%;
   height: 220px;
   background: #ebebeb;
 }
 
-.member_coverImg img,
-.member_prVideo video,
-.member_video video {
+.member_coverImg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
-/* .table>:not(caption)>*>*{
-  padding:0;
-  margin-bottom: .5rem;
-} */
 
 .twoculumn_table {
   display: flex !important;
@@ -48,7 +39,7 @@ table tr td {
   padding: 0.5rem !important;
 }
 
-textarea#sub_title {
+textarea#member_detail {
   height: 300px;
 }
 
