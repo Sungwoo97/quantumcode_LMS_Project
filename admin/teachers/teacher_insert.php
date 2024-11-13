@@ -28,10 +28,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
               <div class="d-flex gap-3">
                 <select class="form-select mt-3" name="grade" required>
                   <option value="" selected>등급을 선택해주세요</option>
-                  <option value="A0001">Blonze</option>
-                  <option value="A0001">Silver</option>
-                  <option value="A0001">Gold</option>
-                  <option value="A0001">Vip</option>
+                  <option value="1">Blonze</option>
+                  <option value="2">Silver</option>
+                  <option value="3">Gold</option>
+                  <option value="4">Vip</option>
                 </select>
               </div>
             </td>
