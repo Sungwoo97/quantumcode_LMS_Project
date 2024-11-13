@@ -1,6 +1,6 @@
 <?php
 $title = '회원 등록';
-$teacher_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/teacher.css\" rel=\"stylesheet\">";
+$member_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/member.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
@@ -9,13 +9,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 ?>
 
 <div class="container">
-  <Form action="teacher_insert_ok.php" id="teacher_submit" method="POST" enctype="multipart/form-data">
-    <input type="hidden" id="teacher_description" name="teacher_description" value="">
+  <Form action="member_insert_ok.php" id="member_submit" method="POST" enctype="multipart/form-data">
+    <input type="hidden" id="member_description" name="member_description" value="">
     <input type="hidden" name="lid" id="lid" value="">
-    <div class="row teacher">
+    <div class="row member">
       <div class="col-4 mb-5">
         <h6>회원 이미지 등록</h6>
-        <div class="teacher_coverImg mb-3">
+        <div class="member_coverImg mb-3">
           <img src="" id="coverImg" alt="">
         </div>
         <div class="input-group">
@@ -99,8 +99,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr>
               <th scope="row">회원 요약</th>
               <td class="twoculumn_table">
-                <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control" placeholder="회원 요약" name="teacher_detail" id="teacher_detail"></textarea>
+                <label for="member_detail" class="bold"></label>
+                <textarea class="form-control" placeholder="회원 요약" name="member_detail" id="member_detail"></textarea>
               </td>
             </tr>
             
