@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-11 10:24
+-- 생성 시간: 24-11-13 09:58
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -86,7 +86,7 @@ INSERT INTO `board` (`pid`, `title`, `content`, `name`, `pw`, `date`, `updated_d
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `coupons_list`
+-- 테이블 구조 `board_event`
 --
 
 CREATE TABLE `board_event` (
@@ -99,13 +99,12 @@ CREATE TABLE `board_event` (
   `eb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `eb_like` int(11) DEFAULT NULL,
   `eb_hit` int(11) DEFAULT NULL
-  )
- ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `coupons_usercp`
+-- 테이블 구조 `board_free`
 --
 
 CREATE TABLE `board_free` (
@@ -125,13 +124,13 @@ CREATE TABLE `board_free` (
 --
 
 INSERT INTO `board_free` (`fb_pid`, `fb_title`, `fb_content`, `fb_user_id`, `fb_pw`, `fb_date`, `fb_updated_date`, `fb_hit`, `fb_like`) VALUES
-(1, 'test', 'test', NULL, '', '2024-11-11 07:48:18', '2024-11-11 07:48:33', 1, NULL),
-(2, '1234', '1234', NULL, '', '2024-11-11 07:54:49', '2024-11-11 08:28:19', 24, 9);
+(1, 'test', 'test', NULL, 0, '2024-11-11 07:48:18', '2024-11-11 07:48:33', 1, NULL),
+(2, '1234', '1234', NULL, 0, '2024-11-11 07:54:49', '2024-11-11 08:28:19', 24, 9);
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `notice_board`
+-- 테이블 구조 `board_notice`
 --
 
 CREATE TABLE `board_notice` (
@@ -155,7 +154,7 @@ INSERT INTO `board_notice` (`nb_pid`, `nb_title`, `nb_content`, `nb_user_id`, `n
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `qna_board`
+-- 테이블 구조 `board_qna`
 --
 
 CREATE TABLE `board_qna` (
@@ -270,6 +269,50 @@ CREATE TABLE `lecture_video` (
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
 
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `members`
+--
+
+CREATE TABLE `members` (
+  `mid` int(15) NOT NULL,
+  `name` varchar(111) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(222) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(25) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `member_detail` text DEFAULT NULL,
+  `cover_image` varchar(111) DEFAULT NULL,
+  `grade` int(11) NOT NULL,
+  `progress` double DEFAULT NULL,
+  `last_login` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `tid` int(15) NOT NULL,
+  `name` varchar(15) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(45) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `cover_image` varchar(200) DEFAULT NULL,
+  `teacher_detail` text DEFAULT NULL,
+  `grade` int(15) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `notyet` varchar(155) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- 덤프된 테이블의 인덱스
 --
@@ -341,6 +384,18 @@ ALTER TABLE `lecture_video`
   ADD PRIMARY KEY (`lvid`);
 
 --
+-- 테이블의 인덱스 `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`mid`);
+
+--
+-- 테이블의 인덱스 `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`tid`);
+
+--
 -- 덤프된 테이블의 AUTO_INCREMENT
 --
 
@@ -363,19 +418,19 @@ ALTER TABLE `board_event`
   MODIFY `eb_pid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 테이블의 AUTO_INCREMENT `free_board`
+-- 테이블의 AUTO_INCREMENT `board_free`
 --
 ALTER TABLE `board_free`
   MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 테이블의 AUTO_INCREMENT `notice_board`
+-- 테이블의 AUTO_INCREMENT `board_notice`
 --
 ALTER TABLE `board_notice`
   MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- 테이블의 AUTO_INCREMENT `qna_board`
+-- 테이블의 AUTO_INCREMENT `board_qna`
 --
 ALTER TABLE `board_qna`
   MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
@@ -409,6 +464,18 @@ ALTER TABLE `lecture_list`
 --
 ALTER TABLE `lecture_video`
   MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호';
+
+--
+-- 테이블의 AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
