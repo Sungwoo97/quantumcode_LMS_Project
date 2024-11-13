@@ -1,14 +1,21 @@
-.lecture_coverImg,
-.lecture_prVideo,
-.lecture_video {
+.insert_name {
+  width: 190px;
+}
+.bold {
+  font-weight: bold;
+}
+
+.member_coverImg,
+.member_prVideo,
+.member_video {
   width: 100%;
   height: 220px;
   background: #ebebeb;
 }
 
-.lecture_coverImg img,
-.lecture_prVideo video,
-.lecture_video video {
+.member_coverImg img,
+.member_prVideo video,
+.member_video video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -50,17 +57,17 @@ textarea#tag {
   height: 150px;
 }
 
-.lecture h3,
-.lecture h4,
-.lecture h5,
-.lecture h6 {
+.member h3,
+.member h4,
+.member h5,
+.member h6 {
   font-weight: 600;
 }
 
-.lecture input {
+.member input {
   z-index: 0;
 }
-.lecture_prVideo {
+.member_prVideo {
   position: relative;
   z-index: 0;
 }
