@@ -51,7 +51,7 @@ $result = $mysqli->query($sql);
         ?>
       <tr>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="read2.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1 ?></a></td>
+        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1 ?></a></td>
         <td><?=$data->name ?></td>
         <td><?=$data->content ?></td>
         <td><?=$data->date ?></td>
@@ -76,7 +76,7 @@ $result = $mysqli->query($sql);
   </nav>
 
   <div class=" d-flex justify-content-end">
-    <a class="btn btn-primary" href="board_write2.php" role="button">글등록</a>
+    <a class="btn btn-primary" href="board_write.php" role="button">글등록</a>
     <a class="btn btn-danger" href="#" role="button">글삭제</a>
   </div>
 </div>

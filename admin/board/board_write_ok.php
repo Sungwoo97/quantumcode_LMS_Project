@@ -1,46 +1,32 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
 
-// POST 데이터 수신
+// board_write_ok.php 예시
 $category = $_POST['category'];
-$title = $_POST['title'];
+$title1 = $_POST['title'];
 $content = $_POST['content'];
 
-// 카테고리에 맞는 테이블 선택
-$table = ''; 
-$title_column = '';
-$content_column = '';
+$sql = "INSERT INTO board (category, title, content) VALUES ('$category', '$title1', '$content')";
+$result = $mysqli->query($sql);
+
+
 switch ($category) {
-    case 'qna':
-        $table = 'board_qna';
-        $title_column = 'qb_title';
-        $content_column = 'qb_content';
-        $redirect_url = '/admin/board/qna_list.php';
-        break;
-    case 'notice':
-        $table = 'board_notice';
-        $title_column = 'nb_title';
-        $content_column = 'nb_content';
-        $redirect_url = '/admin/board/notice_list.php';
-        break;
-    case 'event':
-        $table = 'board_event';
-        $title_column = 'eb_title';
-        $content_column = 'eb_content';
-        $redirect_url = '/admin/board/event_list.php';
-        break;
-    case 'free':
-        $table = 'board_free';
-        $title_column = 'fb_title';
-        $content_column = 'fb_content';
-        $redirect_url = '/admin/board/free_list.php';
-        break;
-    default:
-        die("카테고리를 선택 해주세요.");
+  case 'qna':
+      $redirect_url = '/admin/board/board_list.php?category=qna';
+      break;
+  case 'notice':
+      $redirect_url = '/admin/board/board_list.php?category=notice';
+      break;
+  case 'event':
+      $redirect_url = '/admin/board/board_list.php?category=event';
+      break;
+  case 'free':
+      $redirect_url = '/admin/board/board_list.php?category=free';
+      break;
+  default:
+      die("카테고리를 선택 해주세요.");
 }
 
-$sql = "INSERT INTO $table ($title_column, $content_column) VALUES ('$title','$content')";
-$result = $mysqli -> query($sql);
 
 if($result){
   echo "<script>
@@ -53,5 +39,4 @@ if($result){
    history.back();
   </script>";
 }
-
 ?>
