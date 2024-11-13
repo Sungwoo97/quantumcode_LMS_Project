@@ -4,6 +4,22 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = $_GET['pid']; 
+
+if(!isset($_SESSION['hits'])){
+  $_SESSION['hits'] =[];
+}
+
+if(!isset($_SESSION['hits'][$pid])){
+  $hit_sql = "UPDATE board SET hit = hit+1 WHERE pid=$pid";
+  $hit_result = $mysqli->query($hit_sql);
+
+  $_SESSION['hits'][$pid] = true;
+};
+
+
+
+
+
  
 if ($category === 'all') {
   $sql = "SELECT title, name, likes, hit, content, date FROM board WHERE pid = $pid";
@@ -55,7 +71,7 @@ switch ($category) {
 <div class="d-flex justify-content-end">
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
-    <button id="likeCount" class="btn btn-info">추천</button>
+    <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
