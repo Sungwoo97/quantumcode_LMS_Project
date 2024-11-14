@@ -1,9 +1,17 @@
 <?php
 $title = '쿠폰 목록';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
+// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
+
+$search_where = '';
+
+$search_keyword = $_GET['search_keyword'] ?? '';
+
+if($search_keyword){ 
+  $search_where .= " and (coupon_name LIKE '%$search_keyword%')";
+}
 
 // 전체 데이터 개수 조회
 $page_sql = "SELECT COUNT(*) AS count FROM coupons";
@@ -12,35 +20,31 @@ $page_data = $page_result->fetch_assoc();
 $row_num = $page_data['count'];
 
 //페이지네이션
-
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
 // 목록 개수와 시작 번호 설정
 $list = 10;
-$start_num = ($page - 1)*$list;
+$start_num = $page*$list;
 $block_ct = 5;
 $block_num = ceil($page/$block_ct);
 
 $block_start = (($block_num-1)*$block_ct) + 1;
 $block_end = $block_start + $block_ct - 1;
 
-$total_page = ceil($row_num/$list); //총75개 10개씩, 8
+$total_page = ceil($row_num/$list);
 $total_block = ceil($total_page/$block_ct);
 
 if($block_end > $total_page ) $block_end = $total_page;
 
-
-// 현재 페이지에서 데이터 가져오기
-$sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $start_num, $list";
-$result = $mysqli->query($sql);
 ?>
 
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
 <head>
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/css/coupon.css">
+  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css">
 </head>
 
-<form action="search_result.php" class="coupon_serch d-flex align-items-center justify-content-between">
+<form action="" class="coupon_serch d-flex align-items-center justify-content-between" id="search_form">
   <div class="couponlist_view d-flex">
     <button class="Rows"><img src="../img/icon-img/Rows.svg" alt="박스형 리스트"></button>
     <button class="Layout"><img src="../img/icon-img/Layout.svg" alt="목차형 리스트"></button>
@@ -57,7 +61,7 @@ $result = $mysqli->query($sql);
       <option value="2">비활성화</option>
     </select>
     <div class="d-flex align-items-center w-50 justify-content-end gap-3">
-      <input type="text" name="keywords" class="form-control">
+      <input type="text" class="form-control" name="search_keyword" id="search">
       <button type="submit" class="btn btn-primary">검색</button>
     </div>   
  </div>   
@@ -77,7 +81,7 @@ $result = $mysqli->query($sql);
   </thead>
   <tbody>
     <?php 
-    $sql = "SELECT * FROM coupons ORDER BY cid DESC";
+    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $start_num, $list";
     $result = $mysqli->query($sql);
     while($data = $result->fetch_object()){ 
     ?>
@@ -138,9 +142,9 @@ $result = $mysqli->query($sql);
 </nav>
 
   <div class="d-flex gap-3 justify-content-end">
-    <button href="product_up.php" class="btn btn-secondary">복사</button>
-    <button href="coupon_regis.php" class="btn btn-primary">생성</button>
-    <button href="coupon_del.php" class="btn btn-danger ">삭제</button>
+    <button class="btn btn-secondary"><a href="coupon_copy.php">복사</a></button>
+    <button class="btn btn-primary"><a href="coupon_regis.php">생성</a></button>
+    <button class="btn btn-danger"><a href="coupon_del.php">삭제</a></button>
   </div>
 
   <script>
@@ -153,5 +157,5 @@ $result = $mysqli->query($sql);
 </script>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?> 
