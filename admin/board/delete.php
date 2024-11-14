@@ -17,20 +17,20 @@ if ($category === 'all') {
 
 switch ($category) {
     case 'all':
-        $redirect_url = '/admin/board/board_list.php?category=all'; 
+        $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
         break;
     case 'qna':
-        $redirect_url = '/admin/board/board_list.php?category=qna'; 
+        $redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
         break;
     case 'notice':
-        $redirect_url = '/admin/board/board_list.php?category=notice'; 
+        $redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
         break;
     case 'event':
-        $redirect_url = '/admin/board/board_list.php?category=event'; 
+        $redirect_url = '/qc/admin/board/board_list.php?category=event'; 
         break;
     case 'free':
-        $redirect_url = '/admin/board/board_list.php?category=free'; 
-        $un_redirect_url = '/admin/board/board_list.php';
+        $redirect_url = '/qc/admin/board/board_list.php?category=free'; 
+        $un_redirect_url = '/qc/admin/board/board_list.php';
         break;
     default:
         die("침몰");

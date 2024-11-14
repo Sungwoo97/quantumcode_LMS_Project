@@ -24,7 +24,7 @@
     }
 
     // 파일 업로드 경로 설정
-    $save_dir = $_SERVER['DOCUMENT_ROOT'].'/admin/upload/';
+    $save_dir = $_SERVER['DOCUMENT_ROOT'].'/qc/admin/upload/';
     $filename = $file['name']; // insta.jpg
     $ext = pathinfo($filename, PATHINFO_EXTENSION); // 파일 확장자 추출
     $newFileName = date('YmdHis').substr(rand(), 0, 6); // 새로운 파일명 생성
@@ -32,7 +32,7 @@
 
     // 파일 이동
     if(move_uploaded_file($file['tmp_name'], $save_dir.$savefile)) {
-        return '/admin/upload/'.$savefile; // 성공 시 경로 반환
+        return '/qc/admin/upload/'.$savefile; // 성공 시 경로 반환
     } else {
         return false; // 실패 시 false 반환
     }
