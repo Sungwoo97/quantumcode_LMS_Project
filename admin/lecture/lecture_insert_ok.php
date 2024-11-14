@@ -1,6 +1,6 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/common.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
 
 $lecture_title = $_POST['title'];
