@@ -1,17 +1,7 @@
 <?php
-$title = '쿠폰 등록';
+$title = '쿠폰 수정';
 // $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
-
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
-
 ?>
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
@@ -20,9 +10,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 </head>
 
 <div class="container">
-  <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
-  <input type="hidden" id="coupon_description" name="coupon_description" value="">
-  <input type="hidden" name="coupon_img" id="coupon_img" value="">
+  <form action="coupon_edit_ok.php" method="POST" enctype="multipart/form-data">
+  <input type="hidden" name="cid" value="<?= $cid; ?>"> 
   <div class="row coupon">
     <div class="col-4 mb-5">
       <h6>쿠폰 이미지 등록</h6>
@@ -45,7 +34,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_name">쿠폰 이름</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="coupon_name" id="coupon_name" required>
+                <input type=" text" class="form-control" name="coupon_name" id="coupon_name" value="<?= $data->coupon_name; ?>">"required>
               </td>
             </tr>
             <tr scope="row">
