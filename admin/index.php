@@ -1,6 +1,5 @@
 <?php
-
-
+$title = '대시보드';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
