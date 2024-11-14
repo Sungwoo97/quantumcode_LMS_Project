@@ -1,10 +1,15 @@
 <?php
 $title = '게시판 글등록';
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 
 <form action="board_write_ok.php" method="POST">
+  <div class="mb-3">
+    <input class="form-control" accept="image/*" name="image" type="file" id="image">
+    <label for="upfile" class="form-label">추가 이미지</label>
+    <input class="form-control" type="file" name="upfile" id="upfile" multiple="image/*" accept="image/*">
+  </div>
   <select class="form-select" name="category" aria-label="Default select example" required >
     <option value="" selected>카테고리 선택</option>
     <option value="notice">공지사항</option>
@@ -33,5 +38,5 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 </script>
  
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>

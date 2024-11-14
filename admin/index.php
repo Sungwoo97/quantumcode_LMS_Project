@@ -5,7 +5,7 @@
 바로 프로젝트를 실행해서 이렇게 실행됩니다. 
 */
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 <div>
@@ -13,5 +13,5 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
 </div>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?> 
