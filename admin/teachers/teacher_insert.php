@@ -19,7 +19,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
           <img src="" id="coverImg" alt="">
         </div>
         <div class="input-group">
-          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
+          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >
         </div>
         <div class="mt-3">
           <tr>
