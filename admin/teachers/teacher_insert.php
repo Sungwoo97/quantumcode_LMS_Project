@@ -9,9 +9,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 ?>
 
 <div class="container">
-  <Form action="teacher_insert_ok.php" id="teacher_submit" method="POST" enctype="multipart/form-data">
-    <input type="hidden" id="teacher_description" name="teacher_description" value="">
-    <input type="hidden" name="lid" id="lid" value="">
+  <Form action="teacher_insert_ok.php" id="teacher_save" method="POST" enctype="multipart/form-data">
+    <!-- <input type="hidden" id="teacher_description" name="teacher_description" value="">
+    <input type="hidden" name="lid" id="lid" value=""> -->
     <div class="row teacher">
       <div class="col-4 mb-5">
         <h6>강사 이미지 등록</h6>
