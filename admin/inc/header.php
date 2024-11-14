@@ -4,6 +4,7 @@ session_start();
 if (!isset($title)) {
   $title = '';
 }
+isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
 ?>
 
@@ -121,7 +122,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/coupon/couponlist.php">쿠폰 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/coupon/coupon_list.php">쿠폰 목록</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/coupon/coupon_regis.php">쿠폰 등록</a></li>
           </ul>
         </div>

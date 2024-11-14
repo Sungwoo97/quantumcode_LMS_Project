@@ -1,11 +1,19 @@
 body{
   font-weight: 400;
 }
+a{
+  text-decoration: none;
+  color: black;
+}
 .coupon_serch .form-select,
 .coupon_serch .form-control{
   font-size: 1rem;
   height: 40px;
   font-weight: 500;
+}
+.couponlist tbody tr td:first-child input{
+  width: 18px;
+  height: 18px;
 }
 .couponlist .form-check-input {
   width: 30px;
@@ -18,6 +26,14 @@ body{
 .coupon_serch .form-control{
   width: 300px;
 }
+.couponlist_view .Rows,
+.couponlist_view .Layout{
+  border: none;
+  width: 32px;
+  height: 32px;
+  background: none;
+}
+
 .coupon_serch button{
   width: 80px;
 }
