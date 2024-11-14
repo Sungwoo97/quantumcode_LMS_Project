@@ -1,7 +1,7 @@
 body{
   font-weight: 400;
 }
-a{
+table a{
   text-decoration: none;
   color: black;
 }
@@ -33,7 +33,10 @@ a{
   height: 32px;
   background: none;
 }
-
+.btn a{
+  text-decoration: none;
+  color: white;
+}
 .coupon_serch button{
   width: 80px;
 }
