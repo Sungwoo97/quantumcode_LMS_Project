@@ -1,53 +1,31 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 $category = $_POST['category'];
-$idx = $_POST['idx'];
-$title = $_POST['title'];
+$pid = $_POST['pid'];
+$title1 = $_POST['title'];
 $content = $_POST['content'];
 
-$table = '';
-$pid_column = '';  // 각 카테고리에 맞는 ID 컬럼명 추가
-$title_column = ''; // 제목 컬럼
-$user_id_column = '';  // 글쓴이 컬럼
-$content_column = '';  // 컨텐츠 컬럼
 switch ($category) {
+    case 'all':
+        $redirect_url = "/qc/admin/board/read.php?pid=".$pid."&category=all";
+        break;
     case 'qna':
-        $table = 'board_qna';
-        $pid_column = 'qb_pid';
-        $title_column = 'qb_title';
-        $user_id_column = 'qb_user_id';
-        $content_column = 'qb_content';
-        $redirect_url = '/admin/board/qna_list.php'; 
+        $redirect_url = '/qc/admin/board/read.php?pid='.$pid.'&category=qna'; 
         break;
     case 'notice':
-        $table = 'board_notice';
-        $pid_column = 'nb_pid';
-        $title_column = 'nb_title'; 
-        $user_id_column = 'nb_user_id'; 
-        $content_column = 'nb_content';
-        $redirect_url = '/admin/board/notice_list.php';
+        $redirect_url = '/qc/admin/board/read.php?pid='.$pid.'&category=notice'; 
         break;
     case 'event':
-        $table = 'board_event';
-        $pid_column = 'eb_pid';
-        $title_column = 'eb_title'; 
-        $user_id_column = 'eb_user_id';  
-        $content_column = 'eb_content';
-        $redirect_url = '/admin/board/event_list.php';
+        $redirect_url = '/qc/admin/board/read.php?pid='.$pid.'&category=event'; 
         break;
     case 'free':
-        $table = 'board_free';
-        $pid_column = 'fb_pid';
-        $title_column = 'fb_title'; 
-        $user_id_column = 'fb_user_id'; 
-        $content_column = 'fb_content';
-        $redirect_url = '/admin/board/free_list.php';
+        $redirect_url = '/qc/admin/board/read.php?pid='.$pid.'&category=free'; 
         break;
     default:
         die("유효하지 않은 카테고리입니다.");
 }
 
-$sql = "UPDATE $table SET $title_column='$title',$content_column='$content' WHERE $pid_column= $idx";
+$sql = "UPDATE board SET title='$title1',content='$content' WHERE pid= $pid";
 $result = $mysqli->query($sql);
 if($result){
   echo "<script>

@@ -1,6 +1,6 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $userid = $_POST['userid'];
 $userpw = $_POST['userpw'];

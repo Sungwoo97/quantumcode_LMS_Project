@@ -1,131 +1,83 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+$title ='글 상세보기';
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
-$category = $_GET['category'];
-$idx = $_GET['idx']; 
+$category = isset($_GET['category']) ? $_GET['category'] : 'all';
+$pid = $_GET['pid']; 
 
-
-
-// 카테고리에 맞는 테이블과 컬럼 설정
-$table = '';
-$pid_column = '';  // 각 카테고리에 맞는 ID 컬럼명 추가
-$title_column = ''; // 제목 컬럼
-$user_id_column = '';  // 글쓴이 컬럼
-$like_column = '';  // 추천수 컬럼
-$hit_column = '';  // 조회수 컬럼
-$date_column = '';  // 등록일자 컬럼
-$content_column = '';  // 컨텐츠 컬럼
-switch ($category) {
-    case 'qna':
-        $table = 'board_qna';
-        $pid_column = 'qb_pid';
-        $title_column = 'qb_title';
-        $user_id_column = 'qb_user_id';
-        $like_column = 'qb_like';
-        $hit_column = 'qb_hit'; 
-        $date_column = 'qb_date'; 
-        $content_column = 'qb_content';
-        $redirect_url = '/admin/board/qna_list.php'; 
-        break;
-    case 'notice':
-        $table = 'board_notice';
-        $pid_column = 'nb_pid';
-        $title_column = 'nb_title'; 
-        $user_id_column = 'nb_user_id'; 
-        $like_column = 'nb_like'; 
-        $hit_column = 'nb_hit'; 
-        $date_column = 'nb_date'; 
-        $content_column = 'nb_content';
-        $redirect_url = '/admin/board/notice_list.php';
-        break;
-    case 'event':
-        $table = 'board_event';
-        $pid_column = 'eb_pid';
-        $title_column = 'eb_title'; 
-        $user_id_column = 'eb_user_id';  
-        $like_column = 'eb_like'; 
-        $hit_column = 'eb_hit'; 
-        $date_column = 'eb_date';  
-        $content_column = 'eb_content';
-        $redirect_url = '/admin/board/event_list.php';
-        break;
-    case 'free':
-        $table = 'board_free';
-        $pid_column = 'fb_pid';
-        $title_column = 'fb_title'; 
-        $user_id_column = 'fb_user_id'; 
-        $like_column = 'fb_like';  
-        $hit_column = 'fb_hit'; 
-        $date_column = 'fb_date';  
-        $content_column = 'fb_content';
-        $redirect_url = '/admin/board/free_list.php';
-        break;
-    default:
-        die("유효하지 않은 카테고리입니다.");
+if(!isset($_SESSION['hits'])){
+  $_SESSION['hits'] =[];
 }
 
-$sql = "SELECT $title_column,$user_id_column,$like_column,$hit_column,$date_column,$content_column FROM $table WHERE $pid_column = $idx";
+if(!isset($_SESSION['hits'][$pid])){
+  $hit_sql = "UPDATE board SET hit = hit+1 WHERE pid=$pid";
+  $hit_result = $mysqli->query($hit_sql);
+
+  $_SESSION['hits'][$pid] = true;
+};
+
+
+
+
+
+ 
+if ($category === 'all') {
+  $sql = "SELECT title, name, likes, hit, content, date FROM board WHERE pid = $pid";
+} else {
+  // 카테고리가 'all'이 아닌 경우, 카테고리 조건을 추가하여 쿼리 실행
+  $sql = "SELECT title, name, likes, hit, content, date FROM board WHERE pid = $pid AND category = '$category'";
+}
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-$title = $data->{$title_column};
-$user_id = $data->{$user_id_column};
-$like = $data->{$like_column};
-$hit = $data->{$hit_column}+1;
-$content = $data->{$content_column};
-$date = $data->{$date_column};
+switch ($category) {
+  case 'all':
+      $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
+      break;
+  case 'qna':
+      $redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
+      break;
+  case 'notice':
+      $redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
+      break;
+  case 'event':
+      $redirect_url = '/qc/admin/board/board_list.php?category=event'; 
+      break;
+  case 'free':
+      $redirect_url = '/qc/admin/board/board_list.php?category=free'; 
+      break;
+  default:
+      die("유효하지 않은 카테고리입니다.");
+}
 
-$hitSql = "UPDATE $table SET $hit_column=$hit WHERE $pid_column = $idx";
-$mysqli->query($hitSql);
+
 
 ?>
 
-<h1>게시물 상세보기</h1>
+
+
+
+
 <div class="d-flex justify-content-between">
-  <h2>제목:<?=$title?></h2>
-  <span>글쓴이:<?=$user_id?> <span id="like-count">추천수:<?=$like?></span> 조회수:<?=$hit?> 등록일자:<?=$date?></span>
+  <h2>제목:<?=$data->title?></h2>
+  <span>글쓴이:<?=$data->name?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$data->date?></span>
 </div>
 
 
 <div>
-내용:<?=$content?>
+내용:<?=$data->content?>
 </div>
 
 <div class="d-flex justify-content-end">
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
-    <button id="likeCount" class="btn btn-info">추천</button>
-    <a href="board_modify.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-primary">수정</a>
-    <a href="delete.php?idx=<?=$idx?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
+    <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
+    <a href="delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
 
-<script>
-  document.querySelector('#likeCount').addEventListener('click', function(event) {
-    event.preventDefault();  // 페이지 이동 방지
 
-    let category = '<?=$category?>';  // 카테고리 값
-    let idx = '<?=$idx?>';  // 게시물 ID 값
-
-    // AJAX 요청
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'like_up.php?category=' + category + '&idx=' + idx, true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        let response = JSON.parse(xhr.responseText);
-        
-        // 서버에서 성공 응답이 오면 추천수 업데이트
-        if (response.status == 'success') {
-          document.querySelector('#like-count').innerHTML = '추천수:' + response.likes;
-          alert('추천 완료');
-        } else {
-          alert(response.message);
-        }
-      }
-    };
-    xhr.send();
-  });
-</script>
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>

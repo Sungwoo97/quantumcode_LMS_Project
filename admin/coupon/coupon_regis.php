@@ -12,6 +12,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 //   ";
 // }
 
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
@@ -112,5 +113,5 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
   
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?> 

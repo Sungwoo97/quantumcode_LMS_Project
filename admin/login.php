@@ -1,9 +1,5 @@
 <?php
-session_start();
-// print_r($_SESSION); Array ( [AUID] => admin [AUNAME] => 관리자 [AULEVEL] => 100 ) 
-
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
-
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 <!DOCTYPE html>
@@ -57,11 +53,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
   </div>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-
-  
-</body>
-
-</html>
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
+?>
