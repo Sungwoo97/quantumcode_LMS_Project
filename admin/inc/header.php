@@ -4,7 +4,7 @@ session_start();
 if (!isset($title)) {
   $title = '';
 }
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 ?>
 
 <!DOCTYPE html>
