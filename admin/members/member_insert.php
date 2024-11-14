@@ -9,7 +9,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 ?>
 
 <div class="container">
-  <Form action="member_insert_ok.php" id="member_submit" method="POST" enctype="multipart/form-data">
+  <Form action="member_insert_ok.php" id="member_save" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="member_description" name="member_description" value="">
     <input type="hidden" name="lid" id="lid" value="">
     <div class="row member">
