@@ -1,6 +1,6 @@
 <?php
 $title = "게시판 수정";
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $category = $_GET['category'];
 $pid = $_GET['pid']; 
@@ -66,5 +66,5 @@ switch ($category) {
 
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>

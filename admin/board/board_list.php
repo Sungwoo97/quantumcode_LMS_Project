@@ -1,6 +1,6 @@
 <?php
 $title = '전체 게시판';
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
@@ -113,5 +113,5 @@ $result = $mysqli->query($sql);
 </script>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>

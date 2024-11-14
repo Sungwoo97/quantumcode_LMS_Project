@@ -2,7 +2,7 @@
 // session_start(); 이 부분은 추후 수정예정.
 session_start();
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $userid = $_POST['userid'];
 $userpw = $_POST['userpw'];

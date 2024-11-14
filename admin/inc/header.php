@@ -7,7 +7,7 @@
 session_start();
 // print_r($_SESSION); Array ( [AUID] => admin [AUNAME] => 관리자 [AULEVEL] => 100 ) 
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 ?>
 

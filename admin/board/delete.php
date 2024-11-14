@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 
 // GET 데이터 수신
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';

@@ -1,6 +1,6 @@
 <?php
 $title ='글 상세보기';
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = $_GET['pid']; 
@@ -32,19 +32,19 @@ $data = $result->fetch_object();
 
 switch ($category) {
   case 'all':
-      $redirect_url = '/admin/board/board_list.php?category=all'; 
+      $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
       break;
   case 'qna':
-      $redirect_url = '/admin/board/board_list.php?category=qna'; 
+      $redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
       break;
   case 'notice':
-      $redirect_url = '/admin/board/board_list.php?category=notice'; 
+      $redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
       break;
   case 'event':
-      $redirect_url = '/admin/board/board_list.php?category=event'; 
+      $redirect_url = '/qc/admin/board/board_list.php?category=event'; 
       break;
   case 'free':
-      $redirect_url = '/admin/board/board_list.php?category=free'; 
+      $redirect_url = '/qc/admin/board/board_list.php?category=free'; 
       break;
   default:
       die("유효하지 않은 카테고리입니다.");
@@ -79,5 +79,5 @@ switch ($category) {
 
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>
