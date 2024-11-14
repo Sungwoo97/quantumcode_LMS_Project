@@ -7,8 +7,6 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 <form action="board_write_ok.php" method="POST">
   <div class="mb-3">
     <input class="form-control" accept="image/*" name="image" type="file" id="image">
-    <label for="upfile" class="form-label">추가 이미지</label>
-    <input class="form-control" type="file" name="upfile" id="upfile" multiple="image/*" accept="image/*">
   </div>
   <select class="form-select" name="category" aria-label="Default select example" required >
     <option value="" selected>카테고리 선택</option>
@@ -35,6 +33,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   document.getElementById('cancle').addEventListener('click', function() {
     window.history.back();  // 이전 페이지로 돌아가기
   });
+
+  $('#addImage')
+
 </script>
  
 <?php
