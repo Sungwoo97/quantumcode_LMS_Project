@@ -1,9 +1,9 @@
 <?php
 $title = '강의 등록';
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 if ($result = $mysqli->query($sql)) {
@@ -308,5 +308,5 @@ if ($result = $mysqli->query($sql)) {
   });
 </script>
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
 ?>

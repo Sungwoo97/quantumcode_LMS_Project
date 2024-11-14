@@ -1,12 +1,17 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
+$title = '게시판 글등록';
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
-<h1>게시판 글등록</h1>
 
 <form action="board_write_ok.php" method="POST">
+  <div class="mb-3">
+    <input class="form-control" accept="image/*" name="image" type="file" id="image">
+    <label for="upfile" class="form-label">추가 이미지</label>
+    <input class="form-control" type="file" name="upfile" id="upfile" multiple="image/*" accept="image/*">
+  </div>
   <select class="form-select" name="category" aria-label="Default select example" required >
-    <option selected>카테고리 선택</option>
+    <option value="" selected>카테고리 선택</option>
     <option value="notice">공지사항</option>
     <option value="free">자유게시판</option>
     <option value="event">이벤트</option>
@@ -21,13 +26,17 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/header.php');
     <textarea class="form-control" id="content" name="content" rows="3" value="" required></textarea>
   </div>
   <div class="d-flex justify-content-end">
-    <button class="btn btn-primary">등록</button>
-    <button class="btn btn-danger">취소</button>
+    <button type="submit" class="btn btn-primary">등록</button>
+    <button id="cancle" class="btn btn-danger">취소</button>
   </div  d-flex justify-content-end>
 </form>
-
-
-
+<script>
+  // 취소 버튼 클릭 시 이전 페이지로 돌아가기
+  document.getElementById('cancle').addEventListener('click', function() {
+    window.history.back();  // 이전 페이지로 돌아가기
+  });
+</script>
+ 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?>
