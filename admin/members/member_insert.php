@@ -144,7 +144,7 @@ function addCover(file, cover) {
   }
   addCover($('#cover_image'), $('#coverImg'));
 
-
+  //비밀번호 검증
   function validatePassword() {
     const password = document.getElementById('password').value;
     const passwordCheck = document.getElementById('passwordCheck').value;
