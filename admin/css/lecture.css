@@ -1,10 +1,14 @@
-.lecture_coverImg, .lecture_prVideo, .lecture_video { 
+.lecture_coverImg,
+.lecture_prVideo,
+.lecture_video {
   width: 100%;
   height: 220px;
   background: #ebebeb;
 }
 
-.lecture_coverImg img, .lecture_prVideo video, .lecture_video video {
+.lecture_coverImg img,
+.lecture_prVideo video,
+.lecture_video video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -15,12 +19,17 @@
   margin-bottom: .5rem;
 } */
 
-.twoculumn_table{
-  display: flex !important; 
+.twoculumn_table {
+  display: flex !important;
   align-items: center !important;
 }
 
-tbody, td, tfoot, th, thead, tr{
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
   border: none;
 }
 
@@ -29,22 +38,26 @@ table tr td span {
 }
 
 table tr td {
-  padding: 0.5rem !important;  
+  padding: 0.5rem !important;
 }
 
- textarea#sub_title{
+textarea#sub_title {
   height: 300px;
 }
 
-textarea#objectives, textarea#tag{
+textarea#objectives,
+textarea#tag {
   height: 150px;
 }
 
-.lecture h3, .lecture h4, .lecture h5, .lecture h6{
+.lecture h3,
+.lecture h4,
+.lecture h5,
+.lecture h6 {
   font-weight: 600;
 }
 
-.lecture input{
+.lecture input {
   z-index: 0;
 }
 .lecture_prVideo {
@@ -52,7 +65,7 @@ textarea#objectives, textarea#tag{
   z-index: 0;
 }
 
-#prVideo_type{
+#prVideo_type {
   position: absolute;
   bottom: 0;
 }
