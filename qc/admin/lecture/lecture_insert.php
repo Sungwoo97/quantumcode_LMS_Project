@@ -5,6 +5,8 @@ $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$uid = $_SESSION['AUID'];
+
 $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 if ($result = $mysqli->query($sql)) {
   $data = $result->fetch_object();
@@ -36,6 +38,12 @@ if ($result = $mysqli->query($sql)) {
             </tr>
           </thead>
           <tbody>
+            <tr scope="row">
+              <th scope="row" class="insert_name">강의명</th>
+              <td colspan="3">
+                <input type="text" class="form-control" name="userid" id="userid" value="<?= $uid ?>" disabled>
+              </td>
+            </tr>
             <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
