@@ -1,5 +1,4 @@
 <?php
-// session_start(); 이 부분은 추후 수정예정.
 session_start();
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
@@ -30,7 +29,6 @@ if($data){
     history.back();
   </script>";
 }
-
 
 
 ?>
