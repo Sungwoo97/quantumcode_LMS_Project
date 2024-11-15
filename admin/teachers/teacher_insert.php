@@ -115,7 +115,29 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 </div>
 
 <script>
+//보이게 만들기
+function addCover(file, cover) {
+    let coverImage = file;
+    coverImage.on('change', (e) => {
+      let file = e.target.files[0];
+      let target = cover;
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
+          let attachment = e.target.result;
+          console.log(attachment);
+          if (attachment) {
+            target.attr('src', attachment);
+          }
+        }
+        reader.readAsDataURL(file);
+      } else {
+        target.attr('src', '');
+      }
+    });
+  }
 
+  addCover($('#cover_image'), $('#coverImg'));
   
 </script>
 
