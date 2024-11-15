@@ -5,7 +5,7 @@ table a{
   text-decoration: none;
   color: black;
 }
-.coupon_serch .form-select,
+.form-select,
 .coupon_serch .form-control{
   font-size: 1rem;
   height: 40px;
@@ -23,8 +23,11 @@ table a{
 .couponlist .form-check-input:checked {
   background-size: 14px 14px;
 }
-.coupon_serch .form-control{
-  width: 300px;
+.form-select{
+  width: 30%;
+}
+.form-control{
+  width: 100%;
 }
 .couponlist_view .Rows,
 .couponlist_view .Layout{
@@ -68,11 +71,24 @@ table a{
 .coupon tr{
   border: none;
 }
-
 .insert_explanation input{
   height: 80px;
 }
 
-.coupon table tr td span {
-  margin-right: 120px;
+/* VIEW - 상세보기 */
+.view .row{
+  margin: 0;
+}
+.coupon_view_imgbox{
+  background: #F8F9FA;
+}
+.coupon_view_table {
+  margin-left: 5%;
+}
+.coupon_view_table th {
+  width: 100px;
+  white-space: nowrap;
+}
+.coupon_view_table td {
+  width: 40%;
 }
