@@ -1,12 +1,19 @@
 <?php
 $title = '쿠폰 수정';
 // $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+
+$cid = $_GET['cid'];
+
+$sql = "SELECT * FROM coupons WHERE cid = $cid";
+$result = $mysqli->query($sql);
+$data = $result->fetch_object();
+
 ?>
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
 <head>
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/css/coupon.css">
+  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css">
 </head>
 
 <div class="container">
@@ -34,13 +41,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_name">쿠폰 이름</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="coupon_name" id="coupon_name" value="<?= $data->coupon_name; ?>">"required>
+                <input type=" text" class="form-control" name="coupon_name" id="coupon_name" value="<?= $data->coupon_name; ?>" required>
               </td>
             </tr>
             <tr scope="row">
               <th scope="row" class="insert_name">쿠폰 설명</th>
               <td colspan="3">
-              <textarea class="form-control" name="coupon_content" id="coupon_content" rows="2"></textarea>
+              <textarea class="form-control" name="coupon_content" id="coupon_content" rows="2"><?= $data->coupon_content; ?></textarea>
             </tr>
             <tr>
               <th scope="row">할인구분</th>
@@ -91,7 +98,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
           </tbody>
         </table>
       </div>
-    </div>
+  </div>
     <div class="gap-3 mt-50 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">등록</button>
       <button a href="coupon_list.php" class="btn btn-danger">취소</button>
@@ -101,5 +108,5 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
   
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
 ?> 

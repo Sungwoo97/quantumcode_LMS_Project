@@ -41,7 +41,7 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
 <head>
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css">
+<link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css?v=<?= time(); ?>">
 </head>
 
 <form action="" class="coupon_serch d-flex align-items-center justify-content-between" id="search_form">
@@ -60,7 +60,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       <option value="1" >활성화</option>
       <option value="2">비활성화</option>
     </select>
-    <div class="d-flex align-items-center w-50 justify-content-end gap-3">
+    <div class="d-flex justify-content-end gap-3">
       <input type="text" class="form-control" name="search_keyword" id="search">
       <button type="submit" class="btn btn-primary">검색</button>
     </div>   
@@ -94,7 +94,7 @@ if($block_end > $total_page ) $block_end = $total_page;
         <?= $data->cid; ?>
       </th>
       <td>
-        <a href="coupon_view.php?pid=<?= $data->cid; ?>"><?= $data->coupon_name ?></a>
+        <a href="coupon_view.php?cid=<?= $data->cid; ?>"><?= $data->coupon_name ?></a>
       </td>
       <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "할인 없음") ?></td>
       <td><?= $data->	startdate.'~'.$data->	enddate; ?> </td>
@@ -105,8 +105,8 @@ if($block_end > $total_page ) $block_end = $total_page;
       </div>
       </td>
       <td class="icon_hover d-flex gap-1 justify-content-center">
-        <a href="coupon_.php?pid=<?= $data->cid; ?>"><img src="../img/icon-img/Edit.svg" alt="" style="width: 20px;"></a>
-        <a href="coupon_del.php?pid=<?= $data->cid; ?>"><img src="../img/icon-img/Trash.svg" alt="" style="width: 20px;"></a>
+        <a href="coupon_edit.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Edit.svg" alt="" style="width: 20px;"></a>
+        <a href="coupon_del.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Trash.svg" alt="" style="width: 20px;"></a>
       </td>
       <?php
       }

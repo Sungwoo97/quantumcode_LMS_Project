@@ -16,7 +16,7 @@ if (!isset($cid)) {
   location.href = 'coupon_list.php';</script>";
 }
 
-//products 테이블에서 pid 컬럼이 $pid와 같은 데이터 삭제, 썸네일 삭제
+//products 테이블에서 cid 컬럼이 $cid와 같은 데이터 삭제, 썸네일 삭제
 $coupon_image_sql = "SELECT coupon_image FROM coupons WHERE cid = $cid";
 $coupon_result = $mysqli->query($coupon_image_sql);
 $coupon_data = $coupon_result->fetch_object();
