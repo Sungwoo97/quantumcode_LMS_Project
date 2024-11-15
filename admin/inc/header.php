@@ -1,6 +1,6 @@
 <?php
 session_start();
-// print_r($_SESSION); Array ( [AUID] => admin [AUNAME] => 관리자 [AULEVEL] => 100 ) 
+// print_r($_SESSION); 
 if (!isset($title)) {
   $title = '';
 }
@@ -147,11 +147,25 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       </div>
     </div>
 
+    <?php
+      if(!isset($_SESSION['AUID'])){
+    ?>
     <div class="admin_account d-flex gap-3 align-items-center">
-      <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
-      <p class="tt_02">Admin</p>
+      <p class="tt_02">로그인 이전입니다.</p>
     </div>
+
+    <?php
+      } else{
+    ?>
+    <div class="admin_account d-flex gap-3 align-items-center">
+      <p class="tt_02"><?= $_SESSION['AUID'] ?>의 페이지입니다.</p>
+      <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
+    </div>
+    <?php
+      } 
+    ?>
   </nav>
+  
 
   <div class="nav_header">
     <h2 class="main_tt"> <?= $title ?></h2>
