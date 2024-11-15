@@ -152,6 +152,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     ?>
     <div class="admin_account d-flex gap-3 align-items-center">
       <p class="tt_02">로그인 이전입니다.</p>
+      <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/login.php">로그인</a>
     </div>
 
     <?php
