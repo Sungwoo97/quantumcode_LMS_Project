@@ -2,9 +2,9 @@
 // DB 연결 설정 (dbcon.php를 포함하고 있으면 연결이 되어 있을 것입니다)
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
-// POST 데이터 받기
-$name = $_POST['name'] ?? ''; //id, email, number
-$value = $_POST['value'] ?? ''; //입력한 값
+// POST 데이터 받기...아마 이 부분 에러인거 같은데 gpt는 이게 맞다고 함...
+$name = $_POST['name'] ?? '';
+$value = $_POST['value'] ?? ''; 
 
 // 반환할 결과 초기화
 //$return_data = array("result" => 0);  중복이 없으면 result = 0
