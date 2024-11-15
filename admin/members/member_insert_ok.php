@@ -6,7 +6,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 $name = $_POST['name'] ?? '';
 $id = $_POST['id'] ?? '';
 $birth = $_POST['birth'] ?? '';
-$password = $_POST['password'] ?? '';
+$password = hash('sha512',$userpw);
 $email = $_POST['email'] ?? '';
 $number = $_POST['number'] ?? '';
 $reg_date = $_POST['reg_date'] ?? '';
