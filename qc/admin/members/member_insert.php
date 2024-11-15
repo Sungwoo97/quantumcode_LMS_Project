@@ -36,6 +36,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               </div>
             </td>
           </tr>
+          <p class="mt-3">회원 등급은 강의 결제 수수료에 큰 영향을 미칩니다.</p>
         </div>
       </div>
       <div class="col-8 mb-3">
@@ -65,7 +66,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <th scope="row" class="insert_birth">생년월일</th>
               <td colspan="3">
                 <input type="text" class="form-control" name="birth" id="birth" placeholder="생년월일을 숫자로 6자리 입력해주세요.(ex.901010)" required>
-                <span id="error-message" style="color: red; display: none;">6자리 숫자만 입력 가능합니다.</span>
+                <span id="error-message" style="color: red; display: none;">8자리 숫자만 입력 가능합니다.</span>
               </td>
             </tr>
             <tr scope="row">
@@ -171,7 +172,7 @@ function addCover(file, cover) {
     const errorMessage = document.getElementById("error-message");
     
     // 숫자로만 구성된 6자리인지 검사
-    if (!/^\d{6}$/.test(birthInput)) {
+    if (!/^\d{8}$/.test(birthInput)) {
       errorMessage.style.display = "inline";
       this.style.borderColor = "red"; // 경고 시 입력창 테두리 색상 변경
     } else {

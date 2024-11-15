@@ -11,7 +11,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
       <h2>관리자 로그인!</h2>
       <form action="login_ok.php" method="POST">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="userid" name="userid" placeholder="User ID">
+            <input type="text" class="form-control" id="userid" name="userid" placeholder="administrator ID">
             <label for="userid">User ID</label>
           </div>
           <div class="form-floating">
@@ -21,20 +21,20 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
           <button class="btn btn-primary mt-3">로그인</button>
         </form>
     </div>
-    <!-- <div class="col-md-6">
+    <div class="col-md-6">
       <h2>강사 로그인</h2>
-      <form action="login_ok.php" method="POST">
+      <form action="login_ok_teacher.php" method="POST">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="userid" name="userid" placeholder="User ID">
-            <label for="userid">User ID</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="teacher ID">
+            <label for="id">teacher ID</label>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="userpw" name="userpw" placeholder="Password">
-            <label for="userpw">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+            <label for="password">Password</label>
           </div>
           <button class="btn btn-primary mt-3">로그인</button>
         </form>
-    </div> -->
+    </div>
   </div>
   
 </div>
