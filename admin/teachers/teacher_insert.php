@@ -77,7 +77,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <td colspan="3">
                 <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해주세요(영어숫자 합 최대20자)" required maxlength="20">
                 <div id="idError" class="mt-2" style="color: red;"></div> <!-- 에러 메시지 위치 -->
-                <button type="button" id="idcheck" class="btn btn-secondary btn-sm">중복체크</button>
+                <button type="button" id="idCheck" class="btn btn-secondary btn-sm">중복체크</button>
               </td>
             </tr>
             <tr scope="row">
@@ -104,7 +104,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <th scope="row" class="insert_email">이메일</th>
               <td colspan="3">
                 <input type="text" class="form-control" name="email" id="email" placeholder="이메일을 입력해주세요" required>
-                <span id="email-error" style="color: red; display: none;">올바른 이메일이 아닙니다.</span>
+                <span id="email-error" style="color: red; display: none;">올바른 이메일 형식이 아닙니다.</span>
+                <button type="button" id="emailCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
+
               </td>
             </tr>
             <tr scope="row">
@@ -112,6 +114,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <td colspan="3">
                 <input type="text" class="form-control" name="number" id="number" placeholder="전화번호를 입력해주세요" required>
                 <span id="number-error" style="color: red; display: none;">올바른 전화번호 형식이 아닙니다. 숫자 최대 15자리로 입력해주세요.</span>
+                <button type="button" id="numberCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
+
               </td>
             </tr>
             <tr>
@@ -200,9 +204,24 @@ function addCover(file, cover) {
     }
   });
 
+  //이름이름
+  document.getElementById('name').addEventListener('input', validateName);
+  function validateName() {
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('nameError');
+    const nameValue = nameInput.value;
+    // 한글만 포함되어 있는지, 최대 10자 이내인지 확인하는 정규 표현식
+    const namePattern = /^[가-힣]{1,10}$/;
 
-   // 아이디 검증 함수
-   document.getElementById('id').addEventListener('input', validateId);
+    if (!namePattern.test(nameValue)) {
+      nameError.textContent = "이름은 한글로만 최대 10자까지 입력 가능합니다.";
+    } else {
+      nameError.textContent = ""; // 조건 만족 시 오류 메시지 지우기
+    }
+  }
+
+  // 아이디 검증 함수
+  document.getElementById('id').addEventListener('input', validateId);
    function validateId() {
     const idInput = document.getElementById('id');
     const idError = document.getElementById('idError');
@@ -218,41 +237,27 @@ function addCover(file, cover) {
     }
   }
 
-  // 아이디 입력 필드에 이벤트 리스너 추가
-  // document.getElementById('id').addEventListener('input', validateId);
-
-
-  //이름이름
-  document.getElementById('name').addEventListener('input', validateName);
-  function validateName() {
-    const nameInput = document.getElementById('name');
-    const nameError = document.getElementById('nameError');
-    const nameValue = nameInput.value;
-
-    // 한글만 포함되어 있는지, 최대 10자 이내인지 확인하는 정규 표현식
-    const namePattern = /^[가-힣]{1,10}$/;
-
-    if (!namePattern.test(nameValue)) {
-      nameError.textContent = "이름은 한글로만 최대 10자까지 입력 가능합니다.";
-    } else {
-      nameError.textContent = ""; // 조건 만족 시 오류 메시지 지우기
-    }
-  }
-
   //전화번호
-  document.getElementById("number").addEventListener("blur", function() {
-    const numberInput = this.value;
-    const errorMessage = document.getElementById("number-error");
-    
-    // 숫자로만 구성된 1~15자리인지 검사
-    if (!/^\d{1,15}$/.test(numberInput)) {
-      errorMessage.style.display = "inline";
-      this.style.borderColor = "red"; // 경고 시 입력창 테두리 색상 변경
-    } else {
-      errorMessage.style.display = "none";
-      this.style.borderColor = ""; // 유효한 경우 테두리 색상 초기화
-    }
-  });
+  document.getElementById('number').addEventListener('input', validateNumber);
+
+  function validateNumber() {
+  const numberInput = document.getElementById('number');
+  const numberError = document.getElementById('number-error');
+  const numberValue = numberInput.value;
+
+  // 숫자로만 구성된 1~15자리인지 확인하는 정규 표현식
+  const numberPattern = /^\d{1,15}$/;
+
+  if (!numberPattern.test(numberValue)) {
+    numberError.textContent = "전화번호는 숫자로만 최대 15자리까지 입력 가능합니다.";
+    numberError.style.display = "block"; // 오류 메시지 표시
+    numberInput.style.borderColor = "red"; // 경고 시 입력창 테두리 색상 변경
+  } else {
+    numberError.textContent = ""; // 조건 만족 시 오류 메시지 지우기
+    numberError.style.display = "none"; // 오류 메시지 숨김
+    numberInput.style.borderColor = ""; // 유효한 경우 테두리 색상 초기화
+  }
+}
 
   //이메일 형식
   document.getElementById("email").addEventListener("blur", function() {
@@ -263,7 +268,7 @@ function addCover(file, cover) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
     if (!emailPattern.test(emailInput)) {
-      errorMessage.style.display = "inline";
+      errorMessage.style.display = "block";
       this.style.borderColor = "red"; // 경고 시 입력창 테두리 색상 변경
     } else {
       errorMessage.style.display = "none";
@@ -271,26 +276,55 @@ function addCover(file, cover) {
     }
   });
 
+
+
+
+
+
   //아이디 중복 체크
   let idChecked = false;
+  let emailChecked = false;
+  let numberChecked = false;
 
-  $('#idcheck').click(function(){
-    let id = $('#id').val();
-    if(id == ''){
+  $('#idCheck').click(function(){
+    let value = $('#id').val();
+    if(value == ''){
       alert('아이디를 입력해주세요');
       $('#id').focus();
     } else{
-      idCheck_func(id);
+      Check_func('id', value);
+      console.log('보내지는 것도됌')
     }
   });
 
-  function idCheck_func(id){
+  $('#emailCheck').click(function(){
+    let value = $('#email').val();
+    if(value == ''){
+      alert('email을 입력해주세요 111 ');
+      $('#email').focus();
+    } else{
+      Check_func('email', value);
+    }
+  });
+
+  $('#numberCheck').click(function(){
+    let value = $('#number').val();
+    if(value == ''){
+      alert('전화번호를 입력해주세요 111');
+      $('#number').focus();
+    } else{
+      Check_func('number', value);
+    }
+  });
+
+  function Check_func(name, value){
     let data = {
-      id:id
+      name:name,
+      value:value
     }
     $.ajax({
       async:false,      
-      url:'idCheck_func.php',
+      url:'Check_func.php',
       data:data,
       type:'post',
       dataType:'json',
@@ -298,14 +332,15 @@ function addCover(file, cover) {
         //연결실패시 할일
         alert('서버 연결에 실패했습니다')
       },
-      success:function(returned_data){
+      success:function(response){
+        console.log(response);
         //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
-        if(Number(returned_data.cnt) > 0){
-          alert('아이디 또는 이메일이 중복됩니다, 다시 시도해주세요.');
-          $('#id').focus();
-          return false;
-            }else{
-            alert('사용할 수 있는 아이디 입니다.');
+
+
+          if(Number(response) > 0){
+            alert('중복됩니다, 다시 시도해주세요.');
+          }else{
+            alert('사용할 수 있습니다.');
             idChecked = true
           }
         }
