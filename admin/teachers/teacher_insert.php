@@ -134,7 +134,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       </div>
     </div>
     <div class="mt-3 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">등록</button>
+      <button class="btn btn-primary">등록</button>
     </div>
   </Form>
 </div>
@@ -274,51 +274,55 @@ function addCover(file, cover) {
   //아이디 중복 체크
   let idChecked = false;
 
-    $('#idcheck').click(function(){
-      let id = $('#id').val();
-      if(id == ''){
-        alert('아이디를 입력해주세요');
-        $('#id').focus();
-      } else{
-        idCheck_func(id);
-      }
-    });
-
-    function idCheck_func(id){
-
-      let data = {
-        id:id
-      }
-      $.ajax({
-        async:false,       
-        url:'teacher_insert_ok.php',
-        data:data, 
-        type:'post', 
-        dataType:'json', 
-        error:function(){
-          //연결실패시 할일
-        },
-        success:function(returned_data){
-          //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
-          if(returned_data.result == 'ok'){
-            alert('사용할 수 있는 아이디입니다.');
-            idChecked = true;
-            $('#id').attr('readonly','readonly');
-            return;
-          } else if(returned_data.result == 'error'){
-            alert('중복되는 아이디입니다.');
-            return;
-          } 
-        }
-      })
+  $('#idcheck').click(function(){
+    let id = $('#id').val();
+    if(id == ''){
+      alert('아이디를 입력해주세요');
+      $('#id').focus();
+    } else{
+      idCheck_func(id);
     }
+  });
 
-    $('#teacher_save').submit(function(e){
-      if (!idChecked) {
-        e.preventDefault();
-        alert('아이디 중복체크를 해주세요');
+  function idCheck_func(id){
+    let data = {
+      id:id
+    }
+    $.ajax({
+      async:false,      
+      url:'idCheck_func.php',
+      data:data,
+      type:'post',
+      dataType:'json',
+      error:function(){
+        //연결실패시 할일
+        alert('서버 연결에 실패했습니다')
+      },
+      success:function(returned_data){
+        //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
+        if(Number(returned_data.cnt) > 0){
+          alert('아이디 또는 이메일이 중복됩니다, 다시 시도해주세요.');
+          $('#id').focus();
+          return false;
+            }else{
+            alert('사용할 수 있는 아이디 입니다.');
+            idChecked = true
+          }
+        }
       }
-    });
+    )
+  }
+
+
+  $('#teacher_save').submit(function(e){
+  if (!idChecked) {
+    e.preventDefault();
+    alert('아이디 중복체크를 해주세요');
+  } else{
+    $('#teacher_save').submit();
+  }
+  });
+
   
 </script>
 
