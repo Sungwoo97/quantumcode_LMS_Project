@@ -77,6 +77,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <td colspan="3">
                 <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해주세요(영어숫자 합 최대20자)" required maxlength="20">
                 <div id="idError" class="mt-2" style="color: red;"></div> <!-- 에러 메시지 위치 -->
+                <button type="button" id="idcheck" class="btn btn-secondary btn-sm">중복체크</button>
               </td>
             </tr>
             <tr scope="row">
@@ -269,6 +270,55 @@ function addCover(file, cover) {
       this.style.borderColor = ""; // 유효한 경우 테두리 색상 초기화
     }
   });
+
+  //아이디 중복 체크
+  let idChecked = false;
+
+    $('#idcheck').click(function(){
+      let id = $('#id').val();
+      if(id == ''){
+        alert('아이디를 입력해주세요');
+        $('#id').focus();
+      } else{
+        idCheck_func(id);
+      }
+    });
+
+    function idCheck_func(id){
+
+      let data = {
+        id:id
+      }
+      $.ajax({
+        async:false,       
+        url:'teacher_insert_ok.php',
+        data:data, 
+        type:'post', 
+        dataType:'json', 
+        error:function(){
+          //연결실패시 할일
+        },
+        success:function(returned_data){
+          //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
+          if(returned_data.result == 'ok'){
+            alert('사용할 수 있는 아이디입니다.');
+            idChecked = true;
+            $('#id').attr('readonly','readonly');
+            return;
+          } else if(returned_data.result == 'error'){
+            alert('중복되는 아이디입니다.');
+            return;
+          } 
+        }
+      })
+    }
+
+    $('#teacher_save').submit(function(e){
+      if (!idChecked) {
+        e.preventDefault();
+        alert('아이디 중복체크를 해주세요');
+      }
+    });
   
 </script>
 

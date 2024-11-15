@@ -6,6 +6,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 $name = $_POST['name'] ?? '';
 $id = $_POST['id'] ?? '';
 $birth = $_POST['birth'] ?? '';
+$password = $_POST['password'];
 $password = hash('sha512', $password);
 $email = $_POST['email'] ?? '';
 $number = $_POST['number'] ?? '';
@@ -25,6 +26,22 @@ if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_E
           </script>";
     exit;
   }
+}
+
+
+//중복 id 개수 조회
+$id_sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE id='$id '";
+$id_result = $mysqli->query($id_sql);
+$id_data = $id_result->fetch_assoc();
+$row_num = $id_data['cnt'];  //중복 1, 중복x 0
+
+
+if($row_num >= 1){
+  echo "<script>
+    alert('아이디가 중복됩니다.');
+    history.back();
+  </script>";
+  exit;
 }
 
 $sql = "INSERT INTO teachers
@@ -49,3 +66,7 @@ if ($teacher_result) {
 
 $mysqli->close();
 ?>
+
+
+
+
