@@ -45,14 +45,14 @@ $result = $mysqli->query($sql);
       while($data = $result->fetch_object()){
         $title1 = $data->title;
         // 제목이 길 경우 10글자로 자르기
-        if(iconv_strlen($title) > 10){
+        if(iconv_strlen($title1) > 10){
           $title1 = iconv_substr($title, 0, 10) . '...';
         }
         ?>
       <tr>
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1 ?></a></td>
-        <td><?=$data->name ?></td>
+        <td><?=$data->user_id ?></td>
         <td><?=$data->content ?></td>
         <td><?=$data->date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
