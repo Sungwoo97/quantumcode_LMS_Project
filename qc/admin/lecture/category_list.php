@@ -3,6 +3,12 @@ $title = '카테고리 관리';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$cate_sql = "SELECT * FROM lecture_category WHERE step = 1";
+$cate_result = $mysqli->query($cate_sql) ;
+while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $cate[]= $data; //$cate1배열에 $data할당
+}
+
 ?>
 
 <div class="container">
@@ -12,7 +18,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="d-flex gap-2 mt-4">
         <select class="form-select" name="platforms">
           <option value="" selected>Platforms</option>
-          <!-- <option value="A0001">Web</option> -->
+          <?php
+            if(!empty($cate)){
+            foreach($cate as $plat){
+          ?>
+            <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+          <?php
+            }
+          }
+          ?>
         </select>
         <button class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#platformsModal" id="platforms_btn">등록</button>
       </div>
@@ -65,7 +79,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" data-step="1" class="platforms">
+        <form action="" data-step="1" class="platform">
           <div class="row d-flex justify-content-center">
             <div class="d-flex justify-content-center gap-2 w-100">
               <input type="text" name="platform" id="platform" class="form-control w-75">
@@ -90,7 +104,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <div>
               <select class="form-select w-50" name="platforms" id="pcode2">
                 <option value="" selected>Platforms</option>
-                <option value="A0001">Web</option>
+                <?php
+                  if(!empty($cate)){
+                    foreach($cate as $plat){
+                  ?>
+                      <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+                  <?php
+                    }
+                  }
+                ?>
               </select>
             </div>
             <div class="d-flex gap-2 w-100">
@@ -116,7 +138,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <div class="d-flex gap-2 w-100">
               <select class="form-select flex-fill" name="platforms" id="pcode2">
                 <option value="" selected>Platforms</option>
-                <option value="A0001">Web</option>
+                <?php
+                  if(!empty($cate)){
+                    foreach($cate as $plat){
+                ?>
+                      <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+                <?php
+                    }
+                  }
+                ?>
               </select>
               <select class="form-select flex-fill" name="development" id="pcode3">
                 <option value="" selected>Development</option>
@@ -135,12 +165,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 </div>
 
 <script>
-  $('.platforms').submit(function(e) {
+  $('.platform').submit(function(e) {
     e.preventDefault();
     console.log($(this).find('input[type="text"]'));
     let step = Number($(this).attr('data-step'));
     let pcode = null;
-    let name = $(this).find('input[type="text"]').val();
+    let name = $('#platform').val();
 
     let data = {
       name: name,
@@ -203,6 +233,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
   $('.development').submit(function(e) {
     e.preventDefault();
     let step = Number($(this).attr('data-step'));
+    console.log(step);
     let pcode = $(`#pcode${step}`).val();
     let name = $('#development').val();
 
@@ -234,7 +265,43 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
   })
 
 
-  function addCategory() {
+
+// submit 이벤트, input의 값, 
+  function addCategory(value, target, pcode, e) {
+    $('.development').submit(function(e) {
+    e.preventDefault();
+    let step = Number($(this).attr('data-step'));
+    let pcode = $(`#pcode${step}`).val();
+    let name = $('#development').val();
+
+    let data = {
+      name: name,
+      pcode: pcode,
+      step: step
+    }
+    console.log(data);
+    $.ajax({
+      data: data,
+      type: 'POST',
+      async: false,
+      dataType: 'json',
+      url: 'category_insert.php',
+      success: function(r_data) {
+        console.log(r_data);
+        if (r_data.result == 1) {
+          alert('등록완료');
+          location.reload(); //새로고침
+        } else {
+          alert('등록 실패');
+        }
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  })
+
+
 
   }
 </script>
