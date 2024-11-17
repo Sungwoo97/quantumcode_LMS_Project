@@ -4,7 +4,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 $name = $_POST['name'];
 $step = $_POST['step'];
-$pcode = $_POST['pcode'] ?? null;
+$pcode = $_POST['pcode'] ?? '';
+$ppcode = $_POST['ppcode'] ?? '';
 
 $sql = "SELECT code FROM lecture_category WHERE step = $step AND (pcode = '$pcode' OR pcode IS NULL) ORDER BY code DESC LIMIT 1";
 $result = $mysqli->query($sql);
@@ -22,7 +23,7 @@ if ($data) {
 $prefix = chr(64 + $step); // A, B, C ...
 $fixcode = $prefix . $code;
 
-$cate_sql = "INSERT INTO  lecture_category ( code, pcode, name, step ) VALUES ('$fixcode', '$pcode', '$name', $step)";
+$cate_sql = "INSERT INTO  lecture_category ( code, pcode, ppcode, name, step ) VALUES ('$fixcode', '$pcode','$ppcode', '$name', $step)";
 $cate_result = $mysqli->query($cate_sql);
 
 if ($cate_result) {
