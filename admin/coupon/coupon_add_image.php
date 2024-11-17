@@ -1,15 +1,15 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/common.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
-$fileUploadResult = fileUpload($_FILES['savefile'], 'image');
-$cimg = $_POST['cimg'];
+$fileUploadResult = fileUpload($_FILES['savefile']);
+$cid = $_POST['cid'];
 if($fileUploadResult) {
-  $sql = "INSERT INTO coupons_image (cimg, video_lecture) VALUES ($lid ,'$fileUploadResult')";
+  $sql = "INSERT INTO coupons_image (cid, image_coupon) VALUES ($cid ,'$fileUploadResult')";
   $result = $mysqli->query($sql);
-  $vidid = $mysqli->insert_id; 
-  $return_data = array('result'=>'성공', 'vidid'=>$vidid, 'savefile'=>$fileUploadResult); //연관배열
+  $imgid = $mysqli->insert_id; //테이블에 자동으로 저장되는 고유번호 조회
+  $return_data = array('result'=>'성공', 'imgid'=>$imgid, 'savefile'=>$fileUploadResult); //연관배열
   echo json_encode($return_data); //연관배열 -> 객체
   exit;
 } else {
