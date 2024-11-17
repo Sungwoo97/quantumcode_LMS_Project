@@ -18,13 +18,14 @@ try{
 
   $coupon_name = $_POST['coupon_name'] ?? '';
   $coupon_content = $_POST['coupon_content'] ?? '';
-  $coupon_image = $_FILES['coupon_image'] ??'';
-  $coupon_type = $_POST['coupon_type'] ?? '';
-  $coupon_price = $_POST['coupon_price'] ?? '0';
-  $coupon_ratio = $_POST['coupon_ratio'] ?? '0';
-  $use_min_price = $_POST['use_min_price'] ?? '0';
-  $max_value = $_POST['max_value'] ?? '0';
-  $status = $_POST['status'] ?? '';
+  $coupon_type = $_POST['coupon_type'] ?? '1';
+  $coupon_price = $_POST['coupon_price'] ?? 0;
+  $coupon_ratio = $_POST['coupon_ratio'] ?? 0;
+  $status = isset($_POST['coupon_activate']) ? 1 : 0;
+  $startdate = $_POST['startdate'] ?? date('Y-m-d');
+  $enddate = $_POST['enddate'] ?? '';
+  $userid = $_SESSION['AUID'] ?? 'admin';
+  $max_value = $_POST['max_value'] ?? 0;
 
   //쿠폰이미지 업로드
   if (isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD_ERR_OK)  {
@@ -39,15 +40,12 @@ try{
             history.back();
         </script>";
     }
-  }else {
-    $couponImage = '';
-}
+  }
   //쿠폰 테이블에 입력
   $sql = "INSERT INTO coupons 
-(coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid, max_value, use_min_price) 
-VALUES
-('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}', $max_value, $use_min_price)";
-
+  (coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid, startdate, enddate, max_value) 
+  VALUES
+  ('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}', $startdate, $enddate $max_value)";
 
   $result = $mysqli->query($sql); 
 

@@ -31,7 +31,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
         <img src="" id="couponImg" alt="">
       </div>
       <div class="input-group">
-        <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
+        <input type="file" class="form-control" accept="image/*" name="addedImages" id="addedImages">
       </div>
     </div>
         <div class="col-8 mt-3">
@@ -170,6 +170,61 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
           window.location.href = $(this).attr('href');
       }
   });
+
+
+  function attachFile(file){
+
+let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
+formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+
+$.ajax({
+  url:'product_image_save.php',
+  data:formData,
+  cache: false, //이미지 정보를 브라우저 저장, 안한다
+  contentType:false, //전송되는 데이터 타입지정, 안한다.
+  processData:false, //전송되는 데이터 처리(해석), 안한다.
+  dataType:'json', //product_image_save.php이 반환하는 값의 타입
+  type:'POST', //파일 정보를 전달하는 방법
+  success:function(returned_data){ //product_image_save.php과 연결(성공)되면 할일
+    console.log(returned_data);
+
+    if(returned_data.result === 'size'){
+      alert('10MB 이하만 첨부할 수 있습니다.');
+      return;
+    } else if(returned_data.result === 'image'){
+      alert('이미지만 첨부할 수 있습니다.');
+      return;   
+    } else if(returned_data.result === 'error'){
+      alert('첨부실패, 관리자에게 문의하세요');
+      return;
+    } else{ //파일 첨부가 성공하면
+      let imgids = $('#product_image_id').val() + returned_data.imgid + ',';
+      $('#product_image_id').val(imgids);
+      let html = `
+        <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
+          <img src="${returned_data.savefile}" class="card-img-top" alt="...">
+          <div class="card-body">                
+            <button type="button" class="btn btn-danger btn-sm">삭제</button>
+          </div>
+        </div>
+      `;
+      $('#addedImages').append(html);
+    }
+  }
+
+})
+} //Attachfile
+//$('#addedImages button');
+//변수.addEventListener('이벤트종류','대상',function(){})
+
+$('#addedImages').on('click','button', function(){
+let imgid = $(this).closest('.card').attr('id');
+//console.log(imgid);
+file_delete(imgid);
+});
+
+
+
 </script>
 
 <?php
