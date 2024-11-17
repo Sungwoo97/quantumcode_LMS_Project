@@ -89,13 +89,15 @@ switch ($category) {
 
 <hr>
 <!-- 댓글 -->
-<h3>댓글 달기</h3>
 <form action="board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
   <input type="hidden" name="user_id" value="<?=$data->user_id?>">
   <input type="hidden" name="category" value="<?=$data->category?>">
-  <textarea name="content" class="form-control mb-1" placeholder="댓글내용을 입력 해주세요."></textarea>
-  <button class="btn btn-primary btn-sm mb-3 d-flex justify-content-end">확인</button>
+  <div class="d-flex gap-3 mb-3">
+    <p>댓글 입력:</p> 
+    <textarea name="content" class="form-control w-25" placeholder="댓글내용을 입력 해주세요."></textarea>
+    <button class="btn btn-primary btn-sm">등록</button>
+  </div>
 </form>
 
 <div class="" style="width: 18rem;">
