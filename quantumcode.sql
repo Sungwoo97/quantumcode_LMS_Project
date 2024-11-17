@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-14 10:14
+-- 생성 시간: 24-11-17 14:59
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -54,7 +54,7 @@ INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`,
 
 CREATE TABLE `board` (
   `pid` int(10) NOT NULL,
-  `id` varchar(100) DEFAULT NULL,
+  `user_id` varchar(100) DEFAULT NULL,
   `title` varchar(50) NOT NULL,
   `content` varchar(200) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
@@ -64,44 +64,73 @@ CREATE TABLE `board` (
   `hit` int(11) DEFAULT 0,
   `likes` int(11) DEFAULT 0,
   `category` enum('notice','free','event','qna') NOT NULL,
-  `img` varchar(255) NOT NULL
+  `img` varchar(255) NOT NULL,
+  `is_img` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 테이블의 덤프 데이터 `board`
 --
 
-INSERT INTO `board` (`pid`, `id`, `title`, `content`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`, `img`) VALUES
-(25, '', '하하', '아룡함니꺼', NULL, NULL, '2024-11-12 07:26:09', NULL, NULL, NULL, 'notice', ''),
-(31, '', '공지1', '공지1', NULL, NULL, '2024-11-13 07:56:25', NULL, NULL, NULL, 'notice', ''),
-(32, '', '자유1', '자유1', NULL, NULL, '2024-11-13 07:56:36', NULL, NULL, NULL, 'free', ''),
-(33, '', '이벤트1', '이벤트1', NULL, NULL, '2024-11-13 07:56:45', NULL, NULL, NULL, 'event', ''),
-(34, '', '질문1', '질문1', NULL, NULL, '2024-11-13 07:56:57', NULL, NULL, NULL, 'qna', ''),
-(35, '', '조회1', '조회1', NULL, NULL, '2024-11-13 08:18:18', NULL, NULL, NULL, 'notice', ''),
-(37, '', '123124214124', '12412351351513513', NULL, NULL, '2024-11-13 08:31:28', NULL, 1, NULL, 'event', ''),
-(38, '', '이벤트 추천11', '이벤트 추천11', NULL, NULL, '2024-11-13 08:43:51', NULL, 2, 15, 'event', ''),
-(39, '', '공지 추천1', '공지 추천1', NULL, NULL, '2024-11-13 08:53:47', NULL, 1, 5, 'notice', ''),
-(40, '', '질문 추천', '질문 추천', NULL, NULL, '2024-11-13 08:56:08', NULL, 1, 7, 'qna', ''),
-(41, '', '추천2', '추천2', NULL, NULL, '2024-11-13 08:58:07', NULL, 1, 3, 'notice', ''),
-(42, '', '99', '99', NULL, NULL, '2024-11-13 08:58:43', NULL, 1, 0, 'qna', ''),
-(43, '', '자유 추천', '자유 추천', NULL, NULL, '2024-11-13 09:00:12', NULL, 2, 3, 'free', ''),
-(44, '', '88', '88', NULL, NULL, '2024-11-13 09:02:03', NULL, 1, 5, 'free', ''),
-(45, '', '77', '77', NULL, NULL, '2024-11-13 09:03:06', NULL, 2, 5, 'notice', ''),
-(46, '', '66', '66', NULL, NULL, '2024-11-13 09:05:18', NULL, 1, 5, 'notice', ''),
-(47, '', '55', '55', NULL, NULL, '2024-11-13 09:07:32', NULL, 1, 3, 'notice', ''),
-(48, '', '11', '11', NULL, NULL, '2024-11-13 09:09:02', NULL, 2, 20, 'notice', ''),
-(49, '', '44', '44', NULL, NULL, '2024-11-13 09:10:51', NULL, 1, 2, 'qna', ''),
-(50, '', '11', '11', NULL, NULL, '2024-11-14 07:34:15', NULL, 0, 0, 'notice', ''),
-(51, '', '99', '99', NULL, NULL, '2024-11-14 07:34:44', NULL, 1, 0, 'notice', ''),
-(52, '', '11', '11', NULL, NULL, '2024-11-14 08:05:49', NULL, 0, 0, 'notice', ''),
-(53, '', '11', '11', NULL, NULL, '2024-11-14 08:15:00', NULL, 1, 0, 'free', ''),
-(54, '', '33', '33', NULL, NULL, '2024-11-14 08:16:01', NULL, 0, 0, 'qna', ''),
-(55, '', '222', '222', NULL, NULL, '2024-11-14 08:35:37', NULL, 0, 0, 'free', ''),
-(56, '', '666', '666', NULL, NULL, '2024-11-14 08:38:29', NULL, 0, 0, 'free', ''),
-(57, '', '4124', '4124', NULL, NULL, '2024-11-14 08:54:14', NULL, 1, 0, 'notice', '0'),
-(58, '', '123213', '12312312', NULL, NULL, '2024-11-14 09:06:28', NULL, 0, 0, 'event', 'C:/xampp1/htdocs/qc/admin/board/upload/'),
-(59, '', '124214', '123123', NULL, NULL, '2024-11-14 09:06:41', NULL, 0, 0, 'event', 'C:/xampp1/htdocs/qc/admin/board/upload/'),
-(60, '', '1251515', '31461436143', NULL, NULL, '2024-11-14 09:08:33', NULL, 0, 0, 'free', '');
+INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`, `img`, `is_img`) VALUES
+(25, '', '하하', '아룡함니꺼', NULL, NULL, '2024-11-12 07:26:09', NULL, NULL, NULL, 'notice', '', NULL),
+(31, '', '공지1', '공지1', NULL, NULL, '2024-11-13 07:56:25', NULL, NULL, NULL, 'notice', '', NULL),
+(32, '', '자유1', '자유1', NULL, NULL, '2024-11-13 07:56:36', NULL, NULL, NULL, 'free', '', NULL),
+(33, '', '이벤트1', '이벤트1', NULL, NULL, '2024-11-13 07:56:45', NULL, NULL, NULL, 'event', '', NULL),
+(34, '', '질문1', '질문1', NULL, NULL, '2024-11-13 07:56:57', NULL, NULL, NULL, 'qna', '', NULL),
+(35, '', '조회1', '조회1', NULL, NULL, '2024-11-13 08:18:18', NULL, NULL, NULL, 'notice', '', NULL),
+(37, '', '123124214124', '12412351351513513', NULL, NULL, '2024-11-13 08:31:28', NULL, 2, NULL, 'event', '', NULL),
+(38, '', '이벤트 추천1122', '이벤트 추천1122', NULL, NULL, '2024-11-13 08:43:51', NULL, 3, 15, 'event', '', NULL),
+(39, '', '공지 추천1', '공지 추천1', NULL, NULL, '2024-11-13 08:53:47', NULL, 1, 5, 'notice', '', NULL),
+(40, '', '질문 추천', '질문 추천', NULL, NULL, '2024-11-13 08:56:08', NULL, 1, 7, 'qna', '', NULL),
+(41, '', '추천2', '추천2', NULL, NULL, '2024-11-13 08:58:07', NULL, 1, 3, 'notice', '', NULL),
+(42, '', '99', '99', NULL, NULL, '2024-11-13 08:58:43', NULL, 1, 0, 'qna', '', NULL),
+(43, '', '자유 추천', '자유 추천', NULL, NULL, '2024-11-13 09:00:12', NULL, 2, 3, 'free', '', NULL),
+(44, '', '88', '88', NULL, NULL, '2024-11-13 09:02:03', NULL, 1, 5, 'free', '', NULL),
+(45, '', '77', '77', NULL, NULL, '2024-11-13 09:03:06', NULL, 2, 5, 'notice', '', NULL),
+(46, '', '66', '66', NULL, NULL, '2024-11-13 09:05:18', NULL, 1, 5, 'notice', '', NULL),
+(47, '', '55', '55', NULL, NULL, '2024-11-13 09:07:32', NULL, 1, 3, 'notice', '', NULL),
+(48, '', '11', '11', NULL, NULL, '2024-11-13 09:09:02', NULL, 2, 20, 'notice', '', NULL),
+(49, '', '44', '44', NULL, NULL, '2024-11-13 09:10:51', NULL, 1, 2, 'qna', '', NULL),
+(50, '', '11', '11', NULL, NULL, '2024-11-14 07:34:15', NULL, 0, 0, 'notice', '', NULL),
+(51, '', '99', '99', NULL, NULL, '2024-11-14 07:34:44', NULL, 1, 0, 'notice', '', NULL),
+(52, '', '11', '11', NULL, NULL, '2024-11-14 08:05:49', NULL, 0, 0, 'notice', '', NULL),
+(53, '', '11', '11', NULL, NULL, '2024-11-14 08:15:00', NULL, 2, 0, 'free', '', NULL),
+(54, '', '33', '33', NULL, NULL, '2024-11-14 08:16:01', NULL, 0, 0, 'qna', '', NULL),
+(55, '', '222', '222', NULL, NULL, '2024-11-14 08:35:37', NULL, 0, 0, 'free', '', NULL),
+(56, '', '666', '666', NULL, NULL, '2024-11-14 08:38:29', NULL, 1, 0, 'free', '', NULL),
+(57, '', '4124', '4124', NULL, NULL, '2024-11-14 08:54:14', NULL, 1, 0, 'notice', '0', NULL),
+(58, '', '123213', '12312312', NULL, NULL, '2024-11-14 09:06:28', NULL, 1, 0, 'event', 'C:/xampp1/htdocs/qc/admin/board/upload/', NULL),
+(59, '', '12421411', '12312311', NULL, NULL, '2024-11-14 09:06:41', NULL, 2, 0, 'event', 'C:/xampp1/htdocs/qc/admin/board/upload/', NULL),
+(60, '', '1251515', '31461436143', NULL, NULL, '2024-11-14 09:08:33', NULL, 0, 0, 'free', '', NULL),
+(61, NULL, '24', '15', NULL, NULL, '2024-11-17 12:42:14', NULL, 0, 0, 'free', '', NULL),
+(62, NULL, '24', '15', NULL, NULL, '2024-11-17 12:44:06', NULL, 0, 0, 'free', '', NULL),
+(63, NULL, '1', '1', NULL, NULL, '2024-11-17 12:44:14', NULL, 0, 0, 'notice', '', NULL),
+(64, NULL, '1', '1', NULL, NULL, '2024-11-17 12:44:40', NULL, 0, 0, 'notice', '', NULL),
+(65, NULL, '2', '2', NULL, NULL, '2024-11-17 12:44:49', NULL, 0, 0, 'notice', '', NULL),
+(66, NULL, '1', '1', NULL, NULL, '2024-11-17 12:45:12', NULL, 0, 0, 'notice', '', NULL),
+(67, NULL, '1', '1', NULL, NULL, '2024-11-17 12:47:30', NULL, 0, 0, 'notice', '', NULL),
+(68, NULL, '1', '1', NULL, NULL, '2024-11-17 12:47:39', NULL, 0, 0, 'notice', '', NULL),
+(69, NULL, '1', '1', NULL, NULL, '2024-11-17 12:56:24', NULL, 0, 0, 'notice', '', NULL),
+(70, NULL, '파일', '파일', NULL, NULL, '2024-11-17 12:59:12', NULL, 1, 0, 'notice', 'C:/xampp/htdocs/qc/admin/board/upload/images.jpg', NULL),
+(71, NULL, '2', '2', NULL, NULL, '2024-11-17 13:03:50', NULL, 1, 0, 'notice', 'sdgs6.png', NULL),
+(72, NULL, '1', '1', NULL, NULL, '2024-11-17 13:05:26', NULL, 1, 0, 'notice', 'sdgs1.png', NULL),
+(73, NULL, '1', '1', NULL, NULL, '2024-11-17 13:05:51', NULL, 1, 0, 'free', 'sdgs9.png', NULL),
+(74, NULL, '1', '1', NULL, NULL, '2024-11-17 13:06:29', NULL, 1, 0, 'notice', 'C:/xampp/htdocs/qc/admin/board/upload/sdgs3.png', NULL),
+(75, NULL, '파일2', '파일2', NULL, NULL, '2024-11-17 13:10:15', NULL, 1, 0, 'notice', 'sdgs17.png', NULL),
+(76, NULL, '파일3', '파일3', NULL, NULL, '2024-11-17 13:11:29', NULL, 1, 0, 'notice', './upload/sdgs7.png', NULL),
+(77, NULL, '파일4', '파일4', NULL, NULL, '2024-11-17 13:12:13', NULL, 1, 0, 'notice', './upload/sdgs17.png', NULL),
+(78, NULL, '이미지 첨부', '이미지 첨부', NULL, NULL, '2024-11-17 13:19:02', NULL, 0, 0, 'notice', './upload/sdgs1.png', 0),
+(79, NULL, '첨부 2', '첨부 2', NULL, NULL, '2024-11-17 13:21:13', NULL, 0, 0, 'notice', './upload/sdgs10.png', 1),
+(80, NULL, '1', '1', NULL, NULL, '2024-11-17 13:30:48', NULL, 1, 0, 'notice', './upload/board.sql', 0),
+(81, NULL, '2', '2', NULL, NULL, '2024-11-17 13:31:29', NULL, 1, 0, 'notice', './upload/sdgs9.png', 1),
+(82, NULL, '9', '9', NULL, NULL, '2024-11-17 13:47:24', NULL, 1, 0, 'notice', './upload/sdgs7.png', 1),
+(83, NULL, '1', '1', NULL, NULL, '2024-11-17 13:50:55', NULL, 0, 0, 'notice', './upload/', 0),
+(84, NULL, '1', '1', NULL, NULL, '2024-11-17 13:54:05', NULL, 0, 0, 'notice', './upload/', 0),
+(85, NULL, 'test', 'test', NULL, NULL, '2024-11-17 13:54:29', NULL, 1, 0, 'notice', './upload/', 0),
+(86, NULL, 'test2', 'test2', NULL, NULL, '2024-11-17 13:56:59', NULL, 1, 0, 'notice', './upload/images.jpg', 1),
+(87, NULL, 'test2', 'test2', NULL, NULL, '2024-11-17 13:57:06', NULL, 1, 0, 'notice', './upload/images.jpg', 1),
+(88, NULL, 'test3', 'test3', NULL, NULL, '2024-11-17 13:57:56', NULL, 1, 0, 'free', './upload/sdgs.png', 1);
 
 -- --------------------------------------------------------
 
@@ -221,6 +250,46 @@ CREATE TABLE `board_qna` (
 
 INSERT INTO `board_qna` (`qb_pid`, `qb_title`, `qb_content`, `qb_user_id`, `qb_date`, `qb_updated_date`, `qb_like`, `qb_hit`) VALUES
 (1, 'test', 'test', NULL, '2024-11-11 07:48:54', '2024-11-11 07:54:16', NULL, 2);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `board_reply`
+--
+
+CREATE TABLE `board_reply` (
+  `pid` int(11) NOT NULL,
+  `b_pid` int(11) NOT NULL,
+  `user_id` varchar(10) DEFAULT NULL,
+  `pw` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board_reply`
+--
+
+INSERT INTO `board_reply` (`pid`, `b_pid`, `user_id`, `pw`, `content`, `date`) VALUES
+(1, 59, '', '', '     1234411', '2024-11-16 22:54:46'),
+(2, 59, '', '', ' 1231231111', '2024-11-16 22:54:50'),
+(3, 59, '', '', ' 1231231111', '2024-11-16 22:56:24'),
+(4, 59, '', '', ' 1231231111', '2024-11-16 22:56:24'),
+(5, 59, '', '', ' 1231231111', '2024-11-16 22:56:25'),
+(6, 59, '', '', ' 1231231111', '2024-11-16 22:56:25'),
+(7, 59, '', '', ' 1231231111', '2024-11-16 22:56:29'),
+(8, 59, '', '', ' 1231231111', '2024-11-16 22:57:41'),
+(9, 59, '', '', ' 1231231111', '2024-11-16 22:57:42'),
+(10, 58, '', '', '  1231231111112', '2024-11-16 23:21:51'),
+(11, 59, '', '', ' 1231231111', '2024-11-16 23:22:13'),
+(12, 37, '', '', ' 1231231111', '2024-11-16 23:28:50'),
+(13, 59, '', '', ' 1231231111', '2024-11-17 00:10:07'),
+(14, 59, '', '', ' 1231231111', '2024-11-17 00:10:33'),
+(15, 59, '', '', ' 1231231111', '2024-11-17 00:10:57'),
+(16, 38, '', '', '이벤트 추천11', '2024-11-17 00:33:31'),
+(17, 38, '', '', '  112234', '2024-11-17 00:36:43'),
+(18, 58, '', '', '11', '2024-11-17 00:41:40'),
+(19, 59, '', '', ' 1122', '2024-11-17 00:46:41');
 
 -- --------------------------------------------------------
 
@@ -368,6 +437,12 @@ ALTER TABLE `board_qna`
   ADD PRIMARY KEY (`qb_pid`);
 
 --
+-- 테이블의 인덱스 `board_reply`
+--
+ALTER TABLE `board_reply`
+  ADD PRIMARY KEY (`pid`);
+
+--
 -- 테이블의 인덱스 `coupons_list`
 --
 ALTER TABLE `coupons_list`
@@ -411,7 +486,7 @@ ALTER TABLE `admins`
 -- 테이블의 AUTO_INCREMENT `board`
 --
 ALTER TABLE `board`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_event`
@@ -448,6 +523,12 @@ ALTER TABLE `board_notice`
 --
 ALTER TABLE `board_qna`
   MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_reply`
+--
+ALTER TABLE `board_reply`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- 테이블의 AUTO_INCREMENT `coupons_list`
