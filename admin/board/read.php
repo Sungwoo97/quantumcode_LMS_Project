@@ -32,6 +32,8 @@ if ($category === 'all') {
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
+$post_time = date("Y-m-d", strtotime($data->date));
+
 switch ($category) {
   case 'all':
       $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
@@ -62,7 +64,7 @@ switch ($category) {
 
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$data->title?></h2>
-  <span>글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$data->date?></span>
+  <span>글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_time?></span>
 </div>
 
 

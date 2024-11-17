@@ -62,7 +62,7 @@ $result = $mysqli->query($sql);
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id ?></td>
         <td><?=$data->content ?></td>
-        <td><?=$data->date ?></td>
+        <td><?=$post_time ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td><a href=""><i class="fa-regular fa-pen-to-square"></i></a></td>
