@@ -6,13 +6,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 $name = $_POST['name'] ?? '';
 $id = $_POST['id'] ?? '';
 $birth = $_POST['birth'] ?? '';
-$password = hash('sha512',$userpw);
+$password = $_POST['password'];
+$password = hash('sha512', $password);
 $email = $_POST['email'] ?? '';
 $number = $_POST['number'] ?? '';
 $reg_date = $_POST['reg_date'] ?? '';
-$member_detail = $_POST['member_detail'] ?? '';
+$teacher_detail = $_POST['teacher_detail'] ?? '';
 $grade = $_POST['grade'] ?? '';
 $cover_image = $_FILES['cover_image'] ?? '';
+$tid = $_POST['tid'] ?? ''; // 수정 대상의 tid를 받아옴
 
 if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_ERR_OK) {
   $fileUploadResult = fileUpload($_FILES['cover_image'], 'image');
@@ -27,22 +29,30 @@ if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_E
   }
 }
 
-$sql = "INSERT INTO members
-(name, id, birth, password, email, number, reg_date, member_detail, grade, cover_image)
-VALUES
-('$name', '$id', '$birth', '$password', '$email', '$number', '$reg_date', '$member_detail', '$grade', '$cover_image')";
+$sql = "UPDATE teachers
+        SET name = '$name',
+            id = '$id',
+            birth = '$birth',
+            password = '$password',
+            email = '$email',
+            number = '$number',
+            reg_date = '$reg_date',
+            teacher_detail = '$teacher_detail',
+            grade = '$grade',
+            cover_image = '$cover_image'
+        WHERE tid = '$tid'";
 
 echo $sql;
 
-$member_result = $mysqli->query($sql);
-if ($member_result) {
+$teacher_result = $mysqli->query($sql);
+if ($teacher_result) {
   echo "<script>
-    alert('회원이 등록되었습니다.');
+    alert('강사 정보가 수정 되었습니다.');
     history.back();
     </script>";
 } else {
   echo "<script>
-    alert('등록에 실패했습니다.');
+    alert('수정에 실패했습니다.');
     history.back();
   </script>";
 }
