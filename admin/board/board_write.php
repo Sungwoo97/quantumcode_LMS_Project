@@ -4,9 +4,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 
-<form action="board_write_ok.php" method="POST">
+<form action="board_write_ok.php" method="POST" enctype="multipart/form-data">
   <div class="mb-3">
-    <input class="form-control" accept="image/*" name="image" type="file" id="image">
+    <input class="form-control" accept="image/*" name="file" type="file" id="file">
   </div>
   <select class="form-select" name="category" aria-label="Default select example" required >
     <option value="" selected>카테고리 선택</option>

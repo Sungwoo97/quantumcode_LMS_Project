@@ -24,10 +24,10 @@ if(!isset($_SESSION['hits'][$pid])){
 
  
 if ($category === 'all') {
-  $sql = "SELECT title, likes, hit, content, user_id, category, date FROM board WHERE pid = $pid";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid";
 } else {
   // 카테고리가 'all'이 아닌 경우, 카테고리 조건을 추가하여 쿼리 실행
-  $sql = "SELECT title, likes, hit, content, user_id, category, date FROM board WHERE pid = $pid AND category = '$category'";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid AND category = '$category'";
 }
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
@@ -66,10 +66,18 @@ switch ($category) {
 </div>
 
 
-<div>
+<div class="mb-3">
 내용:<?=$data->content?>
 </div>
-
+<div>
+  <?php
+    if($data->is_img == 1){
+      echo "<img src=\"{$data->img}\" width=\"300\">";
+    }else{
+      echo "첨부파일: <a href=\"{$data->img}\">다운로드</a>";
+    }
+  ?>
+</div>
 <div class="d-flex justify-content-end">
   <p>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
