@@ -3,11 +3,58 @@ $title = '카테고리 관리';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$cate_sql = "SELECT * FROM lecture_category WHERE step = 1";
-$cate_result = $mysqli->query($cate_sql) ;
-while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
+$sql = "SELECT * FROM lecture_category WHERE step = 1 ";
+$result = $mysqli->query($sql) ;
+while($data = $result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
   $cate[]= $data; //$cate1배열에 $data할당
 }
+
+// $cate_sql = "SELECT * FROM lecture_category WHERE step = 2 ";
+// $cate_result = $mysqli->query($cate_sql) ;
+// while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+//   $cateArr[]= $data; //$cate1배열에 $data할당
+// }
+$html = '';
+$list = array();
+$list_sql = "SELECT * FROM lecture_category WHERE step = 3";
+$list_result = $mysqli->query($list_sql);
+while($list_data = $list_result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $list[]= $list_data; //$cate1배열에 $data할당
+}
+
+
+if(count($list)>0){
+  $i = 1;
+  foreach($list as $list){
+    $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->pcode}'";
+    $ppcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->ppcode}'";
+
+    $pcode_result = $mysqli->query($pcode_name_sql);
+    $ppcode_result = $mysqli->query($ppcode_name_sql);
+
+    $pcode_name = ($pcode_result && $pcode_result->num_rows > 0) ? $pcode_result->fetch_object()->name : "Unknown";
+    $ppcode_name = ($ppcode_result && $ppcode_result->num_rows > 0) ? $ppcode_result->fetch_object()->name : "Unknown";
+
+    $html .= "<tr class=\"border-bottom border-secondary-subtitle\">
+        <th >{$i}</th>
+        <td>{$ppcode_name}</td>
+        <td>{$pcode_name}</td>
+        <td>{$list->name}</td>
+        <td><img src=\"../img/icon-img/Edit.svg\" width=\"20\"></td>
+      </tr>";
+    $i++;
+  }
+}
+
 
 ?>
 
@@ -15,8 +62,8 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
   <div class="row d-flex  category">
     <div class="col-3 mb-5 text-center">
       <h5>Platforms</h5>
-      <div class="d-flex gap-2 mt-4">
-        <select class="form-select" name="platforms">
+      <div class="d-flex gap-2 mt-4" id="plat">
+        <select class="form-select plat" name="platforms">
           <option value="" selected>Platforms</option>
           <?php
             if(!empty($cate)){
@@ -33,8 +80,8 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
     </div>
     <div class="col-3 mb-5 text-center">
       <h5>Development</h5>
-      <div class="d-flex gap-2 mt-4">
-        <select class="form-select " name="development">
+      <div class="d-flex gap-2 mt-4" id="dev">
+        <select class="form-select dev" name="development">
           <option value="" selected>Development</option>
           <!-- <option value="B0001">Front-End</option> -->
         </select>
@@ -43,8 +90,8 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
     </div>
     <div class="col-3 mb-5 text-center">
       <h5>Technologies</h5>
-      <div class="d-flex gap-2 mt-4">
-        <select class="form-select " name="technologies">
+      <div class="d-flex gap-2 mt-4" id="tech">
+        <select class="form-select tech" name="technologies">
           <option value="" selected>Technologies</option>
           <!-- <option value="C0001">React</option> -->
         </select>
@@ -56,20 +103,19 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
       <button class=" btn btn-secondary ">검색</button>
     </div>
   </div>
-  <table class="table table-hover">
+  <table class="table table-hover text-center">
     <thead>
-      <tr>
+      <tr class="border-bottom border-secondary-subtitle thline">
         <th scope="col">No</th>
-        <th scope="col">제목</th>
-        <th scope="col">글쓴이</th>
-        <th scope="col">내용</th>
-        <th scope="col">등록일</th>
-        <th scope="col">추천수</th>
-        <th scope="col">조회수</th>
+        <th scope="col">Platforms</th>
+        <th scope="col">Development</th>
+        <th scope="col">Technologies</th>
         <th scope="col">Edit</th>
       </tr>
     </thead>
     <tbody>
+      <?= $html; ?>
+    </tbody>
 </div>
 <div class="modal fade" id="platformsModal" tabindex="1001" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -136,21 +182,21 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
         <form action="" data-step="3" class="technologies">
           <div class="row d-flex d-flex flex-column gap-3">
             <div class="d-flex gap-2 w-100">
-              <select class="form-select flex-fill" name="platforms" id="pcode2">
-                <option value="" selected>Platforms</option>
+              <select class="form-select flex-fill plats" name="platforms" id="pcode2">
+                
                 <?php
                   if(!empty($cate)){
                     foreach($cate as $plat){
                 ?>
-                      <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+                    <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
                 <?php
                     }
                   }
                 ?>
               </select>
-              <select class="form-select flex-fill" name="development" id="pcode3">
+              <select class="form-select flex-fill devs" name="development" id="pcode3">
+                
                 <option value="" selected>Development</option>
-                <option value="B0001">FrontEnd</option>
               </select>
             </div>
             <div class="d-flex justify-content-center gap-2 w-100">
@@ -170,113 +216,40 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
     console.log($(this).find('input[type="text"]'));
     let step = Number($(this).attr('data-step'));
     let pcode = null;
+    let ppcode = null;
     let name = $('#platform').val();
+    addCategory(name, pcode, ppcode, step);
+  })
 
-    let data = {
-      name: name,
-      pcode: pcode,
-      step: step
-    }
-    $.ajax({
-      data: data,
-      type: 'POST',
-      async: false,
-      dataType: 'json',
-      url: 'category_insert.php',
-      success: function(r_data) {
-        console.log(r_data);
-        if (r_data.result == 1) {
-          alert('등록완료');
-          location.reload(); //새로고침
-        } else {
-          alert('등록 실패');
-        }
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    })
+  $('.development').submit(function(e) {
+    e.preventDefault();
+    let step = Number($(this).attr('data-step'));
+    console.log(step);
+    let pcode = $(`#pcode${step}`).val();
+    let ppcode = null; 
+    let name = $('#development').val();
+    addCategory(name, pcode, ppcode, step);
   })
 
   $('.technologies').submit(function(e) {
     e.preventDefault();
     let step = Number($(this).attr('data-step'));
     let pcode = $(`#pcode${step}`).val();
+    let ppcode = $('.plats').val();
+    
     let name = $('#technologies').val();
-
-    let data = {
-      name: name,
-      pcode: pcode,
-      step: step
-    }
-    console.log(data);
-    $.ajax({
-      data: data,
-      type: 'POST',
-      async: false,
-      dataType: 'json',
-      url: 'category_insert.php',
-      success: function(r_data) {
-        console.log(r_data);
-        if (r_data.result == 1) {
-          alert('등록완료');
-          location.reload(); //새로고침
-        } else {
-          alert('등록 실패');
-        }
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    })
-  })
-  $('.development').submit(function(e) {
-    e.preventDefault();
-    let step = Number($(this).attr('data-step'));
-    console.log(step);
-    let pcode = $(`#pcode${step}`).val();
-    let name = $('#development').val();
-
-    let data = {
-      name: name,
-      pcode: pcode,
-      step: step
-    }
-    console.log(data);
-    $.ajax({
-      data: data,
-      type: 'POST',
-      async: false,
-      dataType: 'json',
-      url: 'category_insert.php',
-      success: function(r_data) {
-        console.log(r_data);
-        if (r_data.result == 1) {
-          alert('등록완료');
-          location.reload(); //새로고침
-        } else {
-          alert('등록 실패');
-        }
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    })
+    addCategory(name, pcode, ppcode, step);
   })
 
-
+  
 
 // submit 이벤트, input의 값, 
-  function addCategory(value, target, pcode, e) {
-    $('.development').submit(function(e) {
-    e.preventDefault();
-    let step = Number($(this).attr('data-step'));
-    let pcode = $(`#pcode${step}`).val();
-    let name = $('#development').val();
+  function addCategory(name, pcode, ppcode, step) {
 
     let data = {
       name: name,
       pcode: pcode,
+      ppcode: ppcode,
       step: step
     }
     console.log(data);
@@ -299,11 +272,57 @@ while($data = $cate_result->fetch_object()){ //조회된 값들 마다 할일, �
         console.log(err);
       }
     })
-  })
-
-
-
   }
+
+  $('#plat').on('change', '.plat', function() {
+    let platValue = $(this).val(); 
+    makeOption($(this), 2, $('.dev'), '').then(() => {
+        $('.dev').trigger('change'); // dev의 change 이벤트 실행
+    })
+  });
+
+  $('#dev').on('change', '.dev', function() {
+    //console.log('platValue received in dev change:', platValue);
+      makeOption($(this), 3, $('.tech'), $('.plat').val());
+  });
+
+  $(document).on('change', '.plats', function() {    
+      makeOption($(this), 2, $('.devs'), '');
+  });
+
+  async function makeOption(e,step,target, ppcode){
+    console.log(e,step,target, ppcode);
+  let cate = e.val();
+  console.log(cate);
+  //debugger;
+
+  let data = new URLSearchParams({
+    cate:cate,
+    step:step,
+    ppcode:ppcode
+  });
+
+
+  try{
+    const response = await fetch('category_print.php',{
+      method:'post',
+      headers: { //전송되는 데이터의 타입
+        'Content-Type': 'application/x-www-form-urlencoded' 
+      },
+      body:data
+    });
+    if(!response.ok){ //연결에러가 있다면
+      throw new Error('연결에러');
+    }
+    const result = await response.text(); //응답의 결과를
+    console.log(result);
+    target.html(result);
+
+  } catch(error){
+    console.log(error);
+  }
+}
+
 </script>
 
 <?php

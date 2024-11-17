@@ -1,3 +1,5 @@
+
+
 .lecture_coverImg,
 .lecture_prVideo,
 .lecture_video {
@@ -100,4 +102,8 @@ textarea#tag {
 
 .hidden .select_form select{
   width: 40% ;
+}
+
+.table .thline th{
+  color: var(--darkBlue) !important;
 }
