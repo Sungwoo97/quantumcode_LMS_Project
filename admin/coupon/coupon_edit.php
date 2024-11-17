@@ -16,7 +16,7 @@ $data = $result->fetch_object();
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css">
 </head>
 
-<div class="container">
+<div class="coupon_edit container">
   <form action="coupon_edit_ok.php" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="cid" value="<?= $cid; ?>"> 
   <div class="row coupon">

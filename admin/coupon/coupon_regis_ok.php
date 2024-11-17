@@ -1,7 +1,7 @@
 <?php
-
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/dbcon.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/admin/inc/common.php');
+session_start();
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
 if(!isset($_SESSION['AUID'])){
   echo "
@@ -39,12 +39,15 @@ try{
             history.back();
         </script>";
     }
-  }
+  }else {
+    $couponImage = '';
+}
   //쿠폰 테이블에 입력
   $sql = "INSERT INTO coupons 
-  (coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid, max_value, use_min_price) 
-  VALUES
-  ('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}', $max_value, $use_min_price)";
+(coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid, max_value, use_min_price) 
+VALUES
+('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}', $max_value, $use_min_price)";
+
 
   $result = $mysqli->query($sql); 
 
