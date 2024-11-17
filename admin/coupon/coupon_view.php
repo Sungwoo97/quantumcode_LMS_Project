@@ -134,8 +134,8 @@ if($block_end > $total_page ) $block_end = $total_page;
       <td><?= $uc_data->userid ?></td>
       <td><?= $uc_data->regdate ?></td>
       <td><?= $uc_data->use_max_date ?></td>
-      <td><?= $uc_data->status == 1 ? $uc_data->usedate : '미사용' ?></td>
-      <td><?= $uc_data->reason ?></td>
+      <td><?= $uc_data->status == 1 ? $uc_data->usedate : '미사용' ?></td> 
+      <td><?= $uc_data->status == 1 ? $uc_data->reason : '' ?></td>
       <?php
       }
       ?>
