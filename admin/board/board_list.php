@@ -43,6 +43,14 @@ $result = $mysqli->query($sql);
       <?php
       // 게시글 출력
       while($data = $result->fetch_object()){
+        $post_time = date("Y-m-d", strtotime($data->date)); // date 컬럼의 타임스탬프를 Y-m-d 형식으로 변환
+        $current_time = date("Y-m-d");
+
+        if($post_time == $current_time){
+          $icon = "<i class=\"fa-solid fa-dove\" style=\"color: red;\"></i>";
+        }else{
+          $icon = '';
+        }
         $title1 = $data->title;
         // 제목이 길 경우 10글자로 자르기
         if(iconv_strlen($title1) > 10){
@@ -51,7 +59,7 @@ $result = $mysqli->query($sql);
         ?>
       <tr>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1 ?></a></td>
+        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id ?></td>
         <td><?=$data->content ?></td>
         <td><?=$data->date ?></td>
