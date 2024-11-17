@@ -3,8 +3,7 @@ $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
-$pid = $_GET['pid']; 
-
+$pid = $_GET['pid'];
 
 // 추천 쿼리
 if(!isset($_SESSION['hits'])){
@@ -85,7 +84,7 @@ switch ($category) {
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
-    <a href="delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <a href="reply_delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
 
@@ -120,7 +119,7 @@ switch ($category) {
           </div>
           <div class="controls d-flex justify-content-end gap-1">
             <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$data->pid?>">수정</button>
-            <button class="btn btn-danger sm">삭제</button>
+            <a href="reply_delete.php?pid=<?=$data->pid?>&b_pid=<?=$data->b_pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
           </div>
         </div>
         <!-- modal -->
