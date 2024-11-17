@@ -4,14 +4,6 @@ $teacher_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacher
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 // session_start();
-
-
-$tid = $_GET['tid'];
-if (!isset($tid)) {
-  echo "<script>alert('상품정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
-}
-
-
 // if(!isset($_SESSION['AUID'])){
 //   echo "
 //     <script>
@@ -21,11 +13,21 @@ if (!isset($tid)) {
 //   ";
 // }
 
+
+$tid = $_GET['tid'];
+if (!isset($tid)) {
+  echo "<script>alert('상품정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
+}
+
+
 $sql = "SELECT * FROM teachers WHERE tid = $tid";
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+
+
+
 
 ?>
 
@@ -73,122 +75,27 @@ while($data = $result->fetch_object()){
       </div>
       <div class="col-8 mb-3">
         <table class="table">
-          <thead class="visually-hidden">
-            <tr>
-              <th scope="col">11111111111111111구분</th>
-              <th scope="col">111111내용111111111</th>
-            </tr>
-          </thead>
           <tbody>
-            <tr scope="row">
-              <th scope="row" class="insert_name">회원 고유 ID</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->tid; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_name">이름</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->name; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_id">아이디</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $item->id; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_birth">생년월일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="birth" id="birth" placeholder=<?= $item->birth; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_email">이메일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="email" id="email" placeholder=<?= $item->email; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_number">전화번호</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="number" id="number" placeholder=<?= $item->number; ?>  disabled>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">가입일</th>
-              <td class="twoculumn_table">
-                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> disabled>
-                <span></span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">강사 요약</th>
-              <td class="twoculumn_table">
-                <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control" placeholder=<?= $item->teacher_detail; ?> name="teacher_detail" id="teacher_detail"  disabled></textarea>
-              </td>
-            </tr>
+            <h3>현재 진행 중인 강의
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="..." alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
           </tbody>
+          
         </table>
         <hr>
         <table class="table">
-          <thead class="visually-hidden">
-            <tr>
-              <th scope="col">11111111111111111구분</th>
-              <th scope="col">111111내용111111111</th>
-            </tr>
-          </thead>
+          <h3>강사 월별 매출 현황
           <tbody>
             <tr scope="row">
               <th scope="row" class="insert_name">회원 고유 ID</th>
               <td colspan="3">
                 <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->tid; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_name">이름</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->name; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_id">아이디</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $item->id; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_birth">생년월일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="birth" id="birth" placeholder=<?= $item->birth; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_email">이메일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="email" id="email" placeholder=<?= $item->email; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_number">전화번호</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="number" id="number" placeholder=<?= $item->number; ?>  disabled>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">가입일</th>
-              <td class="twoculumn_table">
-                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> disabled>
-                <span></span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">강사 요약</th>
-              <td class="twoculumn_table">
-                <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control" placeholder=<?= $item->teacher_detail; ?> name="teacher_detail" id="teacher_detail"  disabled></textarea>
               </td>
             </tr>
           </tbody>
@@ -270,6 +177,7 @@ while($data = $result->fetch_object()){
 </div>
 
 <script>
+  
 </script>
 
 <?php

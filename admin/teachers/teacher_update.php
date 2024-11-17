@@ -8,7 +8,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $tid = $_GET['tid'];
 if (!isset($tid)) {
-  echo "<script>alert('상품정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
+  echo "<script>alert('정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
 }
 
 
@@ -34,7 +34,7 @@ while($data = $result->fetch_object()){
       if(isset($dataArr)){
         foreach($dataArr as $item){
   ?> 
-  <Form action="teacher_insert_ok.php" id="teacher_save" method="POST" enctype="multipart/form-data">
+  <Form action="teacher_update_ok.php" id="teacher_save" method="POST" enctype="multipart/form-data">
     <!-- <input type="hidden" id="teacher_description" name="teacher_description" value="">
     <input type="hidden" name="lid" id="lid" value=""> -->
     <div class="row teacher">
