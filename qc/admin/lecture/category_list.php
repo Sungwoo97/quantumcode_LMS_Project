@@ -116,6 +116,7 @@ if(count($list)>0){
     <tbody>
       <?= $html; ?>
     </tbody>
+  </table>
 </div>
 <div class="modal fade" id="platformsModal" tabindex="1001" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
