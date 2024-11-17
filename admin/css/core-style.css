@@ -83,7 +83,6 @@ body > nav{
 }
 .admin_account p{
   font-size: 20px;
-  line-height: 40px;
   font-weight: 700;
 }
 .nav_aside_menu ul{
@@ -131,6 +130,18 @@ body > nav{
 }
 #nav_cate_dashboard{
   display: none;
+}
+.admin_account a{
+  padding:5px;
+  background: var(--bs-gray-300);
+  border-radius: 5px;
+  color:var(--bs-gray-600);
+  text-decoration: none;
+  transition: 0.3s;
+}
+.admin_account a:hover{
+  background: var(--bs-danger);
+  color: #fff;
 }
 
 /* page_wapper */
