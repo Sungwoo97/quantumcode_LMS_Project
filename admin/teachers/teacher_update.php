@@ -1,15 +1,40 @@
 <?php
-$title = '강사 등록';
+$title = '강사 수정 페이지';
 $teacher_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacher.css\" rel=\"stylesheet\">";
-$summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
-$summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+// session_start();
+
+
+$tid = $_GET['tid'];
+if (!isset($tid)) {
+  echo "<script>alert('정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
+}
+
+
+// if(!isset($_SESSION['AUID'])){
+//   echo "
+//     <script>
+//       alert('관리자로 로그인해주세요');
+//       location.href = '../login.php';
+//     </script>
+//   ";
+// }
+
+$sql = "SELECT * FROM teachers WHERE tid = $tid";
+$result = $mysqli->query($sql); //쿼리 실행 결과
+while($data = $result->fetch_object()){
+  $dataArr[] = $data;
+}
 
 ?>
 
 <div class="container">
-  <Form action="teacher_insert_ok.php" id="teacher_save" method="POST" enctype="multipart/form-data">
+  <?php
+      if(isset($dataArr)){
+        foreach($dataArr as $item){
+  ?> 
+  <Form action="teacher_update_ok.php" id="teacher_save" method="POST" enctype="multipart/form-data">
     <!-- <input type="hidden" id="teacher_description" name="teacher_description" value="">
     <input type="hidden" name="lid" id="lid" value=""> -->
     <div class="row teacher">
@@ -27,7 +52,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <td colspan="3">
               <div class="d-flex gap-3">
                 <select class="form-select mt-3" name="grade" required>
-                  <option value="" selected>등급을 선택해주세요</option>
+                  <option value="" selected>현재 등급은 : <?= $item->grade; ?> 입니다</option>
                   <option value="Blonze">Blonze</option>
                   <option value="Silver">Silver</option>
                   <option value="Gold">Gold</option>
@@ -68,23 +93,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
           <tr scope="row">
               <th scope="row" class="insert_name">이름</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력해주세요" required maxlength="10">
+                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->name; ?> required maxlength="10">
                 <div id="nameError" class="mt-2" style="color: red;"></div> <!-- 에러 메시지 위치 -->
               </td>
             </tr>
             <tr scope="row">
               <th scope="row" class="insert_id">아이디</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해주세요(영어숫자 합 최대20자)" required maxlength="20">
+                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $item->id; ?> required maxlength="20">
                 <div id="idError" class="mt-2" style="color: red;"></div> <!-- 에러 메시지 위치 -->
                 <button type="button" id="idCheck" class="btn btn-secondary btn-sm">중복체크</button>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_birth">생년월일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="birth" id="birth" placeholder="생년월일을 숫자로 6자리 입력해주세요.(ex.19901010)" required>
-                <span id="error-message" style="color: red; display: none;">8자리 숫자만 입력 가능합니다.</span>
               </td>
             </tr>
             <tr scope="row">
@@ -103,7 +121,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_email">이메일</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="email" id="email" placeholder="이메일을 입력해주세요" required>
+                <input type="text" class="form-control" name="email" id="email" placeholder=<?= $item->email; ?> required>
                 <span id="email-error" style="color: red; display: none;">올바른 이메일 형식이 아닙니다.</span>
                 <button type="button" id="emailCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
 
@@ -112,7 +130,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_number">전화번호</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="number" id="number" placeholder="전화번호를 입력해주세요" required>
+                <input type="text" class="form-control" name="number" id="number" placeholder=<?= $item->number; ?> required>
                 <span id="number-error" style="color: red; display: none;">올바른 전화번호 형식이 아닙니다. 숫자 최대 15자리로 입력해주세요.</span>
                 <button type="button" id="numberCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
 
@@ -121,7 +139,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
             <tr>
               <th scope="row">가입일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="reg_date" id="reg_date" placeholder="" required>
+                <input type="date" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> required>
                 <span></span>
               </td>
             </tr>
@@ -129,7 +147,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
               <th scope="row">강사 요약</th>
               <td class="twoculumn_table">
                 <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control" placeholder="강사 요약" name="teacher_detail" id="teacher_detail"></textarea>
+                <textarea class="form-control" placeholder=<?= $item->teacher_detail; ?> name="teacher_detail" id="teacher_detail"></textarea>
               </td>
             </tr>
             
@@ -138,9 +156,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       </div>
     </div>
     <div class="mt-3 d-flex justify-content-end">
-      <button class="btn btn-primary">등록</button>
+      <button class="btn btn-danger">삭제하기</button>
+      <button class="btn btn-primary">수정하기</button>
     </div>
   </Form>
+  <?php
+        }
+      }
+    ?>
 </div>
 
 <script>
