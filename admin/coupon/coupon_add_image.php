@@ -3,7 +3,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
-$fileUploadResult = fileUpload($_FILES['savefile']);
+$fileUploadResult = fileUpload($_FILES['savefile'].'image');
 $cid = $_POST['cid'];
 if($fileUploadResult) {
   $sql = "INSERT INTO coupons_image (cid, image_coupon) VALUES ($cid ,'$fileUploadResult')";
