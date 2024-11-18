@@ -399,4 +399,4 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
-?>
+?>d
