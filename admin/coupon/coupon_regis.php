@@ -22,6 +22,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 <div class="coupon_regis container">
   <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
+  <input type="hidden" name="coupon_imageId" id="coupon_imageId" value="">
   <input type="hidden" id="coupon_description" name="coupon_description" value="">
   
     <div class="row coupon">
@@ -188,7 +189,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
       }
   });
 
-/*
+
+  /*
   function attachFile(file){
 
 let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
@@ -196,14 +198,14 @@ formData.append('savefile',file); //<input type="file" name="savefile" value="fi
 
 
 $.ajax({
-  url:'product_image_save.php',
+  url:'coupon_add_image.php',
   data:formData,
   cache: false, //이미지 정보를 브라우저 저장, 안한다
   contentType:false, //전송되는 데이터 타입지정, 안한다.
   processData:false, //전송되는 데이터 처리(해석), 안한다.
   dataType:'json', //product_image_save.php이 반환하는 값의 타입
   type:'POST', //파일 정보를 전달하는 방법
-  success:function(returned_data){ //product_image_save.php과 연결(성공)되면 할일
+  success:function(returned_data){ //coupon_add_image.php과 연결(성공)되면 할일
     console.log(returned_data);
 
     if(returned_data.result === 'size'){
@@ -216,8 +218,8 @@ $.ajax({
       alert('첨부실패, 관리자에게 문의하세요');
       return;
     } else{ //파일 첨부가 성공하면
-      let imgids = $('#product_image_id').val() + returned_data.imgid + ',';
-      $('#product_image_id').val(imgids);
+      let imgids = $('#coupon_imageId').val() + returned_data.imgid + ',';
+      $('#coupon_imageId').val(imgids);
       let html = `
         <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
           <img src="${returned_data.savefile}" class="card-img-top" alt="...">
@@ -226,7 +228,7 @@ $.ajax({
           </div>
         </div>
       `;
-      $('#addedImages').append(html);
+      $('.coupon_regisImg').append(html);
     }
   }
 
