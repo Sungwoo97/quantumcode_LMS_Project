@@ -1,0 +1,103 @@
+aside{
+  position: relative;
+  width: 60%;
+  height: 100vh;
+  background: url(../img/core-img/Login_Logo.svg) no-repeat var(--bs-light);
+  background-position: right 123px top 225px; 
+}
+aside h2, aside h3{
+  font-weight: 900;
+  color: #0A58CA;
+}
+aside h2{
+  width: 571px;
+  font-size: 36px;
+}
+aside h3{
+  width: 470px;
+  font-size: 24px;
+}
+.copy{
+  position: absolute;
+  right: 42%;
+  bottom: 70px;
+}
+.login_container{
+  width: 100%; /* 부모 요소에 맞게 조정 */
+    max-width: 600px; /* 최대 너비 제한 */
+    margin: 0 auto;
+}
+.login_container h1{
+  margin-bottom: 51px;
+}
+.login_box{
+  width: 60%;
+}
+form{
+  color:#9E9E9E;
+}
+form .form-floating,
+.login_box button{
+  width: 100%;
+  height: 68px;
+}
+.forgotpw,
+.login_change{
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  color: #9E9E9E;
+}
+
+.teacher_login_php{
+  aside{
+    position: relative;
+    width: 60%;
+    height: 100vh;
+    background: url(../img/core-img/Login_Logo.svg) no-repeat var(--bs-primary);
+    background-position: right 123px top 225px; 
+  }
+  .login_sns_teacher{
+    width: 60%;
+  }
+  .login_sns_teacher button{
+    font-weight: 600;
+    width: 45%;
+    height: 60px;
+    background-color: white;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 25px;
+    box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .login_container h1{
+    margin-bottom: 0;
+  }
+}
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 55%;
+  margin: 20px 0;
+  color: #9E9E9E;
+}
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #E0E0E0;
+}
+.divider::before {
+    margin-right: 10px;
+}
+.divider::after {
+    margin-left: 10px;
+}
+.divider span {
+    font-size: 14px;
+    font-weight: 300;
+    color: #9E9E9E;
+}
