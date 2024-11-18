@@ -14,6 +14,7 @@ $data = $result ->fetch_object();
 if($data){
   $update_sql = "UPDATE teachers SET last_login = now() WHERE tid = $data->tid";
   $update_result = $mysqli->query($update_sql);
+  $_SESSION['AUIDX'] = $data->tid;
   $_SESSION['AUID'] = $data->id;
   $_SESSION['AUNAME'] = $data->name;
 
