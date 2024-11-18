@@ -4,7 +4,6 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $userid = $_POST['userid'];
 $userpw = $_POST['userpw'];
-$password = hash('sha512',$userpw);
 
 $sql = "SELECT * FROM admins WHERE userid='$userid' and passwd = '$password'";
 $result = $mysqli->query($sql);
