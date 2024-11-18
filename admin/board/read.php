@@ -89,7 +89,7 @@ switch ($category) {
   </p>
 </div>
 
-<hr>
+<hr style="color:blue;">
 <!-- 댓글 -->
 <form action="board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
