@@ -39,7 +39,7 @@ $data = $result->fetch_object();
 <h5><?= $data->regist_day ?> </h5>
 <div class="d-flex gap-3 justify-content-end">
   <a href="lecture_modify.php?lid=<?= $lid ?>" class=" btn btn-primary insert">수정</a>
-  <a href="lecture_del.php?lid=<?= $lid ?>" class=" btn btn-danger insert">삭제</a>
+  <a href="lecture_delete.php?lid=<?= $lid ?>" class=" btn btn-danger insert">삭제</a>
 </div>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');

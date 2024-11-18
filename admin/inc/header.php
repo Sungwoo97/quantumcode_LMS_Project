@@ -90,7 +90,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">매출목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
