@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
@@ -25,6 +26,10 @@ $lecture_coverImage = $_FILES['cover_image'] ?? null;
 $lecture_prVideo = null;
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
+
+$lecture_videoId = $_POST['lecture_video'];  //추가이미지의 imgid들 11,12,
+$lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
+
 print_r($_POST);
 
 $expiration_day = date("Y-m-d", strtotime("+3 months", strtotime($lecture_registDay)));
@@ -63,9 +68,21 @@ $sql = "INSERT INTO  lecture_list
     ";
 
 $lecture_result = $mysqli->query($sql);
+$lid = $mysqli->insert_id;
+
+if ($lecture_result) { //상품이 products테이블에 등록되면
+  //추가 이미지 등록
+  if ($lecture_videoId) {
+    //테이블 product_image_table에서 imgid의 값이 11,12인 데이터 행에서 pid 값을 $pid로 업데이트
+    $update_sql = "UPDATE lecture_video SET lid=$lid WHERE lvid IN ($lecture_videoId)";
+    $update_result = $mysqli->query($update_sql);
+  }
+}
+
+
 if ($lecture_result) {
-  "<script>
+  echo "<script>
     alert('강의가 등록되었습니다.');
-    location.href = '/lecture_list.php';
+    location.href = 'lecture_list.php';
     </script>";
 }

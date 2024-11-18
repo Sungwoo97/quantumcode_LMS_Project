@@ -7,13 +7,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $uid = $_SESSION['AUID'];
 
-$sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
-if ($result = $mysqli->query($sql)) {
-  $data = $result->fetch_object();
-}
+// $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
+// if ($result = $mysqli->query($sql)) {
+//   $data = $result->fetch_object();
+// }
 
-$ll = $data->last_lid + 1;
-echo $ll;
 
 $cate_sql = "SELECT * FROM lecture_category WHERE step = 1 ";
 $cate_result = $mysqli->query($cate_sql);
@@ -26,8 +24,8 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
 <div class="container">
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
-    <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
-    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid + 1 ?>">
+    <input type="hidden" name="lecture_video" id="lecture_videoId" value="">
+
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
