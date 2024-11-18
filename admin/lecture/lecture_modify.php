@@ -11,17 +11,29 @@ $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 if ($result = $mysqli->query($sql)) {
   $data = $result->fetch_object();
 }
-
+$cate = array();
 $cate_sql = "SELECT * FROM lecture_category WHERE step = 1 ";
 $cate_result = $mysqli->query($cate_sql);
 while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
   $cate[] = $cate_data; //$cate1배열에 $data할당
 }
+
 $lid = $_GET['lid'];
-$lecture_sql = "SELECT * FROM lecture_category WHERE lid = $lid";
+$lecture_sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $lecture_result = $mysqli->query($lecture_sql);
 $lecture_data = $lecture_result->fetch_object();
 
+$category = $lecture_data->category;
+$plats = substr($category, 0, 5); // A0001
+$devs = substr($category, 5, 5); // B0001
+$techs = substr($category, 10, 5); // C0001
+
+$addVideos = [];
+$video_sql = "SELECT * FROM lecture_video WHERE lid = $lid";
+$video_result = $mysqli->query($video_sql);
+while ($video_data = $video_result->fetch_object()) {
+  $addVideos[] = $video_data;
+}
 
 
 ?>
@@ -34,7 +46,7 @@ $lecture_data = $lecture_result->fetch_object();
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="<?= $lecture_data->cover_image ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
@@ -66,14 +78,16 @@ $lecture_data = $lecture_result->fetch_object();
               <td colspan="3">
                 <div class="d-flex gap-3">
                   <select class="form-select plat" name="platforms" required>
-                    <option value="" selected>Platforms</option>
                     <?php
-                    if (!empty($cate)) {
-                      foreach ($cate as $plat) {
-                    ?>
-                        <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
-                    <?php
+                    foreach ($cate as $plat) {
+                      $selected = '';
+                      if ($plat->code == $plats) {
+                        $selected = 'selected';
                       }
+                    ?>
+                      <option value="<?= $plat->code; ?>" <?= $selected; ?>><?= $plat->name; ?></option>
+                    <?php
+
                     }
                     ?>
                     <!-- <option value="A0001">Web</option> -->
@@ -92,29 +106,41 @@ $lecture_data = $lecture_result->fetch_object();
             <tr>
               <th scope="row">수강료</th>
               <td class="twoculumn_table">
-                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="" required>
+                <input type="text" class="form-control" name="tuition" id="tuition" value="<?= $lecture_data->tuition; ?>" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">할인 수강료</th>
               <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="">
+                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" value="<?= $lecture_data->dis_tuition; ?>">
               </td>
             </tr>
             <tr>
               <th scope="row">등록일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
+                <input type="text" class="form-control" name="regist_day" id="regist_day" value="<?= $lecture_data->regist_day ?>" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">난이도</th>
               <td>
                 <select class="form-select " name="difficult" required>
-                  <option value="0" selected>난이도</option>
-                  <option value="1">입문</option>
-                  <option value="2">초급</option>
-                  <option value="3">중급</option>
-                  <option value="4">고급</option>
-                  <option value="5">전문가</option>
+                  <option value="0" <?php if ($lecture_data->difficult == 0) {
+                                      echo 'selected';
+                                    } ?>>난이도</option>
+                  <option value="1" <?php if ($lecture_data->difficult == 1) {
+                                      echo 'selected';
+                                    } ?>>입문</option>
+                  <option value="2" <?php if ($lecture_data->difficult == 2) {
+                                      echo 'selected';
+                                    } ?>>초급</option>
+                  <option value="3" <?php if ($lecture_data->difficult == 3) {
+                                      echo 'selected';
+                                    } ?>>중급</option>
+                  <option value="4" <?php if ($lecture_data->difficult == 4) {
+                                      echo 'selected';
+                                    } ?>>고급</option>
+                  <option value="5" <?php if ($lecture_data->difficult == 5) {
+                                      echo 'selected';
+                                    } ?>>전문가</option>
                 </select>
               </td>
             </tr>
@@ -123,19 +149,19 @@ $lecture_data = $lecture_result->fetch_object();
               <td colspan="3">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispremium" value="1" id="ispremium">
+                    <input class="form-check-input me-2" type="checkbox" name="ispremium" <?php echo $lecture_data->ispremium ? 'checked' : ''; ?> value="<?= $lecture_data->ispremium ?>" id="ispremium">
                     <label class="form-check-label" for="ispremium">프리미엄</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispopular" value="1" id="ispopular">
+                    <input class="form-check-input me-2" type="checkbox" name="ispopular" <?php echo $lecture_data->ispopular ? 'checked' : ''; ?> value="<?= $lecture_data->ispopular ?>" id="ispopular">
                     <label class="form-check-label" for="ispopular">인기 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isrecom" value="1" id="isrecom">
+                    <input class="form-check-input me-2" type="checkbox" name="isrecom" <?php echo $lecture_data->isrecom ? 'checked' : ''; ?> value="<?= $lecture_data->isrecom ?>" id="isrecom">
                     <label class="form-check-label" for="isrecom">추천 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isfree" value="1" id="isfree">
+                    <input class="form-check-input me-2" type="checkbox" name="isfree" <?php echo $lecture_data->isfree ? 'checked' : ''; ?> value="<?= $lecture_data->isfree ?>" id="isfree">
                     <label class="form-check-label" for="isfree">무료 강의</label>
                   </div>
                 </div>
@@ -147,7 +173,7 @@ $lecture_data = $lecture_result->fetch_object();
       <div class="col-4 ">
         <h6>홍보영상 등록</h6>
         <div class="lecture_prVideo mb-3">
-          <video src="" id="pr_video"></video>
+          <video src="<?= $lecture_data->pr_video ?>" id="pr_video"></video>
           <select class="form-select w-25" name="prVideo_type" id="prVideo_type">
             <option value="1" selected>파일</option>
             <option value="2">URL</option>
@@ -162,18 +188,32 @@ $lecture_data = $lecture_result->fetch_object();
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="sub_title" class="bold">강의 요약</label>
-          <textarea class="form-control" placeholder="강의 요약" name="sub_title" id="sub_title"></textarea>
+          <textarea class="form-control" name="sub_title" id="sub_title"><?= $lecture_data->sub_title; ?></textarea>
         </div>
       </div>
       <div>
         <h6>강의 상세 설명</h6>
-        <div id="desc"></div>
+        <div id="desc"><?= $lecture_data->description; ?></div>
       </div>
       <div class="col-4 ">
         <h6>강의 영상 등록</h6>
         <div class="lecture_video mb-3 d-flex">
           <!-- <video src="" id="lecture_addVideo"></video> -->
+          <?php
+          if (!empty($addVideos)) {
+            foreach ($addVideos as $video) {
+          ?>
+              <div class="card" style="width: 9rem;" id="<?= $video->lvid ?>">
+                <video src="<?= $video->video_lecture ?>" class="card-img-top" alt="..."> </video>
+                <div class="card-body">
+                  <button type="button" class="btn btn-danger btn-sm">삭제</button>
+                </div>
+              </div>
+          <?php
+            }
+          }
 
+          ?>
         </div>
         <input type="file" class="form-control visually-hidden" accept="video/*" name="add_videos[]" id="add_videos" multiple>
         <button type="button" class="btn btn-primary btn-sm" id="addVideo">영상 추가</button>
@@ -183,11 +223,11 @@ $lecture_data = $lecture_result->fetch_object();
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="objectives" class="bold">강의 목표</label>
-          <textarea class="form-control" placeholder="강의 목표" name="objectives" id="objectives"></textarea>
+          <textarea class="form-control" name="objectives" id="objectives"><?= $lecture_data->learning_obj; ?></textarea>
         </div>
         <div class="d-flex flex-column gap-2">
           <label for="tag" class="bold">강의 태그</label>
-          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag"></textarea>
+          <textarea class="form-control" name="tag" id="tag"><?= $lecture_data->lecture_tag; ?></textarea>
         </div>
       </div>
     </div>
@@ -218,6 +258,32 @@ $lecture_data = $lecture_result->fetch_object();
       }
     });
   }
+
+  makeOption($('.plat'), 2, $('.dev'), '');
+  const dev = document.querySelector(".dev");
+  const dev_observer = new MutationObserver(() => {
+    $('.dev option').each(function() {
+      if ($(this).attr('value') == '<?= $devs; ?>') {
+        $(this).prop('selected', true);
+      }
+    });
+    makeOption($('.dev'), 3, $('.tech'), $('.plat').val());
+  });
+  dev_observer.observe(dev, {
+    childList: true
+  });
+
+  const tech = document.querySelector(".tech");
+  const tech_observer = new MutationObserver(() => {
+    $('.tech option').each(function() {
+      if ($(this).attr('value') == '<?= $techs; ?>') {
+        $(this).prop('selected', true);
+      }
+    });
+  });
+  tech_observer.observe(tech, {
+    childList: true
+  });
 
   $(document).on('change', '.plat', function() {
     let platValue = $(this).val();
@@ -333,6 +399,10 @@ $lecture_data = $lecture_result->fetch_object();
         ['insert', ['link', 'picture']]
       ]
     }
+  });
+
+  $("#regist_day").datepicker({
+    format: "yy-mm-dd"
   });
 
   $('#lecture_submit').submit(function(e) {
