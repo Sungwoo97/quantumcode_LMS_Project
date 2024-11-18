@@ -41,11 +41,12 @@ switch ($category) {
 ?>
 
 
-<form action="board_modify_ok.php" method="POST" class="row">
+<form action="board_modify_ok.php" method="POST" class="row" enctype="multipart/form-data">
   <input type="hidden" name="pid" value="<?=$data->pid?>">
+  <input type="hidden" name="old_img" value="<?=$data->img?>">
   <div class="mb-3 col-4">
     <div class="box mb-3">
-      <img id="imgPreview" src="#" alt="이미지 미리보기" style="display:none; width: 100%; height: 100%; object-fit: contain;">
+      <img id="imgPreview" src="<?=$data->img?>" alt="이미지 미리보기" style="display: <?= $data->img ? 'block' : 'none'; ?>; width: 100%; height: 100%; object-fit: contain;">
     </div>
     <input class="form-control" accept="image/*" name="file" type="file" id="file" onchange="previewImage(event)">
   </div>
@@ -58,11 +59,11 @@ switch ($category) {
     </select>
     <div class="mb-3 d-flex gap-3">
       <label for="title" class="form-label">제목:</label>
-      <input type="text" class="form-control w-50" name="title" id="title" value="<?=$data->title?>" placeholder="제목입력">
+      <input type="text" class="form-control w-75" name="title" id="title" value="<?=$data->title?>" placeholder="제목입력">
     </div>
     <div class="mb-3 d-flex gap-3">
       <label for="content" class="form-label">내용:</label>
-      <textarea class="form-control w-50" id="content" name="content" rows="3" value=""><?=$data->content?></textarea>
+      <textarea class="form-control w-75" id="content" name="content" rows="3" value=""><?=$data->content?></textarea>
     </div>
   </div>
   <div class="d-flex justify-content-end gap-3">
@@ -72,6 +73,18 @@ switch ($category) {
 </form>
 
 
+
+
+<script>
+  document.getElementById('file').addEventListener('change', function(e) {
+    const imgPreview = document.getElementById('imgPreview');
+    const file = e.target.files[0];
+    if (file) {
+        imgPreview.src = URL.createObjectURL(file);
+        imgPreview.style.display = 'block';
+    }
+});
+</script>
 
 
 <?php

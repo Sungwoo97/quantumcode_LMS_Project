@@ -2,7 +2,7 @@
 $title = '전체 게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
-
+$user_id = $_SESSION['AUID'];
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
 
@@ -63,7 +63,7 @@ $result = $mysqli->query($sql);
         <th><input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="<?= $data->pid ?>"></th>
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
-        <td><?=$data->user_id ?></td>
+        <td><?=$user_id?></td>
         <td><?=$data->content ?></td>
         <td><?=$post_time ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
