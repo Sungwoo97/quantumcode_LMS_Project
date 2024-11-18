@@ -337,6 +337,7 @@ CREATE TABLE `lecture_category` (
   `lcid` int(11) NOT NULL COMMENT '카테고리 고유번호',
   `code` varchar(20) NOT NULL COMMENT '카테고리코드',
   `pcode` varchar(20) DEFAULT NULL COMMENT '카테고리 부모코드',
+  `ppcode` varchar(20) DEFAULT NULL COMMENT '카테고리 최상위 코드',
   `name` varchar(100) NOT NULL COMMENT '카테고리 이름',
   `step` tinyint(4) NOT NULL COMMENT '카테고리 분류 단계'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 카테고리';
