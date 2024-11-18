@@ -62,7 +62,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     <div class="row">
       <!-- 쿠폰 이미지 -->
       <div class="coupon_view_imgbox col-md-4 d-flex align-items-center justify-content-center">
-        <img src="" alt="상세_쿠폰 이미지" class="coupon_view_img">
+        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/upload/<?=$data->coupon_image;?>" alt="상세_쿠폰 이미지" class="coupon_view_img">
       </div>
 
       <!-- 쿠폰 정보 -->
@@ -134,8 +134,8 @@ if($block_end > $total_page ) $block_end = $total_page;
       <td><?= $uc_data->userid ?></td>
       <td><?= $uc_data->regdate ?></td>
       <td><?= $uc_data->use_max_date ?></td>
-      <td><?= $uc_data->status == 1 ? $uc_data->usedate : '미사용' ?></td> 
-      <td><?= $uc_data->status == 1 ? $uc_data->reason : '' ?></td>
+      <td><?= $uc_data->status == 0 ? $uc_data->usedate : '미사용' ?></td> 
+      <td><?= $uc_data->status == 0 ? $uc_data->reason : '' ?></td>
       <?php
       }
       ?>
