@@ -5,6 +5,22 @@
   padding: 0;
 }
 
+:root {
+ 
+  --white: #ffffff;
+  --primary: #0D6EFD;
+  --darkBlue: #0A58CA;
+  --secondary: #DC3545;
+  --darkRed: #BB2D3B;
+  --skyBlue: #C2DBFE;
+  --darkGray: #797979;
+  --lineGray: #E2E6E9;
+  --light_gray: #EBEBEB;
+  --medium_gray: #A0A0A0;
+  --blueGray: #F8F9FA;
+  --black: #000000;
+}
+
 /* Text Style */
 body {
   font-family: 'Noto Sans KR', 'Roboto', 'Apple SD Gothic Neo',  'Pretendard', 'Malgun Gothic', sans-serif;
@@ -49,7 +65,7 @@ body > nav{
   border-right: solid 1px #C2C2C2;
   position: fixed;
   background-color: #fff;
-  z-index: 9999;
+  z-index: 1000;
 }
 .nav_aside_menu{
   width: 100%;

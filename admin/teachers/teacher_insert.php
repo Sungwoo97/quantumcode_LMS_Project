@@ -39,22 +39,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
           </tr>
           <p class="mt-3">강사 등급은 강의 결제 수수료에 큰 영향을 미칩니다.</p>
         </div>
-        <!-- <div class="mt-3">
-          <tr>
-            <th scope="row">언어 카테고리</th>
-            <td colspan="3">
-              <div class="d-flex gap-3">
-                <select class="form-select mt-3" name="grade" required>
-                  <option value="" selected>등급을 선택해주세요</option>
-                  <option value="Blonze">Blonze</option>
-                  <option value="Silver">Silver</option>
-                  <option value="Gold">Gold</option>
-                  <option value="Vip">Vip</option>
-                </select>
-              </div>
-            </td>
-          </tr>
-        </div> -->
       </div>
       <div class="col-8 mb-3">
         <table class="table">
@@ -309,6 +293,7 @@ function addCover(file, cover) {
 
   $('#numberCheck').click(function(){
     let value = $('#number').val();
+    console.log(value);
     if(value == ''){
       alert('전화번호를 입력해주세요 111');
       $('#number').focus();
@@ -322,27 +307,29 @@ function addCover(file, cover) {
       name:name,
       value:value
     }
+    console.log(data);
     $.ajax({
       async:false,      
       url:'Check_func.php',
       data:data,
       type:'post',
       dataType:'json',
-      error:function(){
+      error:function(e){
         //연결실패시 할일
+        console.log(e);
         alert('서버 연결에 실패했습니다')
       },
-      success:function(response){
-        console.log(response);
+      success:function(returend_data){
         //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
+        // console.log(returend_data);
 
 
-          if(Number(response) > 0){
-            alert('중복됩니다, 다시 시도해주세요.');
-          }else{
-            alert('사용할 수 있습니다.');
-            idChecked = true
-          }
+        if(Number(returend_data.result) > 0){
+          alert('중복됩니다, 다시 시도해주세요.');
+        }else{
+          alert('사용할 수 있습니다.');
+          idChecked = true
+        }
         }
       }
     )
@@ -358,7 +345,6 @@ function addCover(file, cover) {
   }
   });
 
-  
 </script>
 
 <?php
