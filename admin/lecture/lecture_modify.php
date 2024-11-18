@@ -37,7 +37,7 @@ while ($video_data = $video_result->fetch_object()) {
 
 ?>
 <div class="container">
-  <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
+  <Form action="lecture_modify_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
     <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
     <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid ?>">
@@ -48,7 +48,7 @@ while ($video_data = $video_result->fetch_object()) {
           <img src="<?= $lecture_data->cover_image ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
-          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
+          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" value="<?= $lecture_data->cover_image ?>" required>
         </div>
       </div>
       <div class="col-8 mt-3">
