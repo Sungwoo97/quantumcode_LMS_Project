@@ -293,6 +293,7 @@ function addCover(file, cover) {
 
   $('#numberCheck').click(function(){
     let value = $('#number').val();
+    console.log(value);
     if(value == ''){
       alert('전화번호를 입력해주세요 111');
       $('#number').focus();
@@ -318,16 +319,17 @@ function addCover(file, cover) {
         console.log(e);
         alert('서버 연결에 실패했습니다')
       },
-      success:function(response){
-        console.log(response);
+      success:function(returend_data){
         //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
+        // console.log(returend_data);
 
-        // if(Number(response.result) > 0){
-        //   alert('중복됩니다, 다시 시도해주세요.');
-        // }else{
-        //   alert('사용할 수 있습니다.');
-        //   idChecked = true
-        // }
+
+        if(Number(returend_data.result) > 0){
+          alert('중복됩니다, 다시 시도해주세요.');
+        }else{
+          alert('사용할 수 있습니다.');
+          idChecked = true
+        }
         }
       }
     )
