@@ -23,7 +23,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     <label for="content" class="form-label">내용:</label>
     <textarea class="form-control" id="content" name="content" rows="3" value="" required></textarea>
   </div>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end gap-3">
     <button type="submit" class="btn btn-primary">등록</button>
     <button id="cancle" class="btn btn-danger">취소</button>
   </div  d-flex justify-content-end>
