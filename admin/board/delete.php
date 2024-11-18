@@ -7,6 +7,7 @@ $pid=$_GET['pid'];
 
 
 
+
 if ($category === 'all') {
     $sql = "DELETE FROM board WHERE pid = $pid";
 } else {
@@ -16,24 +17,24 @@ if ($category === 'all') {
 
 
 switch ($category) {
-    case 'all':
-        $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
-        break;
-    case 'qna':
-        $redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
-        break;
-    case 'notice':
-        $redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
-        break;
-    case 'event':
-        $redirect_url = '/qc/admin/board/board_list.php?category=event'; 
-        break;
-    case 'free':
-        $redirect_url = '/qc/admin/board/board_list.php?category=free'; 
-        $un_redirect_url = '/qc/admin/board/board_list.php';
-        break;
-    default:
-        die("침몰");
+	case 'all':
+		$redirect_url = '/qc/admin/board/board_list.php?category=all'; 
+		break;
+	case 'qna':
+		$redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
+		break;
+	case 'notice':
+		$redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
+		break;
+	case 'event':
+		$redirect_url = '/qc/admin/board/board_list.php?category=event'; 
+		break;
+	case 'free':
+		$redirect_url = '/qc/admin/board/board_list.php?category=free'; 
+		$un_redirect_url = '/qc/admin/board/board_list.php';
+		break;
+	default:
+		die("침몰");
   }
   
 
@@ -48,6 +49,8 @@ if($mysqli->query($sql) === true){
   location.href='$un_redirect_url';
   </script>";
 }
+
+
 
 
 
