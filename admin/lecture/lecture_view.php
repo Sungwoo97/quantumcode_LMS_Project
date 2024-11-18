@@ -3,6 +3,17 @@ $title = '상품 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
+
 $lid = $_GET['lid'];
 
 $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
