@@ -1,6 +1,8 @@
 <?php
 $title = '전체 게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/css/board.css');
+
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
@@ -18,7 +20,7 @@ $result = $mysqli->query($sql);
 
 ?>
 <div class="container">
-    <select id="categorySelect" name="category">
+    <select id="categorySelect" class="form-select w-25 mb-3" name="category">
       <option value="all">전체 게시판</option>
       <option value="notice" <?= $category == 'notice' ? 'selected' : '' ?>>공지사항</option>
       <option value="free" <?= $category == 'free' ? 'selected' : '' ?>>자유게시판</option>
@@ -26,7 +28,7 @@ $result = $mysqli->query($sql);
       <option value="qna" <?= $category == 'qna' ? 'selected' : '' ?>>질문과답변</option>
     </select>
 
-  <table class="table table-hover">
+  <table class="table table-hover mb-3">
     <thead>
       <tr>
         <th scope="col">check</th>
@@ -59,7 +61,7 @@ $result = $mysqli->query($sql);
         }
         ?>
       <tr>
-        <th><input type="checkbox" id="selectAll" class="delete_checkbox" value="<?= $data->pid ?>"></th>
+        <th><input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="<?= $data->pid ?>"></th>
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id ?></td>
@@ -75,7 +77,7 @@ $result = $mysqli->query($sql);
     </tbody>
   </table>
 
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example" class="mb-3">
     <ul class="pagination d-flex justify-content-center">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
       <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -85,7 +87,7 @@ $result = $mysqli->query($sql);
     </ul>
   </nav>
 
-  <div class=" d-flex justify-content-end">
+  <div class=" d-flex justify-content-end gap-3">
     <a class="btn btn-primary" href="board_write.php" role="button">글등록</a>
     <button type="button" id="deleteSelected" class="btn btn-danger" href="#" role="button">글삭제</button>
   </div>

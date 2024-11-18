@@ -81,7 +81,7 @@ switch ($category) {
   ?>
 </div>
 <div class="d-flex justify-content-end">
-  <p>
+  <p class="d-flex gap-3">
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>

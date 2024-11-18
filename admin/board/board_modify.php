@@ -56,7 +56,7 @@ switch ($category) {
     <label for="content" class="form-label">내용:</label>
     <textarea class="form-control" id="content" name="content" rows="3" value=""><?=$data->content?></textarea>
   </div>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end gap-3">
     <button class="btn btn-primary">등록</button>
     <a href="<?=$redirect_url?>" class="btn btn-danger">취소</a>
   </div>
