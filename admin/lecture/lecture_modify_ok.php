@@ -55,7 +55,7 @@ if (isset($_FILES['pr_video']) && $_FILES['pr_video']['error'] == UPLOAD_ERR_OK)
   }
 }
 
-
+/*
 $sql = "INSERT INTO  lecture_list
     (category, title, cover_image, tid, isfree, ispremium, ispopular, isrecom, tuition, dis_tuition, regist_day, expiration_day, sub_title, description, learning_obj, difficult, lecture_tag, pr_video )
     VALUES
@@ -66,6 +66,7 @@ $lecture_result = $mysqli->query($sql);
 if ($lecture_result) {
   "<script>
     alert('강의가 등록되었습니다.');
-    location.href = '/lecture_list.php';
+    location.href = 'lecture_list.php';
     </script>";
 }
+*/
