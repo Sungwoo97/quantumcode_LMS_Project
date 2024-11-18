@@ -23,18 +23,19 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 <div class="coupon_regis container">
   <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
   <input type="hidden" id="coupon_description" name="coupon_description" value="">
-  <input type="hidden" name="coupon_img" id="coupon_img" value="">
-  <div class="row coupon">
-    <div class="col-4 mb-5">
-      <h6>쿠폰 이미지 등록</h6>
-      <div class="coupon_cpImg mb-3">
-        <img src="" id="couponImg" alt="">
+    <div class="row coupon">
+      
+      <div class="col-4 mb-5">
+        <h6>쿠폰 이미지 등록</h6>
+          <div class="coupon_regis_Img mb-3">
+            <img src="" id="couponImg" alt="">
+          </div>
+          <div class="input-group">
+            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
+          </div>
       </div>
-      <div class="input-group">
-        <input type="file" class="form-control" accept="image/*" name="addedImages" id="addedImages">
-      </div>
-    </div>
-        <div class="col-8 mt-3">
+
+      <div class="col-8 mt-3">
         <table class="table">
           <thead class="visually-hidden">
             <tr>
@@ -55,27 +56,26 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
               <textarea class="form-control" name="coupon_content" id="coupon_content" rows="2"></textarea>
             </tr>
             <tr>
-          <th scope="row">할인구분</th>
-          <td>
-            <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
-              <option value="fixed" selected>정액</option>
-              <option value="percentage">정률</option>
-            </select>
-          </td>
-          <td id="ct1">
-            <div class="input-group">
-              <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="0" aria-describedby="coupon_price"> 
-              <span class="input-group-text" id="coupon_price">원</span>
-            </div>
-          </td> 
-          <td id="ct2">
-            <div class="input-group">
-              <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="0" aria-describedby="coupon_ratio">
-              <span class="input-group-text" id="coupon_ratio">%</span>
-            </div>
-          </td>
-        </tr>
-        </tr> 
+              <th scope="row">할인구분</th>
+              <td>
+                <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
+                  <option value="fixed" selected>정액</option>
+                  <option value="percentage">정률</option>
+                </select>
+              </td>
+              <td id="ct1">
+                <div class="input-group">
+                  <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="0" aria-describedby="coupon_price"> 
+                  <span class="input-group-text" id="coupon_price">원</span>
+                </div>
+              </td> 
+              <td id="ct2">
+                <div class="input-group">
+                  <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="0" aria-describedby="coupon_ratio">
+                  <span class="input-group-text" id="coupon_ratio">%</span>
+                </div>
+              </td>
+            </tr> 
             <tr>
               <th scope="row">사용기한</th>
               <td colspan="3">
