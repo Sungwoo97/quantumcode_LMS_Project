@@ -12,6 +12,9 @@ if ($result = $mysqli->query($sql)) {
   $data = $result->fetch_object();
 }
 
+$ll = $data->last_lid + 1;
+echo $ll;
+
 $cate_sql = "SELECT * FROM lecture_category WHERE step = 1 ";
 $cate_result = $mysqli->query($cate_sql);
 while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
@@ -24,7 +27,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
     <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
-    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid ?>">
+    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid + 1 ?>">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
@@ -98,7 +101,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
             <tr>
               <th scope="row">등록일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
+                <input type="text" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">난이도</th>
@@ -328,6 +331,10 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         ['insert', ['link', 'picture']]
       ]
     }
+  });
+
+  $("#regist_day").datepicker({
+    format: "yy-mm-dd"
   });
 
   $('#lecture_submit').submit(function(e) {

@@ -34,7 +34,7 @@ while ($list_data = $list_result->fetch_object()) { //조회된 값들 마다 �
 if (count($list) > 0) {
   $i = 1;
   foreach ($list as $list) {
-    $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->pcode}'";
+    $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->pcode}' AND pcode = '{$list->ppcode}'";
     $ppcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->ppcode}'";
 
     $pcode_result = $mysqli->query($pcode_name_sql);
