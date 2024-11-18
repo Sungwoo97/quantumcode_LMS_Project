@@ -2,15 +2,15 @@
 $title = "강사 목록";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../index.php';
+    </script>
+  ";
+}
 
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
 
 //검색
 $search_where = ''; //초기화

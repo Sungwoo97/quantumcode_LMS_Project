@@ -3,6 +3,12 @@ session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
+$tid = $_POST['tid'] ?? '';
+if (!isset($tid)) {
+  echo "<script>alert('수정할 정보가 없습니다.'); 
+  location.href = '../teacher/teacher_list.php';</script>";
+}
+
 $name = $_POST['name'] ?? '';
 $id = $_POST['id'] ?? '';
 $birth = $_POST['birth'] ?? '';
@@ -14,7 +20,7 @@ $reg_date = $_POST['reg_date'] ?? '';
 $teacher_detail = $_POST['teacher_detail'] ?? '';
 $grade = $_POST['grade'] ?? '';
 $cover_image = $_FILES['cover_image'] ?? '';
-$tid = $_POST['tid'] ?? ''; // 수정 대상의 tid를 받아옴
+
 
 if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_ERR_OK) {
   $fileUploadResult = fileUpload($_FILES['cover_image'], 'image');

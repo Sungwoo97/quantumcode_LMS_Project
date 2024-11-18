@@ -3,15 +3,14 @@ $title = '강사 상세 페이지';
 $teacher_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacher.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-// session_start();
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../index.php';
+    </script>
+  ";
+}
 
 
 $tid = $_GET['tid'];
@@ -42,8 +41,8 @@ while($data = $result->fetch_object()){
     ?> 
     <div class="row teacher">
       <div class="col-4 mb-5">
-        <div class="teacher_coverImg mb-3">
-          <img src="<?= $item->cover_image; ?>" id="coverImg" alt="">
+        <div class="teacher_coverImg2 mb-3">
+          <img src="<?= $item->cover_image; ?>" id="coverImg" alt="" width="400" height="300">
         </div>
         <div class="col-12 mb-3">
           <table class="table">
