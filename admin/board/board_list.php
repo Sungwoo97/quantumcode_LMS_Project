@@ -1,7 +1,6 @@
 <?php
 $title = '전체 게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/css/board.css');
 
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
