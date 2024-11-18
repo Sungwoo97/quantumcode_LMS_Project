@@ -42,7 +42,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
         <span>Or Continue With Email</span>
       </div>
       <div class="row login_box">
-        <form action="login_teacher_ok.php" method="POST">
+        <form action="login_ok_teacher.php" method="POST">
           <div class="form-floating">
             <input type="text" class="form-control" id="userid" name="userid" placeholder="Admin">
             <label for="userid">Your Email</label>
