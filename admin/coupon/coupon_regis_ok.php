@@ -18,15 +18,13 @@ $mysqli->autocommit(FALSE);
 try {
     $coupon_name = $_POST['coupon_name'] ?? '';
     $coupon_content = $_POST['coupon_content'] ?? '';
-    $coupon_type = $_POST['coupon_type'] ?? '1';
+    $coupon_type = $_POST['coupon_type'] ?? '';
     $coupon_price = $_POST['coupon_price'] ?? 0;
     $coupon_ratio = $_POST['coupon_ratio'] ?? 0;
     $status = isset($_POST['coupon_activate']) ? 1 : 0;
     $startdate = $_POST['startdate'] ?? date('Y-m-d');
     $enddate = $_POST['enddate'] ?? date('Y-m-d', strtotime('+1 year'));
     $userid = $_SESSION['AUID'] ?? 'admin';
-    $max_value = $_POST['max_value'] ?? 0;
-    $couponImage = '';
 
     // 이미지 업로드 처리
     if (isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD_ERR_OK) {
@@ -42,47 +40,29 @@ try {
         }
     }
 
-    // 데이터 삽입 쿼리
     $sql = "INSERT INTO coupons 
-            (coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid, startdate, enddate, max_value) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-    $stmt = $mysqli->prepare($sql);
-    if (!$stmt) {
-        throw new Exception("SQL Prepare Error: " . $mysqli->error);
+    (coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid) 
+    VALUES
+    ('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}')";
+  
+    $result = $mysqli->query($sql); 
+  
+    //입력성공하면 쿠폰등록 완료 경고창 띄우고 쿠폰목록 페이지로 이동
+    if($result){
+      echo "
+        <script>
+          alert('쿠폰 등록 완료');
+          location.href = 'coupon_list.php';
+        </script>
+      ";
+      $mysqli->commit();//디비에 커밋한다.
     }
-
-    $stmt->bind_param(
-        'ssssddsissi',
-        $coupon_name,
-        $coupon_content,
-        $couponImage,
-        $coupon_type,
-        $coupon_price,
-        $coupon_ratio,
-        $status,
-        $userid,
-        $startdate,
-        $enddate,
-        $max_value
-    );
-
-    if ($stmt->execute()) {
-        $mysqli->commit();
-        echo "
-          <script>
-            alert('쿠폰 등록 완료');
-            location.href = 'coupon_list.php';
-          </script>
-        ";
-    } else {
-        throw new Exception("SQL Execution Error: " . $stmt->error);
-    }
-
-} catch (Exception $e) {
-    $mysqli->rollback();
-    echo "<script>alert('오류가 발생했습니다: " . $e->getMessage() . "'); history.back();</script>";
-}
-
-$mysqli->close();
-?>
+  
+   
+  }catch (Exception $e) {
+      $mysqli->rollback();//저장한 테이블이 있다면 롤백한다.
+      exit;
+  }
+  
+  $mysqli->close();
+  ?>
