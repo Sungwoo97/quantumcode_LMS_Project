@@ -240,6 +240,7 @@ if (count($list) > 0) {
     addCategory(name, pcode, ppcode, step);
   })
 
+  makeOption($('.plats'), 2, $('.devs'), '');
 
 
   // submit 이벤트, input의 값, 
@@ -284,6 +285,7 @@ if (count($list) > 0) {
     //console.log('platValue received in dev change:', platValue);
     makeOption($(this), 3, $('.tech'), $('.plat').val());
   });
+
 
   $(document).on('change', '.plats', function() {
     makeOption($(this), 2, $('.devs'), '');
