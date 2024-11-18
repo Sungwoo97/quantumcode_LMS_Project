@@ -109,6 +109,7 @@ while($data = $result->fetch_object()){
             </tr>
           </thead>
           <tbody>
+            <h3>강사 개인 정보
             <tr scope="row">
               <th scope="row" class="insert_name">회원 고유 ID</th>
               <td colspan="3">
