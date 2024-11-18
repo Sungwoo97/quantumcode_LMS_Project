@@ -54,8 +54,8 @@ $sql = "UPDATE coupons SET
   coupon_price = $coupon_price,
   coupon_ratio = $coupon_ratio,
   status = $status,
-  startdate = $startdate,
-  enddate = $enddate,
+  startdate = '$startdate',
+  enddate = '$enddate',
   userid = '$userid'
   ";
 
