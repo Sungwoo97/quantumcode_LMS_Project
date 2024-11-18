@@ -3,8 +3,8 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 // POST 데이터 받기...아마 이 부분 에러인거 같은데 gpt는 이게 맞다고 함...
-$name = $_POST['name'] ?? '';
-$value = $_POST['value'] ?? ''; 
+$name = $_POST['name'] ;
+$value = $_POST['value']; 
 
 // 반환할 결과 초기화
 //$return_data = array("result" => 0);  중복이 없으면 result = 0
@@ -13,25 +13,28 @@ if ($name && $value) {
     // SQL 쿼리 작성
     if ($name === 'id') {
         // 아이디 중복 체크
-        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE id = $value";
+        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE id = '$value'";
     } elseif ($name === 'email') {
         // 이메일 중복 체크
-        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE email = $value";
+        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE email = '$value'";
     } elseif ($name === 'number') {
         // 전화번호 중복 체크
-        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE number = $value";
+        $sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE number = '$value'";
     }
 
+    // $return_data = array('result'=>$sql);
+    // echo json_encode($return_data);
+    
     if (isset($sql)) {
       $result = $mysqli->query($sql);
       $row = $result->fetch_assoc();
       $row_num = $row['cnt'];
 
       if($row_num > 0){
-        $return_data = array('result'=>$row_num);
+        $return_data = array('result'=>$row_num, 'type'=>$name);
         echo json_encode($return_data);
       }else if($row_num == 0){
-        $return_data = array('result'=>0);
+        $return_data = array('result'=>0, 'type'=>$name);
         echo json_encode($return_data);
       }
     }
@@ -41,32 +44,6 @@ $mysqli->close();
 ?>
 
 
-<!-- //중복 id 개수 조회
-$id_sql = "SELECT COUNT(*) AS cnt FROM admins WHERE userid='$userid '";
-$id_result = $mysqli->query($id_sql);
-$id_data = $id_result->fetch_assoc();
-$row_num = $id_data['cnt'];  //중복 1, 중복x 0
 
-if($row_num >= 1){
-  $return_data = array('result'=>'error');
-  echo json_encode($return_data);
-}else if($row_num == 0){ 
-  $return_data = array('result'=>'ok');
-  echo json_encode($return_data);
-}
-
-$mysqli->close(); -->
-
-<!-- 
-$id_result = $mysqli->query($id_sql);
-$row = $id_result -> fetch_object(); // $row->cnt
-$row_num = $row->cnt;
-
-
-$return_data = array('result'=>$row_num);
-echo json_encode($return_data);
-$mysqli->close();
-
--->
 
 

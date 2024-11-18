@@ -322,27 +322,28 @@ function addCover(file, cover) {
       name:name,
       value:value
     }
+    console.log(data);
     $.ajax({
       async:false,      
       url:'Check_func.php',
       data:data,
       type:'post',
       dataType:'json',
-      error:function(){
+      error:function(e){
         //연결실패시 할일
+        console.log(e);
         alert('서버 연결에 실패했습니다')
       },
       success:function(response){
         console.log(response);
         //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
 
-
-          if(Number(response) > 0){
-            alert('중복됩니다, 다시 시도해주세요.');
-          }else{
-            alert('사용할 수 있습니다.');
-            idChecked = true
-          }
+        // if(Number(response.result) > 0){
+        //   alert('중복됩니다, 다시 시도해주세요.');
+        // }else{
+        //   alert('사용할 수 있습니다.');
+        //   idChecked = true
+        // }
         }
       }
     )
@@ -358,7 +359,6 @@ function addCover(file, cover) {
   }
   });
 
-  
 </script>
 
 <?php
