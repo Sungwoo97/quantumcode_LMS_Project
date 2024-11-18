@@ -18,6 +18,7 @@ $mysqli->autocommit(FALSE);
 try {
     $coupon_name = $_POST['coupon_name'] ?? '';
     $coupon_content = $_POST['coupon_content'] ?? '';
+    $coupon_image = $_POST['coupon_image'] ?? '';
     $coupon_type = $_POST['coupon_type'] ?? '';
     $coupon_price = $_POST['coupon_price'] ?? 0;
     $coupon_ratio = $_POST['coupon_ratio'] ?? 0;
@@ -30,7 +31,7 @@ try {
     if (isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD_ERR_OK) {
         $fileUploadResult = fileUpload($_FILES['coupon_image']);
         if ($fileUploadResult) {
-            $couponImage = $fileUploadResult;
+            $coupon_image = $fileUploadResult;
         } else {
             echo "<script>
                 alert('파일 첨부할 수 없습니다.');
@@ -43,7 +44,7 @@ try {
     $sql = "INSERT INTO coupons 
     (coupon_name, coupon_content, coupon_image, coupon_type, coupon_price, coupon_ratio, status, userid) 
     VALUES
-    ('$coupon_name', '$coupon_content', '$couponImage', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}')";
+    ('$coupon_name', '$coupon_content', '$coupon_image', '$coupon_type', $coupon_price, $coupon_ratio, $status, '{$_SESSION['AUID']}')";
   
     $result = $mysqli->query($sql); 
   
