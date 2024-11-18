@@ -24,6 +24,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/common.css">
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/core-style.css">
@@ -41,7 +42,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       echo $member_css;
     }
     ?>
- 
+
 
   </head>
   <!-- Favicon -->
@@ -50,6 +51,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <!-- Bootstrap, jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
@@ -62,9 +64,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-      <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">
-        <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
-      </a>
+        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">
+          <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
+        </a>
       </h1>
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
@@ -152,28 +154,28 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     </div>
 
     <?php
-      if(!isset($_SESSION['AUID'])){
+    if (!isset($_SESSION['AUID'])) {
     ?>
-    <div class="admin_account d-flex gap-3 align-items-center">
-      <p class="tt_02">로그인 이전입니다.</p>
-      <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/login.php">로그인</a>
-    </div>
+      <div class="admin_account d-flex gap-3 align-items-center">
+        <p class="tt_02">로그인 이전입니다.</p>
+        <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/login.php">로그인</a>
+      </div>
 
     <?php
-      } else{
+    } else {
     ?>
-    <div class="admin_account">
-      <div class="d-flex gap-3 align-items-center mb-4">
-        <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
-        <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+      <div class="admin_account">
+        <div class="d-flex gap-3 align-items-center mb-4">
+          <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
+          <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+        </div>
+        <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
       </div>
-      <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
-    </div>
     <?php
-      } 
+    }
     ?>
   </nav>
-  
+
   <div class="nav_header">
     <h2 class="main_tt"> <?= $title ?></h2>
   </div>
