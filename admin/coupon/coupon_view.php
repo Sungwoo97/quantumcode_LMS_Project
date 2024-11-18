@@ -73,19 +73,19 @@ if($block_end > $total_page ) $block_end = $total_page;
               <th>쿠폰번호</th>
               <td class="text-primary"><?= $data->cid; ?></td>
               <th>할인구분</th>
-              <td>정액</td>
+              <td><?= $data->coupon_type === 'fixed' ? '정액' : '정률'; ?></td>
             </tr>
             <tr>
               <th>쿠폰이름</th>
               <td><?= $data->coupon_name; ?></td>
               <th>할인율</th>
-              <td>5,000 원</td>
+              <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "할인 없음") ?></td>
             </tr>
             <tr>
               <th>쿠폰설명</th>
               <td><?= $data->coupon_content; ?></td>
               <th>상태</th>
-              <td>활성화</td>
+              <td><?= $data->status == '1' ? '활성화' : '비활성화' ?></td>
             </tr>
             <tr>
               <th>발급기간</th>
