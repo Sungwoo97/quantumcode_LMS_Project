@@ -1,6 +1,6 @@
 <?php
 session_start();
-print_r($_SESSION); 
+// print_r($_SESSION); 
 if (!isset($title)) {
   $title = '';
 }
@@ -9,10 +9,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,11 +65,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 </head>
 
 <body>
-
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">
+        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">  
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
@@ -182,16 +177,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     ?>
       <div class="admin_account">
         <div class="d-flex gap-3 align-items-center mb-4">
-          <img src="<?= $data->cover_image; ?>" alt="">
-
+          <img src="<?= $data->cover_image; ?>" alt="" width="150" height="150">
           <?php
             if (isset($_SESSION['TUIDX'])) {
           ?>
-            <p class="tt_02"><?= $_SESSION['TUID'] ?></p>
+            <h3 class="tt_02"><?= $_SESSION['TUID'] ?></h3>
             <?php
             } else {                
             ?>
-              <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+              <h3 class="tt_02"><?= $_SESSION['AUID'] ?></h3>
             <?php
               }
             ?>
