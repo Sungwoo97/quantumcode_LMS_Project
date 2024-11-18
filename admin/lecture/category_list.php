@@ -1,7 +1,7 @@
 <?php
 $title = '카테고리 관리';
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/lecture.css\" rel=\"stylesheet\">";
+include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/header.php');
 
 if (!isset($_SESSION['AUID'])) {
   echo "
@@ -209,7 +209,7 @@ if (count($list) > 0) {
     </div>
   </div>
 </div>
-<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
+<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/admin/js/common.js"></script>
 <script>
   $('.platform').submit(function(e) {
     e.preventDefault();
@@ -292,5 +292,5 @@ if (count($list) > 0) {
 </script>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/inc/footer.php');
 ?>
