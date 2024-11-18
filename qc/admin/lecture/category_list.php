@@ -3,7 +3,7 @@ $title = '카테고리 관리';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-if(!isset($_SESSION['AUID'])){
+if (!isset($_SESSION['AUID'])) {
   echo "
     <script>
       alert('관리자로 로그인해주세요');
@@ -13,9 +13,9 @@ if(!isset($_SESSION['AUID'])){
 }
 
 $sql = "SELECT * FROM lecture_category WHERE step = 1 ";
-$result = $mysqli->query($sql) ;
-while($data = $result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
-  $cate[]= $data; //$cate1배열에 $data할당
+$result = $mysqli->query($sql);
+while ($data = $result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $cate[] = $data; //$cate1배열에 $data할당
 }
 
 // $cate_sql = "SELECT * FROM lecture_category WHERE step = 2 ";
@@ -27,14 +27,13 @@ $html = '';
 $list = array();
 $list_sql = "SELECT * FROM lecture_category WHERE step = 3";
 $list_result = $mysqli->query($list_sql);
-while($list_data = $list_result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
-  $list[]= $list_data; //$cate1배열에 $data할당
+while ($list_data = $list_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $list[] = $list_data; //$cate1배열에 $data할당
 }
 
-
-if(count($list)>0){
+if (count($list) > 0) {
   $i = 1;
-  foreach($list as $list){
+  foreach ($list as $list) {
     $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->pcode}'";
     $ppcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->ppcode}'";
 
@@ -49,7 +48,7 @@ if(count($list)>0){
         <td>{$ppcode_name}</td>
         <td>{$pcode_name}</td>
         <td>{$list->name}</td>
-        <td><img src=\"../img/icon-img/Edit.svg\" width=\"20\"></td>
+        <td><img src=\"../img/icon-img/Edit.svg\" id=\"edit{$i}\" width=\"20\"></td>
       </tr>";
     $i++;
   }
@@ -66,10 +65,10 @@ if(count($list)>0){
         <select class="form-select plat" name="platforms">
           <option value="" selected>Platforms</option>
           <?php
-            if(!empty($cate)){
-            foreach($cate as $plat){
+          if (!empty($cate)) {
+            foreach ($cate as $plat) {
           ?>
-            <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+              <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
           <?php
             }
           }
@@ -152,13 +151,13 @@ if(count($list)>0){
               <select class="form-select w-50" name="platforms" id="pcode2">
                 <option value="" selected>Platforms</option>
                 <?php
-                  if(!empty($cate)){
-                    foreach($cate as $plat){
-                  ?>
-                      <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
-                  <?php
-                    }
+                if (!empty($cate)) {
+                  foreach ($cate as $plat) {
+                ?>
+                    <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
+                <?php
                   }
+                }
                 ?>
               </select>
             </div>
@@ -184,19 +183,19 @@ if(count($list)>0){
           <div class="row d-flex d-flex flex-column gap-3">
             <div class="d-flex gap-2 w-100">
               <select class="form-select flex-fill plats" name="platforms" id="pcode2">
-                
+
                 <?php
-                  if(!empty($cate)){
-                    foreach($cate as $plat){
+                if (!empty($cate)) {
+                  foreach ($cate as $plat) {
                 ?>
-                    <option value="<?= $plat->code;?>"><?= $plat->name;?></option>
+                    <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
                 <?php
-                    }
                   }
+                }
                 ?>
               </select>
               <select class="form-select flex-fill devs" name="development" id="pcode3">
-                
+
                 <option value="" selected>Development</option>
               </select>
             </div>
@@ -210,7 +209,7 @@ if(count($list)>0){
     </div>
   </div>
 </div>
-
+<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
 <script>
   $('.platform').submit(function(e) {
     e.preventDefault();
@@ -227,7 +226,7 @@ if(count($list)>0){
     let step = Number($(this).attr('data-step'));
     console.log(step);
     let pcode = $(`#pcode${step}`).val();
-    let ppcode = null; 
+    let ppcode = null;
     let name = $('#development').val();
     addCategory(name, pcode, ppcode, step);
   })
@@ -237,14 +236,14 @@ if(count($list)>0){
     let step = Number($(this).attr('data-step'));
     let pcode = $(`#pcode${step}`).val();
     let ppcode = $('.plats').val();
-    
+
     let name = $('#technologies').val();
     addCategory(name, pcode, ppcode, step);
   })
 
-  
 
-// submit 이벤트, input의 값, 
+
+  // submit 이벤트, input의 값, 
   function addCategory(name, pcode, ppcode, step) {
 
     let data = {
@@ -276,54 +275,20 @@ if(count($list)>0){
   }
 
   $('#plat').on('change', '.plat', function() {
-    let platValue = $(this).val(); 
+    let platValue = $(this).val();
     makeOption($(this), 2, $('.dev'), '').then(() => {
-        $('.dev').trigger('change'); // dev의 change 이벤트 실행
+      $('.dev').trigger('change'); // dev의 change 이벤트 실행
     })
   });
 
   $('#dev').on('change', '.dev', function() {
     //console.log('platValue received in dev change:', platValue);
-      makeOption($(this), 3, $('.tech'), $('.plat').val());
+    makeOption($(this), 3, $('.tech'), $('.plat').val());
   });
 
-  $(document).on('change', '.plats', function() {    
-      makeOption($(this), 2, $('.devs'), '');
+  $(document).on('change', '.plats', function() {
+    makeOption($(this), 2, $('.devs'), '');
   });
-
-  async function makeOption(e,step,target, ppcode){
-    console.log(e,step,target, ppcode);
-  let cate = e.val();
-  console.log(cate);
-  //debugger;
-
-  let data = new URLSearchParams({
-    cate:cate,
-    step:step,
-    ppcode:ppcode
-  });
-
-
-  try{
-    const response = await fetch('category_print.php',{
-      method:'post',
-      headers: { //전송되는 데이터의 타입
-        'Content-Type': 'application/x-www-form-urlencoded' 
-      },
-      body:data
-    });
-    if(!response.ok){ //연결에러가 있다면
-      throw new Error('연결에러');
-    }
-    const result = await response.text(); //응답의 결과를
-    console.log(result);
-    target.html(result);
-
-  } catch(error){
-    console.log(error);
-  }
-}
-
 </script>
 
 <?php

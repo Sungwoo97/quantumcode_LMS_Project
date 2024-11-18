@@ -17,6 +17,11 @@ $cate_result = $mysqli->query($cate_sql);
 while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
   $cate[] = $cate_data; //$cate1배열에 $data할당
 }
+$lid = $_GET['lid'];
+$lecture_sql = "SELECT * FROM lecture_category WHERE lid = $lid";
+$lecture_result = $mysqli->query($lecture_sql);
+$lecture_data = $lecture_result->fetch_object();
+
 
 
 ?>
@@ -53,7 +58,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
             <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
-                <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요" required>
+                <input type=" text" class="form-control" name="title" id="title" value="<?= $lecture_data->title; ?>" required>
               </td>
             </tr>
             <tr scope="row">
