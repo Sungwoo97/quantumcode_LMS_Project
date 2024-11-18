@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-18 06:46
+-- 생성 시간: 24-11-18 07:03
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `teachers` (
   `name` varchar(15) NOT NULL,
   `id` varchar(45) NOT NULL,
   `birth` date NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `email` varchar(45) NOT NULL,
   `number` int(45) NOT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
@@ -51,8 +51,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `sales`, `lecture_num`) VALUES
-(20, '강동원', 'dongwon', '1990-10-10', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'dongwon@naver.com', 1011112222, '2024-11-07 00:00:00', '/qc/admin/upload/20241118025234161954.png', '자바스크립트 위주 강사', 'silver', '2024-11-18 10:52:34', NULL, '', 5000000, 4),
-(21, '공유', 'gonguu', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'gonguu@naver.com', 1022221234, '2024-11-06 00:00:00', '/qc/admin/upload/20241118031054112220.png', '자바스트립트 인기 강사', 'Blonze', '2024-11-18 11:10:54', NULL, '', NULL, NULL);
+(0, '홍길동', 'hong', '1991-01-10', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hong@naver.com', 1054542121, '2024-10-03 00:00:00', 'Array', '123123', 'Blonze', '2024-11-18 15:02:38', NULL, '', NULL, NULL);
 
 --
 -- 덤프된 테이블의 인덱스
