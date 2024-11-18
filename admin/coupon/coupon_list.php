@@ -76,7 +76,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       <th scope="col">할인율</th>
       <th scope="col">발급기간</th>
       <th scope="col">활성화</th>
-      <th scope="col">상세보기</th>
+      <th scope="col">수정 및 삭제</th>
     </tr>
   </thead>
   <tbody>
