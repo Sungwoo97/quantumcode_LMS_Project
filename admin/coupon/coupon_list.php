@@ -24,7 +24,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // 목록 개수와 시작 번호 설정
 $list = 10;
-$start_num = $page*$list;
+$start_num = ($page - 1) * $list;
 $block_ct = 5;
 $block_num = ceil($page/$block_ct);
 
@@ -76,7 +76,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       <th scope="col">할인율</th>
       <th scope="col">발급기간</th>
       <th scope="col">활성화</th>
-      <th scope="col">상세보기</th>
+      <th scope="col">수정 및 삭제</th>
     </tr>
   </thead>
   <tbody>
@@ -87,7 +87,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     ?>
     <tr>
       <td scope="row">
-      <input class="form-check-input listcheck" type="checkbox" value="" id="cid<?= $data->cid; ?>">
+      <input class="form-check-input listcheck" name="cid_check[]" type="checkbox" value="" id="cid<?= $data->cid; ?>">
       </td>
       <th scope="row">
         <input type="hidden" name="cid[]" value="<?= $data->cid; ?>">

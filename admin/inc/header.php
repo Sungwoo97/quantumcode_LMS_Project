@@ -6,6 +6,8 @@ if (!isset($title)) {
 }
 isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +65,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 </head>
 
 <body>
-
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">
+        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">  
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
@@ -157,7 +158,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     </div>
 
     <?php
-    if (!isset($_SESSION['AUID'])) {
+    if (!isset($_SESSION['AUIDX']) && !isset($_SESSION['TUIDX'])) {
     ?>
       <div class="admin_account d-flex gap-3 align-items-center">
         <p class="tt_02">로그인 이전입니다.</p>
@@ -165,12 +166,30 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       </div>
 
     <?php
-    } else {
+    } else {  //즉, auidx가 있다면...(로그인되었다면)
+      if(isset($_SESSION['AUIDX'])){
+        $sql = "SELECT * FROM admins WHERE idx = {$_SESSION['AUIDX']}";  //지금 접속한 사람의 id값
+      }else{
+        $sql = "SELECT * FROM teachers WHERE tid = {$_SESSION['TUIDX']}";  //지금 접속한 사람의 id값
+      }
+      $result = $mysqli->query($sql);
+      $data = $result->fetch_object()
     ?>
       <div class="admin_account">
         <div class="d-flex gap-3 align-items-center mb-4">
-          <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
-          <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+          <img src="<?= $data->cover_image; ?>" alt="" width="150" height="150">
+          <?php
+            if (isset($_SESSION['TUIDX'])) {
+          ?>
+            <h3 class="tt_02"><?= $_SESSION['TUID'] ?></h3>
+            <?php
+            } else {                
+            ?>
+              <h3 class="tt_02"><?= $_SESSION['AUID'] ?></h3>
+            <?php
+              }
+            ?>
+
         </div>
         <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
       </div>
