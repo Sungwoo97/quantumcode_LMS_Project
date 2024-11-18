@@ -29,6 +29,7 @@ $result = $mysqli->query($sql);
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col">check</th>
         <th scope="col">No</th>
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
@@ -58,6 +59,7 @@ $result = $mysqli->query($sql);
         }
         ?>
       <tr>
+        <th><input type="checkbox" id="selectAll" class="delete_checkbox" value="<?= $data->pid ?>"></th>
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id ?></td>
@@ -65,7 +67,7 @@ $result = $mysqli->query($sql);
         <td><?=$post_time ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
-        <td><a href=""><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <td><a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a></td>
       </tr>
       <?php
       }
@@ -85,7 +87,7 @@ $result = $mysqli->query($sql);
 
   <div class=" d-flex justify-content-end">
     <a class="btn btn-primary" href="board_write.php" role="button">글등록</a>
-    <a class="btn btn-danger" href="#" role="button">글삭제</a>
+    <button type="button" id="deleteSelected" class="btn btn-danger" href="#" role="button">글삭제</button>
   </div>
 </div>
 
@@ -118,6 +120,41 @@ $result = $mysqli->query($sql);
     const category = this.value;
   location.href=`?category=${category}`;
   });
+
+  //체크박스 선택 시
+  const deleteSelected = document.querySelector('#deleteSelected');
+  
+  deleteSelected.addEventListener('click',()=>{
+    const selectedIds = Array.from(document.querySelectorAll('.delete_checkbox:checked')).map(checkbox => checkbox.value);
+
+   // console.log(selectedIds); 선택한 요소 배열로 들어오는지 확인
+
+    if(selectedIds.length === 0){
+    alert('삭제할 게시물을 선택해주세요.');
+    return; // fetch 요청이 실행되지 않도록 함 alert 창 중복방지
+  }
+  const requestData = JSON.stringify(selectedIds);
+
+  fetch('check_delete.php',{
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'application/json',
+    },
+    body:requestData
+  })
+  .then(response => response.text())
+  .then(data => {
+    const userConfirmed = confirm("게시물을 삭제하겠습니까?");
+  
+    if (userConfirmed) {
+      location.reload(); // 사용자가 '확인'을 클릭하면 페이지 새로 고침
+    }
+  })
+  .catch(error => console.error('Error:', error));
+  });
+
+
+
 </script>
 
 <?php

@@ -3,7 +3,8 @@ $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
-$pid = $_GET['pid'];
+$pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
+
 
 // 추천 쿼리
 if(!isset($_SESSION['hits'])){
@@ -84,7 +85,7 @@ switch ($category) {
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
-    <a href="reply_delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <a href="delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
   </p>
 </div>
 
