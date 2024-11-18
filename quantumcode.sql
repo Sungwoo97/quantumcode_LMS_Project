@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-18 09:57
+-- 생성 시간: 24-11-18 10:02
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -575,6 +575,12 @@ ALTER TABLE `board_reply`
   ADD PRIMARY KEY (`pid`);
 
 --
+-- 테이블의 인덱스 `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`cid`);
+
+--
 -- 테이블의 인덱스 `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
@@ -631,6 +637,84 @@ ALTER TABLE `board`
 --
 ALTER TABLE `board_event`
   MODIFY `eb_pid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_free`
+--
+ALTER TABLE `board_free`
+  MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_images`
+--
+ALTER TABLE `board_images`
+  MODIFY `imgid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_like`
+--
+ALTER TABLE `board_like`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_notice`
+--
+ALTER TABLE `board_notice`
+  MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_qna`
+--
+ALTER TABLE `board_qna`
+  MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `board_reply`
+--
+ALTER TABLE `board_reply`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- 테이블의 AUTO_INCREMENT `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- 테이블의 AUTO_INCREMENT `coupons_usercp`
+--
+ALTER TABLE `coupons_usercp`
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_category`
+--
+ALTER TABLE `lecture_category`
+  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_list`
+--
+ALTER TABLE `lecture_list`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=7;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_video`
+--
+ALTER TABLE `lecture_video`
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호';
+
+--
+-- 테이블의 AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
