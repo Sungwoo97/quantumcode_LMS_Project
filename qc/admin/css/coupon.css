@@ -1,0 +1,102 @@
+body{
+  font-weight: 400;
+}
+table a{
+  text-decoration: none;
+  color: black;
+}
+.form-select,
+.coupon_serch .form-control{
+  font-size: 1rem;
+  height: 40px;
+  font-weight: 500;
+}
+.couponlist tbody tr td:first-child input{
+  width: 18px;
+  height: 18px;
+}
+.couponlist .form-check-input {
+  width: 30px;
+  height: 16x;
+  transform: scale(0.8);
+}
+.couponlist .form-check-input:checked {
+  background-size: 14px 14px;
+}
+.form-select{
+  width: 30%;
+}
+.form-control{
+  width: 100%;
+}
+.couponlist_view .Rows,
+.couponlist_view .Layout{
+  border: none;
+  width: 32px;
+  height: 32px;
+  background: none;
+}
+.btn a{
+  text-decoration: none;
+  color: white;
+}
+.coupon_serch button{
+  width: 80px;
+}
+.couponlist_view{
+    gap: 13px;
+}
+.couponlist thead{
+  height: 48px;
+}
+.couponlist thead tr th{
+  color:var(--bs-primary);
+}
+.coupon_cpImg { 
+  width: 100%;
+  height: 220px;
+  background: #F8F9FA;
+}
+
+.coupon_cpImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.coupon tbody, 
+.coupon td, 
+.coupon tfoot, 
+.coupon th, 
+.coupon thead, 
+.coupon tr{
+  border: none;
+}
+.insert_explanation input{
+  height: 80px;
+}
+
+/* Regis, edit - 등록 및 수정 */
+
+.coupon_regis,
+.coupon_edit{
+  .form-select{
+    width: 100%;
+  }
+}
+/* VIEW - 상세보기 */
+.view .row{
+  margin: 0;
+}
+.coupon_view_imgbox{
+  background: #F8F9FA;
+}
+.coupon_view_table {
+  margin-left: 5%;
+}
+.coupon_view_table th {
+  width: 100px;
+  white-space: nowrap;
+}
+.coupon_view_table td {
+  width: 40%;
+}

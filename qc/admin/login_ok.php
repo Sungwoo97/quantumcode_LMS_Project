@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
