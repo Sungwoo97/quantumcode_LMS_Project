@@ -8,7 +8,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   <div class="mb-3">
     <input class="form-control" accept="image/*" name="file" type="file" id="file">
   </div>
-  <select class="form-select" name="category" aria-label="Default select example" required >
+  <select class="form-select w-25" name="category" aria-label="Default select example" required >
     <option value="" selected>카테고리 선택</option>
     <option value="notice">공지사항</option>
     <option value="free">자유게시판</option>
