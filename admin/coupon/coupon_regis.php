@@ -23,15 +23,15 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 <div class="coupon_regis container">
   <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
   <input type="hidden" id="coupon_description" name="coupon_description" value="">
+  
     <div class="row coupon">
-      
       <div class="col-4 mb-5">
         <h6>쿠폰 이미지 등록</h6>
-          <div class="coupon_regis_Img mb-3">
-            <img src="" id="couponImg" alt="">
+          <div class="coupon_regisImg mb-3">
+            <img src="" id="coverImg" alt="">
           </div>
           <div class="input-group">
-            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
+            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
           </div>
       </div>
 
@@ -113,6 +113,29 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 </div>
   
 <script>
+  //이미지 구현창
+  function addCover(file, cover) {
+    let coverImage = file;
+    coverImage.on('change', (e) => {
+      let file = e.target.files[0];
+      let target = cover;
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
+          let attachment = e.target.result;
+          console.log(attachment);
+          if (attachment) {
+            target.attr('src', attachment);
+          }
+        }
+        reader.readAsDataURL(file);
+      } else {
+        target.attr('src', '');
+      }
+    });
+  }
+  addCover($('#coupon_image'), $('#coverImg'));
+
   //할인구분
   $('#ct2 input').prop('disabled', true);
 
@@ -165,11 +188,12 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
       }
   });
 
-
+/*
   function attachFile(file){
 
 let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
 formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+
 
 $.ajax({
   url:'product_image_save.php',
@@ -216,7 +240,7 @@ let imgid = $(this).closest('.card').attr('id');
 //console.log(imgid);
 file_delete(imgid);
 });
-
+*/
 
 
 </script>
