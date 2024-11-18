@@ -114,7 +114,7 @@ while($data = $result->fetch_object()){
               <td><?= $item->email; ?></td>
               <td><?= $item->reg_date; ?></td>
               <td><?= $item->lecture_num; ?></td>
-              <td><?= $item->sales; ?></td>
+              <td><?= $item->year_sales; ?></td>
               <td><?= $item->grade; ?></td>
               <td><a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
           </tr>
