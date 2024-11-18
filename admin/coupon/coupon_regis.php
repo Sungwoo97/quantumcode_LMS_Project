@@ -58,8 +58,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
           <th scope="row">할인구분</th>
           <td>
             <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
-              <option value="1" selected>정액</option>
-              <option value="2">정률</option>
+              <option value="fixed" selected>정액</option>
+              <option value="percentage">정률</option>
             </select>
           </td>
           <td id="ct1">
@@ -100,7 +100,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
                     <label class="form-check-label" for="coupon_activate">활성화</label>
                   </div>
                   <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="1" id="coupon_deactivate">
+                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate">
                     <label class="form-check-label" for="coupon_deactivate">비활성화</label>
                   </div>
                   </div>
@@ -125,7 +125,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   $('#coupon_type').change(function(){
     let value = $(this).val();
     $('#ct1 input, #ct2 input').prop('disabled', true);
-    if(value == 1){
+    if(value == 'fixed'){
       $('#ct1 input').prop('disabled', false);
     } else{
       $('#ct2 input').prop('disabled', false);
