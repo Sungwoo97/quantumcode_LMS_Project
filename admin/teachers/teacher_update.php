@@ -155,7 +155,7 @@ while($data = $result->fetch_object()){
         </table>
       </div>
     </div>
-    <div class="mt-3 d-flex justify-content-end">
+    <div class="mt-3 d-flex justify-content-end gap-3">
       <button class="btn btn-danger">삭제하기</button>
       <button class="btn btn-primary">수정하기</button>
     </div>

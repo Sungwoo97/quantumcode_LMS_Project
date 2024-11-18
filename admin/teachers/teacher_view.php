@@ -76,7 +76,7 @@ while($data = $result->fetch_object()){
       <div class="col-8 mb-3">
         <table class="table">
           <tbody>
-            <h3>현재 진행 중인 강의
+            <h3>현재 진행 중인 강의</h3>
             <div class="card" style="width: 18rem;">
               <img class="card-img-top" src="..." alt="Card image cap">
               <div class="card-body">
@@ -90,15 +90,8 @@ while($data = $result->fetch_object()){
         </table>
         <hr>
         <table class="table">
-          <h3>강사 월별 매출 현황
-          <tbody>
-            <tr scope="row">
-              <th scope="row" class="insert_name">회원 고유 ID</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $item->tid; ?>  disabled>
-              </td>
-            </tr>
-          </tbody>
+          <h3>강사 월별 매출 현황</h3>
+          
         </table>
         <hr>
         <table class="table">
@@ -109,7 +102,7 @@ while($data = $result->fetch_object()){
             </tr>
           </thead>
           <tbody>
-            <h3>강사 개인 정보
+            <h3>강사 개인 정보</h3>
             <tr scope="row">
               <th scope="row" class="insert_name">회원 고유 ID</th>
               <td colspan="3">
@@ -149,7 +142,7 @@ while($data = $result->fetch_object()){
             <tr>
               <th scope="row">가입일</th>
               <td class="twoculumn_table">
-                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> disabled>
+                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> disabled></input>
                 <span></span>
               </td>
             </tr>
@@ -157,7 +150,7 @@ while($data = $result->fetch_object()){
               <th scope="row">강사 요약</th>
               <td class="twoculumn_table">
                 <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control" placeholder=<?= $item->teacher_detail; ?> name="teacher_detail" id="teacher_detail"  disabled></textarea>
+                <textarea class="form-control"  name="teacher_detail" id="teacher_detail"  disabled><?= $item->teacher_detail; ?></textarea>
               </td>
             </tr>
           </tbody>

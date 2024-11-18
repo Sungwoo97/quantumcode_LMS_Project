@@ -1,5 +1,4 @@
 <?php
-// session_start();
 $title = "강사 목록";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
@@ -65,7 +64,7 @@ while($data = $result->fetch_object()){
 
 <div class="container">
   <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명
+    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
     <div class="d-flex gap-3 w-30 mt-3 align-items-center">
     <tr>
         <td colspan="3">
