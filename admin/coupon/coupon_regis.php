@@ -58,18 +58,18 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
           <th scope="row">할인구분</th>
           <td>
             <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
-              <option value="1" selected>정액</option>
-              <option value="2">정률</option>
+              <option value="fixed" selected>정액</option>
+              <option value="percentage">정률</option>
             </select>
           </td>
           <td id="ct1">
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="0" aria-describedby="coupon_price"> 
               <span class="input-group-text" id="coupon_price">원</span>
             </div>
           </td> 
           <td id="ct2">
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="0" aria-describedby="coupon_ratio">
               <span class="input-group-text" id="coupon_ratio">%</span>
             </div>
@@ -78,17 +78,11 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
         </tr> 
             <tr>
               <th scope="row">사용기한</th>
-              <td>
-                <select class="form-select" name="coupon_type_usage" id="coupon_type_usage" aria-label="사용기한">                            
-                  <option value="1" selected>무제한</option>
-                  <option value="2">제한</option>
-                </select>
-              </td>
-              <td>
-                <input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
-              </td>
-              <td>
-               <input type="date" class="form-control" name="enddate" id="enddate" placeholder="" required>
+              <td colspan="3">
+                <div class="d-flex gap-2">
+                  <input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
+                  <input type="date" class="form-control" name="enddate" id="enddate" placeholder="" required>
+                </div>
               </td>
             </tr>
             <tr scope="row">
@@ -100,7 +94,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
                     <label class="form-check-label" for="coupon_activate">활성화</label>
                   </div>
                   <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="1" id="coupon_deactivate">
+                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate">
                     <label class="form-check-label" for="coupon_deactivate">비활성화</label>
                   </div>
                   </div>
@@ -125,7 +119,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   $('#coupon_type').change(function(){
     let value = $(this).val();
     $('#ct1 input, #ct2 input').prop('disabled', true);
-    if(value == 1){
+    if(value == 'fixed'){
       $('#ct1 input').prop('disabled', false);
     } else{
       $('#ct2 input').prop('disabled', false);

@@ -17,7 +17,7 @@ $data = $result->fetch_object();
 </head>
 
 <div class="coupon_edit container">
-  <form action="coupon_edit_ok.php" method="POST" enctype="multipart/form-data">
+  <form action="coupon_edit_ok.php" id="coupon_submit" method="POST">
   <input type="hidden" name="cid" value="<?= $cid; ?>"> 
   <div class="row coupon">
     <div class="col-4 mb-5">
@@ -26,7 +26,7 @@ $data = $result->fetch_object();
         <img src="" id="couponImg" alt="">
       </div>
       <div class="input-group">
-        <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
+        <input type="file" class="form-control" accept="image/*" name="addedImages" id="addedImages">
       </div>
     </div>
         <div class="col-8 mt-3">
@@ -50,46 +50,47 @@ $data = $result->fetch_object();
               <textarea class="form-control" name="coupon_content" id="coupon_content" rows="2"><?= $data->coupon_content; ?></textarea>
             </tr>
             <tr>
-              <th scope="row">할인구분</th>
-              <td>
-                <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
-                  <option value="1" selected>정액</option>
-                  <option value="2">정률</option>
-                </select>
-              </td>
-              <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="최소 금액">
-              </td>
-              <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="최대 금액">
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">사용기한</th>
-              <td>
-                <select class="form-select" name="coupon_type" id="coupon_type" aria-label="사용기한">                            
-                  <option value="1" selected>무제한</option>
-                  <option value="2">제한</option>
-                </select>
-              </td>
-              <td>
-                <input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
-              </td>
-              <td>
-               <input type="date" class="form-control" name="enddate" id="enddate" placeholder="" required>
-              </td>
-            </tr>
+          <th scope="row">할인구분</th>
+          <td>
+            <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
+              <option value="fixed" <?= $data->coupon_type === 'fixed' ? 'selected' : ''; ?>>정액</option>
+              <option value="percentage" <?php if($data->coupon_type === 'percentage'){echo 'selected';}?>>정률</option>
+            </select>
+          </td>
+          <td id="ct1">
+            <div class="input-group">
+              <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="<?= $data->coupon_price; ?>" <?= $data->coupon_type === 'fixed' ? '' : 'disabled'; ?>>
+              <span class="input-group-text" id="coupon_price">원</span>
+            </div>
+          </td> 
+          <td id="ct2">
+            <div class="input-group">
+              <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="<?= $data->coupon_ratio; ?>" <?= $data->coupon_type === 'percentage' ? '' : 'disabled'; ?>>
+              <span class="input-group-text" id="coupon_ratio">%</span>
+            </div>
+          </td>
+        </tr>
+        </tr> 
+        <tr>
+          <th scope="row">사용기한</th>
+          <td colspan="3">
+            <div class="d-flex gap-2">
+              <input type="date" class="form-control flex-fill" name="startdate" id="startdate" value="<?= $data->startdate ?? ''; ?>" <?= $data->status == 1 ? 'disabled' : ''; ?> required>
+              <input type="date" class="form-control flex-fill" name="enddate" id="enddate" value="<?= $data->enddate ?? ''; ?>" <?= $data->status == 1 ? 'disabled' : ''; ?> required>
+            </div>
+          </td>
+        </tr>
             <tr scope="row">
               <th scope="row" class="insert_name">활성화</th>
               <td colspan="3">
                 <div class="d-flex gap-3">
                   <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispremium" value="1" id="ispremium">
-                    <label class="form-check-label" for="ispremium">활성화</label>
+                  <input class="form-check-input me-2" type="checkbox" name="coupon_activate" value="1" id="coupon_activate" <?= $data->status == 1 ? 'checked' : ''; ?>>
+                    <label class="form-check-label" for="coupon_activate">활성화</label>
                   </div>
                   <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispopular" value="1" id="ispopular">
-                    <label class="form-check-label" for="ispopular">비활성화</label>
+                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate" <?= $data->status == 0 ? 'checked' : ''; ?>>
+                    <label class="form-check-label" for="coupon_deactivate">비활성화</label>
                   </div>
                   </div>
                 </div>
@@ -98,14 +99,138 @@ $data = $result->fetch_object();
           </tbody>
         </table>
       </div>
-  </div>
+    </div>
     <div class="gap-3 mt-50 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button a href="coupon_list.php" class="btn btn-danger">취소</button>
+      <button a href="coupon_list.php" class="btn btn-danger cancel">취소</button>
     </div>
   </form>
 </div>
-  
+
+<script>
+  //할인구분
+  document.addEventListener('DOMContentLoaded', () => {
+    // 할인 구분에 따라 필드 활성화/비활성화
+    const updateDiscountFields = () => {
+        const type = $('#coupon_type').val();
+        $('#ct1 input').prop('disabled', type !== 'fixed');
+        $('#ct2 input').prop('disabled', type !== 'percentage');
+    };
+
+    // 활성화/비활성화 체크박스 토글
+    const toggleActivation = () => {
+        $('#coupon_activate').prop('checked', !$('#coupon_deactivate').is(':checked'));
+        $('#coupon_deactivate').prop('checked', !$('#coupon_activate').is(':checked'));
+    };
+
+    // 사용기한 설정에 따라 날짜 입력 필드 제어
+    const updateUsageFields = () => {
+        const isUnlimited = $('#coupon_type_usage').val() === '1';
+        $('#startdate, #enddate').prop('disabled', isUnlimited).val(isUnlimited ? '' : $('#startdate').val());
+    };
+
+    // 초기 설정 및 이벤트 핸들러 등록
+    updateDiscountFields();
+    toggleActivation();
+    updateUsageFields();
+
+    $('#coupon_type').change(updateDiscountFields);
+    $('#coupon_activate, #coupon_deactivate').change(toggleActivation);
+    $('#coupon_type_usage').change(updateUsageFields);
+});
+
+// 활성화 체크박스 
+  document.addEventListener('DOMContentLoaded', ()=>{
+  const activateCheckbox = document.getElementById('coupon_activate');
+  const deactivateCheckbox = document.getElementById('coupon_deactivate');
+
+  activateCheckbox.addEventListener('change', ()=>{
+    if (activateCheckbox.checked) {
+      deactivateCheckbox.checked = false; 
+    }
+  });
+
+  deactivateCheckbox.addEventListener('change', ()=>{
+    if (deactivateCheckbox.checked) {
+      activateCheckbox.checked = false;
+    }
+  });
+
+   // 사용기한 필드 활성화/비활성화 설정
+ const updateUsageFields = () => {
+        const isUnlimited = $('#coupon_type_usage').val() === '1';
+        $('#startdate, #enddate').prop('disabled', isUnlimited);
+    };
+
+    // 초기 설정
+    updateUsageFields();
+
+    // 사용기한 변경 시 업데이트
+    $('#coupon_type_usage').change(updateUsageFields);
+});
+
+  $('.cancel').click((e)=>{
+      e.preventDefault();
+      if (confirm('정말 취소할까요?')) {
+          window.location.href = $(this).attr('href');
+      }
+  });
+
+
+  function attachFile(file){
+
+let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
+formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+
+$.ajax({
+  url:'product_image_save.php',
+  data:formData,
+  cache: false, //이미지 정보를 브라우저 저장, 안한다
+  contentType:false, //전송되는 데이터 타입지정, 안한다.
+  processData:false, //전송되는 데이터 처리(해석), 안한다.
+  dataType:'json', //product_image_save.php이 반환하는 값의 타입
+  type:'POST', //파일 정보를 전달하는 방법
+  success:function(returned_data){ //product_image_save.php과 연결(성공)되면 할일
+    console.log(returned_data);
+
+    if(returned_data.result === 'size'){
+      alert('10MB 이하만 첨부할 수 있습니다.');
+      return;
+    } else if(returned_data.result === 'image'){
+      alert('이미지만 첨부할 수 있습니다.');
+      return;   
+    } else if(returned_data.result === 'error'){
+      alert('첨부실패, 관리자에게 문의하세요');
+      return;
+    } else{ //파일 첨부가 성공하면
+      let imgids = $('#product_image_id').val() + returned_data.imgid + ',';
+      $('#product_image_id').val(imgids);
+      let html = `
+        <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
+          <img src="${returned_data.savefile}" class="card-img-top" alt="...">
+          <div class="card-body">                
+            <button type="button" class="btn btn-danger btn-sm">삭제</button>
+          </div>
+        </div>
+      `;
+      $('#addedImages').append(html);
+    }
+  }
+
+})
+} //Attachfile
+//$('#addedImages button');
+//변수.addEventListener('이벤트종류','대상',function(){})
+
+$('#addedImages').on('click','button', function(){
+let imgid = $(this).closest('.card').attr('id');
+//console.log(imgid);
+file_delete(imgid);
+});
+
+
+
+</script>
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');

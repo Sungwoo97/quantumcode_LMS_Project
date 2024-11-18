@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-18 04:58
+-- 생성 시간: 24-11-18 07:33
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -294,22 +294,35 @@ INSERT INTO `board_reply` (`pid`, `b_pid`, `user_id`, `pw`, `content`, `date`) V
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `coupons_list`
+-- 테이블의 덤프 데이터 `coupons`
 --
 
-CREATE TABLE `coupons_list` (
-  `cid` int(11) NOT NULL,
-  `coupon_name` varchar(100) NOT NULL COMMENT '쿠폰명',
-  `coupon_image` varchar(100) NOT NULL COMMENT '쿠폰이미지',
-  `coupon_type` varchar(100) NOT NULL COMMENT '쿠폰타입',
-  `coupon_price` double DEFAULT NULL COMMENT '할인금액',
-  `coupon_ratio` double DEFAULT NULL COMMENT '할인비율',
-  `status` tinyint(4) DEFAULT 0 COMMENT '상태',
-  `regdate` datetime DEFAULT current_timestamp() COMMENT '등록일',
-  `userid` varchar(100) DEFAULT NULL COMMENT '등록한유저',
-  `max_value` double DEFAULT NULL COMMENT '최대할인금액',
-  `use_min_price` double DEFAULT NULL COMMENT '최소사용금액'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `coupons` (`cid`, `coupon_name`, `coupon_image`, `coupon_type`, `coupon_price`, `coupon_ratio`, `status`, `startdate`, `enddate`, `userid`) VALUES
+(1, '회원가입 웰컴 쿠폰', 'welcome.jpg', '정액', 5000, NULL, 1, '2024-11-18 15:25:55', '2025-12-31', 'admin'),
+(2, '블랙프라이데이 할인', 'black_friday.jpg', '정률', NULL, 15, 1, '2024-11-18 15:25:55', '2024-11-30', 'admin'),
+(3, '여름방학 특가', 'summer.jpg', '정액', 7000, NULL, 1, '2024-11-18 15:25:55', '2025-06-30', 'user1'),
+(4, '크리스마스 선물 쿠폰', 'christmas.jpg', '정률', NULL, 20, 1, '2024-11-18 15:25:55', '2024-12-25', 'user2'),
+(5, '새해 맞이 할인', 'new_year.jpg', '정액', 10000, NULL, 1, '2024-11-18 15:25:55', '2025-01-15', 'admin'),
+(6, '봄맞이 이벤트', 'spring.jpg', '정률', NULL, 10, 0, '2024-11-18 15:25:55', '2025-03-31', 'user3'),
+(7, '번개 할인 쿠폰', 'flash_sale.jpg', '정액', 3000, NULL, 1, '2024-11-18 15:25:55', '2024-12-31', 'user4'),
+(8, '발렌타인데이 스페셜', 'valentine.jpg', '정률', NULL, 25, 1, '2024-11-18 15:25:55', '2025-02-14', 'user5'),
+(9, '생일 축하 쿠폰', 'birthday.jpg', '정액', 8000, NULL, 0, '2024-11-18 15:25:55', '2025-07-31', 'user6'),
+(10, '수강 기념 할인', 'anniversary.jpg', '정률', NULL, 30, 1, '2024-11-18 15:25:55', '2025-05-01', 'admin'),
+(11, '프리미엄 강의 할인', 'exclusive.jpg', '정액', 1500, NULL, 1, '2024-11-18 15:25:55', '2025-08-31', 'user7'),
+(12, '신학기 프로모션', 'back_to_school.jpg', '정률', NULL, 12, 0, '2024-11-18 15:25:55', '2024-12-01', 'user8'),
+(13, '겨울방학 특별 할인', 'winter.jpg', '정액', 4000, NULL, 1, '2024-11-18 15:25:55', '2025-02-28', 'user9'),
+(14, '사이버 먼데이 쿠폰', 'cyber_monday.jpg', '정률', NULL, 18, 1, '2024-11-18 15:25:55', '2024-11-27', 'admin'),
+(15, '충성 고객 감사 쿠폰', 'loyalty.jpg', '정액', 6000, NULL, 0, '2024-11-18 15:25:55', '2025-10-31', 'user10'),
+(16, '연말 프로모션', 'festival.jpg', '정률', NULL, 22, 1, '2024-11-18 15:25:55', '2024-12-31', 'user11'),
+(17, '재고 정리 할인', 'clearance.jpg', '정액', 3500, NULL, 1, '2024-11-18 15:25:55', '2025-03-15', 'user12'),
+(18, '휴일 특별 할인', 'holiday.jpg', '정률', NULL, 14, 0, '2024-11-18 15:25:55', '2024-12-20', 'user13'),
+(19, '신규 회원 전용 쿠폰', 'new_user.jpg', '정액', 9000, NULL, 1, '2024-11-18 15:25:55', '2025-09-30', 'user14'),
+(20, '강의 패키지 할인', 'shopping_spree.jpg', '정률', NULL, 17, 1, '2024-11-18 15:25:55', '2025-04-30', 'user15'),
+(21, '주말 한정 할인', 'weekend.jpg', '정액', 2000, NULL, 0, '2024-11-18 15:25:55', '2025-05-31', 'user16'),
+(22, '시간 한정 특별 쿠폰', 'limited_time.jpg', '정률', NULL, 28, 1, '2024-11-18 15:25:55', '2025-07-15', 'user17'),
+(23, '관리자 전용 프로모션', 'promo.jpg', '정액', 12000, NULL, 1, '2024-11-18 15:25:55', '2025-11-30', 'admin'),
+(24, '대박 할인 쿠폰', 'mega_discount.jpg', '정률', NULL, 35, 1, '2024-11-18 15:25:55', '2025-12-31', 'user18'),
+(25, '할로윈 스페셜 쿠폰', 'halloween.jpg', '정액', 2500, NULL, 1, '2024-11-18 15:25:55', '2024-10-31', 'user19');
 
 -- --------------------------------------------------------
 
@@ -324,8 +337,40 @@ CREATE TABLE `coupons_usercp` (
   `status` int(11) DEFAULT 1 COMMENT '상태',
   `use_max_date` datetime DEFAULT NULL COMMENT '만료일',
   `regdate` datetime DEFAULT current_timestamp() COMMENT '발급일',
+  `usedate` date DEFAULT NULL COMMENT '사용일',
   `reason` varchar(100) NOT NULL COMMENT '쿠폰사용강의'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `coupons_usercp`
+--
+
+INSERT INTO `coupons_usercp` (`ucid`, `couponid`, `userid`, `status`, `use_max_date`, `regdate`, `usedate`, `reason`) VALUES
+(1, 1, 'user1', 1, '2025-12-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Python 기초 강의'),
+(2, 2, 'user2', 0, '2024-11-30 23:59:59', '2024-11-18 15:31:50', '2024-11-15', 'JavaScript 심화 과정'),
+(3, 3, 'user3', 1, '2025-06-30 23:59:59', '2024-11-18 15:31:50', NULL, 'HTML/CSS 기초'),
+(4, 4, 'user4', 1, '2024-12-25 23:59:59', '2024-11-18 15:31:50', NULL, 'React 기본 강의'),
+(5, 5, 'user5', 0, '2025-01-15 23:59:59', '2024-11-18 15:31:50', '2025-01-10', 'Node.js 프로그래밍'),
+(6, 6, 'user6', 1, '2025-03-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Spring Boot 실습'),
+(7, 7, 'user7', 0, '2024-12-31 23:59:59', '2024-11-18 15:31:50', '2024-12-20', 'Vue.js 입문'),
+(8, 8, 'user8', 1, '2025-02-14 23:59:59', '2024-11-18 15:31:50', NULL, 'SQL 데이터베이스 기초'),
+(9, 9, 'user9', 0, '2025-07-31 23:59:59', '2024-11-18 15:31:50', '2025-07-15', 'Docker 활용'),
+(10, 10, 'user10', 1, '2025-05-01 23:59:59', '2024-11-18 15:31:50', NULL, 'Java 고급 프로그래밍'),
+(11, 11, 'user11', 1, '2025-08-31 23:59:59', '2024-11-18 15:31:50', NULL, 'C++ 알고리즘'),
+(12, 12, 'user12', 0, '2024-12-01 23:59:59', '2024-11-18 15:31:50', '2024-11-28', 'Git/GitHub 실습'),
+(13, 13, 'user13', 1, '2025-02-28 23:59:59', '2024-11-18 15:31:50', NULL, 'Python 데이터 분석'),
+(14, 14, 'user14', 1, '2024-11-27 23:59:59', '2024-11-18 15:31:50', NULL, 'Kotlin 개발'),
+(15, 15, 'user15', 0, '2025-10-31 23:59:59', '2024-11-18 15:31:50', '2025-10-15', 'Android 앱 개발'),
+(16, 16, 'user16', 1, '2024-12-31 23:59:59', '2024-11-18 15:31:50', NULL, 'AWS 클라우드 기초'),
+(17, 17, 'user17', 0, '2025-03-15 23:59:59', '2024-11-18 15:31:50', '2025-03-05', 'TypeScript 입문'),
+(18, 18, 'user18', 1, '2024-12-20 23:59:59', '2024-11-18 15:31:50', NULL, 'Data Science 강의'),
+(19, 19, 'user19', 1, '2025-09-30 23:59:59', '2024-11-18 15:31:50', NULL, 'Machine Learning 기본'),
+(20, 20, 'user20', 0, '2025-04-30 23:59:59', '2024-11-18 15:31:50', '2025-04-20', 'GraphQL 실습'),
+(21, 21, 'user21', 1, '2025-05-31 23:59:59', '2024-11-18 15:31:50', NULL, 'React Native 개발'),
+(22, 22, 'user22', 1, '2025-07-15 23:59:59', '2024-11-18 15:31:50', NULL, 'Go 언어 기초'),
+(23, 23, 'user23', 1, '2025-11-30 23:59:59', '2024-11-18 15:31:50', NULL, 'Swift 프로그래밍'),
+(24, 24, 'user24', 0, '2025-12-31 23:59:59', '2024-11-18 15:31:50', '2025-12-20', 'Flutter 앱 개발'),
+(25, 25, 'user25', 1, '2024-10-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Unity 게임 개발');
 
 -- --------------------------------------------------------
 
@@ -337,6 +382,7 @@ CREATE TABLE `lecture_category` (
   `lcid` int(11) NOT NULL COMMENT '카테고리 고유번호',
   `code` varchar(20) NOT NULL COMMENT '카테고리코드',
   `pcode` varchar(20) DEFAULT NULL COMMENT '카테고리 부모코드',
+  `ppcode` varchar(20) DEFAULT NULL COMMENT '카테고리 최상위 코드',
   `name` varchar(100) NOT NULL COMMENT '카테고리 이름',
   `step` tinyint(4) NOT NULL COMMENT '카테고리 분류 단계'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 카테고리';
@@ -381,6 +427,7 @@ CREATE TABLE `lecture_list` (
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
   `difficult` varchar(11) NOT NULL COMMENT '난이도',
+  `lecture_tag` varchar(250) DEFAULT NULL COMMENT '강의관련 스킬',
   `pr_video` varchar(100) DEFAULT NULL COMMENT '홍보 영상',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
   `status` tinyint(4) NOT NULL COMMENT '상태'
@@ -510,9 +557,9 @@ ALTER TABLE `board_reply`
   ADD PRIMARY KEY (`pid`);
 
 --
--- 테이블의 인덱스 `coupons_list`
+-- 테이블의 인덱스 `coupons`
 --
-ALTER TABLE `coupons_list`
+ALTER TABLE `coupons`
   ADD PRIMARY KEY (`cid`);
 
 --
@@ -520,6 +567,7 @@ ALTER TABLE `coupons_list`
 --
 ALTER TABLE `coupons_usercp`
   ADD PRIMARY KEY (`ucid`);
+
 
 --
 -- 테이블의 인덱스 `lecture_category`
@@ -538,6 +586,18 @@ ALTER TABLE `lecture_list`
 --
 ALTER TABLE `lecture_video`
   ADD PRIMARY KEY (`lvid`);
+
+--
+-- 테이블의 인덱스 `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`mid`);
+
+--
+-- 테이블의 인덱스 `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`tid`);
 
 --
 -- 덤프된 테이블의 AUTO_INCREMENT
@@ -598,17 +658,11 @@ ALTER TABLE `board_reply`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- 테이블의 AUTO_INCREMENT `coupons_list`
---
-ALTER TABLE `coupons_list`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+COMMIT;
 --
 -- 테이블의 AUTO_INCREMENT `lecture_category`
 --
