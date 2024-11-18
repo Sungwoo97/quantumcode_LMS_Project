@@ -19,7 +19,7 @@ if (count($list) > 0) {
     $html .= "<tr class=\"border-bottom border-secondary-subtitle\">
     <th >{$i}</th>
     <td><img src=\"{$list->cover_image}\" width=\"50\"></td>
-    <td>{$list->title}</td>
+    <td><a href=\"lecture_view.php?lid={$list->lid}\">{$list->title}</a></td>
     <td>{$list->tid}</td>
     <td>{$list->dis_tuition}</td>
     <td>{$list->difficult}</td>
