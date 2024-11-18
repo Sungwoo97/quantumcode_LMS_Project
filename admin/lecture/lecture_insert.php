@@ -5,9 +5,20 @@ $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$uid = $_SESSION['AUID'];
+
 $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 if ($result = $mysqli->query($sql)) {
   $data = $result->fetch_object();
+}
+
+$ll = $data->last_lid + 1;
+echo $ll;
+
+$cate_sql = "SELECT * FROM lecture_category WHERE step = 1 ";
+$cate_result = $mysqli->query($cate_sql);
+while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $cate[] = $cate_data; //$cate1배열에 $data할당
 }
 
 
@@ -16,7 +27,7 @@ if ($result = $mysqli->query($sql)) {
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
     <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
-    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid ?>">
+    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid + 1 ?>">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
@@ -37,6 +48,12 @@ if ($result = $mysqli->query($sql)) {
           </thead>
           <tbody>
             <tr scope="row">
+              <th scope="row" class="insert_name">강사명</th>
+              <td colspan="3">
+                <input type="text" class="form-control" name="userid" id="userid" value="<?= $uid ?>" disabled>
+              </td>
+            </tr>
+            <tr scope="row">
               <th scope="row" class="insert_name">강의명</th>
               <td colspan="3">
                 <input type=" text" class="form-control" name="title" id="title" placeholder="강의명을 입력해주세요" required>
@@ -46,17 +63,26 @@ if ($result = $mysqli->query($sql)) {
               <th scope="row">카테고리 선택</th>
               <td colspan="3">
                 <div class="d-flex gap-3">
-                  <select class="form-select" name="platforms" required>
+                  <select class="form-select plat" name="platforms" required>
                     <option value="" selected>Platforms</option>
-                    <option value="A0001">Web</option>
+                    <?php
+                    if (!empty($cate)) {
+                      foreach ($cate as $plat) {
+                    ?>
+                        <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                    <!-- <option value="A0001">Web</option> -->
                   </select>
-                  <select class="form-select" name="development" required>
+                  <select class="form-select dev" name="development" required>
                     <option value="" selected>Development</option>
-                    <option value="B0001">Front-End</option>
+                    <!-- <option value="B0001">Front-End</option> -->
                   </select>
-                  <select class="form-select" name="technologies" required>
+                  <select class="form-select tech" name="technologies" required>
                     <option value="" selected>Technologies</option>
-                    <option value="C0001">React</option>
+                    <!-- <option value="C0001">React</option> -->
                   </select>
                 </div>
               </td>
@@ -75,7 +101,7 @@ if ($result = $mysqli->query($sql)) {
             <tr>
               <th scope="row">등록일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
+                <input type="text" class="form-control" name="regist_day" id="regist_day" placeholder="" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">난이도</th>
@@ -168,6 +194,7 @@ if ($result = $mysqli->query($sql)) {
     </div>
   </Form>
 </div>
+<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
 <script>
   function addCover(file, cover) {
     let coverImage = file;
@@ -190,8 +217,20 @@ if ($result = $mysqli->query($sql)) {
     });
   }
 
-  addCover($('#cover_image'), $('#coverImg'));
+  $(document).on('change', '.plat', function() {
+    let platValue = $(this).val();
+    makeOption($(this), 2, $('.dev'), '').then(() => {
+      $('.dev').trigger('change'); // dev의 change 이벤트 실행
+    })
+  });
 
+  $(document).on('change', '.dev', function() {
+    //console.log('platValue received in dev change:', platValue);
+    makeOption($(this), 3, $('.tech'), $('.plat').val());
+  });
+
+
+  addCover($('#cover_image'), $('#coverImg'));
   addCover($('#pr_videoFile'), $('#pr_video'));
 
   function videoToggle(select, target1, target2) {
@@ -292,6 +331,10 @@ if ($result = $mysqli->query($sql)) {
         ['insert', ['link', 'picture']]
       ]
     }
+  });
+
+  $("#regist_day").datepicker({
+    format: "yy-mm-dd"
   });
 
   $('#lecture_submit').submit(function(e) {

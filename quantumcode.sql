@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-17 14:59
+-- 생성 시간: 24-11-18 04:58
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-07 17:28:44', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-18 11:05:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -341,6 +341,22 @@ CREATE TABLE `lecture_category` (
   `step` tinyint(4) NOT NULL COMMENT '카테고리 분류 단계'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 카테고리';
 
+--
+-- 테이블의 덤프 데이터 `lecture_category`
+--
+
+INSERT INTO `lecture_category` (`lcid`, `code`, `pcode`, `ppcode`, `name`, `step`) VALUES
+(23, 'A0001', '', '', 'Web', 1),
+(24, 'A0002', '', '', 'App', 1),
+(25, 'B0001', 'A0001', '', 'Front', 2),
+(26, 'B0002', 'A0001', '', 'Back', 2),
+(27, 'B0001', 'A0002', '', 'dev', 2),
+(36, 'C0001', 'B0001', 'A0001', 'html', 3),
+(37, 'C0002', 'B0001', 'A0001', 'CSS', 3),
+(38, 'C0003', 'B0001', 'A0002', 'java', 3),
+(39, 'C0001', 'B0002', 'A0001', 'react', 3),
+(40, 'C0004', 'B0001', 'A0001', 'javascript', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -359,8 +375,8 @@ CREATE TABLE `lecture_list` (
   `isrecom` tinyint(4) NOT NULL COMMENT '추천강의',
   `tuition` double NOT NULL COMMENT '수강료',
   `dis_tuition` double DEFAULT NULL COMMENT '할인 수강료',
-  `regist_day` datetime NOT NULL COMMENT '수강시작일',
-  `expiration_day` datetime DEFAULT NULL COMMENT '수강마감일',
+  `regist_day` date NOT NULL COMMENT '수강시작일',
+  `expiration_day` date DEFAULT NULL COMMENT '수강마감일',
   `sub_title` varchar(250) DEFAULT NULL COMMENT '강의 요약',
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
@@ -369,6 +385,13 @@ CREATE TABLE `lecture_list` (
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
   `status` tinyint(4) NOT NULL COMMENT '상태'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
+
+--
+-- 테이블의 덤프 데이터 `lecture_list`
+--
+
+INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `tid`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
+(6, 'A0001B0001C0004', '자바스크립트 강의', '/qc/admin/upload/20241118045329161037.png', 'admin', 0, 1, 0, 0, 10000, 8000, '2024-11-20', '2025-02-20', '쉬워요', '<p>설명 드립니다</p>', '목표입니다', '2', 'js', '/qc/admin/upload/20241118045329149502.mp4', '2024-11-18 12:53:29', 0);
 
 -- --------------------------------------------------------
 
@@ -383,6 +406,50 @@ CREATE TABLE `lecture_video` (
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `members`
+--
+
+CREATE TABLE `members` (
+  `mid` int(15) NOT NULL,
+  `name` varchar(111) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(222) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(25) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `member_detail` text DEFAULT NULL,
+  `cover_image` varchar(111) DEFAULT NULL,
+  `grade` int(11) NOT NULL,
+  `progress` double DEFAULT NULL,
+  `last_login` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `tid` int(15) NOT NULL,
+  `name` varchar(15) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(45) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `cover_image` varchar(200) DEFAULT NULL,
+  `teacher_detail` text DEFAULT NULL,
+  `grade` int(15) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `notyet` varchar(155) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 덤프된 테이블의 인덱스
@@ -546,19 +613,31 @@ ALTER TABLE `coupons_usercp`
 -- 테이블의 AUTO_INCREMENT `lecture_category`
 --
 ALTER TABLE `lecture_category`
-  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호';
+  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_list`
 --
 ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호';
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=7;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
 --
 ALTER TABLE `lecture_video`
   MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호';
+
+--
+-- 테이블의 AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
