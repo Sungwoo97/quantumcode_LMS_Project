@@ -46,6 +46,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if(isset($board_css)){
       echo $board_css;
     }
+    if(isset($sales_css)){
+      echo $sales_css;
+    }
     ?>
 
 
