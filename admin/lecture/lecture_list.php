@@ -3,6 +3,16 @@ $title = '상품 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
 
 $html = '';
 $list = array();
@@ -19,7 +29,7 @@ if (count($list) > 0) {
     $html .= "<tr class=\"border-bottom border-secondary-subtitle\">
     <th >{$i}</th>
     <td><img src=\"{$list->cover_image}\" width=\"50\"></td>
-    <td>{$list->title}</td>
+    <td><a href=\"lecture_view.php?lid={$list->lid}\">{$list->title}</a></td>
     <td>{$list->tid}</td>
     <td>{$list->dis_tuition}</td>
     <td>{$list->difficult}</td>
