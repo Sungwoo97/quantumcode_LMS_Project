@@ -44,7 +44,44 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-18 11:07:27', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-18 11:05:40', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `board`
+--
+
+CREATE TABLE `board` (
+  `pid` int(10) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `pw` int(50) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_date` timestamp NULL DEFAULT NULL,
+  `hit` int(11) DEFAULT NULL,
+  `likes` int(11) DEFAULT NULL,
+  `category` enum('notice','free','event','qna') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board`
+--
+
+INSERT INTO `board` (`pid`, `title`, `content`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`) VALUES
+(1, '123123', '123123123', NULL, NULL, '2024-11-11 08:18:06', NULL, NULL, NULL, 'notice'),
+(2, '', '', NULL, NULL, '2024-11-11 08:18:07', NULL, NULL, NULL, ''),
+(3, '', '', NULL, NULL, '2024-11-11 08:18:08', NULL, NULL, NULL, ''),
+(4, '', '', NULL, NULL, '2024-11-11 08:18:08', NULL, NULL, NULL, ''),
+(5, '', '', NULL, NULL, '2024-11-11 08:18:09', NULL, NULL, NULL, ''),
+(6, '', '', NULL, NULL, '2024-11-11 08:18:27', NULL, NULL, NULL, ''),
+(7, '', '', NULL, NULL, '2024-11-11 08:18:27', NULL, NULL, NULL, ''),
+(8, '', '', NULL, NULL, '2024-11-11 08:18:27', NULL, NULL, NULL, ''),
+(9, '', '', NULL, NULL, '2024-11-11 08:18:28', NULL, NULL, NULL, ''),
+(10, '1111', '1111', NULL, NULL, '2024-11-11 08:18:42', NULL, NULL, NULL, 'notice'),
+(11, '12312412', '1241231231', NULL, NULL, '2024-11-11 08:19:40', NULL, NULL, NULL, 'notice'),
+(12, 'free', 'free', NULL, NULL, '2024-11-11 08:22:02', NULL, NULL, NULL, 'free');
 
 -- --------------------------------------------------------
 
@@ -59,7 +96,9 @@ CREATE TABLE `board_event` (
   `eb_event_date` date DEFAULT NULL,
   `eb_user_id` varchar(10) DEFAULT NULL,
   `eb_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `eb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `eb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `eb_like` int(11) DEFAULT NULL,
+  `eb_hit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -73,12 +112,20 @@ CREATE TABLE `board_free` (
   `fb_title` varchar(255) NOT NULL,
   `fb_content` text NOT NULL,
   `fb_user_id` varchar(10) DEFAULT NULL,
-  `fb_pw` varchar(50) NOT NULL,
+  `fb_pw` int(50) DEFAULT NULL,
   `fb_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `fb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `fb_hit` int(11) DEFAULT NULL,
   `fb_like` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board_free`
+--
+
+INSERT INTO `board_free` (`fb_pid`, `fb_title`, `fb_content`, `fb_user_id`, `fb_pw`, `fb_date`, `fb_updated_date`, `fb_hit`, `fb_like`) VALUES
+(1, 'test', 'test', NULL, 0, '2024-11-11 07:48:18', '2024-11-11 07:48:33', 1, NULL),
+(2, '1234', '1234', NULL, 0, '2024-11-11 07:54:49', '2024-11-11 08:28:19', 24, 9);
 
 -- --------------------------------------------------------
 
@@ -92,8 +139,17 @@ CREATE TABLE `board_notice` (
   `nb_content` text NOT NULL,
   `nb_user_id` varchar(10) DEFAULT NULL,
   `nb_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `nb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `nb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `nb_like` int(11) DEFAULT NULL,
+  `nb_hit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board_notice`
+--
+
+INSERT INTO `board_notice` (`nb_pid`, `nb_title`, `nb_content`, `nb_user_id`, `nb_date`, `nb_updated_date`, `nb_like`, `nb_hit`) VALUES
+(1, 'test11', 'test11', NULL, '2024-11-11 07:55:07', '2024-11-11 07:56:00', 11, 13);
 
 -- --------------------------------------------------------
 
@@ -107,8 +163,17 @@ CREATE TABLE `board_qna` (
   `qb_content` text NOT NULL,
   `qb_user_id` varchar(10) DEFAULT NULL,
   `qb_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `qb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `qb_updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `qb_like` int(11) DEFAULT NULL,
+  `qb_hit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board_qna`
+--
+
+INSERT INTO `board_qna` (`qb_pid`, `qb_title`, `qb_content`, `qb_user_id`, `qb_date`, `qb_updated_date`, `qb_like`, `qb_hit`) VALUES
+(1, 'test', 'test', NULL, '2024-11-11 07:48:54', '2024-11-11 07:54:16', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -156,7 +221,6 @@ CREATE TABLE `lecture_category` (
   `lcid` int(11) NOT NULL COMMENT '카테고리 고유번호',
   `code` varchar(20) NOT NULL COMMENT '카테고리코드',
   `pcode` varchar(20) DEFAULT NULL COMMENT '카테고리 부모코드',
-  `ppcode` varchar(20) DEFAULT NULL COMMENT '카테고리 최상위 코드',
   `name` varchar(100) NOT NULL COMMENT '카테고리 이름',
   `step` tinyint(4) NOT NULL COMMENT '카테고리 분류 단계'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 카테고리';
@@ -201,10 +265,10 @@ CREATE TABLE `lecture_list` (
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
   `difficult` varchar(11) NOT NULL COMMENT '난이도',
-  `lecture_tag` varchar(250) DEFAULT NULL COMMENT '강의 관련된 스킬 태그',
+  `lecture_tag` varchar(250) DEFAULT NULL COMMENT '강의관련 스킬',
   `pr_video` varchar(100) DEFAULT NULL COMMENT '홍보 영상',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
-  `status` tinyint(4) NOT NULL COMMENT '상태'
+  `status` tinyint(4) DEFAULT NULL COMMENT '상태'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
 
 --
@@ -243,21 +307,29 @@ INSERT INTO `lecture_video` (`lvid`, `lid`, `video_lecture`, `video_desc`, `regd
 --
 
 CREATE TABLE `members` (
-  `m_idx` int(11) NOT NULL,
-  `id` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `number` varchar(20) NOT NULL,
-  `thumbmail` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `level` varchar(45) DEFAULT NULL,
-  `bio` text DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
-  `rating` decimal(3,2) DEFAULT 0.00,
-  `progress` decimal(5,2) DEFAULT 0.00
+  `mid` int(15) NOT NULL,
+  `name` varchar(111) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(222) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(25) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `member_detail` text DEFAULT NULL,
+  `cover_image` varchar(111) DEFAULT NULL,
+  `grade` int(11) NOT NULL,
+  `progress` double DEFAULT NULL,
+  `last_login` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `members`
+--
+
+INSERT INTO `members` (`mid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `member_detail`, `cover_image`, `grade`, `progress`, `last_login`) VALUES
+(1, '1', '2', '0000-00-00', '4', '6', 7, '2024-11-20 00:00:00', '123', '/qc/admin/upload/20241115032056184603.png', 2, NULL, '2024-11-15 11:20:56'),
+(2, '강동원', 'dongwon123', '1991-10-22', '123', '456', 123, '2024-11-18 00:00:00', '123123123123', '/qc/admin/upload/20241115041334179408.png', 1, NULL, '2024-11-15 12:13:34'),
+(3, '강동원', 'dongwon123', '1991-10-22', '123', '456', 123, '2024-11-18 00:00:00', '444', '/qc/admin/upload/20241115041443153504.png', 1, NULL, '2024-11-15 12:14:43');
 
 -- --------------------------------------------------------
 
@@ -266,21 +338,31 @@ CREATE TABLE `members` (
 --
 
 CREATE TABLE `teachers` (
-  `t_idx` int(11) NOT NULL,
-  `id` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `number` varchar(20) NOT NULL,
-  `thumbmail` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `t_level` varchar(45) DEFAULT NULL,
-  `expertise` varchar(100) DEFAULT NULL,
-  `bio` text DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
-  `rating` decimal(3,2) DEFAULT 0.00
+  `tid` int(15) NOT NULL,
+  `name` varchar(15) NOT NULL,
+  `id` varchar(45) NOT NULL,
+  `birth` date NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `number` int(45) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `cover_image` varchar(200) DEFAULT NULL,
+  `teacher_detail` text DEFAULT NULL,
+  `grade` varchar(15) NOT NULL,
+  `last_login` datetime DEFAULT current_timestamp(),
+  `notyet` varchar(155) DEFAULT NULL,
+  `main` varchar(15) NOT NULL,
+  `sales` int(11) DEFAULT NULL,
+  `lecture_num` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `teachers`
+--
+
+INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `sales`, `lecture_num`) VALUES
+(20, '강동원', 'dongwon', '1990-10-10', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'dongwon@naver.com', 1011112222, '2024-11-07 00:00:00', '/qc/admin/upload/20241118025234161954.png', '자바스크립트 위주 강사', 'silver', '2024-11-18 10:52:34', NULL, '', 5000000, 4),
+(21, '공유', 'gonguu', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'gonguu@naver.com', 1022221234, '2024-11-06 00:00:00', '/qc/admin/upload/20241118031054112220.png', '자바스트립트 인기 강사', 'Blonze', '2024-11-18 11:10:54', NULL, '', NULL, NULL);
 
 --
 -- 덤프된 테이블의 인덱스
@@ -291,6 +373,12 @@ CREATE TABLE `teachers` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`idx`);
+
+--
+-- 테이블의 인덱스 `board`
+--
+ALTER TABLE `board`
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 테이블의 인덱스 `board_event`
@@ -350,13 +438,13 @@ ALTER TABLE `lecture_video`
 -- 테이블의 인덱스 `members`
 --
 ALTER TABLE `members`
-  ADD PRIMARY KEY (`m_idx`);
+  ADD PRIMARY KEY (`mid`);
 
 --
 -- 테이블의 인덱스 `teachers`
 --
 ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`t_idx`);
+  ADD PRIMARY KEY (`tid`);
 
 --
 -- 덤프된 테이블의 AUTO_INCREMENT
@@ -369,6 +457,12 @@ ALTER TABLE `admins`
   MODIFY `idx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- 테이블의 AUTO_INCREMENT `board`
+--
+ALTER TABLE `board`
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- 테이블의 AUTO_INCREMENT `board_event`
 --
 ALTER TABLE `board_event`
@@ -378,19 +472,19 @@ ALTER TABLE `board_event`
 -- 테이블의 AUTO_INCREMENT `board_free`
 --
 ALTER TABLE `board_free`
-  MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_notice`
 --
 ALTER TABLE `board_notice`
-  MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_qna`
 --
 ALTER TABLE `board_qna`
-  MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 테이블의 AUTO_INCREMENT `coupons_list`
@@ -426,13 +520,13 @@ ALTER TABLE `lecture_video`
 -- 테이블의 AUTO_INCREMENT `members`
 --
 ALTER TABLE `members`
-  MODIFY `m_idx` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 테이블의 AUTO_INCREMENT `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `t_idx` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

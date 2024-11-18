@@ -123,7 +123,7 @@ while($data = $result->fetch_object()){
               <td colspan="3">
                 <input type="text" class="form-control" name="email" id="email" placeholder=<?= $item->email; ?> required>
                 <span id="email-error" style="color: red; display: none;">올바른 이메일 형식이 아닙니다.</span>
-                <button type="button" id="emailCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
+                <!-- <button type="button" id="emailCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button> -->
 
               </td>
             </tr>
@@ -132,7 +132,7 @@ while($data = $result->fetch_object()){
               <td colspan="3">
                 <input type="text" class="form-control" name="number" id="number" placeholder=<?= $item->number; ?> required>
                 <span id="number-error" style="color: red; display: none;">올바른 전화번호 형식이 아닙니다. 숫자 최대 15자리로 입력해주세요.</span>
-                <button type="button" id="numberCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button>
+                <!-- <button type="button" id="numberCheck" class="btn btn-secondary btn-sm mt-2">중복체크</button> -->
 
               </td>
             </tr>
@@ -155,7 +155,7 @@ while($data = $result->fetch_object()){
         </table>
       </div>
     </div>
-    <div class="mt-3 d-flex justify-content-end">
+    <div class="mt-3 d-flex justify-content-end gap-3">
       <button class="btn btn-danger">삭제하기</button>
       <button class="btn btn-primary">수정하기</button>
     </div>
@@ -317,26 +317,6 @@ function addCover(file, cover) {
     } else{
       Check_func('id', value);
       console.log('보내지는 것도됌')
-    }
-  });
-
-  $('#emailCheck').click(function(){
-    let value = $('#email').val();
-    if(value == ''){
-      alert('email을 입력해주세요 111 ');
-      $('#email').focus();
-    } else{
-      Check_func('email', value);
-    }
-  });
-
-  $('#numberCheck').click(function(){
-    let value = $('#number').val();
-    if(value == ''){
-      alert('전화번호를 입력해주세요 111');
-      $('#number').focus();
-    } else{
-      Check_func('number', value);
     }
   });
 

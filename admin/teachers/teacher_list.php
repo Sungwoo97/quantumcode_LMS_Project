@@ -1,17 +1,16 @@
 <?php
-session_start();
 $title = "강사 목록";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
-if(!isset($_SESSION['AUID'])){
-  echo "
-    <script>
-      alert('관리자로 로그인해주세요');
-      location.href = '../login.php';
-    </script>
-  ";
-}
+// if(!isset($_SESSION['AUID'])){
+//   echo "
+//     <script>
+//       alert('관리자로 로그인해주세요');
+//       location.href = '../login.php';
+//     </script>
+//   ";
+// }
 
 //검색
 $search_where = ''; //초기화
@@ -61,21 +60,18 @@ while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
 
-
-
 ?>
-
-
 
 <div class="container">
   <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명
+    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
     <div class="d-flex gap-3 w-30 mt-3 align-items-center">
     <tr>
         <td colspan="3">
           <div class="d-flex gap-3">
             <select class="form-select mt-3" name="sort_order" >
               <option value="" selected>정렬 기준을 선택해 주세요</option>
+              <option value="highPriceToLow">등록 순</option>
               <option value="highPriceToLow">매출 많은 순</option>
               <option value="lowPriceToHigh">매출 적은 순</option>
               <option value="highLectureToLow">강의 많은 순</option>
@@ -117,7 +113,7 @@ while($data = $result->fetch_object()){
               <td><?= $item->id; ?></td>
               <td><?= $item->email; ?></td>
               <td><?= $item->reg_date; ?></td>
-              <td><?= $item->notyet; ?></td>
+              <td><?= $item->lecture_num; ?></td>
               <td><?= $item->sales; ?></td>
               <td><?= $item->grade; ?></td>
               <td><a href="teacher_view.php?tid=<?= $item->tid; ?>" class="btn btn-primary btn-sm">상세보기</a></td>
