@@ -6,19 +6,19 @@
 
 
     <script>
-    // 대시보드 버튼 클릭 시 index.php로 이동
-    document.addEventListener("DOMContentLoaded", ()=>{
-    const dashboardButton = document.getElementById("dashboardButton");
+      // 대시보드 버튼 클릭 시 index.php로 이동
+      document.addEventListener("DOMContentLoaded", () => {
+        const dashboardButton = document.getElementById("dashboardButton");
 
-    dashboardButton.addEventListener("click", (e)=>{
-      e.preventDefault();
-      dashboardButton.classList.remove("collapsed");
+        dashboardButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          dashboardButton.classList.remove("collapsed");
 
-        setTimeout(() => {
-            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/index.php";
-        }, 500);
+          setTimeout(() => {
+            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/admin/index.php";
+          }, 500);
         });
-    });
+      });
     </script>
     </body>
 
