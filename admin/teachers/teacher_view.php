@@ -19,14 +19,17 @@ if (!isset($tid)) {
   echo "<script>alert('상품정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
 }
 
-
 $sql = "SELECT * FROM teachers WHERE tid = $tid";
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
 
-
+// 이걸 갖고 올 수 있어야 함.....
+// $lid = $_GET['lid'];
+// $lecture_sql = "SELECT * FROM lecture_list WHERE lid = $lid";
+// $lecture_result = $mysqli->query($lecture_sql);
+// $lecture_data = $lecture_result->fetch_object();
 
 
 ?>
@@ -40,7 +43,7 @@ while($data = $result->fetch_object()){
     <div class="row teacher">
       <div class="col-4 mb-5">
         <div class="teacher_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="<?= $item->cover_image; ?>" id="coverImg" alt="">
         </div>
         <div class="col-12 mb-3">
           <table class="table">
@@ -78,7 +81,7 @@ while($data = $result->fetch_object()){
           <tbody>
             <h3>현재 진행 중인 강의</h3>
             <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="..." alt="Card image cap">
+              <img class="card-img-top" src="<?= $item->cover_image; ?>" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

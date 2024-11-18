@@ -139,7 +139,7 @@ while($data = $result->fetch_object()){
             <tr>
               <th scope="row">가입일</th>
               <td class="twoculumn_table">
-                <input type="date" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> required>
+                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $item->reg_date; ?> disabled>
                 <span></span>
               </td>
             </tr>
