@@ -51,12 +51,12 @@ switch ($category) {
   <input type="hidden" name="old_img" value="<?=$data->img?>">
   <div class="mb-3 col-4">
     <div class="box mb-3">
-      <img id="imgPreview" src="<?=$data->img?>" alt="이미지 미리보기" style="display: <?= $data->img ? 'block' : 'none'; ?>; width: 100%; height: 100%; object-fit: contain;">
+      <img id="imgPreview" src="" alt="이미지 미리보기" style="display: <?= $data->img ? 'block' : 'none'; ?>; width: 100%; height: 100%; object-fit: contain;">
     </div>
     <input class="form-control" accept="image/*" name="file" type="file" id="file" onchange="previewImage(event)">
   </div>
   <div class="col-8">
-    <select class="form-select w-25 mb-3" name="category" readonly aria-label="Default select example" required >
+    <select class="form-select w-25 mb-3" name="category" style="pointer-events: none; background-color: #ebebeb;" aria-label="Default select example">
       <option value="notice" <?= ($category == 'notice') ? 'selected' : ''; ?>>공지사항</option>
       <option value="free" <?= ($category == 'free') ? 'selected' : ''; ?>>자유게시판</option>
       <option value="event" <?= ($category == 'event') ? 'selected' : ''; ?>>이벤트</option>
