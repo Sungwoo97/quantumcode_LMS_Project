@@ -20,7 +20,7 @@ if($data){
 
   echo "<script>
     alert('강사님 반갑습니다.');
-    location.href='index.php';
+    location.href='/qc/admin/teachers/index.php';
   </script>";
 
 }else{
