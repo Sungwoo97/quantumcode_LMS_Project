@@ -23,7 +23,7 @@ $lucture_objectives = $_POST['objectives'] ?? '';
 $lecture_tag = $_POST['tag'] ?? '';
 
 $lecture_coverImage = $_FILES['cover_image'] ?? null;
-$lecture_prVideo = null;
+$lecture_prVideo = $_FILES['pr_video'] ?? null;
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
 
