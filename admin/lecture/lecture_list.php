@@ -41,12 +41,13 @@ if (count($list) > 0) {
     <thead>
       <tr class="border-bottom border-secondary-subtitle thline">
         <th scope="col">No</th>
-        <th scope="col">Platforms</th>
-        <th scope="col">Development</th>
-        <th scope="col">Technologies</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Edit</th>
+        <th scope="col">Cover Image</th>
+        <th scope="col">강의명</th>
+        <th scope="col">강사명</th>
+        <th scope="col">수강료</th>
+        <th scope="col">난이도</th>
+        <th scope="col">카테고리</th>
+        <th scope="col">등록일</th>
         <th scope="col">Edit</th>
       </tr>
     </thead>
