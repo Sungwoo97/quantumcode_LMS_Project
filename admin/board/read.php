@@ -1,7 +1,7 @@
 <?php
 $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-
+$user_id = $_SESSION['AUID'];
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -66,7 +66,7 @@ switch ($category) {
 
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$data->title?></h2>
-  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
+  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
 </div>
 
 
