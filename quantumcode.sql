@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-17 17:19
+-- 생성 시간: 24-11-18 04:58
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.0.30
+-- PHP 버전: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-17 21:59:08', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-18 11:07:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,7 +173,9 @@ INSERT INTO `lecture_category` (`lcid`, `code`, `pcode`, `ppcode`, `name`, `step
 (27, 'B0001', 'A0002', '', 'dev', 2),
 (36, 'C0001', 'B0001', 'A0001', 'html', 3),
 (37, 'C0002', 'B0001', 'A0001', 'CSS', 3),
-(38, 'C0003', 'B0001', 'A0002', 'java', 3);
+(38, 'C0003', 'B0001', 'A0002', 'java', 3),
+(39, 'C0001', 'B0002', 'A0001', 'react', 3),
+(40, 'C0004', 'B0001', 'A0001', 'javascript', 3);
 
 -- --------------------------------------------------------
 
@@ -193,8 +195,8 @@ CREATE TABLE `lecture_list` (
   `isrecom` tinyint(4) NOT NULL COMMENT '추천강의',
   `tuition` double NOT NULL COMMENT '수강료',
   `dis_tuition` double DEFAULT NULL COMMENT '할인 수강료',
-  `regist_day` datetime NOT NULL COMMENT '수강시작일',
-  `expiration_day` datetime DEFAULT NULL COMMENT '수강마감일',
+  `regist_day` date NOT NULL COMMENT '수강시작일',
+  `expiration_day` date DEFAULT NULL COMMENT '수강마감일',
   `sub_title` varchar(250) DEFAULT NULL COMMENT '강의 요약',
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
@@ -210,8 +212,7 @@ CREATE TABLE `lecture_list` (
 --
 
 INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `tid`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
-(1, 'A0001B0001C0001', 'dev', '/qc/admin/upload/20241117161105134849.jpg', 'admin', 0, 1, 1, 0, 123, 123, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'ddd', '<p>ㅇㅈㅇ</p>', 'ㅇㅈㅇ', '2', 'ㅇㅈㅇ', '/qc/admin/upload/20241117161105101200.mp4', '2024-11-18 00:11:05', 0),
-(2, 'A0001B0001C0001', '자바스크립트', '/qc/admin/upload/20241117161725189690.png', 'admin', 0, 1, 0, 0, 1234, 123, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'ㅇㄷㅇ', '<p>ㅇㅈㅇ</p>', 'ㅇㅅㅇ', '2', 'ㅊㅋㅇ', '', '2024-11-18 00:17:25', 0);
+(6, 'A0001B0001C0004', '자바스크립트 강의', '/qc/admin/upload/20241118045329161037.png', 'admin', 0, 1, 0, 0, 10000, 8000, '2024-11-20', '2025-02-20', '쉬워요', '<p>설명 드립니다</p>', '목표입니다', '2', 'js', '/qc/admin/upload/20241118045329149502.mp4', '2024-11-18 12:53:29', 0);
 
 -- --------------------------------------------------------
 
@@ -226,6 +227,14 @@ CREATE TABLE `lecture_video` (
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
+
+--
+-- 테이블의 덤프 데이터 `lecture_video`
+--
+
+INSERT INTO `lecture_video` (`lvid`, `lid`, `video_lecture`, `video_desc`, `regdate`) VALUES
+(10, 6, '/qc/admin/upload/20241118045324101044.mp4', NULL, '2024-11-18 12:53:24'),
+(11, 6, '/qc/admin/upload/20241118045324897251.mp4', NULL, '2024-11-18 12:53:24');
 
 -- --------------------------------------------------------
 
@@ -399,19 +408,19 @@ ALTER TABLE `coupons_usercp`
 -- 테이블의 AUTO_INCREMENT `lecture_category`
 --
 ALTER TABLE `lecture_category`
-  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=39;
+  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_list`
 --
 ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=3;
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=7;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
 --
 ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=6;
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=12;
 
 --
 -- 테이블의 AUTO_INCREMENT `members`

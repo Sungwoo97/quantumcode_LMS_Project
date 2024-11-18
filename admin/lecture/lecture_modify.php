@@ -35,7 +35,6 @@ while ($video_data = $video_result->fetch_object()) {
   $addVideos[] = $video_data;
 }
 
-
 ?>
 <div class="container">
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
