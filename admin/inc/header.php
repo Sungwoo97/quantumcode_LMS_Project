@@ -6,7 +6,13 @@ if (!isset($title)) {
 }
 isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+
+
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -157,7 +163,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     </div>
 
     <?php
-    if (!isset($_SESSION['AUID'])) {
+    if (!isset($_SESSION['AUIDX']) && !isset($_SESSION['TUIDX'])) {
     ?>
       <div class="admin_account d-flex gap-3 align-items-center">
         <p class="tt_02">로그인 이전입니다.</p>
@@ -165,12 +171,31 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       </div>
 
     <?php
-    } else {
+    } else {  //즉, auidx가 있다면...(로그인되었다면)
+      if(isset($_SESSION['AUIDX'])){
+        $sql = "SELECT * FROM admins WHERE idx = {$_SESSION['AUIDX']}";  //지금 접속한 사람의 id값
+      }else{
+        $sql = "SELECT * FROM teachers WHERE tid = {$_SESSION['TUIDX']}";  //지금 접속한 사람의 id값
+      }
+      $result = $mysqli->query($sql);
+      $data = $result->fetch_object()
     ?>
       <div class="admin_account">
         <div class="d-flex gap-3 align-items-center mb-4">
-          <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
-          <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+          <img src="<?= $data->cover_image; ?>" alt="">
+
+          <?php
+            if (isset($_SESSION['TUIDX'])) {
+          ?>
+            <p class="tt_02"><?= $_SESSION['TUID'] ?></p>
+            <?php
+            } else {                
+            ?>
+              <p class="tt_02"><?= $_SESSION['AUID'] ?></p>
+            <?php
+              }
+            ?>
+
         </div>
         <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
       </div>
