@@ -15,6 +15,14 @@ if($category == 'all') {
 $result = $mysqli->query($sql);
 
 
+// 종료일이 지난 게시물을 자동으로 삭제
+$event_delete_sql = "DELETE FROM board WHERE category = 'event' AND end_date < NOW()";
+$mysqli->query($event_delete_sql);
+
+// 게시물 목록을 조회
+$event_sql = "SELECT * FROM board WHERE category = 'event'";  // 이벤트 카테고리만 조회
+$event_result = $mysqli->query($sql);
+
 
 
 ?>
@@ -45,10 +53,10 @@ $result = $mysqli->query($sql);
       <?php
       // 게시글 출력
       while($data = $result->fetch_object()){
-        $post_time = date("Y-m-d", strtotime($data->date)); // date 컬럼의 타임스탬프를 Y-m-d 형식으로 변환
-        $current_time = date("Y-m-d");
+        $post_date = date("Y-m-d", strtotime($data->date)); // date 컬럼의 타임스탬프를 Y-m-d 형식으로 변환
+        $current_date = date("Y-m-d");
 
-        if($post_time == $current_time){
+        if($post_date == $current_date){
           $icon = "<i class=\"fa-solid fa-dove\" style=\"color: red;\"></i>";
         }else{
           $icon = '';
@@ -56,7 +64,7 @@ $result = $mysqli->query($sql);
         $title1 = $data->title;
         // 제목이 길 경우 10글자로 자르기
         if(iconv_strlen($title1) > 10){
-          $title1 = iconv_substr($title, 0, 10) . '...';
+          $title1 = iconv_substr($title1, 0, 10) . '...';
         }
         ?>
       <tr>
@@ -65,7 +73,7 @@ $result = $mysqli->query($sql);
         <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$user_id?></td>
         <td><?=$data->content ?></td>
-        <td><?=$post_time ?></td>
+        <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td><a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a></td>

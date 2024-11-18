@@ -4,6 +4,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 $category = $_POST['category'];
 $title1 = $_POST['title'];
 $content = $_POST['content'];
+$start_date = $_POST['start_date'] ?? null;
+$end_date = $_POST['end_date'] ?? null;
 //print_r($_FILES['file']['name']);
 
 //파일 업로드
@@ -26,7 +28,7 @@ if($_FILES['file']['size'] >$max_file_size ){
 }
 
 
-$sql = "INSERT INTO board (category, title, content, img, is_img) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img)";
+$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date')";
 $result = $mysqli->query($sql);
 
 switch ($category) {

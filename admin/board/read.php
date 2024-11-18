@@ -24,15 +24,17 @@ if(!isset($_SESSION['hits'][$pid])){
 
  
 if ($category === 'all') {
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid";
 } else {
   // 카테고리가 'all'이 아닌 경우, 카테고리 조건을 추가하여 쿼리 실행
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid AND category = '$category'";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid AND category = '$category'";
 }
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-$post_time = date("Y-m-d", strtotime($data->date));
+$post_date = date("Y-m-d", strtotime($data->date));
+$start_date = date("Y-m-d", strtotime($data->start_date));
+$end_date = date("Y-m-d", strtotime($data->end_date));
 
 switch ($category) {
   case 'all':
@@ -64,7 +66,7 @@ switch ($category) {
 
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$data->title?></h2>
-  <span>글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_time?></span>
+  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
 </div>
 
 
