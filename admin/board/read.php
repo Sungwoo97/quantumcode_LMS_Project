@@ -74,9 +74,7 @@ switch ($category) {
 <div>
   <?php
     if($data->is_img == 1){
-      echo "<img src=\"{$data->img}\" width=\"300\">";
-    }else{
-      echo "첨부파일: <a href=\"{$data->img}\">다운로드</a>";
+      echo "<img src=\"{$data->img}\" width=\"300\" class=\"mb-3\">";
     }
   ?>
 </div>
