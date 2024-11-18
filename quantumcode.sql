@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-18 07:33
+-- 생성 시간: 24-11-18 09:57
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -294,6 +294,23 @@ INSERT INTO `board_reply` (`pid`, `b_pid`, `user_id`, `pw`, `content`, `date`) V
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `cid` int(11) NOT NULL,
+  `coupon_name` varchar(100) NOT NULL COMMENT '쿠폰명',
+  `coupon_image` varchar(100) NOT NULL COMMENT '쿠폰이미지',
+  `coupon_type` varchar(100) NOT NULL COMMENT '쿠폰타입(정액,정률)',
+  `coupon_price` double DEFAULT NULL COMMENT '할인금액',
+  `coupon_ratio` double DEFAULT NULL COMMENT '할인비율',
+  `status` tinyint(4) DEFAULT 0 COMMENT '활성화 상태',
+  `startdate` datetime DEFAULT current_timestamp() COMMENT '등록일',
+  `enddate` date NOT NULL COMMENT '만료일',
+  `userid` varchar(100) DEFAULT NULL COMMENT '등록한유저'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- 테이블의 덤프 데이터 `coupons`
 --
 
@@ -449,6 +466,7 @@ INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `tid`, `i
 CREATE TABLE `lecture_video` (
   `lvid` int(11) NOT NULL COMMENT '강의영상 고유번호',
   `lid` int(11) NOT NULL COMMENT '연결된 강의 고유번호',
+  `tid` varchar(20) NOT NULL,
   `video_lecture` varchar(100) NOT NULL COMMENT '강의 영상 파일경로',
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
@@ -557,17 +575,10 @@ ALTER TABLE `board_reply`
   ADD PRIMARY KEY (`pid`);
 
 --
--- 테이블의 인덱스 `coupons`
---
-ALTER TABLE `coupons`
-  ADD PRIMARY KEY (`cid`);
-
---
 -- 테이블의 인덱스 `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
   ADD PRIMARY KEY (`ucid`);
-
 
 --
 -- 테이블의 인덱스 `lecture_category`
@@ -620,78 +631,6 @@ ALTER TABLE `board`
 --
 ALTER TABLE `board_event`
   MODIFY `eb_pid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `board_free`
---
-ALTER TABLE `board_free`
-  MODIFY `fb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- 테이블의 AUTO_INCREMENT `board_images`
---
-ALTER TABLE `board_images`
-  MODIFY `imgid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `board_like`
---
-ALTER TABLE `board_like`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `board_notice`
---
-ALTER TABLE `board_notice`
-  MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- 테이블의 AUTO_INCREMENT `board_qna`
---
-ALTER TABLE `board_qna`
-  MODIFY `qb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- 테이블의 AUTO_INCREMENT `board_reply`
---
-ALTER TABLE `board_reply`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- 테이블의 AUTO_INCREMENT `coupons_usercp`
---
-ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-COMMIT;
---
--- 테이블의 AUTO_INCREMENT `lecture_category`
---
-ALTER TABLE `lecture_category`
-  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_list`
---
-ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=7;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_video`
---
-ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호';
-
---
--- 테이블의 AUTO_INCREMENT `members`
---
-ALTER TABLE `members`
-  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `teachers`
---
-ALTER TABLE `teachers`
-  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
