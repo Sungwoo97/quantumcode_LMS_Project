@@ -9,13 +9,13 @@ $list = array();
 
 $sql = "SELECT * FROM lecture_list ORDER BY regdate LIMIT 10";
 $result = $mysqli->query($sql);
-while($data = $result->fetch_object()){
-  $list[]= $data;
+while ($data = $result->fetch_object()) {
+  $list[] = $data;
 }
 
-if(count($list)>0){
+if (count($list) > 0) {
   $i = 1;
-  foreach($list as $list){
+  foreach ($list as $list) {
     $html .= "<tr class=\"border-bottom border-secondary-subtitle\">
     <th >{$i}</th>
     <td><img src=\"{$list->cover_image}\" width=\"50\"></td>
@@ -25,9 +25,9 @@ if(count($list)>0){
     <td>{$list->difficult}</td>
     <td>{$list->category}</td>
     <td>{$list->regist_day}</td>
-    <td><img src=\"../img/icon-img/Edit.svg\" width=\"20\"></td>
+    <td><a href=\"lecture_modify.php?lid={$list->lid}\"><img src=\"../img/icon-img/Edit.svg\" width=\"20\"></a></td>
   </tr>";
-  $i++;
+    $i++;
   }
 }
 
@@ -37,7 +37,7 @@ if(count($list)>0){
 ?>
 
 <div class="container">
-<table class="table table-hover text-center">
+  <table class="table table-hover text-center">
     <thead>
       <tr class="border-bottom border-secondary-subtitle thline">
         <th scope="col">No</th>
@@ -54,8 +54,16 @@ if(count($list)>0){
       <?= $html; ?>
     </tbody>
   </table>
-</div>
+  <div class="d-flex justify-content-end">
+    <button class=" btn btn-primary insert">등록</button>
+  </div>
 
+</div>
+<script>
+  $('.insert').click(function() {
+    location.href = "lecture_insert.php"
+  })
+</script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
 ?>
