@@ -213,7 +213,6 @@ if (count($list) > 0) {
 <script>
   $('.platform').submit(function(e) {
     e.preventDefault();
-    console.log($(this).find('input[type="text"]'));
     let step = Number($(this).attr('data-step'));
     let pcode = null;
     let ppcode = null;
