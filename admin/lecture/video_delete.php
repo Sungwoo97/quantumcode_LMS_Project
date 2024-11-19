@@ -15,7 +15,7 @@ $sql = "SELECT * FROM lecture_video WHERE lvid=$lvid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-if ($data->tid !== $id) {
+if ($data->t_id !== $id) {
   $return_data = array('result' => 'mine');
   echo json_encode($return_data);
   exit;

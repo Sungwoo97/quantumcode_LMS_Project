@@ -111,7 +111,7 @@ if ($result) { //상품이 products테이블에 등록되면
 }
 /*
 $sql = "INSERT INTO  lecture_list
-    (category, title, cover_image, tid, isfree, ispremium, ispopular, isrecom, tuition, dis_tuition, regist_day, expiration_day, sub_title, description, learning_obj, difficult, lecture_tag, pr_video )
+    (category, title, cover_image, t_id, isfree, ispremium, ispopular, isrecom, tuition, dis_tuition, regist_day, expiration_day, sub_title, description, learning_obj, difficult, lecture_tag, pr_video )
     VALUES
     ('$lecture_cate', '$lecture_title', '$lecture_coverImage', '{$_SESSION['AUID']}', $lecture_isfree, $lecture_ispremium, $lecture_ispopular, $lecture_isrecom, $lecture_tuition, $lecture_disTuition, '$lecture_registDay', '$expiration_day', '$lecture_subTitle', '$lecture_desc', '$lucture_objectives', $lecture_difficult, '$lecture_tag', '$lecture_prVideo')
     ";
