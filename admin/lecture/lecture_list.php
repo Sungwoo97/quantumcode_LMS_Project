@@ -30,7 +30,7 @@ if (count($list) > 0) {
     <th >{$i}</th>
     <td><img src=\"{$list->cover_image}\" width=\"50\"></td>
     <td><a href=\"lecture_view.php?lid={$list->lid}\">{$list->title}</a></td>
-    <td>{$list->tid}</td>
+    <td>{$list->t_id}</td>
     <td>{$list->dis_tuition}</td>
     <td>{$list->difficult}</td>
     <td>{$list->category}</td>
