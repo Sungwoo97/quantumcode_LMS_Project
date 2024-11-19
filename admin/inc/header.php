@@ -1,6 +1,6 @@
 <?php
 session_start();
-print_r($_SESSION); 
+//print_r($_SESSION); 
 if (!isset($title)) {
   $title = '';
 }
@@ -41,7 +41,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($member_css)) {
       echo $member_css;
     }
-    if(isset($board_css)){
+    if (isset($board_css)) {
       echo $board_css;
     }
     ?>

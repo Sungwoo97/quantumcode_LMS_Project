@@ -32,8 +32,8 @@ $lecture_desc = rawurldecode($_POST['lecture_description']);
 $lucture_objectives = $_POST['objectives'] ?? '';
 $lecture_tag = $_POST['tag'] ?? '';
 
-$lecture_coverImage = $_FILES['cover_image'] ?? null;
-$lecture_prVideo = $_FILES['pr_video'] ?? null;
+$lecture_coverImage = $_FILES['cover_image'] ?? '';
+$lecture_prVideo = $_FILES['pr_video'] ?? '';
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
 
