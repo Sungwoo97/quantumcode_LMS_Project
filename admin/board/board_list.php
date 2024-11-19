@@ -1,5 +1,5 @@
 <?php
-$title = '전체 게시판';
+$title = '게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $user_id = $_SESSION['AUID'] ?? '';
@@ -133,14 +133,18 @@ $event_result = $mysqli->query($sql);
   </table>
 
   <nav aria-label="Page navigation">
-    <ul class="pagination d-flex justify-content-center">
+    <ul class="pagination">
       <?php
-        // Previous 버튼 설정
-        if ($block_num > 1) {
-          echo "<li class=\"page-item\"><a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">Previous</a></li>";
+        if ($block_num > 1) { //prev 버튼
+          $prev = $block_start - $block_ct;
+          echo "<li class=\"page-item prev\">
+              <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
+                  <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
+              </a>
+          </li>";
         }
       ?>
-      
+        
       <?php
         // 페이지 번호 표시
         for ($i = $block_start; $i <= $block_end; $i++) {                
@@ -149,11 +153,16 @@ $event_result = $mysqli->query($sql);
       <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
       <?php
         }
-
-        // Next 버튼 설정
-        if ($total_block > $block_num) {
-          echo "<li class=\"page-item\"><a class=\"page-link\" href=\"board_list.php?category={$category}&page={$next}\">Next</a></li>";
-        }
+        $next = $block_end + 1;
+        if($total_block >  $block_num){ //next 버튼
+      ?>
+      <li class="page-item next">
+        <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
+          <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
+        </a>
+      </li>
+      <?php
+      }         
       ?>
     </ul>
   </nav>
