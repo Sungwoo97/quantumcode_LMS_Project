@@ -22,10 +22,7 @@
 
 .sales dl{
   height: 100%;
-  display: flex; /* Flexbox 활성화 */
-  flex-direction: column;
-  justify-content: start; /* 가로 가운데 정렬 */
-  align-items: center;
+ 
 }
 
 
@@ -50,11 +47,19 @@
 }
 
 .sales dd {
+ 
   display: flex;
-
-  font-size: 1rem; /* 설명 크기 */
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem; /* 설명 크기 */
   margin: 0; /* 기본 여백 제거 */
   color: #212529; /* 텍스트 색상 */
-  position: relative;
 
+  span{
+    font-size: 1.3rem;
+    color: var(--primary)
+  }
+}
+.sales .sales_box dd{
+  height: 80%;
 }

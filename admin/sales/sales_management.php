@@ -11,7 +11,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_box">
         <dl class="">
           <dt>강의 수</dt>
-          <dd>23 개</dd>
+          <dd>
+            <div>23 개</div>
+          </dd>
         </dl>
       </div>
     </div>
@@ -19,7 +21,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_box">
         <dl>
           <dt>총 수강생</dt>
-          <dd><span>200 명</span></dd>
+          <dd>
+            <div>200 명</div>
+          </dd>
         </dl>
       </div>
     </div>
@@ -27,7 +31,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_box">
         <dl>
           <dt>평점</dt>
-          <dd><span>4.5 점</span></dd>
+          <dd>
+            <div>4.5 점</div>
+          </dd>
         </dl>
       </div>
     </div>
@@ -39,7 +45,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_box w-100">
         <dl>
           <dt>총 매출</dt>
-          <dd><span>10,580,000 원</span></dd>
+          <dd>
+            <div>10,580,000 원</div>
+          </dd>
         </dl>
       </div>
     </div>
@@ -51,8 +59,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_chart">
         <dl>
           <dt>이번 달 수익</dt>
-          <dd><span>2,020,000 원
-              <br> 991,000원 (96%)</span></dd>
+          <dd>
+            <div>2,020,000 원
+              <br><span> 991,000원 (96%)</span>
+            </div>
+          </dd>
         </dl>
       </div>
     </div>
