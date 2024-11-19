@@ -445,6 +445,35 @@ CREATE TABLE `lecture_list` (
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `lecture_data`
+--
+
+CREATE TABLE `lecture_data` (
+  `lid` int(11) NOT NULL,
+  `lecture_completion` int(10) NOT NULL,
+  `lecture_name` varchar(50) NOT NULL,
+  `lecture_time` time NOT NULL,
+  `lecture_number` int(20) NOT NULL,
+  `lecture_date` int(20) NOT NULL,
+  `lecture_avgwatch` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `lecture_data`
+--
+
+INSERT INTO `lecture_data` (`lid`, `lecture_completion`, `lecture_name`, `lecture_time`, `lecture_number`, `lecture_date`, `lecture_avgwatch`) VALUES
+(4, 80, '웹 프론트엔드를 위한 자바스크립트', '02:40:00', 12, 2, '02:40:00'),
+(5, 60, '만들면서 배우는 리액트', '06:25:00', 41, 7, '05:40:00'),
+(6, 50, '코어 자바스크립트', '04:32:00', 24, 4, '02:40:00'),
+(7, 75, '웹의 탄생, HTML의 탄생과 기초', '01:06:00', 6, 1, '00:40:00'),
+(8, 66, 'React 공식문서 공부하기', '02:11:00', 10, 2, '01:59:00'),
+(9, 78, 'Vue.js 시작하기', '03:55:00', 20, 5, '03:40:00');
+
+
+-- --------------------------------------------------------
+
+--
 -- 테이블 구조 `lecture_video`
 --
 
@@ -486,6 +515,62 @@ CREATE TABLE `members` (
   `progress` double DEFAULT NULL,
   `last_login` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `monthly sales`
+--
+
+CREATE TABLE `monthly sales` (
+  `msid` int(11) NOT NULL,
+  `month` varchar(50) NOT NULL,
+  `sales` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `monthly sales`
+--
+
+INSERT INTO `monthly sales` (`msid`, `month`, `sales`) VALUES
+(1, '1월', 1500000),
+(2, '2월', 1200000),
+(3, '3월', 1000000),
+(4, '4월', 1500000),
+(5, '3월', 1000000),
+(6, '4월', 1300000),
+(7, '5월', 1600000),
+(8, '6월', 1200000),
+(9, '7월', 1800000),
+(10, '8월', 1500000),
+(11, '9월', 1300000),
+(12, '10월', 1000000),
+(13, '11월', 1200000),
+(14, '12월', 1900000);
+
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `sales_management`
+--
+
+CREATE TABLE `sales_management` (
+  `sid` int(11) NOT NULL COMMENT '테이블 고유번호',
+  `total_lecture` int(50) NOT NULL COMMENT '총 강의 수',
+  `total_student` int(50) NOT NULL COMMENT '총 수강생',
+  `total_grade` int(50) NOT NULL COMMENT '평점',
+  `total_sales` int(100) NOT NULL COMMENT '총 매출'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `sales_management`
+--
+
+INSERT INTO `sales_management` (`sid`, `total_lecture`, `total_student`, `total_grade`, `total_sales`) VALUES
+(1, 23, 2323, 5, 12020000);
+
+
 
 -- --------------------------------------------------------
 
@@ -604,6 +689,27 @@ ALTER TABLE `lecture_category`
 ALTER TABLE `lecture_list`
   ADD PRIMARY KEY (`lid`);
 
+
+--
+-- 테이블의 인덱스 `lecture_data`
+--
+ALTER TABLE `lecture_data`
+  ADD PRIMARY KEY (`lid`);
+
+--
+-- 테이블의 인덱스 `monthly sales`
+--
+ALTER TABLE `monthly sales`
+  ADD PRIMARY KEY (`msid`);
+
+--
+-- 테이블의 인덱스 `sales_management`
+--
+ALTER TABLE `sales_management`
+  ADD PRIMARY KEY (`sid`);
+
+
+
 --
 -- 테이블의 인덱스 `lecture_video`
 --
@@ -655,6 +761,25 @@ ALTER TABLE `board_free`
 --
 ALTER TABLE `board_notice`
   MODIFY `nb_pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_data`
+--
+ALTER TABLE `lecture_data`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- 테이블의 AUTO_INCREMENT `monthly sales`
+--
+ALTER TABLE `monthly sales`
+  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- 테이블의 AUTO_INCREMENT `sales_management`
+--
+ALTER TABLE `sales_management`
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT COMMENT '테이블 고유번호', AUTO_INCREMENT=3;
+
 
 --
 -- 테이블의 AUTO_INCREMENT `board_qna`
