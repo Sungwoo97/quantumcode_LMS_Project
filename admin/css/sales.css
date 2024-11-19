@@ -63,3 +63,8 @@
 .sales .sales_box dd{
   height: 80%;
 }
+
+.chart-box {
+  width: 25%;
+  height: 300px;
+}
