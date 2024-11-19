@@ -51,7 +51,7 @@ switch ($category) {
   <input type="hidden" name="old_img" value="<?=$data->img?>">
   <div class="mb-3 col-4">
     <div class="box mb-3">
-      <img id="imgPreview" src="" alt="이미지 미리보기" style="display: <?= $data->img ? 'block' : 'none'; ?>; width: 100%; height: 100%; object-fit: contain;">
+      <img id="imgPreview" src="<?=$data->img?>" alt="이미지 미리보기" style="display: <?= $data->is_img == 1 ? 'block' : 'none'; ?>; width: 100%; height: 100%; object-fit: contain;">
     </div>
     <input class="form-control" accept="image/*" name="file" type="file" id="file" onchange="previewImage(event)">
   </div>
