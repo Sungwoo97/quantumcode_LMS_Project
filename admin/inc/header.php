@@ -44,6 +44,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($board_css)) {
       echo $board_css;
     }
+    if (isset($sales_css)) {
+      echo $sales_css;
+    }
+
     ?>
 
 
@@ -58,6 +62,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
+  }
+  if (isset($chart_css)) {
+    echo $chart_css;
   }
   ?>
 </head>
@@ -89,7 +96,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">매출목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
