@@ -17,10 +17,11 @@ if($data){
   $_SESSION['TUIDX'] = $data->tid;
   $_SESSION['TUID'] = $data->id;
   $_SESSION['TUNAME'] = $data->name;
+  $tid = $_SESSION['TUIDX'];
 
   echo "<script>
     alert('강사님 반갑습니다.');
-    location.href='/qc/admin/teachers/index.php';
+    location.href = '/qc/admin/teachers/index.php';
   </script>";
 
 }else{

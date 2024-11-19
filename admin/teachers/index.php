@@ -1,13 +1,18 @@
 <?php
 session_start();
-print_r($_SESSION); 
-if (!isset($title)) {
+//print_r($_SESSION); Array ( [TUIDX] => 22 [TUID] => kwak [TUNAME] => 곽튜브 ) 이런식
+if (!isset($title)) { 
   $title = '';
 }
 isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
-
+//강사의 로그인 데이터로 강사의 db에 있는 정보를 활용하려고 이렇게 넣어두었습니다.
+$tid = $_SESSION['TUIDX'];
+$it = $_SESSION['TUID'];
+$name = $_SESSION['TUNAME'];
+$tid = $_SESSION['TUIDX'];
+// print_r($tid);
 ?>
 
 <!DOCTYPE html>
@@ -68,11 +73,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">  
+        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/teachers/index.php' : '/qc/admin/login.php'; ?>">  
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
-      <h6 class="top_logo d-flex justify-content-center">이 페이지는 ~~강사의 개인 페이지 입니다.</h6>
+      <h6 class="top_logo d-flex justify-content-center">이 페이지는 <?= $_SESSION['TUID'] ?>강사의 개인 페이지 입니다.</h6>
+      <h6 class="top_logo d-flex justify-content-center">[TUIDX] => <?= $_SESSION['TUIDX'] ?> [TUID] => <?= $_SESSION['TUID'] ?> [TUNAME] => <?= $_SESSION['TUNAME'] ?> 추후 지울예정. </h6>
+
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
@@ -169,11 +176,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
           <?php
             if (isset($_SESSION['TUIDX'])) {
           ?>
-            <h3 class="tt_02"><?= $_SESSION['TUID'] ?></h3>
-            <?php
-            } else {                
-            ?>
-              <h3 class="tt_02"><?= $_SESSION['AUID'] ?></h3>
+            <h6 class="tt_02"><?= $_SESSION['TUID'] ?></h6>
             <?php
               }
             ?>
@@ -212,8 +215,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       dashboardButton.classList.remove("collapsed");
 
         setTimeout(() => {
-            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/index.php";
-        }, 500);
+            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/teachers/index.php";
+        }, 5000);
         });
     });
     </script>
