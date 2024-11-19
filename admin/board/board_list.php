@@ -96,7 +96,7 @@ $event_result = $mysqli->query($sql);
   <table class="table table-hover mb-3">
     <thead>
       <tr>
-        <th scope="col">check</th>
+        <th scope="col"><i class="fa-solid fa-check"></i></th>
         <th scope="col">No</th>
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
@@ -134,7 +134,10 @@ $event_result = $mysqli->query($sql);
         <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
-        <td><a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a></td>
+        <td>
+          <a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a>
+          <a href="delete.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+        </td>
       </tr>
       <?php
       }
