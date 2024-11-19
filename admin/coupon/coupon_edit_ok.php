@@ -2,7 +2,7 @@
 session_start();
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/file_upload_func.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
 
 if(!isset($_SESSION['AUID'])){
@@ -21,6 +21,7 @@ if (!isset($cid)) {
 
 $coupon_name = $_POST['coupon_name'] ?? '';
 $coupon_content = $_POST['coupon_content'] ?? '';
+$coupon_image = $_POST['coupon_image'] ?? '';
 $coupon_type = $_POST['coupon_type'] ?? '';
 $coupon_price = $_POST['coupon_price'] ?? 0;
 $coupon_ratio = $_POST['coupon_ratio'] ?? 0;
@@ -28,6 +29,7 @@ $status = isset($_POST['coupon_activate']) ? 1 : 0;
 $startdate = $_POST['startdate'] ?? date('Y-m-d');
 $enddate = $_POST['enddate'] ?? date('Y-m-d', strtotime('+1 year'));
 $userid = $_SESSION['AUID'] ?? 'admin';
+
 
 //쿠폰 썸네일 변경 되었다면
 if(isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD_ERR_OK){
