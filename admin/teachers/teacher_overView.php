@@ -65,7 +65,7 @@ while($data = $result->fetch_object()){
 
 <div class="container">
   <div class="">
-    <h1>인기강사</h1>
+    <h1>인기강사.<매출많은 순서대로 나타낼것></h1>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
       <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
         <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
@@ -103,7 +103,7 @@ while($data = $result->fetch_object()){
   </div>
   <hr>
   <div class="">
-    <h1>보통강사</h1>
+    <h1>보통강사<무작위로 나타낼것></h1>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
       <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
         <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
@@ -173,7 +173,7 @@ while($data = $result->fetch_object()){
   </div>
   <hr>
   <div class="">
-    <h1>신규강사</h1>
+    <h1>신규강사<가입순 최신대로 나타낼것></h1>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
       <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
         <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
