@@ -5,78 +5,78 @@ $chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
-<div class="dashboard container mt-4">
+<div class="dashboard container m-0">
     <!-- Summary Section -->
     <div class="row">
-        <div class="col-md-4 amount_teacher">
-          <div class="card border-0 shadow-sm p-3">
-            <div class="card-header bg-white border-0 pb-2 d-flex">
-                <h6 class="mb-0 fw-bold text-primary">강사</h6>
-                <small class="ms-2">2024년 11월 기준 전년 대비 증감량</small>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-4">
-                        <h6 class="text-primary">전체 강사</h6>
-                        <p class="mb-0">
-                            <span class="text-primary">↑50(10%)</span> 
-                            <span class="text-dark">500명</span>
-                        </p>
-                    </div>
-                    <div class="col-4">
-                        <h6 class="text-primary">신규 강사</h6>
-                        <p class="mb-0">
-                            <span class="text-primary">↑10(20%)</span> 
-                            <span class="text-dark">50명</span>
-                        </p>
-                    </div>
-                    <div class="col-4">
-                        <h6 class="text-danger">탈퇴 강사</h6>
-                        <p class="mb-0">
-                            <span class="text-danger">↑2(4%)</span> 
-                            <span class="text-dark">5명</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+      <div class="col-md-4 amount_teacher">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="card-header bg-white border-0 pb-2 d-flex">
+              <h6 class="mb-0 fw-bold text-primary">강사</h6>
+              <small class="ms-2">2024년 11월 기준 전년 대비 증감량</small>
+          </div>
+          <div class="card-body">
+              <div class="row text-center">
+                  <div class="col-4">
+                      <h6 class="text-primary">전체 강사</h6>
+                      <p class="mb-0">
+                          <span class="text-primary">↑50(10%)</span> 
+                          <span class="text-dark">500명</span>
+                      </p>
+                  </div>
+                  <div class="col-4">
+                      <h6 class="text-primary">신규 강사</h6>
+                      <p class="mb-0">
+                          <span class="text-primary">↑10(20%)</span> 
+                          <span class="text-dark">50명</span>
+                      </p>
+                  </div>
+                  <div class="col-4">
+                      <h6 class="text-danger">탈퇴 강사</h6>
+                      <p class="mb-0">
+                          <span class="text-danger">↑2(4%)</span> 
+                          <span class="text-dark">5명</span>
+                      </p>
+                  </div>
+              </div>
           </div>
         </div>
-        
-        <div class="col-md-4 amount_member">
-          <div class="card border-0 shadow-sm p-3">
-            <div class="card-header bg-white border-0 pb-2 d-flex">
-                <h6 class="mb-0 fw-bold  text-primary">회원</h6>
-                <small class="ms-2">2024년 11월 기준 10월 달 대비 증감량</small>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-4">
-                        <h6 class="sub_tt text-primary">전체 회원</h6>
-                        <p class="mb-0">
-                            <span class="text-primary fw-bold">↑120(15%)</span> 
-                            <span class="text-dark">3500명</span>
-                        </p>
-                    </div>
-                    <div class="col-4">
-                        <h6 class="text-primary">신규 회원</h6>
-                        <p class="mb-0">
-                            <span class="text-primary fw-bold">↑10(20%)</span> 
-                            <span class="text-dark">250명</span>
-                        </p>
-                    </div>
-                    <div class="col-4">
-                        <h6 class="text-danger">탈퇴 회원</h6>
-                        <p class="mb-0">
-                            <span class="text-danger fw-bold">↑16(6%)</span> 
-                            <span class="text-dark">35명</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+      </div>
+      
+      <div class="col-md-4 amount_member">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="card-header bg-white border-0 pb-2 d-flex">
+              <h6 class="mb-0 fw-bold text-primary">회원</h6>
+              <small class="ms-2">2024년 11월 기준 10월 달 대비 증감량</small>
+          </div>
+          <div class="card-body">
+              <div class="row text-center">
+                  <div class="col-4">
+                      <h6 class="sub_tt text-primary">전체 회원</h6>
+                      <p class="mb-0">
+                          <span class="text-primary fw-bold">↑120(15%)</span> 
+                          <span class="text-dark">3500명</span>
+                      </p>
+                  </div>
+                  <div class="col-4">
+                      <h6 class="text-primary">신규 회원</h6>
+                      <p class="mb-0">
+                          <span class="text-primary fw-bold">↑10(20%)</span> 
+                          <span class="text-dark">250명</span>
+                      </p>
+                  </div>
+                  <div class="col-4">
+                      <h6 class="text-danger">탈퇴 회원</h6>
+                      <p class="mb-0">
+                          <span class="text-danger fw-bold">↑16(6%)</span> 
+                          <span class="text-dark">35명</span>
+                      </p>
+                  </div>
+              </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-md-4 amount_sales">
+      <div class="col-md-4 amount_sales">
         <div class="card border-0 shadow-sm p-3">
           <div class="card-header bg-white border-0 pb-2 d-flex">
             <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
@@ -85,53 +85,55 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
               <canvas id="salesChart" height="150"></canvas>
           </div>
         </div>
-    </div>
+      </div>
+  </div>
 
     <!-- Popular Courses -->
-    <div class="row">
-      <div class="row col-md-6">
-        <div class="mb-4">
+    <div class="row mt-4 ms-0 me-0 d-flex justify-content-between" >
+      <div class="row col-md-8">
+        <div class="mb-4 card p-3 border-0 bg-light">
+            <h6>인기 강의</h6>
             <div class="chart-container">
             <canvas id="popularCoursesChart"></canvas>
         </div>
       </div>
   
-        <div class="QnA">
-            <h6>Q&A</h6>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>등록일</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>title</td>
-                        <td>name</td>
-                        <td>2024-11-01</td>
-                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td>title</td>
-                        <td>name</td>
-                        <td>2024-11-02</td>
-                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      </div>
-  
-      <!-- Revenue Section -->
-      <div class="col-md-4">
-        <h6>월별 매출</h6>
-        <h5 class="text-end mt-3">12,020,000원 <span class="text-success">(+10%)</span></h5>
-        <canvas id="monthlyChart"></canvas>
+      <div class="QnA card p-3 border-0 bg-light">
+          <h6>Q&A</h6>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>등록일</th>
+                      <th>Edit</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>title</td>
+                      <td>name</td>
+                      <td>2024-11-01</td>
+                      <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                  </tr>
+                  <tr>
+                      <td>title</td>
+                      <td>name</td>
+                      <td>2024-11-02</td>
+                      <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                  </tr>
+              </tbody>
+          </table>
       </div>
     </div>
+
+    <!-- Revenue Section -->
+    <div class="col-md-4 mb-4 card p-3 border-0 bg-light">
+      <h6>월별 매출</h6>
+      <h5 class="text-end mt-3">12,020,000원 <span class="text-success">(+10%)</span></h5>
+      <canvas id="monthlyChart"></canvas>
+    </div>
+  </div>
 </div>
 
 
@@ -214,6 +216,11 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
                 color: '#333'}// Y축 텍스트 색상
             }
           }
+        },
+        elements: {
+            bar: {
+                maxBarThickness: 10 // 막대 최대 두께를 20px로 제한
+            }
         }
       });
 
