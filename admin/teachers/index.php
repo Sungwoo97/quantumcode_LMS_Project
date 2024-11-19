@@ -1,5 +1,6 @@
 <?php
 session_start();
+// print_r($_SESSION); 
 if (!isset($title)) {
   $title = '';
 }
@@ -45,9 +46,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if(isset($board_css)){
       echo $board_css;
     }
-    if(isset($sales_css)){
-      echo $sales_css;
-    }
     ?>
 
 
@@ -70,15 +68,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">  
+        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">  
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
+      <h6 class="top_logo d-flex justify-content-center">이 페이지는 ~~강사의 개인 페이지 입니다.</h6>
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_dashboard" aria-expanded="false" aria-controls="nav_cate_dashboard" id="dashboardButton">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/SquaresFour.svg" alt="대시보드 아이콘"> 대시보드
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/SquaresFour.svg" alt="대시보드 아이콘">대시보드
             </button>
           </h2>
           <ul id="nav_cate_dashboard" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -88,21 +87,21 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_Sales" aria-expanded="false" aria-controls="nav_cate_Sales">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/ChartLineUp.svg" alt="매출관리 아이콘"> 매출관리
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/ChartLineUp.svg" alt="매출관리 아이콘">매출관리
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
+            <li><a href="">매출현황</a></li>
           </ul>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_lecture" aria-expanded="false" aria-controls="nav_cate_lecture">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Book.svg" alt="강의 관리 아이콘"> 강의 관리
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Book.svg" alt="강의 관리 아이콘">내 강의 관리
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">강의 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">나의 강의 목록</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
@@ -111,31 +110,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_member" aria-expanded="false" aria-controls="nav_cate_member">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/UsersFour.svg" alt="회원 관리 아이콘"> 회원 관리
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/UsersFour.svg" alt="회원 관리 아이콘">내 회원 관리
             </button>
           </h2>
           <ul id="nav_cate_member" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_list.php">회원 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_insert.php">회원 등록</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_overview.php">회원 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_instructor" aria-expanded="false" aria-controls="nav_cate_instructor">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/ChalkboardSimple.svg" alt="강사 관리 아이콘"> 강사 관리
-            </button>
-          </h2>
-          <ul id="nav_cate_instructor" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_list.php">강사 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_insert.php">강사 등록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_overview.php">강사 총괄</a></li>
-          </ul>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_coupon" aria-expanded="false" aria-controls="nav_cate_coupon">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Ticket.svg" alt="쿠폰 관리 아이콘"> 쿠폰 관리
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Ticket.svg" alt="쿠폰 관리 아이콘">쿠폰 관리
             </button>
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -146,7 +132,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_board" aria-expanded="false" aria-controls="nav_cate_board">
-              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Article.svg" alt="게시판 관리 아이콘"> 게시판 관리
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/Article.svg" alt="게시판 관리 아이콘">게시판 관리
             </button>
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -206,3 +192,34 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
   <div class="page_wapper">
     <div class="content">
+
+
+
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
+    <script>
+    // 대시보드 버튼 클릭 시 index.php로 이동
+    document.addEventListener("DOMContentLoaded", ()=>{
+    const dashboardButton = document.getElementById("dashboardButton");
+
+    dashboardButton.addEventListener("click", (e)=>{
+      e.preventDefault();
+      dashboardButton.classList.remove("collapsed");
+
+        setTimeout(() => {
+            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/index.php";
+        }, 500);
+        });
+    });
+    </script>
+    </body>
+
+    </html>
+    <?php
+    $mysqli->close();
+    ?>

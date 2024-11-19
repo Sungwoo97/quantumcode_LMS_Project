@@ -1,16 +1,25 @@
 <?php
-$title = '강의 등록';
+$title = '강의 수정';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$uid = $_SESSION['AUID'];
-
-$sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
-if ($result = $mysqli->query($sql)) {
-  $data = $result->fetch_object();
+$id = isset($_SESSION['AUID']) ?  $_SESSION['AUID'] : $_SESSION['TUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
 }
+
+
+// $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
+// if ($result = $mysqli->query($sql)) {
+//   $data = $result->fetch_object();
+// }
 $cate = array();
 $cate_sql = "SELECT * FROM lecture_category WHERE step = 1 ";
 $cate_result = $mysqli->query($cate_sql);
@@ -39,8 +48,8 @@ while ($video_data = $video_result->fetch_object()) {
 <div class="container">
   <Form action="lecture_modify_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
-    <input type="hidden" name="lecture_videoId" id="lecture_videoId" value="">
-    <input type="hidden" name="lid" id="lid" value="<?= $data->last_lid === null ? 1 : $data->last_lid ?>">
+    <input type="hidden" name="lecture_video" id="lecture_videoId" value="">
+    <input type="hidden" name="lid" value="<?= $lid ?>">
     <div class="row lecture">
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
@@ -48,7 +57,7 @@ while ($video_data = $video_result->fetch_object()) {
           <img src="<?= $lecture_data->cover_image ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
-          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" value="<?= $lecture_data->cover_image ?>" required>
+          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" value="<?= $lecture_data->cover_image ?>">
         </div>
       </div>
       <div class="col-8 mt-3">
@@ -63,7 +72,7 @@ while ($video_data = $video_result->fetch_object()) {
             <tr scope="row">
               <th scope="row" class="insert_name">강사명</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="userid" id="userid" value="<?= $uid ?>" disabled>
+                <input type="text" class="form-control" name="userid" id="userid" value="<?= $id ?>" disabled>
               </td>
             </tr>
             <tr scope="row">
@@ -361,6 +370,39 @@ while ($video_data = $video_result->fetch_object()) {
     })
   } //Attachfile
 
+  function file_delete(lvid) {
+
+    if (!confirm('정말 삭제할까요?')) { //조건이 false일때
+      return false; //거짓 반환,종료      
+    }
+
+    let data = {
+      lvid: lvid
+    }
+    $.ajax({
+      async: false, //동기방식, image_delete.php의 결과를 받으면 진행      
+      url: 'video_delete.php',
+      data: data, //삭제할 번호 data 객체를 전달
+      type: 'post', //data를 전달할 방식
+      dataType: 'json', //json형식이용해서, 객체로 받겠다.
+      error: function() {
+        //연결실패시 할일
+      },
+      success: function(returned_data) {
+        //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
+        if (returned_data.result == 'mine') {
+          alert('본인이 작성한 제품의 이미지만 삭제할 수 있습니다.');
+          return;
+        } else if (returned_data.result == 'error') {
+          alert('삭제 실패!');
+          return;
+        } else {
+          $('#' + lvid).remove(); //요소(tag)를 삭제
+        }
+      }
+    })
+  }
+
   $('#addVideo').click(function() {
     $('#add_videos').trigger('click');
   });
@@ -415,6 +457,11 @@ while ($video_data = $video_result->fetch_object()) {
     var markup = lecture_desc.summernote('code');
     let content = encodeURIComponent(markup);
     $('#lecture_description').val(markup);
+  });
+  $('.lecture_video').on('click', 'button', function() {
+    let lvid = $(this).closest('.card').attr('id');
+    //console.log(imgid);
+    file_delete(lvid);
   });
 </script>
 <?php

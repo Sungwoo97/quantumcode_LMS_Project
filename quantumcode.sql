@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-18 07:33
+-- 생성 시간: 24-11-18 10:02
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -294,6 +294,23 @@ INSERT INTO `board_reply` (`pid`, `b_pid`, `user_id`, `pw`, `content`, `date`) V
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `cid` int(11) NOT NULL,
+  `coupon_name` varchar(100) NOT NULL COMMENT '쿠폰명',
+  `coupon_image` varchar(100) NOT NULL COMMENT '쿠폰이미지',
+  `coupon_type` varchar(100) NOT NULL COMMENT '쿠폰타입(정액,정률)',
+  `coupon_price` double DEFAULT NULL COMMENT '할인금액',
+  `coupon_ratio` double DEFAULT NULL COMMENT '할인비율',
+  `status` tinyint(4) DEFAULT 0 COMMENT '활성화 상태',
+  `startdate` datetime DEFAULT current_timestamp() COMMENT '등록일',
+  `enddate` date NOT NULL COMMENT '만료일',
+  `userid` varchar(100) DEFAULT NULL COMMENT '등록한유저'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- 테이블의 덤프 데이터 `coupons`
 --
 
@@ -449,6 +466,7 @@ INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `tid`, `i
 CREATE TABLE `lecture_video` (
   `lvid` int(11) NOT NULL COMMENT '강의영상 고유번호',
   `lid` int(11) NOT NULL COMMENT '연결된 강의 고유번호',
+  `tid` varchar(20) NOT NULL,
   `video_lecture` varchar(100) NOT NULL COMMENT '강의 영상 파일경로',
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
@@ -568,7 +586,6 @@ ALTER TABLE `coupons`
 ALTER TABLE `coupons_usercp`
   ADD PRIMARY KEY (`ucid`);
 
-
 --
 -- 테이블의 인덱스 `lecture_category`
 --
@@ -658,11 +675,17 @@ ALTER TABLE `board_reply`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- 테이블의 AUTO_INCREMENT `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
   MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-COMMIT;
+
 --
 -- 테이블의 AUTO_INCREMENT `lecture_category`
 --

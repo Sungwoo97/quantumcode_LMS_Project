@@ -12,14 +12,14 @@ if (!isset($tid)) {
 }
 
 
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 $sql = "SELECT * FROM teachers WHERE tid = $tid";
 $result = $mysqli->query($sql); //쿼리 실행 결과
@@ -39,9 +39,9 @@ while($data = $result->fetch_object()){
     <input type="hidden" name="lid" id="lid" value=""> -->
     <div class="row teacher">
       <div class="col-4 mb-5">
-        <h6>강사 이미지 등록</h6>
+        <h6>현재 강사 이미지</h6>
         <div class="teacher_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="<?= $item->cover_image; ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >
@@ -100,9 +100,9 @@ while($data = $result->fetch_object()){
             <tr scope="row">
               <th scope="row" class="insert_id">아이디</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $item->id; ?> required maxlength="20">
+                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $item->id; ?> required maxlength="20" disabled>
                 <div id="idError" class="mt-2" style="color: red;"></div> <!-- 에러 메시지 위치 -->
-                <button type="button" id="idCheck" class="btn btn-secondary btn-sm">중복체크</button>
+                <!-- <button type="button" id="idCheck" class="btn btn-secondary btn-sm">중복체크</button> -->
               </td>
             </tr>
             <tr scope="row">

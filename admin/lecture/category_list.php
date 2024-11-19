@@ -245,7 +245,6 @@ if (count($list) > 0) {
 
   // submit 이벤트, input의 값, 
   function addCategory(name, pcode, ppcode, step) {
-
     let data = {
       name: name,
       pcode: pcode,
