@@ -1,7 +1,7 @@
 <?php
 $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-$user_id = $_SESSION['AUID'];
+$user_id = $_SESSION['AUID'] ?? '';
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -75,6 +75,7 @@ switch ($category) {
 </div>
 <div>
   <?php
+  // 이미지가 있을시 출력
     if($data->is_img == 1){
       echo "<img src=\"{$data->img}\" width=\"300\" class=\"mb-3\">";
     }
