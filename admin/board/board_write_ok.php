@@ -2,8 +2,14 @@
 session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 
+if (isset($_SESSION['AUID'])) {
+    // 관리자 로그인 시
+    $user_id = $_SESSION['AUID'];
+} else if (isset($_SESSION['TUID'])) {
+    // 강사 로그인 시
+    $user_id = $_SESSION['TUID'];
+}
 
-$user_id = $_SESSION['AUID'] ?? '';
 
 $category = $_POST['category'];
 $title1 = $_POST['title'];
