@@ -1,7 +1,7 @@
 <?php
 session_start();
-// print_r($_SESSION); 
-if (!isset($title)) {
+//print_r($_SESSION); Array ( [TUIDX] => 22 [TUID] => kwak [TUNAME] => 곽튜브 ) 이런식
+if (!isset($title)) { 
   $title = '';
 }
 isset($coupon_css) ? $coupon_css : '';
@@ -11,6 +11,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 $tid = $_SESSION['TUIDX'];
 $it = $_SESSION['TUID'];
 $name = $_SESSION['TUNAME'];
+$tid = $_SESSION['TUIDX'];
+// print_r($tid);
 ?>
 
 <!DOCTYPE html>
@@ -107,9 +109,9 @@ $name = $_SESSION['TUNAME'];
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">나의 강의 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">나의 강의 등록</a></li>
-            <!-- <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li> -->
-            <!-- <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li> -->
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
           </ul>
         </div>
         <div class="accordion-item">
