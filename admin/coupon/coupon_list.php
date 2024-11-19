@@ -1,7 +1,7 @@
 <?php
 $title = '쿠폰 목록';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+$coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
+
 
 $cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
 
@@ -37,12 +37,6 @@ $total_block = ceil($total_page/$block_ct);
 if($block_end > $total_page ) $block_end = $total_page;
 
 ?>
-
-
-<!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
-<head>
-<link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css?v=<?= time(); ?>">
-</head>
 
 <form action="" class="coupon_serch d-flex align-items-center justify-content-between" id="search_form">
   <div class="couponlist_view d-flex">
