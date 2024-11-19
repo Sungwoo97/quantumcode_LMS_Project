@@ -78,26 +78,31 @@ while($lecture_data = $lecture_result->fetch_object()){
       <div class="col-8 mb-3">
         <!--  -->
         <?php
-            if(isset($lecture_dataArr)){
-              foreach($lecture_dataArr as $item){
-        ?> 
-        <table class="table">
-          <tbody>
-            <h3>현재 진행 중인 강의</h3>
-            <div class="card flex" style="width: 18rem;">
-              <img class="card-img-top" src="<?= $item->cover_image; ?>" alt="Card image cap" width="300" height="200">
-              <div class="card-body">
-                <h5 class="card-title"><?= $item->title; ?></h5>
-                <p class="card-text"><?= $item->description; ?></p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </tbody>
-        <?php
-            }
-          }
+          if (isset($lecture_dataArr)) {
         ?>
-        </table>
+        <h3>현재 진행 중인 강의</h3>
+        <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
+          <?php
+          foreach ($lecture_dataArr as $item) {
+          ?> 
+          <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+            <img class="card-img-top" src="<?= $item->cover_image?>" alt="Card image cap" width="300" height="200">
+            <div class="card-body">
+              <h5 class="card-title"><?= $item->title?></h5>
+              <p class="card-text"><?= $item->description?></p>
+              <a href="/qc/admin/lecture/lecture_view.php?lid=<?= $item->lid; ?>" class="btn btn-primary" >해당 강의 보러가기</a>
+              <!-- http://localhost/qc/admin/lecture/lecture_view.php?lid=3 -->
+            </div>
+          </div>
+          <?php
+          }
+          ?>
+        </div>
+        <?php
+        }
+        ?>
+
+        
         <!--  -->
         <hr>
         <table class="table">
