@@ -3,6 +3,18 @@ $title = '매출 관리';
 $sales_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
 $chart_css = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+
+
+
+$data_sql = "SELECT * FROM lecture_data";
+$data_result = $mysqli->query($data_sql);
+
+while ($data_row = $data_result->fetch_object()) {
+  $data_data[] = $data_row;
+}
+
+
+
 ?>
 
 <div class="container sales my-4">
@@ -102,12 +114,23 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
       <div class="sales_chart">
         <dl>
           <dt>강의 정보</dt>
-          <dd>1</dd>
-          <dd>2</dd>
-          <dd>3</dd>
-          <dd>4</dd>
-          <dd>5</dd>
-          <dd>6</dd>
+          <dd>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">강의명</th>
+                  <th scope="col">영상 시간</th>
+                  <th scope="col">영상 개수</th>
+                  <th scope="col">기간</th>
+                  <th scope="col">평균 시청 시간</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+          </dd>
+
         </dl>
       </div>
     </div>
@@ -142,9 +165,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
           datasets: [{
             label: 'Monthly Sales',
             data: sales, // y축 데이터
-            backgroundColor: 'rgba(112, 134, 253, 0.2)',
-            borderColor: 'rgba(112, 134, 253, 1)',
-            borderWidth: 1
+            backgroundColor: 'rgba(112, 134, 253, 1)',
+
           }]
         },
         options: {
@@ -162,17 +184,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      const colors = ['#4CAF50', '#FF9800', '#2196F3'];
+      const colors = ['#0E5FD9', '#64A2FF', '#0040A1'];
       data.forEach((item, index) => {
         const ctx = document.getElementById(`chart${index + 1}`).getContext('2d');
 
         new Chart(ctx, {
+
           type: 'doughnut',
           data: {
             labels: ['완강률', '미강률'], // 레이블 설정
             datasets: [{
               data: [parseFloat(item.lecture_completion), 100 - parseFloat(item.lecture_completion)],
-              backgroundColor: [colors[index], '#DDDDDD'], // 색상
+              backgroundColor: [colors[index], '#ffffff'], // 색상
             }]
           },
           options: {
@@ -199,8 +222,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
           }
         });
       });
-
-
     }).catch(error => console.error('Error fetching data:', error));
 
 
