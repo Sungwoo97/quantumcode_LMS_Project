@@ -3,14 +3,14 @@ $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 //관리자가 아닐시 로그인창으로 보내기
-if(!isset($_SESSION['AUID'])){
-  echo "
-    <script>
-      alert('관리자로 로그인해주세요');
-      location.href = '../login.php';
-    </script>
-  ";
-}
+// if(!isset($_SESSION['AUID'])){
+//   echo "
+//     <script>
+//       alert('관리자로 로그인해주세요');
+//       location.href = '../login.php';
+//     </script>
+//   ";
+// }
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
@@ -100,16 +100,16 @@ switch ($category) {
   </p>
 </div>
 
-<hr style="color:blue;">
+<hr style="color:#0D6EFD;">
 <!-- 댓글 -->
 <form action="board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
   <input type="hidden" name="user_id" value="<?=$data->user_id?>">
   <input type="hidden" name="category" value="<?=$data->category?>">
-  <div class="d-flex gap-3 mb-3">
+  <div class="d-flex gap-3 mb-3 align-items-center">
     <p>댓글 입력:</p> 
     <textarea name="content" class="form-control w-25" placeholder="댓글내용을 입력 해주세요."></textarea>
-    <button class="btn btn-primary btn-sm">등록</button>
+    <button class="btn btn-primary btn-sm ">등록</button>
   </div>
 </form>
 
@@ -122,9 +122,13 @@ switch ($category) {
 
       while($data = $reply_result -> fetch_object()){
         ?>
+        <!-- 댓글 출력 부분 -->
       <li class="list-group-item mb-3" style="border: 1px solid blue; border-radius:15px">
         <div class="contents">
-          <small><?=$data->user_id?><?=$data->date?></small>
+          <div class="d-flex justify-content-between">
+            <small><?=$data->user_id?></small> 
+            <small><?=$data->date?></small>
+          </div>
           <hr>
           <div class="content">
           <?=$data->content?>
@@ -134,6 +138,7 @@ switch ($category) {
             <a href="reply_delete.php?pid=<?=$data->pid?>&b_pid=<?=$data->b_pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
           </div>
         </div>
+        <!-- //댓글 출력 부분 -->
         <!-- modal -->
         <div class="modal fade" id="reply_edit<?=$data->pid?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
