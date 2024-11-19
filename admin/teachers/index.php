@@ -1,7 +1,7 @@
 <?php
 session_start();
-//print_r($_SESSION); Array ( [TUIDX] => 22 [TUID] => kwak [TUNAME] => 곽튜브 ) 이런식
-if (!isset($title)) { 
+// print_r($_SESSION); 
+if (!isset($title)) {
   $title = '';
 }
 isset($coupon_css) ? $coupon_css : '';
