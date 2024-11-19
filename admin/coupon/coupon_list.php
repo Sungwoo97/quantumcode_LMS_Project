@@ -72,8 +72,8 @@ if($block_end > $total_page ) $block_end = $total_page;
     <tr>
       <th scope="col"></th>
       <th scope="col">No</th>
-      <th scope="col">쿠폰 이름</th>
-      <th scope="col">할인율</th>
+      <th scope="col" style="width: 35%;">쿠폰 이름</th>
+      <th scope="col" style="width: 10%;">할인율</th>
       <th scope="col">발급기간</th>
       <th scope="col">활성화</th>
       <th scope="col">수정 및 삭제</th>
@@ -115,11 +115,16 @@ if($block_end > $total_page ) $block_end = $total_page;
 </table>
 
 <nav aria-label="Page navigation">
-    <ul class="pagination d-flex justify-content-center">
+    <ul class="pagination">
+    
     <?php
-      if($block_num > 1){
+      if ($block_num > 1) { //prev 버튼
         $prev = $block_start - $block_ct;
-        echo "<li class=\"page-item\"><a class=\"page-link\" href=\"coupon_list.php?search_keyword={$search_keyword}&page={$prev}\">Previous</a></li>";
+        echo "<li class=\"page-item prev\">
+            <a class=\"page-link\" href=\"coupon_list.php?search_keyword={$search_keyword}&page={$prev}\">
+                <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
+            </a>
+        </li>";
       }
     ?>
     
@@ -128,13 +133,22 @@ if($block_end > $total_page ) $block_end = $total_page;
         // if($page == $i) {$active = 'active';} else {$active = '';}
         $page == $i ? $active = 'active': $active = '';
     ?>
-    <li class="page-item <?= $active; ?>"><a class="page-link" href="coupon_list.php?search_keyword=<?= $search_keyword;?>&page=<?= $i;?>"><?= $i;?></a></li>
+    <li class="page-item <?= $active; ?>">
+      <a class="page-link" href="coupon_list.php?search_keyword=<?= $search_keyword;?>&page=<?= $i;?>">
+        <?= $i;?>
+      </a>
+    </li>
+  
     <?php
       }
       $next = $block_end + 1;
-      if($total_block >  $block_num){
+      if($total_block >  $block_num){ //next 버튼
     ?>
-    <li class="page-item"><a class="page-link" href="coupon_list.php?search_keyword=<?= $search_keyword;?>&page=<?= $next;?>">Next</a></li>
+    <li class="page-item next">
+      <a class="page-link" href="coupon_list.php?search_keyword=<?= $search_keyword;?>&page=<?= $next;?>">
+        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
+      </a>
+    </li>
     <?php
     }         
     ?>

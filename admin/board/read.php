@@ -1,7 +1,7 @@
 <?php
 $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-
+$user_id = $_SESSION['AUID'] ?? '';
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -24,15 +24,17 @@ if(!isset($_SESSION['hits'][$pid])){
 
  
 if ($category === 'all') {
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid";
 } else {
   // 카테고리가 'all'이 아닌 경우, 카테고리 조건을 추가하여 쿼리 실행
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date FROM board WHERE pid = $pid AND category = '$category'";
+  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid AND category = '$category'";
 }
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-$post_time = date("Y-m-d", strtotime($data->date));
+$post_date = date("Y-m-d", strtotime($data->date));
+$start_date = date("Y-m-d", strtotime($data->start_date));
+$end_date = date("Y-m-d", strtotime($data->end_date));
 
 switch ($category) {
   case 'all':
@@ -64,7 +66,7 @@ switch ($category) {
 
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$data->title?></h2>
-  <span>글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_time?></span>
+  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
 </div>
 
 
@@ -73,10 +75,9 @@ switch ($category) {
 </div>
 <div>
   <?php
+  // 이미지가 있을시 출력
     if($data->is_img == 1){
-      echo "<img src=\"{$data->img}\" width=\"300\">";
-    }else{
-      echo "첨부파일: <a href=\"{$data->img}\">다운로드</a>";
+      echo "<img src=\"{$data->img}\" width=\"300\" class=\"mb-3\">";
     }
   ?>
 </div>
