@@ -50,15 +50,23 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 //목적에 맞게 목록 가져오기
 $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY tid ASC LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
-$sql_lowPriceToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
 $sql_highPriceToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
-$sql_lowLectureToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
+$sql_lowPriceToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
 $sql_highLectureToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
+$sql_lowLectureToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
 
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+
+function chooseSQL($sql){
+  $result = $mysqli->query($csql); 
+  while($data = $result->fetch_object()){
+  $dataArr[] = $data;
+  }
+}
+
 
 ?>
 
@@ -70,8 +78,7 @@ while($data = $result->fetch_object()){
         <td colspan="3">
           <div class="d-flex gap-3">
             <select class="form-select mt-3" name="sort_order" >
-              <option value="" selected>정렬 기준을 선택해 주세요</option>
-              <option value="highPriceToLow">등록 순</option>
+              <option value="base" selected>정렬 기준을 선택해 주세요</option>
               <option value="highPriceToLow">매출 많은 순</option>
               <option value="lowPriceToHigh">매출 적은 순</option>
               <option value="highLectureToLow">강의 많은 순</option>
@@ -83,10 +90,8 @@ while($data = $result->fetch_object()){
       <input type="text" class="form-control w-25 ms-auto" name="search_keyword" id="search">
       <button class="btn btn-primary btn-sm w-20">검색</button>
     </div>     
-    
-
-
     <hr> 
+    
     <!-- <form action="plist_update.php" method="GET"> -->
     <table class="table">
       <thead>
@@ -154,9 +159,28 @@ while($data = $result->fetch_object()){
 </div>
 
 <script>
-  
+    const sortSelect = document.getElementById('sort_order');
 
-  
+    sortSelect.addEventListener('change', function () {
+        const selectedValue = this.value;
+
+        switch (selectedValue) {
+            case 'highPriceToLow':
+                console.log('매출 많은 순을 선택했습니다.');
+                break;
+            case 'lowPriceToHigh':
+                console.log('매출 적은 순을 선택했습니다.');
+                break;
+            case 'highLectureToLow':
+                console.log('강의 많은 순을 선택했습니다.');
+                break;
+            case 'lowLectureToHigh':
+                console.log('강의 적은 순을 선택했습니다.');
+                break;
+            default:
+                console.log('정렬 기준을 선택해 주세요.');
+        }
+    });
 </script>
 
 <?php
