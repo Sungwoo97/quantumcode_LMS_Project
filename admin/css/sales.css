@@ -1,0 +1,22 @@
+.row-cols-md-3 {
+  --bs-gutter-x: 24px; /* 열 간격 */
+  --bs-gutter-y: 24px; /* 행 간격 */
+}
+
+.sales .sales_box{
+  /* padding: 16px; 안쪽 여백 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
+  height: 180px;
+}
+.sales .sales_chart{
+  padding: 0;
+  height: 400px;
+}
+.sales dt{
+  color: var(--darkBlue);
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding: 5px 30px;
+}
+.sales_shadow{
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
