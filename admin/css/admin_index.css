@@ -1,0 +1,7 @@
+.dashboard small{
+  color: var(--medium_gray);
+}
+.dashboard .card-body h6{
+  font-size: 20px;
+  font-weight: 700;
+}
