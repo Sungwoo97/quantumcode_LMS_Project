@@ -13,6 +13,7 @@ $data = $result ->fetch_object();
 if($data){
   $update_sql = "UPDATE admins SET last_login = now() WHERE idx = $data->idx";
   $update_result = $mysqli->query($update_sql);
+  $_SESSION['AUIDX'] = $data->idx;
   $_SESSION['AUID'] = $data->userid;
   $_SESSION['AUNAME'] = $data->username;
   $_SESSION['AULEVEL'] = $data->level;

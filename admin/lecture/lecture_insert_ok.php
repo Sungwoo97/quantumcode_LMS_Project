@@ -1,6 +1,17 @@
 <?php
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
+
+$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 
 $lecture_title = $_POST['title'];
@@ -22,9 +33,13 @@ $lucture_objectives = $_POST['objectives'] ?? '';
 $lecture_tag = $_POST['tag'] ?? '';
 
 $lecture_coverImage = $_FILES['cover_image'] ?? null;
-$lecture_prVideo = null;
+$lecture_prVideo = $_FILES['pr_video'] ?? null;
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
+
+$lecture_videoId = $_POST['lecture_video'];  //추가이미지의 imgid들 11,12,
+$lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
+
 print_r($_POST);
 
 $expiration_day = date("Y-m-d", strtotime("+3 months", strtotime($lecture_registDay)));
@@ -57,15 +72,27 @@ if (isset($_FILES['pr_video']) && $_FILES['pr_video']['error'] == UPLOAD_ERR_OK)
 
 
 $sql = "INSERT INTO  lecture_list
-    (category, title, cover_image, tid, isfree, ispremium, ispopular, isrecom, tuition, dis_tuition, regist_day, expiration_day, sub_title, description, learning_obj, difficult, lecture_tag, pr_video )
+    (category, title, cover_image, t_id, isfree, ispremium, ispopular, isrecom, tuition, dis_tuition, regist_day, expiration_day, sub_title, description, learning_obj, difficult, lecture_tag, pr_video )
     VALUES
-    ('$lecture_cate', '$lecture_title', '$lecture_coverImage', '{$_SESSION['AUID']}', $lecture_isfree, $lecture_ispremium, $lecture_ispopular, $lecture_isrecom, $lecture_tuition, $lecture_disTuition, '$lecture_registDay', '$expiration_day', '$lecture_subTitle', '$lecture_desc', '$lucture_objectives', $lecture_difficult, '$lecture_tag', '$lecture_prVideo')
+    ('$lecture_cate', '$lecture_title', '$lecture_coverImage', '$id', $lecture_isfree, $lecture_ispremium, $lecture_ispopular, $lecture_isrecom, $lecture_tuition, $lecture_disTuition, '$lecture_registDay', '$expiration_day', '$lecture_subTitle', '$lecture_desc', '$lucture_objectives', $lecture_difficult, '$lecture_tag', '$lecture_prVideo')
     ";
 
 $lecture_result = $mysqli->query($sql);
+$lid = $mysqli->insert_id;
+
+if ($lecture_result) { //상품이 products테이블에 등록되면
+  //추가 이미지 등록
+  if ($lecture_videoId) {
+    //테이블 product_image_table에서 imgid의 값이 11,12인 데이터 행에서 pid 값을 $pid로 업데이트
+    $update_sql = "UPDATE lecture_video SET lid=$lid WHERE lvid IN ($lecture_videoId)";
+    $update_result = $mysqli->query($update_sql);
+  }
+}
+
+
 if ($lecture_result) {
-  "<script>
+  echo "<script>
     alert('강의가 등록되었습니다.');
-    location.href = '/lecture_list.php';
+    location.href = 'lecture_list.php';
     </script>";
 }
