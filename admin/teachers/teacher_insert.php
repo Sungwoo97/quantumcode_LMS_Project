@@ -5,14 +5,14 @@ $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../index.php';
-//     </script>
-//   ";
-// }
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../index.php';
+    </script>
+  ";
+}
 
 
 
