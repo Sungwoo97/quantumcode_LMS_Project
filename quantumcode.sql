@@ -340,6 +340,34 @@ INSERT INTO `lecture_category` (`lcid`, `code`, `pcode`, `ppcode`, `name`, `step
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `lecture_data`
+--
+
+CREATE TABLE `lecture_data` (
+  `lid` int(11) NOT NULL,
+  `lecture_completion` int(10) NOT NULL,
+  `lecture_name` varchar(50) NOT NULL,
+  `lecture_time` time NOT NULL,
+  `lecture_number` int(20) NOT NULL,
+  `lecture_date` int(20) NOT NULL,
+  `lecture_avgwatch` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `lecture_data`
+--
+
+INSERT INTO `lecture_data` (`lid`, `lecture_completion`, `lecture_name`, `lecture_time`, `lecture_number`, `lecture_date`, `lecture_avgwatch`) VALUES
+(4, 80, '웹 프론트엔드를 위한 자바스크립트', '02:40:00', 12, 2, '02:40:00'),
+(5, 60, '만들면서 배우는 리액트', '06:25:00', 41, 7, '05:40:00'),
+(6, 50, '코어 자바스크립트', '04:32:00', 24, 4, '02:40:00'),
+(7, 75, '웹의 탄생, HTML의 탄생과 기초', '01:06:00', 6, 1, '00:40:00'),
+(8, 66, 'React 공식문서 공부하기', '02:11:00', 10, 2, '01:59:00'),
+(9, 78, 'Vue.js 시작하기', '03:55:00', 20, 5, '03:40:00');
+
+-- --------------------------------------------------------
+
+--
 -- 테이블 구조 `lecture_list`
 --
 
@@ -348,7 +376,7 @@ CREATE TABLE `lecture_list` (
   `category` varchar(100) NOT NULL COMMENT '강의 카테고리',
   `title` varchar(500) NOT NULL COMMENT '강의 제목',
   `cover_image` varchar(100) DEFAULT NULL COMMENT '강의 커버 이미지',
-  `tid` varchar(100) NOT NULL COMMENT '강사이름',
+  `t_id` varchar(100) NOT NULL COMMENT '강사이름',
   `isfree` tinyint(4) NOT NULL COMMENT '무료강의',
   `ispremium` tinyint(4) NOT NULL COMMENT '프리미엄강의',
   `ispopular` tinyint(4) NOT NULL COMMENT '인기강의',
@@ -376,19 +404,11 @@ CREATE TABLE `lecture_list` (
 CREATE TABLE `lecture_video` (
   `lvid` int(11) NOT NULL COMMENT '강의영상 고유번호',
   `lid` int(11) NOT NULL COMMENT '연결된 강의 고유번호',
-  `tid` varchar(20) NOT NULL,
+  `t_id` varchar(20) NOT NULL,
   `video_lecture` varchar(100) NOT NULL COMMENT '강의 영상 파일경로',
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
-
---
--- 테이블의 덤프 데이터 `lecture_video`
---
-
-INSERT INTO `lecture_video` (`lvid`, `lid`, `tid`, `video_lecture`, `video_desc`, `regdate`) VALUES
-(10, 6, '', '/qc/admin/upload/20241118045324101044.mp4', NULL, '2024-11-18 12:53:24'),
-(11, 6, '', '/qc/admin/upload/20241118045324897251.mp4', NULL, '2024-11-18 12:53:24');
 
 -- --------------------------------------------------------
 
@@ -411,6 +431,59 @@ CREATE TABLE `members` (
   `progress` double DEFAULT NULL,
   `last_login` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `monthly sales`
+--
+
+CREATE TABLE `monthly sales` (
+  `msid` int(11) NOT NULL,
+  `month` varchar(50) NOT NULL,
+  `sales` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `monthly sales`
+--
+
+INSERT INTO `monthly sales` (`msid`, `month`, `sales`) VALUES
+(1, '1월', 1500000),
+(2, '2월', 1200000),
+(3, '3월', 1000000),
+(4, '4월', 1500000),
+(5, '3월', 1000000),
+(6, '4월', 1300000),
+(7, '5월', 1600000),
+(8, '6월', 1200000),
+(9, '7월', 1800000),
+(10, '8월', 1500000),
+(11, '9월', 1300000),
+(12, '10월', 1000000),
+(13, '11월', 1200000),
+(14, '12월', 1900000);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `sales_management`
+--
+
+CREATE TABLE `sales_management` (
+  `sid` int(11) NOT NULL COMMENT '테이블 고유번호',
+  `total_lecture` int(50) NOT NULL COMMENT '총 강의 수',
+  `total_student` int(50) NOT NULL COMMENT '총 수강생',
+  `total_grade` int(50) NOT NULL COMMENT '평점',
+  `total_sales` int(100) NOT NULL COMMENT '총 매출'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `sales_management`
+--
+
+INSERT INTO `sales_management` (`sid`, `total_lecture`, `total_student`, `total_grade`, `total_sales`) VALUES
+(1, 23, 2323, 5, 12020000);
 
 -- --------------------------------------------------------
 
@@ -501,6 +574,12 @@ ALTER TABLE `lecture_category`
   ADD PRIMARY KEY (`lcid`);
 
 --
+-- 테이블의 인덱스 `lecture_data`
+--
+ALTER TABLE `lecture_data`
+  ADD PRIMARY KEY (`lid`);
+
+--
 -- 테이블의 인덱스 `lecture_list`
 --
 ALTER TABLE `lecture_list`
@@ -517,6 +596,18 @@ ALTER TABLE `lecture_video`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`mid`);
+
+--
+-- 테이블의 인덱스 `monthly sales`
+--
+ALTER TABLE `monthly sales`
+  ADD PRIMARY KEY (`msid`);
+
+--
+-- 테이블의 인덱스 `sales_management`
+--
+ALTER TABLE `sales_management`
+  ADD PRIMARY KEY (`sid`);
 
 --
 -- 테이블의 인덱스 `teachers`
@@ -557,12 +648,6 @@ ALTER TABLE `board_reply`
 --
 ALTER TABLE `coupons_list`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `coupons_usercp`
---
-ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
