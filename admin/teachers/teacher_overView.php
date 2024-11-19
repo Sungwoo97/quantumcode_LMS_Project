@@ -62,95 +62,156 @@ while($data = $result->fetch_object()){
 
 ?>
 
+
 <div class="container">
-  <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
-    <div class="d-flex gap-3 w-30 mt-3 align-items-center">
-    <tr>
-        <td colspan="3">
-          <div class="d-flex gap-3">
-            <select class="form-select mt-3" name="sort_order" >
-              <option value="" selected>정렬 기준을 선택해 주세요</option>
-              <option value="highPriceToLow">등록 순</option>
-              <option value="highPriceToLow">매출 많은 순</option>
-              <option value="lowPriceToHigh">매출 적은 순</option>
-              <option value="highLectureToLow">강의 많은 순</option>
-              <option value="lowLectureToHigh">강의 적은 순</option>
-            </select>
-          </div>
-        </td>
-      </tr>
-      <input type="text" class="form-control w-25 ms-auto" name="search_keyword" id="search">
-      <button class="btn btn-primary btn-sm w-20">검색</button>
-    </div>     
-    
-
-
-    <hr> 
-    <!-- <form action="plist_update.php" method="GET"> -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">No. </th>
-          <th scope="col">이름</th>
-          <th scope="col">아이디</th>
-          <th scope="col">이메일</th>
-          <th scope="col">가입날짜</th>
-          <th scope="col">강의 갯수</th>
-          <th scope="col">올해 매출</th>
-          <th scope="col">강사 등급</th>
-          <th scope="col">상세보기, 수정 삭제</th>
-        </tr>
-      </thead>
-      <tbody>
-          <?php
-            if(isset($dataArr)){
-              foreach($dataArr as $item){
-          ?> 
-          <tr>
-            <th scope="row"><?= $item->tid; ?></th>
-              <td><?= $item->name; ?></td>
-              <td><?= $item->id; ?></td>
-              <td><?= $item->email; ?></td>
-              <td><?= $item->reg_date; ?></td>
-              <td><?= $item->lecture_num; ?></td>
-              <td><?= $item->year_sales; ?></td>
-              <td><?= $item->grade; ?></td>
-              <td><a href="teacher_view.php?tid=<?= $item->tid; ?>" class="btn btn-primary btn-sm">상세보기</a></td>
-          </tr>
-
-          <?php
-              }
-            }
-          ?> 
-      </tbody>
-    </table>
-  </form>
-  <nav aria-label="Page navigation">
-      <ul class="pagination d-flex justify-content-center">
-        <?php
-          if($block_num > 1){
-            $prev = $block_start - $block_ct;
-            echo "<li class=\"page-item\"><a class=\"page-link\" href=\"teacher_list.php?&search_keyword={$search_keyword}&page={$prev}\">Previous</a></li>";
-          }
-        ?>
-        
-        <?php
-          for($i=$block_start; $i<=$block_end; $i++){                
-            $page == $i ? $active = 'active': $active = '';
-        ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="teacher_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $i;?>"><?= $i;?></a></li>
-        <?php
-          }
-          $next = $block_end + 1;
-          if($total_block >  $block_num){
-        ?>
-        <li class="page-item"><a class="page-link" href="teacher_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $next;?>">Next</a></li>
-        <?php
-        }         
-        ?>
-      </ul>
-    </nav>
+  <div class="">
+    <h1>인기강사</h1>
+    <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="">
+    <h1>보통강사</h1>
+    <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="">
+    <h1>신규강사</h1>
+    <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">123</h5>
+          <p class="card-text">123</p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center my-4">
+    <a href="/qc/admin/teachers/teacher_list.php" class="btn btn-primary btn-lg">모든 강사 보러 가기</a>
+  </div>
 </div>
 
 <script>
