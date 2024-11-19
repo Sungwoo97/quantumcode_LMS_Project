@@ -61,11 +61,25 @@ if(isset($_GET['orderby'])){
 }
 
 $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
-
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+
+$join_sql = " SELECT 
+    t.id AS teacher_id,
+    COUNT(l.t_id) AS lecture_count
+FROM 
+    teachers t
+LEFT JOIN 
+    lecture_list l
+ON 
+    t.id = l.t_id
+GROUP BY 
+    t.id;";
+
+$join_result = $mysqli->query($join_sql);
+print_r($join_result);
 
 
 ?>
