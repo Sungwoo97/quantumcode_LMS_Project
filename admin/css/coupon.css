@@ -1,6 +1,17 @@
 body{
   font-weight: 400;
 }
+.coupon_regisImg {
+  width: 100%;
+  height: 220px;
+  background: #ebebeb;
+}
+.coupon_regisImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+}
 table a{
   text-decoration: none;
   color: black;

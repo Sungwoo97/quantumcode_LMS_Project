@@ -44,11 +44,11 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
       <div class="row login_box">
         <form action="login_ok_teacher.php" method="POST">
           <div class="form-floating">
-            <input type="text" class="form-control" id="id" name="id" placeholder="teacher">
-            <label for="id">Your Email OR Id</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="teacher ID">
+            <label for="id">teacher ID</label>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="password" name="password" placeholder="1111">
+          <input type="password" class="form-control" id="password" name="password" placeholder="password">
             <label for="password">Password</label>
           </div>
           <div class="d-flex justify-content-between">

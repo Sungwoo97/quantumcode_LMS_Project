@@ -22,19 +22,21 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 <div class="coupon_regis container">
   <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
+  <input type="hidden" name="coupon_imageId" id="coupon_imageId" value="">
   <input type="hidden" id="coupon_description" name="coupon_description" value="">
-  <input type="hidden" name="coupon_img" id="coupon_img" value="">
-  <div class="row coupon">
-    <div class="col-4 mb-5">
-      <h6>쿠폰 이미지 등록</h6>
-      <div class="coupon_cpImg mb-3">
-        <img src="" id="couponImg" alt="">
+  
+    <div class="row coupon">
+      <div class="col-4 mb-5">
+        <h6>쿠폰 이미지 등록</h6>
+          <div class="coupon_regisImg mb-3">
+            <img src="" id="coverImg" alt="">
+          </div>
+          <div class="input-group">
+            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
+          </div>
       </div>
-      <div class="input-group">
-        <input type="file" class="form-control" accept="image/*" name="addedImages" id="addedImages">
-      </div>
-    </div>
-        <div class="col-8 mt-3">
+
+      <div class="col-8 mt-3">
         <table class="table">
           <thead class="visually-hidden">
             <tr>
@@ -55,40 +57,33 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
               <textarea class="form-control" name="coupon_content" id="coupon_content" rows="2"></textarea>
             </tr>
             <tr>
-          <th scope="row">할인구분</th>
-          <td>
-            <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
-              <option value="1" selected>정액</option>
-              <option value="2">정률</option>
-            </select>
-          </td>
-          <td id="ct1">
-            <div class="input-group mb-3">
-              <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="0" aria-describedby="coupon_price"> 
-              <span class="input-group-text" id="coupon_price">원</span>
-            </div>
-          </td> 
-          <td id="ct2">
-            <div class="input-group mb-3">
-              <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="0" aria-describedby="coupon_ratio">
-              <span class="input-group-text" id="coupon_ratio">%</span>
-            </div>
-          </td>
-        </tr>
-        </tr> 
-            <tr>
-              <th scope="row">사용기한</th>
+              <th scope="row">할인구분</th>
               <td>
-                <select class="form-select" name="coupon_type_usage" id="coupon_type_usage" aria-label="사용기한">                            
-                  <option value="1" selected>무제한</option>
-                  <option value="2">제한</option>
+                <select class="form-select" name="coupon_type" id="coupon_type" aria-label="할인구분">                            
+                  <option value="fixed" selected>정액</option>
+                  <option value="percentage">정률</option>
                 </select>
               </td>
-              <td>
-                <input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
+              <td id="ct1">
+                <div class="input-group">
+                  <input type="text" name="coupon_price" class="form-control" aria-label="할인가" value="0" aria-describedby="coupon_price"> 
+                  <span class="input-group-text" id="coupon_price">원</span>
+                </div>
+              </td> 
+              <td id="ct2">
+                <div class="input-group">
+                  <input type="text" name="coupon_ratio" class="form-control" aria-label="할인비율" value="0" aria-describedby="coupon_ratio">
+                  <span class="input-group-text" id="coupon_ratio">%</span>
+                </div>
               </td>
-              <td>
-               <input type="date" class="form-control" name="enddate" id="enddate" placeholder="" required>
+            </tr> 
+            <tr>
+              <th scope="row">사용기한</th>
+              <td colspan="3">
+                <div class="d-flex gap-2">
+                  <input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
+                  <input type="date" class="form-control" name="enddate" id="enddate" placeholder="" required>
+                </div>
               </td>
             </tr>
             <tr scope="row">
@@ -100,7 +95,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
                     <label class="form-check-label" for="coupon_activate">활성화</label>
                   </div>
                   <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="1" id="coupon_deactivate">
+                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate">
                     <label class="form-check-label" for="coupon_deactivate">비활성화</label>
                   </div>
                   </div>
@@ -119,13 +114,36 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 </div>
   
 <script>
+  //이미지 구현창
+  function addCover(file, cover) {
+    let coverImage = file;
+    coverImage.on('change', (e) => {
+      let file = e.target.files[0];
+      let target = cover;
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
+          let attachment = e.target.result;
+          console.log(attachment);
+          if (attachment) {
+            target.attr('src', attachment);
+          }
+        }
+        reader.readAsDataURL(file);
+      } else {
+        target.attr('src', '');
+      }
+    });
+  }
+  addCover($('#coupon_image'), $('#coverImg'));
+
   //할인구분
   $('#ct2 input').prop('disabled', true);
 
   $('#coupon_type').change(function(){
     let value = $(this).val();
     $('#ct1 input, #ct2 input').prop('disabled', true);
-    if(value == 1){
+    if(value == 'fixed'){
       $('#ct1 input').prop('disabled', false);
     } else{
       $('#ct2 input').prop('disabled', false);
@@ -172,20 +190,22 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   });
 
 
+  /*
   function attachFile(file){
 
 let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
 formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
 
+
 $.ajax({
-  url:'product_image_save.php',
+  url:'coupon_add_image.php',
   data:formData,
   cache: false, //이미지 정보를 브라우저 저장, 안한다
   contentType:false, //전송되는 데이터 타입지정, 안한다.
   processData:false, //전송되는 데이터 처리(해석), 안한다.
   dataType:'json', //product_image_save.php이 반환하는 값의 타입
   type:'POST', //파일 정보를 전달하는 방법
-  success:function(returned_data){ //product_image_save.php과 연결(성공)되면 할일
+  success:function(returned_data){ //coupon_add_image.php과 연결(성공)되면 할일
     console.log(returned_data);
 
     if(returned_data.result === 'size'){
@@ -198,8 +218,8 @@ $.ajax({
       alert('첨부실패, 관리자에게 문의하세요');
       return;
     } else{ //파일 첨부가 성공하면
-      let imgids = $('#product_image_id').val() + returned_data.imgid + ',';
-      $('#product_image_id').val(imgids);
+      let imgids = $('#coupon_imageId').val() + returned_data.imgid + ',';
+      $('#coupon_imageId').val(imgids);
       let html = `
         <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
           <img src="${returned_data.savefile}" class="card-img-top" alt="...">
@@ -208,7 +228,7 @@ $.ajax({
           </div>
         </div>
       `;
-      $('#addedImages').append(html);
+      $('.coupon_regisImg').append(html);
     }
   }
 
@@ -222,7 +242,7 @@ let imgid = $(this).closest('.card').attr('id');
 //console.log(imgid);
 file_delete(imgid);
 });
-
+*/
 
 
 </script>

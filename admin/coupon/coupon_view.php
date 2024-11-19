@@ -62,7 +62,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     <div class="row">
       <!-- 쿠폰 이미지 -->
       <div class="coupon_view_imgbox col-md-4 d-flex align-items-center justify-content-center">
-        <img src="" alt="상세_쿠폰 이미지" class="coupon_view_img">
+        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/upload/<?=$data->coupon_image;?>" alt="상세_쿠폰 이미지" class="coupon_view_img">
       </div>
 
       <!-- 쿠폰 정보 -->
@@ -73,19 +73,19 @@ if($block_end > $total_page ) $block_end = $total_page;
               <th>쿠폰번호</th>
               <td class="text-primary"><?= $data->cid; ?></td>
               <th>할인구분</th>
-              <td>정액</td>
+              <td><?= $data->coupon_type === 'fixed' ? '정액' : '정률'; ?></td>
             </tr>
             <tr>
               <th>쿠폰이름</th>
               <td><?= $data->coupon_name; ?></td>
               <th>할인율</th>
-              <td>5,000 원</td>
+              <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "할인 없음") ?></td>
             </tr>
             <tr>
               <th>쿠폰설명</th>
               <td><?= $data->coupon_content; ?></td>
               <th>상태</th>
-              <td>활성화</td>
+              <td><?= $data->status == '1' ? '활성화' : '비활성화' ?></td>
             </tr>
             <tr>
               <th>발급기간</th>
@@ -134,8 +134,8 @@ if($block_end > $total_page ) $block_end = $total_page;
       <td><?= $uc_data->userid ?></td>
       <td><?= $uc_data->regdate ?></td>
       <td><?= $uc_data->use_max_date ?></td>
-      <td><?= $uc_data->status == 1 ? $uc_data->usedate : '미사용' ?></td> 
-      <td><?= $uc_data->status == 1 ? $uc_data->reason : '' ?></td>
+      <td><?= $uc_data->status == 0 ? $uc_data->usedate : '미사용' ?></td> 
+      <td><?= $uc_data->status == 0 ? $uc_data->reason : '' ?></td>
       <?php
       }
       ?>
