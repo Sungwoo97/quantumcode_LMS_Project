@@ -72,8 +72,8 @@ if($block_end > $total_page ) $block_end = $total_page;
     <tr>
       <th scope="col"></th>
       <th scope="col">No</th>
-      <th scope="col">쿠폰 이름</th>
-      <th scope="col">할인율</th>
+      <th scope="col" style="width: 35%;">쿠폰 이름</th>
+      <th scope="col" style="width: 10%;">할인율</th>
       <th scope="col">발급기간</th>
       <th scope="col">활성화</th>
       <th scope="col">수정 및 삭제</th>
