@@ -4,7 +4,6 @@ session_start();
 if (!isset($title)) {
   $title = '';
 }
-isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 ?>
 
@@ -44,6 +43,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($board_css)) {
       echo $board_css;
     }
+    if (isset($coupon_css)) {
+      echo $coupon_css;
+    }
+    if (isset($admin_index_css)) {
+      echo $admin_index_css;
+    }
     ?>
 
 
@@ -58,6 +63,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
+  }
+  if (isset($chart_js)) {
+    echo $chart_js;
   }
   ?>
 </head>
