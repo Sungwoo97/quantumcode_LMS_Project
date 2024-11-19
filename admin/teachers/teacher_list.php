@@ -50,10 +50,10 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 //목적에 맞게 목록 가져오기
 $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY tid ASC LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
-$sql_lowPriceToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY sales DESC"; //테이블에서 모든 데이터를 조회
-$sql_highPriceToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY sales ASC"; //테이블에서 모든 데이터를 조회
-$sql_lowLectureToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY sales DESC"; //테이블에서 모든 데이터를 조회
-$sql_highLectureToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY sales ASC"; //테이블에서 모든 데이터를 조회
+$sql_lowPriceToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
+$sql_highPriceToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
+$sql_lowLectureToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
+$sql_highLectureToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
 
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
