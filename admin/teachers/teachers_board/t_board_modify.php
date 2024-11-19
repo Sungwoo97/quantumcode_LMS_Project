@@ -2,12 +2,12 @@
 $title = "게시판 수정";
 $board_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-//관리자가 아닐시 로그인창으로 보내기
-if(!isset($_SESSION['AUID'])){
+//강사가 아닐시 로그인창으로 보내기
+if(!isset($_SESSION['TUID'])){
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
-      location.href = '../login.php';
+      alert('강사로 로그인해주세요');
+      location.href = '../login_teacher.php';
     </script>
   ";
 }
@@ -33,19 +33,19 @@ $category = $cate_data->category ?? 'all';
 
 switch ($category) {
   case 'all':
-      $redirect_url = "/qc/admin/board/read.php?pid=" . $pid . "&category=all";
+      $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=" . $pid . "&category=all";
       break;
   case 'qna':
-      $redirect_url = "/qc/admin/board/read.php?pid=" . $pid . "&category=qna"; 
+      $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=" . $pid . "&category=qna"; 
       break;
   case 'notice':
-      $redirect_url = "/qc/admin/board/read.php?pid=" . $pid . "&category=notice"; 
+      $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=" . $pid . "&category=notice"; 
       break;
   case 'event':
-      $redirect_url = "/qc/admin/board/read.php?pid=" . $pid . "&category=event"; 
+      $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=" . $pid . "&category=event"; 
       break;
   case 'free':
-      $redirect_url = "/qc/admin/board/read.php?pid=" . $pid . "&category=free"; 
+      $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=" . $pid . "&category=free"; 
       break;
   default:
       die("유효하지 않은 카테고리입니다.");
@@ -55,7 +55,7 @@ switch ($category) {
 ?>
 
 
-<form action="board_modify_ok.php" method="POST" class="row" enctype="multipart/form-data">
+<form action="t_board_modify_ok.php" method="POST" class="row" enctype="multipart/form-data">
   <input type="hidden" name="pid" value="<?=$data->pid?>">
   <input type="hidden" name="old_img" value="<?=$data->img?>">
   <div class="mb-3 col-4">

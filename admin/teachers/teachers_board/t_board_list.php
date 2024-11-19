@@ -1,6 +1,7 @@
 <?php
 $title = '게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+$user_id = $_SESSION['TUID'] ?? '';
 
 //강사가 아닐시 로그인창으로 보내기
 // if(!isset($_SESSION['TUID'])){
@@ -126,17 +127,20 @@ $event_result = $mysqli->query($sql);
         }
         ?>
       <tr>
-        <th><input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="<?= $data->pid ?>"></th>
+        <th><?= ($_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
+        <td><a href="t_read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$data->content ?></td>
         <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td>
-          <a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a>
-          <a href="delete.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+        <?= ($_SESSION['TUID'] == $data->user_id) ? 
+          '<a href="t_board_modify.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-pen-to-square"></i></a>
+          <a href="t_delete.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>' 
+          : ''
+        ?>
         </td>
       </tr>
       <?php
@@ -151,7 +155,7 @@ $event_result = $mysqli->query($sql);
         if ($block_num > 1) { //prev 버튼
           $prev = $block_start - $block_ct;
           echo "<li class=\"page-item prev\">
-              <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
+              <a class=\"page-link\" href=\"t_board_list.php?category={$category}&page={$prev}\">
                   <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
               </a>
           </li>";
@@ -163,14 +167,14 @@ $event_result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
         if($total_block >  $block_num){ //next 버튼
       ?>
       <li class="page-item next">
-        <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
+        <a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $next;?>">
           <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
         </a>
       </li>
@@ -181,7 +185,7 @@ $event_result = $mysqli->query($sql);
   </nav>
 
   <div class=" d-flex justify-content-end gap-3">
-    <a class="btn btn-primary" href="board_write.php" role="button">글등록</a>
+    <a class="btn btn-primary" href="t_board_write.php" role="button">글등록</a>
     <button type="button" id="deleteSelected" class="btn btn-danger" href="#" role="button">글삭제</button>
   </div>
 </div>
@@ -195,7 +199,7 @@ $event_result = $mysqli->query($sql);
 
     // AJAX 요청으로 데이터만 갱신
     $.ajax({
-      url: 'board_list.php',  // 요청할 PHP 파일
+      url: 't_board_list.php',  // 요청할 PHP 파일
       type: 'GET',
       data: { category: category },  // 보낼 데이터 (카테고리 값)
       success: function(data) {
@@ -232,7 +236,7 @@ $event_result = $mysqli->query($sql);
   }
   const requestData = JSON.stringify(selectedIds);
 
-  fetch('check_delete.php',{
+  fetch('t_check_delete.php',{
     method: 'POST',
     headers: {
       'Content-Type' : 'application/json',

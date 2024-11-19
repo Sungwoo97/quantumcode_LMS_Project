@@ -2,12 +2,14 @@
 $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
-//관리자가 아닐시 로그인창으로 보내기
-// if(!isset($_SESSION['AUID'])){
+
+
+//강사가 아닐시 로그인창으로 보내기
+// if(!isset($_SESSION['TUID'])){
 //   echo "
 //     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
+//       alert('강사로 로그인해주세요');
+//       location.href = '../login_teacher.php';
 //     </script>
 //   ";
 // }
@@ -48,19 +50,19 @@ $end_date = date("Y-m-d", strtotime($data->end_date));
 
 switch ($category) {
   case 'all':
-      $redirect_url = '/qc/admin/board/board_list.php?category=all'; 
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=all'; 
       break;
   case 'qna':
-      $redirect_url = '/qc/admin/board/board_list.php?category=qna'; 
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=qna'; 
       break;
   case 'notice':
-      $redirect_url = '/qc/admin/board/board_list.php?category=notice'; 
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=notice'; 
       break;
   case 'event':
-      $redirect_url = '/qc/admin/board/board_list.php?category=event'; 
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=event'; 
       break;
   case 'free':
-      $redirect_url = '/qc/admin/board/board_list.php?category=free'; 
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=free'; 
       break;
   default:
       die("유효하지 않은 카테고리입니다.");
@@ -94,15 +96,18 @@ switch ($category) {
 <div class="d-flex justify-content-end">
   <p class="d-flex gap-3">
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
-    <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
-    <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
-    <a href="delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <a href="t_like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
+    <?php if ($data->user_id === $_SESSION['TUID']) : ?>
+    <!-- 수정/삭제 버튼 (본인이 작성한 글일 때만 표시) -->
+    <a href="t_board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
+    <a href="t_delete.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <?php endif; ?>
   </p>
 </div>
 
 <hr style="color:#0D6EFD;">
 <!-- 댓글 -->
-<form action="board_reply_ok.php" method="POST">
+<form action="t_board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
   <input type="hidden" name="user_id" value="<?=$data->user_id?>">
   <input type="hidden" name="category" value="<?=$data->category?>">
@@ -135,14 +140,14 @@ switch ($category) {
           </div>
           <div class="controls d-flex justify-content-end gap-1">
             <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$data->pid?>">수정</button>
-            <a href="reply_delete.php?pid=<?=$data->pid?>&b_pid=<?=$data->b_pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
+            <a href="t_reply_delete.php?pid=<?=$data->pid?>&b_pid=<?=$data->b_pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
           </div>
         </div>
         <!-- //댓글 출력 부분 -->
         <!-- modal -->
         <div class="modal fade" id="reply_edit<?=$data->pid?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
-            <form action="board_reply_modify_ok.php" method="POST" class="modal-content">
+            <form action="t_board_reply_modify_ok.php" method="POST" class="modal-content">
               <input type="hidden" name="pid" value="<?=$data->pid?>">
               <input type="hidden" name="b_pid" value="<?=$pid?>">
               <input type="hidden" name="category" value="<?=$category?>">

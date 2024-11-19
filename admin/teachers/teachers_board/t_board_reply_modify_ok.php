@@ -9,19 +9,19 @@ $content = $_POST['content'];
 
 switch ($category) {
     case 'all':
-        $redirect_url = "/qc/admin/board/read.php?pid=".$b_pid."&category=all";
+        $redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=".$b_pid."&category=all";
         break;
     case 'qna':
-        $redirect_url = '/qc/admin/board/read.php?pid='.$b_pid.'&category=qna'; 
+        $redirect_url = '/qc/admin/teachers/teachers_board/t_read.php?pid='.$b_pid.'&category=qna'; 
         break;
     case 'notice':
-        $redirect_url = '/qc/admin/board/read.php?pid='.$b_pid.'&category=notice'; 
+        $redirect_url = '/qc/admin/teachers/teachers_board/t_read.php?pid='.$b_pid.'&category=notice'; 
         break;
     case 'event':
-        $redirect_url = '/qc/admin/board/read.php?pid='.$b_pid.'&category=event'; 
+        $redirect_url = '/qc/admin/teachers/teachers_board/t_read.php?pid='.$b_pid.'&category=event'; 
         break;
     case 'free':
-        $redirect_url = '/qc/admin/board/read.php?pid='.$b_pid.'&category=free'; 
+        $redirect_url = '/qc/admin/teachers/teachers_board/t_read.php?pid='.$b_pid.'&category=free'; 
         break;
     default:
         die("유효하지 않은 카테고리입니다.");
