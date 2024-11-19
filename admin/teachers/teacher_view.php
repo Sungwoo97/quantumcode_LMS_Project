@@ -18,19 +18,8 @@ if (!isset($tid)) {
   echo "<script>alert('관련 정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
 }
 
-$sql = "
-    SELECT 
-        t.*, 
-        l.* 
-    FROM 
-        teachers t 
-    INNER JOIN 
-        lecture_list l 
-    ON 
-        t.name = l.t_id
-";
-
-$result = $mysqli->query($sql);
+$sql = "SELECT * FROM teachers WHERE tid = $tid";
+$result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
@@ -85,22 +74,6 @@ while($data = $result->fetch_object()){
           <tbody>
             <h3>현재 진행 중인 강의</h3>
             <div class="card flex" style="width: 18rem;">
-              <img class="card-img-top" src="<?= $item->cover_image; ?>" alt="Card image cap" width="300" height="200">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="<?= $item->cover_image; ?>" alt="Card image cap" width="300" height="200">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-            <div class="card" style="width: 18rem;">
               <img class="card-img-top" src="<?= $item->cover_image; ?>" alt="Card image cap" width="300" height="200">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>

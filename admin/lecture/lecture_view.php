@@ -24,7 +24,7 @@ $data = $result->fetch_object();
 <ul>
   <li><?= $data->category ?></li>
   <li><?= $data->title ?></li>
-  <li><?= $data->tid ?></li>
+  <li><?= $data->t_id ?></li>
   <li><?= $data->sub_title ?></li>
   <li>수강평</li>
   <li>추천 수</li>
