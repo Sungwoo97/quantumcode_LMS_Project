@@ -3,19 +3,19 @@ $title = '게시판 글등록';
 $board_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-//관리자가 아닐시 로그인창으로 보내기
+//강사가 아닐시 로그인창으로 보내기
 // if(!isset($_SESSION['AUID'])){
 //   echo "
 //     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
+//       alert('강사로 로그인해주세요');
+//       location.href = '../login_teacher.php';
 //     </script>
 //   ";
 // }
 ?>
 
 
-<form action="board_write_ok.php" method="POST" enctype="multipart/form-data" class="row">
+<form action="t_board_write_ok.php" method="POST" enctype="multipart/form-data" class="row">
   <div class="mb-3 col-4">
     <div class="box mb-3">
       <img id="imgPreview" src="#" alt="이미지 미리보기" style="display:none; width: 100%; height: 100%; object-fit: contain;">
@@ -27,7 +27,6 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
       <option value="" selected>카테고리 선택</option>
       <option value="notice">공지사항</option>
       <option value="free">자유게시판</option>
-      <option value="event">이벤트</option>
       <option value="qna">질문과답변</option>
     </select>
     <div class="mb-3 d-flex gap-3">

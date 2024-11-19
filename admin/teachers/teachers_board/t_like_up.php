@@ -38,7 +38,7 @@ if ($check_data->count == 0) {
 
       echo "<script>
               alert('추천이 반영되었습니다.');
-              location.href='read.php?pid=$pid&category=$category';  // 해당 카테고리 목록으로 리디렉션
+              location.href='t_read.php?pid=$pid&category=$category';  // 해당 카테고리 목록으로 리디렉션
             </script>";
   }
 } else {

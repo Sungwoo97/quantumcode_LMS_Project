@@ -21,7 +21,7 @@ $end_date = $_POST['end_date'] ?? null;
 //파일 업로드
 $file_name = $_FILES['file']['name'];
 $temp_path = $_FILES['file']['tmp_name'];
-$upload_path = './upload/'.$file_name;
+$upload_path = './t_upload/'.$file_name;
 move_uploaded_file($temp_path,$upload_path);
 
 strpos($_FILES['file']['type'], 'image') !== false ? $is_img = 1 : $is_img = 0;
@@ -43,16 +43,16 @@ $result = $mysqli->query($sql);
 
 switch ($category) {
   case 'qna':
-      $redirect_url = '/qc/admin/board/board_list.php?category=qna';
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=qna';
       break;
   case 'notice':
-      $redirect_url = '/qc/admin/board/board_list.php?category=notice';
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=notice';
       break;
   case 'event':
-      $redirect_url = '/qc/admin/board/board_list.php?category=event';
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=event';
       break;
   case 'free':
-      $redirect_url = '/qc/admin/board/board_list.php?category=free';
+      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=free';
       break;
   default:
       die("카테고리를 선택 해주세요.");
