@@ -25,25 +25,6 @@ while($data = $result->fetch_object()){
 }
 
 
-// 아래처럼 하는 거 아닌가..ㅜ
-// $sql = "
-//     SELECT 
-//         t.*, 
-//         l.* 
-//     FROM 
-//         teachers t 
-//     INNER JOIN 
-//         lecture_list l 
-//     ON 
-//         t.name = l.t_id
-// ";
-
-// $result = $mysqli->query($sql);
-// while($data = $result->fetch_object()){
-//   $dataArr[] = $data;
-// }
-
-
 ?>
 
 <div class="container">
