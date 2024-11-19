@@ -1,5 +1,15 @@
 <?php
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+
+if (isset($_SESSION['AUID'])) {
+    // 관리자 로그인 시
+    $user_id = $_SESSION['AUID'];
+} else if (isset($_SESSION['TUID'])) {
+    // 강사 로그인 시
+    $user_id = $_SESSION['TUID'];
+}
+
 
 $category = $_POST['category'];
 $title1 = $_POST['title'];
@@ -28,7 +38,7 @@ if($_FILES['file']['size'] >$max_file_size ){
 }
 
 
-$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date')";
+$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date, user_id) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date','$user_id')";
 $result = $mysqli->query($sql);
 
 switch ($category) {

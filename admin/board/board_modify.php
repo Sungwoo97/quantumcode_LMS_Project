@@ -2,6 +2,15 @@
 $title = "게시판 수정";
 $board_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+//관리자가 아닐시 로그인창으로 보내기
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 $category = $_GET['category'];
 $pid = $_GET['pid'];

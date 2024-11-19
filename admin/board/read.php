@@ -1,7 +1,17 @@
 <?php
 $title ='글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-$user_id = $_SESSION['AUID'] ?? '';
+
+//관리자가 아닐시 로그인창으로 보내기
+if(!isset($_SESSION['AUID'])){
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -66,7 +76,7 @@ switch ($category) {
 
 <div class="d-flex justify-content-between">
   <h2>제목:<?=$data->title?></h2>
-  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
+  <span> <?= $data->category === 'event' ? '시작일: ' . ($data->start_date ? $start_date : '').'~' . ' 종료일: ' . ($data->end_date ? $end_date : '') : '' ?> 글쓴이:<?=$data->user_id?> <span id="like-count">추천수:<?=$data->likes ? $data->likes : 0?></span> 조회수:<?=$data->hit ? $data->hit : 0?> 등록일자:<?=$post_date?></span>
 </div>
 
 
