@@ -1,5 +1,9 @@
 <?php
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+
+
+$user_id = $_SESSION['AUID'] ?? '';
 
 $category = $_POST['category'];
 $title1 = $_POST['title'];
@@ -28,7 +32,7 @@ if($_FILES['file']['size'] >$max_file_size ){
 }
 
 
-$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date')";
+$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date, user_id) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date','$user_id')";
 $result = $mysqli->query($sql);
 
 switch ($category) {
