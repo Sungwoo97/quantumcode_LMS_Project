@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-19 09:40
+-- 생성 시간: 24-11-19 10:04
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -378,6 +378,17 @@ CREATE TABLE `lecture_list` (
   `status` tinyint(4) NOT NULL COMMENT '상태'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
 
+--
+-- 테이블의 덤프 데이터 `lecture_list`
+--
+
+INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
+(1, 'A0001B0001C0001', '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11 00:00:00', '2025-02-11 00:00:00', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0),
+(4, 'A0001B0001C0001', '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01 00:00:00', '2025-02-01 00:00:00', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
+(5, 'A0001B0001C0004', '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02 00:00:00', '2025-02-02 00:00:00', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
+(6, 'A0001B0001C0004', '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18 00:00:00', '2025-01-18 00:00:00', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
+(7, 'A0001B0002C0001', '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04 00:00:00', '2025-02-04 00:00:00', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -497,9 +508,9 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `lecture_num`, `level`) VALUES
-(20, '강동원', 'dongwon', '1990-10-10', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'dongwon@naver.com', 1011112222, '2024-11-07 00:00:00', '/qc/admin/upload/20241118025234161954.png', '자바스크립트 위주 강사', 'silver', '2024-11-18 10:52:34', NULL, '', 5000000, 4, 10),
-(21, '공유', 'gonguu', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'gonguu@naver.com', 1022221234, '2024-11-06 00:00:00', '/qc/admin/upload/20241118031054112220.png', '자바스트립트 인기 강사', 'Blonze', '2024-11-18 11:10:54', NULL, '', 1765000, 4, 10),
-(22, '곽튜브', 'kwak', '1982-01-02', '123123', 'haemilyjh@gmail.com', 1022221239, '2024-11-16 00:00:00', '/qc/admin/upload/20241118062713851098.jpg', '123123', 'Silver', '2024-11-18 14:44:32', NULL, '', 1350000, 2, 10);
+(1, '정승제', 'jungsungjae', '1978-12-14', '123123', 'jungsungjae@naver.com', 1099451212, '2024-11-08 00:00:00', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-19 16:54:43', NULL, '', 1500000, NULL, 10),
+(2, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-19 16:55:48', NULL, '', 1300000, NULL, 10),
+(3, '곽튜브', 'kwak', '1977-12-09', '123123', 'kwak@naver.com', 1052221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085632209070.jpg', '여행을 가서 종종 연락이 안됌', 'Vip', '2024-11-19 17:54:27', NULL, '', 2100000, NULL, 10);
 
 --
 -- 덤프된 테이블의 인덱스
@@ -657,7 +668,7 @@ ALTER TABLE `lecture_data`
 -- 테이블의 AUTO_INCREMENT `lecture_list`
 --
 ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=2;
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=8;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
@@ -687,7 +698,7 @@ ALTER TABLE `sales_monthly`
 -- 테이블의 AUTO_INCREMENT `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
