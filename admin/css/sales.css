@@ -56,7 +56,11 @@
   margin: 0; /* 기본 여백 제거 */
   color: #212529; /* 텍스트 색상 */
 
-  span{
+  .red{
+    font-size: 1.3rem;
+    color: var(--secondary)
+  }
+  .blue{
     font-size: 1.3rem;
     color: var(--primary)
   }
@@ -68,4 +72,8 @@
 .chart-box {
   width: 25%;
   height: 300px;
+}
+
+.sales .data_table{
+  font-size: 1rem;
 }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-19 10:04
+-- 생성 시간: 24-11-19 21:00
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.2.12
+-- PHP 버전: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-19 10:02:30', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-20 02:04:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -429,6 +429,73 @@ CREATE TABLE `members` (
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `sales_course`
+--
+
+CREATE TABLE `sales_course` (
+  `scid` int(11) NOT NULL,
+  `course_name` varchar(50) NOT NULL,
+  `month` varchar(20) NOT NULL,
+  `sales` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `sales_course`
+--
+
+INSERT INTO `sales_course` (`scid`, `course_name`, `month`, `sales`) VALUES
+(1, 'React', '1월', 220000),
+(2, 'React', '2월', 130000),
+(3, 'React', '3월', 120000),
+(4, 'React', '4월', 160000),
+(5, 'React', '5월', 140000),
+(6, 'React', '6월', 180000),
+(7, 'React', '7월', 220000),
+(8, 'React', '8월', 190000),
+(9, 'React', '9월', 250000),
+(10, 'React', '10월', 240000),
+(11, 'React', '11월', 220000),
+(12, 'React', '12월', 300000),
+(13, 'JavaScript', '1월', 80000),
+(14, 'JavaScript', '2월', 110000),
+(15, 'JavaScript', '3월', 100000),
+(16, 'JavaScript', '4월', 90000),
+(17, 'JavaScript', '5월', 120000),
+(18, 'JavaScript', '6월', 140000),
+(19, 'JavaScript', '7월', 150000),
+(20, 'JavaScript', '8월', 180000),
+(21, 'JavaScript', '9월', 170000),
+(22, 'JavaScript', '10월', 90000),
+(23, 'JavaScript', '11월', 210000),
+(24, 'JavaScript', '12월', 110000),
+(25, 'PHP', '1월', 260000),
+(26, 'PHP', '2월', 170000),
+(27, 'PHP', '3월', 85000),
+(28, 'PHP', '4월', 100000),
+(29, 'PHP', '5월', 95000),
+(30, 'PHP', '6월', 210000),
+(31, 'PHP', '7월', 110000),
+(32, 'PHP', '8월', 140000),
+(33, 'PHP', '9월', 130000),
+(34, 'PHP', '10월', 160000),
+(35, 'PHP', '11월', 170000),
+(36, 'PHP', '12월', 190000),
+(37, 'Vue', '1월', 190000),
+(38, 'Vue', '2월', 95000),
+(39, 'Vue', '3월', 110000),
+(40, 'Vue', '4월', 125000),
+(41, 'Vue', '5월', 230000),
+(42, 'Vue', '6월', 115000),
+(43, 'Vue', '7월', 140000),
+(44, 'Vue', '8월', 150000),
+(45, 'Vue', '9월', 170000),
+(46, 'Vue', '10월', 160000),
+(47, 'Vue', '11월', 180000),
+(48, 'Vue', '12월', 100000);
+
+-- --------------------------------------------------------
+
+--
 -- 테이블 구조 `sales_management`
 --
 
@@ -589,6 +656,12 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`mid`);
 
 --
+-- 테이블의 인덱스 `sales_course`
+--
+ALTER TABLE `sales_course`
+  ADD PRIMARY KEY (`scid`);
+
+--
 -- 테이블의 인덱스 `sales_management`
 --
 ALTER TABLE `sales_management`
@@ -681,6 +754,12 @@ ALTER TABLE `lecture_video`
 --
 ALTER TABLE `members`
   MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `sales_course`
+--
+ALTER TABLE `sales_course`
+  MODIFY `scid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- 테이블의 AUTO_INCREMENT `sales_management`
