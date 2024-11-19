@@ -18,22 +18,30 @@ if (!isset($tid)) {
   echo "<script>alert('관련 정보가 없습니다.'); location.href = '../teachers/teacher_list.php';</script>";
 }
 
-$sql = "
-    SELECT 
-        t.*, 
-        l.* 
-    FROM 
-        teachers t 
-    INNER JOIN 
-        lecture_list l 
-    ON 
-        t.name = l.t_id
-";
-
-$result = $mysqli->query($sql);
+$sql = "SELECT * FROM teachers WHERE tid = $tid";
+$result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+
+
+// 아래처럼 하는 거 아닌가..ㅜ
+// $sql = "
+//     SELECT 
+//         t.*, 
+//         l.* 
+//     FROM 
+//         teachers t 
+//     INNER JOIN 
+//         lecture_list l 
+//     ON 
+//         t.name = l.t_id
+// ";
+
+// $result = $mysqli->query($sql);
+// while($data = $result->fetch_object()){
+//   $dataArr[] = $data;
+// }
 
 
 ?>
