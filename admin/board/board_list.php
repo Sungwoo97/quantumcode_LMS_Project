@@ -2,7 +2,7 @@
 $title = '전체 게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
-$user_id = $_SESSION['AUID'];
+$user_id = $_SESSION['AUID'] ?? '';
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
 
