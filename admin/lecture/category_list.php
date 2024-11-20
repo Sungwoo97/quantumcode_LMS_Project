@@ -48,7 +48,7 @@ if (count($list) > 0) {
         <td>{$ppcode_name}</td>
         <td>{$pcode_name}</td>
         <td>{$list->name}</td>
-        <td><img src=\"../img/icon-img/Edit.svg\" id=\"edit{$i}\" width=\"20\"></td>
+        <td><a href=\"\"><img src=\"../img/icon-img/Edit.svg\" id=\"edit{$i}\" width=\"20\"></a></td>
       </tr>";
     $i++;
   }
