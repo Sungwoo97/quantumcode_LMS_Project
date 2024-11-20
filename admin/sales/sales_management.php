@@ -11,6 +11,7 @@ if ($lecuter_result) {
   $lecture_data = $lecuter_result->fetch_object();
 }
 
+
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
 if ($manage_result) {
