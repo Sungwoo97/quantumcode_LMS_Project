@@ -39,7 +39,7 @@ $teacher_result = $mysqli->query($sql);
 if ($teacher_result) {
   echo "<script>
     alert('강사가 등록되었습니다.');
-    history.back();
+    location.href = 'teacher_list.php';
     </script>";
 } else {
   echo "<script>
