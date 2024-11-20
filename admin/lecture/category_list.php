@@ -48,13 +48,39 @@ if (count($list) > 0) {
         <td>{$ppcode_name}</td>
         <td>{$pcode_name}</td>
         <td>{$list->name}</td>
-        <td><a href=\"\"><img src=\"../img/icon-img/Edit.svg\" id=\"edit{$i}\" width=\"20\"></a></td>
-      </tr>";
+        <td><a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#editModal{$list->lcid}\">
+                <img src=\"../img/icon-img/Edit.svg\" id=\"edit{$list->lcid}\" width=\"20\">
+            </a>
+        </td>
+      </tr>
+      <div class=\"modal edit fade\" id=\"editModal{$list->lcid}\" tabindex=\"-1\" aria-labelledby=\"editModalLabel{$list->lcid}\" aria-hidden=\"true\">
+        <div class=\"modal-dialog modal-dialog-centered\">
+            <div class=\"modal-content\">
+                <div class=\"modal-header\">
+                    <h5 class=\"modal-title\" id=\"editModalLabel{$list->lcid}\">카테고리 수정</h5>
+                    <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
+                </div>
+                <div class=\"modal-body\">
+                    <form id=\"editForm{$list->lcid}\" data-lcid=\"{$list->lcid}\">
+                        <div class=\"d-flex mb-3 gap-3\">
+                        <input type=\"text\" class=\"form-control\" value=\"{$ppcode_name}\" disabled>
+                        <input type=\"text\" class=\"form-control\" value=\"{$pcode_name}\" disabled>
+                        </div>
+                        <div class=\" mb-3\">
+                            <input type=\"text\" class=\"form-control\" id=\"editName{$list->lcid}\" value=\"{$list->name}\">
+                        </div>
+                        <div class=\"d-flex justify-content-end gap-3\">
+                          <button type=\"button\" class=\"btn btn-primary cate_edit\" data-id=\"{$list->lcid}\">수정</button>
+                          <button type=\"button\" class=\"btn btn-danger cate_del\" data-id=\"{$list->lcid}\">삭제</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>";
     $i++;
   }
 }
-
-
 ?>
 
 <div class="container">
@@ -209,6 +235,44 @@ if (count($list) > 0) {
     </div>
   </div>
 </div>
+<div class="modal fade" id="editform" tabindex="1001" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Technologies</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" data-step="3" class="technologies">
+          <div class="row d-flex d-flex flex-column gap-3">
+            <div class="d-flex gap-2 w-100">
+              <select class="form-select flex-fill plats" name="platforms" id="pcode2">
+                <option value="" selected>Platforms</option>
+                <?php
+                if (!empty($cate)) {
+                  foreach ($cate as $plat) {
+                ?>
+                    <option value="<?= $plat->code; ?>"><?= $plat->name; ?></option>
+                <?php
+                  }
+                }
+                ?>
+              </select>
+              <select class="form-select flex-fill devs" name="development" id="pcode3">
+
+                <option value="" selected>Development</option>
+              </select>
+            </div>
+            <div class="d-flex justify-content-center gap-2 w-100">
+              <input type="text" id="technologies" class="form-control w-75">
+              <button class=" btn btn-primary ">등록</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
 <script>
   $('.platform').submit(function(e) {
@@ -299,6 +363,69 @@ if (count($list) > 0) {
   $(document).on('change', '.plats', function() {
     makeOption($(this), 2, $('.devs'), '');
   });
+
+  $('.edit').on('click', '.cate_edit', function () {
+    const lcid = $(this).attr('data-id'); // 카테고리 ID
+    const name = $(`#editName${lcid}`).val(); // 수정된 이름
+    console.log(lcid , name);
+    if (!name) {
+        alert('카테고리 이름을 입력해주세요.');
+        return;
+    }
+
+    let data =  {
+      lcid: lcid,
+      name: name
+    }
+    $.ajax({
+        url: 'category_modify.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (response) {
+            if (response.result === 1) {
+                alert('수정이 완료되었습니다.');
+                location.reload(); // 페이지 새로고침
+            } else {
+                alert('수정 실패: ' + response.error);
+            }
+        },
+        error: function (error) {
+            console.error(error);
+            alert('수정 중 오류가 발생했습니다.');
+        }
+    });
+  });
+
+  $('.edit').on('click', '.cate_del', function () {
+    
+    if(confirm('정말 삭제하시겠습니까?')){
+      const lcid = $(this).attr('data-id'); // 카테고리 ID
+      console.log(lcid);
+      let data = {
+        lcid:lcid
+      }
+      $.ajax({
+          url: 'category_delete.php',
+          type: 'POST',
+          data: data,
+          dataType: 'json',
+          success: function (response) {
+              if (response.result === 1) {
+                  alert('삭제가 완료되었습니다.');
+                  location.reload(); // 페이지 새로고침
+              } else {
+                  alert('삭제 실패: ' + response.error);
+              }
+          },
+          error: function (error) {
+              console.error(error);
+              alert('삭제 중 오류가 발생했습니다.');
+          }
+      });
+    }
+  });
+
 </script>
 
 <?php

@@ -24,7 +24,7 @@ $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-if (isset($data->dis_tuition)) {
+if ($data->dis_tuition > 0) {
   $tui_val = number_format($data->tuition);
   $distui_val = number_format($data->dis_tuition);
   $tuition .= "<p class=\"text-decoration-line-through text-end \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
