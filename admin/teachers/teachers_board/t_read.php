@@ -14,6 +14,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 //   ";
 // }
 
+
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -100,7 +101,7 @@ switch ($category) {
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="t_like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <?php if (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) : ?>
-    <!-- 수정/삭제 버튼 (본인이 작성한 글일 때만 표시) -->
+    <!-- 수정 삭제 버튼 본인이 작성한 글일 때만 표시 -->
     <a href="t_board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="t_delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
     <?php endif; ?>
@@ -111,7 +112,6 @@ switch ($category) {
 <!-- 댓글 -->
 <form action="t_board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
-  <input type="hidden" name="user_id" value="<?=$data->user_id?>">
   <input type="hidden" name="category" value="<?=$data->category?>">
   <div class="d-flex gap-3 mb-3 align-items-center">
     <p>댓글 입력:</p> 
@@ -124,7 +124,7 @@ switch ($category) {
   <ul class="list-group list-group-flush">
     <?php
     // 댓글 쿼리
-      $sql = "SELECT * FROM board_reply WHERE b_pid = $pid";
+      $sql = "SELECT * FROM board_reply WHERE b_pid = $pid ORDER BY date DESC";
       $reply_result = $mysqli->query($sql);
 
       while($data = $reply_result -> fetch_object()){
@@ -141,11 +141,15 @@ switch ($category) {
           <?=$data->content?>
           </div>
           <div class="controls d-flex justify-content-end gap-1">
+          <?php if (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) : ?>
+          <!-- 수정 삭제 버튼 본인이 작성한 댓글일 때만 표시 -->
             <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$data->pid?>">수정</button>
             <a href="t_reply_delete.php?pid=<?=$data->pid?>&b_pid=<?=$data->b_pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
+          <?php endif; ?>
           </div>
         </div>
         <!-- //댓글 출력 부분 -->
+         
         <!-- modal -->
         <div class="modal fade" id="reply_edit<?=$data->pid?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
