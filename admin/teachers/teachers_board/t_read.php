@@ -97,7 +97,7 @@ switch ($category) {
   <p class="d-flex gap-3">
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="t_like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
-    <?php if ($data->user_id === $_SESSION['TUID']) : ?>
+    <?php if (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) : ?>
     <!-- 수정/삭제 버튼 (본인이 작성한 글일 때만 표시) -->
     <a href="t_board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
     <a href="t_delete.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
