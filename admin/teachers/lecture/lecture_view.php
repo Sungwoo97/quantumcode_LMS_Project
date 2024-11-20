@@ -20,32 +20,6 @@ $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 ?>
-<div class="container">
-  <section class="info">
-    <div class="catogory">web / frontEnd / javascript</div>
-    <div class="title">신나는 자바스크립트</div>
-    <div class="name">곽</div>
-    <div class="learnObj">
-      <h3>학습 목표</h3>
-      <p>자바스크립트 잘배우기</p>
-    </div>
-    <div class="review">review</div>
-    <div class="like">like</div>
-    <div class="tag">tag</div>
-  </section>
-  <section class="desc">
-    <div class="subtitle"></div>
-    <div class="description"></div>
-  </section>
-    
-  <aside>
-    <div class="coverImage"></div>
-    <div class="tuitionInfo">
-      <div class="tuition"></div>
-      <div class="tuition"></div>
-    </div>
-  </aside>
-</div>
 
 <ul>
   <li><?= $data->category ?></li>

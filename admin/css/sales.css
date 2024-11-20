@@ -51,15 +51,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 48px;
   font-size: 2rem; /* 설명 크기 */
   margin: 0; /* 기본 여백 제거 */
   color: #212529; /* 텍스트 색상 */
 
-  span{
+  .red{
+    font-size: 1.3rem;
+    color: var(--secondary)
+  }
+  .blue{
     font-size: 1.3rem;
     color: var(--primary)
   }
 }
 .sales .sales_box dd{
   height: 80%;
+}
+
+.chart-box {
+  width: 25%;
+  height: 300px;
+}
+
+.sales .data_table{
+  font-size: 1rem;
 }

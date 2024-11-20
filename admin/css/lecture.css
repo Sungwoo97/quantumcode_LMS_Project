@@ -107,3 +107,8 @@ textarea#tag {
 .table .thline th{
   color: var(--darkBlue) !important;
 }
+
+section.info{
+  background: linear-gradient(to right, #242424, #6D6D6D 100%);
+  color: var(--white);
+}
