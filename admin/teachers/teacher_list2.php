@@ -64,35 +64,11 @@ if(isset($_GET['orderby'])){
   $orderColumn = 'tid' ;
 }
 
-// $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; 
-// $result = $mysqli->query($sql); //쿼리 실행 결과
-// while($data = $result->fetch_object()){
-//   $dataArr[] = $data;
-// }
-
-
-$join_sql = "SELECT 
-    t.*,
-    COUNT(l.t_id) AS lecture_count,
-    COUNT(l.t_id) AS lecture_num
-FROM 
-    teachers t
-LEFT JOIN 
-    lecture_list l
-ON 
-    t.id = l.t_id
-WHERE 1=1 $search_where 
-GROUP BY 
-    t.id
-ORDER BY $orderColumn $ordertype LIMIT $start_num, $list";
-// echo $join_sql;
-
-$join_result = $mysqli->query($join_sql);
-while($join_data = $join_result->fetch_object()){
-  $dataArr[] = $join_data;
+$sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; 
+$result = $mysqli->query($sql); //쿼리 실행 결과
+while($data = $result->fetch_object()){
+  $dataArr[] = $data;
 }
-
-// print_r($dataArr)
 
 
 // $join_sql = "SELECT 

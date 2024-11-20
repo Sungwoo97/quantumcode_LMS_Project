@@ -41,7 +41,7 @@ while($data = $result->fetch_object()){
       <div class="col-4 mb-5">
         <h6>현재 강사 이미지</h6>
         <div class="teacher_coverImg mb-3">
-          <img src="<?= $item->cover_image; ?>" id="coverImg" alt="">
+          <img src="<?= $item->cover_image; ?>" id="coverImg" alt=""  style="object-fit: cover;">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >

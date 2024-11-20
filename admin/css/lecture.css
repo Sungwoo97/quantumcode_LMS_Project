@@ -91,6 +91,9 @@ textarea#tag {
 .modal input {
   width: 70%;
 }
+.modal.edit input{
+  width: 100%;
+}
 .category button.btn,
 .modal button.btn {
   width: 20%;
