@@ -93,7 +93,7 @@ if (count($list) > 0) {
         $diff = '전문';
         break;
     }
-    if (isset($list->dis_tuition)) {
+    if ($list->dis_tuition>0) {
       $tui_val =  number_format($list->dis_tuition);
     } else {
       $tui_val = number_format($list->tuition);
