@@ -19,7 +19,7 @@ $lecture_platforms = $_POST['platforms'] ?? '';
 $lecture_development = $_POST['development'] ?? '';
 $lecture_technologies = $_POST['technologies'] ?? '';
 $lecture_tuition = $_POST['tuition'] ?? 0;
-$lecture_disTuition = $_POST['dis_tuition'] ?? 0;
+$lecture_disTuition = $_POST['dis_tuition'] ?? '';
 $lecture_registDay = $_POST['regist_day'] ?? 0;
 $lecture_difficult = $_POST['difficult'] ?? '';
 $lecture_ispremium = $_POST['ispremium'] ?? 0;
@@ -41,6 +41,7 @@ $lecture_videoId = $_POST['lecture_video'];  //추가이미지의 imgid들 11,12
 $lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
 
 print_r($_POST);
+print_r($_FILES);
 
 $expiration_day = date("Y-m-d", strtotime("+3 months", strtotime($lecture_registDay)));
 

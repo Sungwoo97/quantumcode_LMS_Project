@@ -41,7 +41,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
@@ -220,7 +220,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         }
         reader.readAsDataURL(file);
       } else {
-        target.attr('src', '');
+        target.attr('src', '../img/icon-img/no-image.png');
       }
     });
   }
@@ -375,7 +375,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
   });
 
   $("#regist_day").datepicker({
-    format: "yy-mm-dd"
+    format: "yyyy-mm-dd"
   });
 
   $('#lecture_submit').submit(function(e) {
