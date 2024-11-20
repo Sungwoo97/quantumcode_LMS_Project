@@ -1,7 +1,7 @@
 <?php
 session_start();
 //print_r($_SESSION); Array ( [TUIDX] => 22 [TUID] => kwak [TUNAME] => 곽튜브 ) 이런식
-if (!isset($title)) { 
+if (!isset($title)) {
   $title = '';
 }
 isset($coupon_css) ? $coupon_css : '';
@@ -48,7 +48,7 @@ $tid = $_SESSION['TUIDX'];
     if (isset($member_css)) {
       echo $member_css;
     }
-    if(isset($board_css)){
+    if (isset($board_css)) {
       echo $board_css;
     }
     ?>
@@ -73,7 +73,7 @@ $tid = $_SESSION['TUIDX'];
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/teachers/index.php' : '/qc/admin/login.php'; ?>">  
+        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/teachers/index.php' : '/qc/admin/login.php'; ?>">
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
@@ -108,10 +108,10 @@ $tid = $_SESSION['TUIDX'];
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">나의 강의 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_list.php">나의 강의 목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_insert.php">강의 등록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/category_list.php">카테고리 관리</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_review.php">수강평</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -162,9 +162,9 @@ $tid = $_SESSION['TUIDX'];
 
     <?php
     } else {  //즉, auidx가 있다면...(로그인되었다면)
-      if(isset($_SESSION['AUIDX'])){
+      if (isset($_SESSION['AUIDX'])) {
         $sql = "SELECT * FROM admins WHERE idx = {$_SESSION['AUIDX']}";  //지금 접속한 사람의 id값
-      }else{
+      } else {
         $sql = "SELECT * FROM teachers WHERE tid = {$_SESSION['TUIDX']}";  //지금 접속한 사람의 id값
       }
       $result = $mysqli->query($sql);
@@ -174,12 +174,12 @@ $tid = $_SESSION['TUIDX'];
         <div class="d-flex gap-3 align-items-center mb-4">
           <img src="<?= $data->cover_image; ?>" alt="" width="150" height="150">
           <?php
-            if (isset($_SESSION['TUIDX'])) {
+          if (isset($_SESSION['TUIDX'])) {
           ?>
             <h6 class="tt_02"><?= $_SESSION['TUID'] ?></h6>
-            <?php
-              }
-            ?>
+          <?php
+          }
+          ?>
 
         </div>
         <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
@@ -199,30 +199,30 @@ $tid = $_SESSION['TUIDX'];
 
 
     </div>
-    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 
-    <script>
+  <script>
     // 대시보드 버튼 클릭 시 index.php로 이동
-    document.addEventListener("DOMContentLoaded", ()=>{
-    const dashboardButton = document.getElementById("dashboardButton");
+    document.addEventListener("DOMContentLoaded", () => {
+      const dashboardButton = document.getElementById("dashboardButton");
 
-    dashboardButton.addEventListener("click", (e)=>{
-      e.preventDefault();
-      dashboardButton.classList.remove("collapsed");
+      dashboardButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        dashboardButton.classList.remove("collapsed");
 
         setTimeout(() => {
-            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/teachers/index.php";
+          window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/teachers/index.php";
         }, 5000);
-        });
+      });
     });
-    </script>
-    </body>
+  </script>
+</body>
 
-    </html>
-    <?php
-    $mysqli->close();
-    ?>
+</html>
+<?php
+$mysqli->close();
+?>

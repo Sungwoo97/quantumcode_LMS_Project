@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-19 07:58
+-- 생성 시간: 24-11-19 21:00
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.2.12
+-- PHP 버전: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-19 15:50:50', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-20 02:04:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -90,6 +90,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (25, '', '하하', '아룡함니꺼', NULL, NULL, '2024-11-12 07:26:09', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
 (31, '', '공지1', '공지1', NULL, NULL, '2024-11-13 07:56:25', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
 (32, '', '자유1', '자유1', NULL, NULL, '2024-11-13 07:56:36', NULL, NULL, NULL, 'free', '', NULL, NULL, NULL),
+(33, '', '이벤트1', '이벤트1', NULL, NULL, '2024-11-13 07:56:45', NULL, NULL, NULL, 'event', '', NULL, NULL, NULL),
 (34, '', '질문1', '질문1', NULL, NULL, '2024-11-13 07:56:57', NULL, NULL, NULL, 'qna', '', NULL, NULL, NULL),
 (35, '', '조회1', '조회1', NULL, NULL, '2024-11-13 08:18:18', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
 (37, '', '123124214124', '12412351351513513', NULL, NULL, '2024-11-13 08:31:28', NULL, 3, NULL, 'event', '', NULL, NULL, NULL),
@@ -99,6 +100,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (41, '', '추천2', '추천2', NULL, NULL, '2024-11-13 08:58:07', NULL, 2, 3, 'notice', '', NULL, NULL, NULL),
 (42, '', '99', '99', NULL, NULL, '2024-11-13 08:58:43', NULL, 1, 0, 'qna', '', NULL, NULL, NULL),
 (43, '', '자유 추천', '자유 추천', NULL, NULL, '2024-11-13 09:00:12', NULL, 2, 3, 'free', '', NULL, NULL, NULL),
+(44, '', '88', '88', NULL, NULL, '2024-11-13 09:02:03', NULL, 1, 5, 'free', '', NULL, NULL, NULL),
 (45, '', '77', '77', NULL, NULL, '2024-11-13 09:03:06', NULL, 3, 5, 'notice', '', NULL, NULL, NULL),
 (46, '', '66', '66', NULL, NULL, '2024-11-13 09:05:18', NULL, 2, 5, 'notice', '', NULL, NULL, NULL),
 (47, '', '55', '55', NULL, NULL, '2024-11-13 09:07:32', NULL, 2, 3, 'notice', '', NULL, NULL, NULL),
@@ -107,6 +109,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (50, '', '11', '11', NULL, NULL, '2024-11-14 07:34:15', NULL, 0, 0, 'notice', '', NULL, NULL, NULL),
 (51, '', '99', '99', NULL, NULL, '2024-11-14 07:34:44', NULL, 2, 0, 'notice', '', NULL, NULL, NULL),
 (52, '', '11', '11', NULL, NULL, '2024-11-14 08:05:49', NULL, 1, 0, 'notice', '', NULL, NULL, NULL),
+(53, '', '11', '11', NULL, NULL, '2024-11-14 08:15:00', NULL, 2, 0, 'free', '', NULL, NULL, NULL),
 (54, '', '33', '33', NULL, NULL, '2024-11-14 08:16:01', NULL, 0, 0, 'qna', '', NULL, NULL, NULL),
 (55, '', '222', '222', NULL, NULL, '2024-11-14 08:35:37', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
 (56, '', '666', '666', NULL, NULL, '2024-11-14 08:38:29', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
@@ -117,17 +120,14 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (62, NULL, '24', '15', NULL, NULL, '2024-11-17 12:44:06', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
 (89, NULL, 'gd', 'gd', NULL, NULL, '2024-11-18 03:02:57', NULL, 1, 0, 'event', './upload/qqq2.png', 1, NULL, NULL),
 (90, NULL, '이미지', '이미지', NULL, NULL, '2024-11-18 04:19:54', NULL, 1, 0, 'free', './upload/logo2.png', 1, NULL, NULL),
-(91, NULL, '1123', '23232', NULL, NULL, '2024-11-18 05:52:09', NULL, 2, 0, 'notice', './upload/', 0, NULL, NULL),
-(92, NULL, '1', '1', NULL, NULL, '2024-11-18 05:59:29', NULL, 3, 1, 'notice', './upload/qqq.jpg', 1, NULL, NULL),
+(91, NULL, '1123', '23232', NULL, NULL, '2024-11-18 05:52:09', NULL, 1, 0, 'notice', './upload/', 0, NULL, NULL),
+(92, NULL, '1', '1', NULL, NULL, '2024-11-18 05:59:29', NULL, 1, 0, 'notice', './upload/qqq.jpg', 1, NULL, NULL),
 (93, NULL, '22', '22', NULL, NULL, '2024-11-18 06:05:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
 (94, NULL, 'ㅅㅁㄼ11243', 'ㅈㅂㄷㅂ11253', NULL, NULL, '2024-11-18 06:12:20', NULL, 1, 0, 'qna', './upload/qqq2.png', 1, NULL, NULL),
 (95, NULL, '123456789123456789', 'ㅁㄹㄴㅁㄻㄹㄴㅁ', NULL, NULL, '2024-11-18 07:21:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
-(96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', NULL, NULL, '2024-11-18 07:22:23', NULL, 3, 1, 'notice', './upload/', 0, NULL, NULL),
-(98, NULL, '135', '135151351', NULL, NULL, '2024-11-18 09:01:25', NULL, 3, 1, 'event', './upload/', 0, '2024-11-18 00:00:00', '2024-11-27 00:00:00'),
-(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 2, 1, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(102, 'admin', 'test', 'etst', NULL, NULL, '2024-11-19 04:11:18', NULL, 2, 1, 'notice', './upload/', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(103, 'kwak', '111', '111', NULL, NULL, '2024-11-19 04:31:48', NULL, 1, 1, 'notice', './upload/', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(104, 'admin', '44', '44', NULL, NULL, '2024-11-19 06:49:03', NULL, 2, 2, 'notice', './upload/', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', NULL, NULL, '2024-11-18 07:22:23', NULL, 2, 0, 'notice', './upload/', 0, NULL, NULL),
+(98, NULL, '135', '135151351', NULL, NULL, '2024-11-18 09:01:25', NULL, 1, 0, 'event', './upload/', 0, '2024-11-18 00:00:00', '2024-11-27 00:00:00'),
+(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 1, 0, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -137,23 +137,9 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `l_pid` int(11) NOT NULL,
-  `user_id` varchar(100) DEFAULT NULL
+  `name` int(11) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 테이블의 덤프 데이터 `board_like`
---
-
-INSERT INTO `board_like` (`pid`, `l_pid`, `user_id`) VALUES
-(4, 92, '0'),
-(3, 96, '0'),
-(5, 98, '0'),
-(8, 101, 'kwak'),
-(2, 102, '0'),
-(1, 103, '0'),
-(6, 104, '0'),
-(7, 104, 'kwak');
 
 -- --------------------------------------------------------
 
@@ -192,10 +178,7 @@ INSERT INTO `board_reply` (`pid`, `b_pid`, `user_id`, `pw`, `content`, `date`) V
 (16, 38, '', '', '이벤트 추천11', '2024-11-17 00:33:31'),
 (18, 58, '', '', ' 11111', '2024-11-17 00:41:40'),
 (19, 59, '', '', ' 1122', '2024-11-17 00:46:41'),
-(20, 58, '', '', '1111', '2024-11-18 12:43:06'),
-(21, 103, 'kwak', '', '11', '2024-11-19 15:13:31'),
-(22, 103, 'kwak', '', '22', '2024-11-19 15:13:33'),
-(23, 103, 'kwak', '', '33', '2024-11-19 15:13:35');
+(20, 58, '', '', '1111', '2024-11-18 12:43:06');
 
 -- --------------------------------------------------------
 
@@ -395,6 +378,17 @@ CREATE TABLE `lecture_list` (
   `status` tinyint(4) NOT NULL COMMENT '상태'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
 
+--
+-- 테이블의 덤프 데이터 `lecture_list`
+--
+
+INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
+(1, 'A0001B0001C0001', '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11 00:00:00', '2025-02-11 00:00:00', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0),
+(4, 'A0001B0001C0001', '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01 00:00:00', '2025-02-01 00:00:00', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
+(5, 'A0001B0001C0004', '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02 00:00:00', '2025-02-02 00:00:00', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
+(6, 'A0001B0001C0004', '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18 00:00:00', '2025-01-18 00:00:00', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
+(7, 'A0001B0002C0001', '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04 00:00:00', '2025-02-04 00:00:00', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -435,34 +429,69 @@ CREATE TABLE `members` (
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `monthly sales`
+-- 테이블 구조 `sales_course`
 --
 
-CREATE TABLE `monthly sales` (
-  `msid` int(11) NOT NULL,
-  `month` varchar(50) NOT NULL,
+CREATE TABLE `sales_course` (
+  `scid` int(11) NOT NULL,
+  `course_name` varchar(50) NOT NULL,
+  `month` varchar(20) NOT NULL,
   `sales` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `monthly sales`
+-- 테이블의 덤프 데이터 `sales_course`
 --
 
-INSERT INTO `monthly sales` (`msid`, `month`, `sales`) VALUES
-(1, '1월', 1500000),
-(2, '2월', 1200000),
-(3, '3월', 1000000),
-(4, '4월', 1500000),
-(5, '3월', 1000000),
-(6, '4월', 1300000),
-(7, '5월', 1600000),
-(8, '6월', 1200000),
-(9, '7월', 1800000),
-(10, '8월', 1500000),
-(11, '9월', 1300000),
-(12, '10월', 1000000),
-(13, '11월', 1200000),
-(14, '12월', 1900000);
+INSERT INTO `sales_course` (`scid`, `course_name`, `month`, `sales`) VALUES
+(1, 'React', '1월', 220000),
+(2, 'React', '2월', 130000),
+(3, 'React', '3월', 120000),
+(4, 'React', '4월', 160000),
+(5, 'React', '5월', 140000),
+(6, 'React', '6월', 180000),
+(7, 'React', '7월', 220000),
+(8, 'React', '8월', 190000),
+(9, 'React', '9월', 250000),
+(10, 'React', '10월', 240000),
+(11, 'React', '11월', 220000),
+(12, 'React', '12월', 300000),
+(13, 'JavaScript', '1월', 80000),
+(14, 'JavaScript', '2월', 110000),
+(15, 'JavaScript', '3월', 100000),
+(16, 'JavaScript', '4월', 90000),
+(17, 'JavaScript', '5월', 120000),
+(18, 'JavaScript', '6월', 140000),
+(19, 'JavaScript', '7월', 150000),
+(20, 'JavaScript', '8월', 180000),
+(21, 'JavaScript', '9월', 170000),
+(22, 'JavaScript', '10월', 90000),
+(23, 'JavaScript', '11월', 210000),
+(24, 'JavaScript', '12월', 110000),
+(25, 'PHP', '1월', 260000),
+(26, 'PHP', '2월', 170000),
+(27, 'PHP', '3월', 85000),
+(28, 'PHP', '4월', 100000),
+(29, 'PHP', '5월', 95000),
+(30, 'PHP', '6월', 210000),
+(31, 'PHP', '7월', 110000),
+(32, 'PHP', '8월', 140000),
+(33, 'PHP', '9월', 130000),
+(34, 'PHP', '10월', 160000),
+(35, 'PHP', '11월', 170000),
+(36, 'PHP', '12월', 190000),
+(37, 'Vue', '1월', 190000),
+(38, 'Vue', '2월', 95000),
+(39, 'Vue', '3월', 110000),
+(40, 'Vue', '4월', 125000),
+(41, 'Vue', '5월', 230000),
+(42, 'Vue', '6월', 115000),
+(43, 'Vue', '7월', 140000),
+(44, 'Vue', '8월', 150000),
+(45, 'Vue', '9월', 170000),
+(46, 'Vue', '10월', 160000),
+(47, 'Vue', '11월', 180000),
+(48, 'Vue', '12월', 100000);
 
 -- --------------------------------------------------------
 
@@ -484,6 +513,36 @@ CREATE TABLE `sales_management` (
 
 INSERT INTO `sales_management` (`sid`, `total_lecture`, `total_student`, `total_grade`, `total_sales`) VALUES
 (1, 23, 2323, 5, 12020000);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `sales_monthly`
+--
+
+CREATE TABLE `sales_monthly` (
+  `msid` int(11) NOT NULL,
+  `month` varchar(50) NOT NULL,
+  `sales` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `sales_monthly`
+--
+
+INSERT INTO `sales_monthly` (`msid`, `month`, `sales`) VALUES
+(1, '1월', 1500000),
+(2, '2월', 1200000),
+(5, '3월', 1000000),
+(6, '4월', 1300000),
+(7, '5월', 1600000),
+(8, '6월', 1200000),
+(9, '7월', 1800000),
+(10, '8월', 1500000),
+(11, '9월', 1300000),
+(12, '10월', 1000000),
+(13, '11월', 1200000),
+(14, '12월', 1900000);
 
 -- --------------------------------------------------------
 
@@ -516,9 +575,9 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `lecture_num`, `level`) VALUES
-(20, '강동원', 'dongwon', '1990-10-10', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'dongwon@naver.com', 1011112222, '2024-11-07 00:00:00', '/qc/admin/upload/20241118025234161954.png', '자바스크립트 위주 강사', 'silver', '2024-11-18 10:52:34', NULL, '', 5000000, 4, 10),
-(21, '공유', 'gonguu', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50', 'gonguu@naver.com', 1022221234, '2024-11-06 00:00:00', '/qc/admin/upload/20241118031054112220.png', '자바스트립트 인기 강사', 'Blonze', '2024-11-18 11:10:54', NULL, '', 1765000, 4, 10),
-(22, '곽튜브', 'kwak', '1982-01-02', '123123', 'haemilyjh@gmail.com', 1022221239, '2024-11-16 00:00:00', '/qc/admin/upload/20241118062713851098.jpg', '123123', 'Silver', '2024-11-19 15:52:03', NULL, '', 1350000, 2, 10);
+(1, '정승제', 'jungsungjae', '1978-12-14', '123123', 'jungsungjae@naver.com', 1099451212, '2024-11-08 00:00:00', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-19 16:54:43', NULL, '', 1500000, NULL, 10),
+(2, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-19 16:55:48', NULL, '', 1300000, NULL, 10),
+(3, '곽튜브', 'kwak', '1977-12-09', '123123', 'kwak@naver.com', 1052221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085632209070.jpg', '여행을 가서 종종 연락이 안됌', 'Vip', '2024-11-19 17:54:27', NULL, '', 2100000, NULL, 10);
 
 --
 -- 덤프된 테이블의 인덱스
@@ -540,8 +599,7 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`),
-  ADD UNIQUE KEY `b_pid` (`l_pid`,`user_id`);
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 테이블의 인덱스 `board_reply`
@@ -598,16 +656,22 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`mid`);
 
 --
--- 테이블의 인덱스 `monthly sales`
+-- 테이블의 인덱스 `sales_course`
 --
-ALTER TABLE `monthly sales`
-  ADD PRIMARY KEY (`msid`);
+ALTER TABLE `sales_course`
+  ADD PRIMARY KEY (`scid`);
 
 --
 -- 테이블의 인덱스 `sales_management`
 --
 ALTER TABLE `sales_management`
   ADD PRIMARY KEY (`sid`);
+
+--
+-- 테이블의 인덱스 `sales_monthly`
+--
+ALTER TABLE `sales_monthly`
+  ADD PRIMARY KEY (`msid`);
 
 --
 -- 테이블의 인덱스 `teachers`
@@ -629,25 +693,91 @@ ALTER TABLE `admins`
 -- 테이블의 AUTO_INCREMENT `board`
 --
 ALTER TABLE `board`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_like`
 --
 ALTER TABLE `board_like`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_reply`
 --
 ALTER TABLE `board_reply`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- 테이블의 AUTO_INCREMENT `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- 테이블의 AUTO_INCREMENT `coupons_list`
 --
 ALTER TABLE `coupons_list`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `coupons_usercp`
+--
+ALTER TABLE `coupons_usercp`
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_category`
+--
+ALTER TABLE `lecture_category`
+  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_data`
+--
+ALTER TABLE `lecture_data`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_list`
+--
+ALTER TABLE `lecture_list`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=8;
+
+--
+-- 테이블의 AUTO_INCREMENT `lecture_video`
+--
+ALTER TABLE `lecture_video`
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=4;
+
+--
+-- 테이블의 AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `sales_course`
+--
+ALTER TABLE `sales_course`
+  MODIFY `scid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- 테이블의 AUTO_INCREMENT `sales_management`
+--
+ALTER TABLE `sales_management`
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT COMMENT '테이블 고유번호', AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `sales_monthly`
+--
+ALTER TABLE `sales_monthly`
+  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- 테이블의 AUTO_INCREMENT `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

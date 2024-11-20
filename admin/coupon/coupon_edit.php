@@ -1,6 +1,6 @@
 <?php
 $title = '쿠폰 수정';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
+$coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $cid = $_GET['cid'];
@@ -12,10 +12,6 @@ $data = $result->fetch_object();
 ?>
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
-<head>
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css">
-</head>
-
 <div class="coupon_edit container">
   <form action="coupon_edit_ok.php" id="coupon_submit" method="POST">
   <input type="hidden" name="cid" value="<?= $cid; ?>"> 
