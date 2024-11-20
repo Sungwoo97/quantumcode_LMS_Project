@@ -90,7 +90,7 @@ while($join_data = $join_result->fetch_object()){
   $join_dataArr[] = $join_data;
 }
 
-// print_r($join_dataArr)
+print_r($join_dataArr)
 
 ?>
 
