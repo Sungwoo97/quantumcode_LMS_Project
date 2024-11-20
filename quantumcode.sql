@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-19 21:00
+-- 생성 시간: 24-11-20 04:42
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.0.30
+-- PHP 버전: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -127,7 +127,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (95, NULL, '123456789123456789', 'ㅁㄹㄴㅁㄻㄹㄴㅁ', NULL, NULL, '2024-11-18 07:21:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
 (96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', NULL, NULL, '2024-11-18 07:22:23', NULL, 2, 0, 'notice', './upload/', 0, NULL, NULL),
 (98, NULL, '135', '135151351', NULL, NULL, '2024-11-18 09:01:25', NULL, 1, 0, 'event', './upload/', 0, '2024-11-18 00:00:00', '2024-11-27 00:00:00'),
-(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 1, 0, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 2, 1, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -137,9 +137,16 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `likes` int(11) NOT NULL DEFAULT 0
+  `l_pid` int(11) NOT NULL,
+  `user_id` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `board_like`
+--
+
+INSERT INTO `board_like` (`pid`, `l_pid`, `user_id`) VALUES
+(1, 101, 'admin');
 
 -- --------------------------------------------------------
 
@@ -599,7 +606,8 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`);
+  ADD PRIMARY KEY (`pid`),
+  ADD UNIQUE KEY `b_pid` (`l_pid`,`user_id`);
 
 --
 -- 테이블의 인덱스 `board_reply`
@@ -699,7 +707,7 @@ ALTER TABLE `board`
 -- 테이블의 AUTO_INCREMENT `board_like`
 --
 ALTER TABLE `board_like`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_reply`
