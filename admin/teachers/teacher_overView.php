@@ -1,5 +1,6 @@
 <?php
 $title = "강사 목록";
+$teacherOverView_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacherOverView.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 if(!isset($_SESSION['AUID'])){
@@ -11,208 +12,108 @@ if(!isset($_SESSION['AUID'])){
   ";
 }
 
-
-//검색
-$search_where = ''; //초기화
-$search_keyword = $_GET['search_keyword'] ?? '';
-
-if($search_keyword){ 
-  // $search_where .= " and (name LIKE '%$search_keyword%' OR content LIKE '%$search_keyword%')";
-  $search_where .= " and (name LIKE '%$search_keyword%')";
-}
-
-//데이터의 개수 조회
-$page_sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE 1=1 $search_where";
-$page_result = $mysqli->query($page_sql);
-$page_data = $page_result->fetch_assoc();
-$row_num = $page_data['cnt'];
-
-
-//페이지네이션 
-if(isset($_GET['page'])){
-  $page = $_GET['page'];
-}else{
-  $page = 1;
-}
-
-$list = 10;
-$start_num=($page-1)*$list;
-$block_ct = 5;
-$block_num = ceil($page/$block_ct); //$page1/5 0.2 = 1
-
-$block_start = (($block_num-1)*$block_ct) + 1;
-$block_end = $block_start + $block_ct - 1;
-
-$total_page = ceil($row_num/$list); //총75개 10개씩, 8
-$total_block = ceil($total_page/$block_ct);
-
-if($block_end > $total_page ) $block_end = $total_page;
-
-//목적에 맞게 목록 가져오기
-$sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY tid ASC LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
-$sql_lowPriceToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
-$sql_highPriceToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
-$sql_lowLectureToHigh = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales DESC"; //테이블에서 모든 데이터를 조회
-$sql_highLectureToLow = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY year_sales ASC"; //테이블에서 모든 데이터를 조회
-
-$result = $mysqli->query($sql); //쿼리 실행 결과
+//매출순
+$sql = "SELECT * FROM teachers ORDER BY year_sales DESC";
+$result = $mysqli->query($sql); 
+$dataArr = [];
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+$dataArr = array_slice($dataArr, 0, 4);
+
+//모든 강사(8개로 자름)
+$sql2 = "SELECT * FROM `teachers` WHERE 1";
+$result2 = $mysqli->query($sql2); 
+$dataArr2 = [];
+while($data2 = $result2->fetch_object()){
+  $dataArr2[] = $data2;
+}
+$dataArr2 = array_slice($dataArr2, 0, 8);
+
+//최신강사순
+$sql3 = "SELECT * FROM teachers ORDER BY reg_date DESC";
+$result3 = $mysqli->query($sql3); 
+$dataArr3 = [];
+while ($data3 = $result3->fetch_object()) {
+  $dataArr3[] = $data3;
+}
+
+// 최대 4개의 카드만 표시
+$dataArr3 = array_slice($dataArr3, 0, 4);
+
+
 
 ?>
 
 
+
+
 <div class="container">
   <div class="">
-    <h1>인기강사.<매출많은 순서대로 나타낼것></h1>
+    <h2>인기강사</h2>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+      <?php
+          foreach ($dataArr as $item) {
+      ?>
+      <div class="card m-2" style="width:18rem; height:25rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="<?= $item->cover_image?>" alt="Card image cap" width="250" height="250">
+        <div class="card-body" >
+          <h5 class="card-title"><?= $item->name?></h5>
+          <p class="card-text"><?= $item->id?></p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
+      <?php
+          }
+      ?>
     </div>
   </div>
   <hr>
   <div class="">
-    <h1>보통강사<무작위로 나타낼것></h1>
+    <h2>신입강사</h2>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+      <?php
+          foreach ($dataArr3 as $item) {
+      ?>
+      <div class="card m-2" style="width:18rem; height:25rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="<?= $item->cover_image?>" alt="Card image cap" width="250" height="250">
+        <div class="card-body" >
+          <h5 class="card-title"><?= $item->name?></h5>
+          <p class="card-text"><?= $item->id?></p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
+      <?php
+          }
+      ?>
     </div>
   </div>
   <hr>
   <div class="">
-    <h1>신규강사<가입순 최신대로 나타낼것></h1>
+    <h2>일반강사</h2>
     <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
+      <?php
+        foreach ($dataArr2 as $item) {
+      ?>
+      <div class="card m-2" style="width:18rem; height:25rem;"> <!-- 개별 카드 -->
+        <img class="card-img-top" src="<?= $item->cover_image?>" alt="Card image cap" width="250" height="250">
+        <div class="card-body" >
+          <h5 class="card-title"><?= $item->name?></h5>
+          <p class="card-text"><?= $item->id?></p>
+          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;"> <!-- 개별 카드 -->
-        <img class="card-img-top" src="" alt="Card image cap" width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">123</h5>
-          <p class="card-text">123</p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">해당 강의 보러가기</a>
-        </div>
-      </div>
+      <?php
+        }
+      ?>
     </div>
   </div>
   <div class="text-center my-4">
     <a href="/qc/admin/teachers/teacher_list.php" class="btn btn-primary btn-lg">모든 강사 보러 가기</a>
   </div>
 </div>
+
+
 
 <script>
   
