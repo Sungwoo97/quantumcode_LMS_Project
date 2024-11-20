@@ -21,7 +21,7 @@ $end_date = $_POST['end_date'] ?? null;
 //파일 업로드
 $file_name = time() . '_' . $_FILES['file']['name'];
 $temp_path = $_FILES['file']['tmp_name'];
-$upload_path = $_SERVER['DOCUMENT_ROOT'].'/qc/admin/board/upload/'.$file_name;
+$upload_path = '/qc/admin/board/upload'.$file_name;
 move_uploaded_file($temp_path,$upload_path);
 
 strpos($_FILES['file']['type'], 'image') !== false ? $is_img = 1 : $is_img = 0;
