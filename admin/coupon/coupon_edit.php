@@ -99,7 +99,7 @@ $data = $result->fetch_object();
     </div>
     <div class="gap-3 mt-50 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button a href="coupon_list.php" class="btn btn-danger cancel">취소</button>
+      <button href="coupon_list.php" class="btn btn-danger cancel">취소</button>
     </div>
   </form>
 </div>
@@ -189,7 +189,7 @@ $data = $result->fetch_object();
     $('#coupon_type_usage').change(updateUsageFields);
 });
 
-  $('.cancel').click((e)=>{
+  $('.cancel').click(function(e) {
       e.preventDefault();
       if (confirm('정말 취소할까요?')) {
           window.location.href = $(this).attr('href');
