@@ -21,7 +21,7 @@ if($data){
 
   echo "<script>
     alert('강사님 반갑습니다.');
-    location.href = '/qc/admin/teachers/index.php?tid=$tid';
+    location.href = '/qc/admin/teachers/index.php';
   </script>";
 
 }else{
