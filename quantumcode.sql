@@ -212,42 +212,18 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`cid`, `coupon_name`, `coupon_image`, `coupon_content`, `coupon_type`, `coupon_price`, `coupon_ratio`, `status`, `startdate`, `enddate`, `userid`) VALUES
-(1, '프론트엔드 강의 10% 할인', '쿠폰_10%.jpg', '프론트엔드 강의 구매 시 10% 할인 적용', 'percentage', NULL, 10, 0, '2024-05-15 01:02:16', '2024-12-31', 'admin'),
-(2, '첫 강의 무료 쿠폰', '쿠폰_무료.jpg', '신규 회원 첫 강의 무료 제공', 'fixed', 0, NULL, 1, '2024-11-03 01:02:16', '2025-01-01', 'user123'),
-(3, '5만원 이상 구매 시 5천원 할인', '쿠폰_5천원.jpg', '5만원 이상 강의 구매 시 5천원 할인', 'fixed', 5000, NULL, 1, '2024-09-10 01:02:16', '2024-12-31', 'admin'),
-(4, '백엔드 강의 패키지 15% 할인', '쿠폰_15%.jpg', '백엔드 강의 패키지에 대해 15% 할인', 'percentage', NULL, 15, 0, '2024-08-23 01:02:16', '2024-12-31', 'user456'),
-(5, '데이터 사이언스 강의 할인', '쿠폰_1만원.jpg', '데이터 사이언스 강의에 대해 10,000원 할인', 'fixed', 10000, NULL, 1, '2024-06-27 01:02:16', '2025-02-28', 'user789'),
-(6, '무료 체험 강의 제공', '쿠폰_무료.jpg', '특정 강의를 무료로 체험할 수 있는 쿠폰', 'fixed', 0, NULL, 1, '2024-09-25 01:02:16', '2025-01-31', 'guest'),
-(7, '알고리즘 강의 20% 할인', '쿠폰_20%.jpg', '알고리즘 강의 수강료 20% 할인', 'percentage', NULL, 20, 1, '2024-09-22 01:02:16', '2024-12-15', 'admin'),
-(8, 'AI 강의 패키지 할인', '쿠폰_30%.jpg', 'AI 강의 패키지 최대 30% 할인', 'percentage', NULL, 30, 1, '2024-04-18 01:02:16', '2025-03-31', 'user999'),
-(9, '여름 시즌 강의 할인', '쿠폰_5%.jpg', '여름 동안 모든 강의 5% 할인', 'percentage', NULL, 5, 1, '2024-05-08 01:02:16', '2025-02-15', 'user123'),
-(10, '초보자 전용 할인 쿠폰', '쿠폰_7천원.jpg', '초보자를 위한 기본 강의 7,000원 할인', 'fixed', 7000, NULL, 0, '2024-04-19 01:02:16', '2025-04-01', 'user001'),
-(11, '풀스택 개발자 과정 10% 할인', '쿠폰_10%.jpg', '풀스택 개발자 과정을 10% 할인된 가격으로 제공', 'percentage', NULL, 10, 1, '2024-07-13 01:02:16', '2024-12-31', 'user002'),
-(12, '강의 3개 이상 구매 시 20% 할인', '쿠폰_20%.jpg', '3개 이상의 강의를 구매 시 20% 할인', 'percentage', NULL, 20, 1, '2024-09-20 01:02:16', '2025-01-15', 'admin'),
-(13, '리뷰 작성자 전용 쿠폰', '쿠폰_5천원.jpg', '강의 리뷰를 작성한 사용자에게 제공되는 5,000원 할인 쿠폰', 'fixed', 5000, NULL, 0, '2024-11-13 01:02:16', '2025-02-28', 'user003'),
-(14, 'VIP 고객 감사 할인', '쿠폰_25%.jpg', 'VIP 고객 대상 25% 할인 쿠폰', 'percentage', NULL, 25, 1, '2024-01-10 01:02:16', '2025-03-31', 'user004'),
-(15, '이벤트 참가자 쿠폰', '쿠폰_무료.jpg', '특별 이벤트 참가자에게 제공되는 강의 1개 무료 쿠폰', 'fixed', 0, NULL, 1, '2024-08-26 01:02:16', '2025-04-01', 'user005');
-
--- --------------------------------------------------------
+(1, '프론트엔드 강의 10% 할인', '/qc/admin/upload/20241120084829512142.png', '프론트엔드 강의 구매 시 10% 할인 적용', 'percentage', 0, 10, 1, '2024-09-11 00:00:00', '2025-02-06', 'admin'),
+(2, '첫 강의 무료 쿠폰', '/qc/admin/upload/20241120084958134303.png', '신규 회원 첫 강의 무료 제공', 'percentage', 0, 100, 1, '2023-01-20 00:00:00', '2095-12-31', 'admin'),
+(3, '5만원 이상 구매 시 5천원 할인', '/qc/admin/upload/20241120085051148019.png', '5만원 이상 구매 시 5천원 할인', 'fixed', 5000, 0, 1, '2023-01-20 00:00:00', '2024-12-07', 'admin'),
+(4, '백엔드 강의 패키지 15% 할인', '/qc/admin/upload/20241120085116476668.png', '백엔드 강의 패키지에 대해 15% 할인', 'percentage', 0, 15, 1, '2024-11-13 00:00:00', '2024-11-27', 'admin'),
+(5, '데이터 사이언스 강의 할인', '/qc/admin/upload/20241120085143832055.png', '데이터 사이언스 강의에 대해 10,000원 할인', 'fixed', 10000, 0, 0, '2024-07-29 00:00:00', '2024-10-31', 'admin'),
+(6, '무료 체험 강의 제공', '/qc/admin/upload/20241120085218187242.png', '특정 강의를 무료로 체험할 수 있는 쿠폰', 'percentage', 0, 100, 1, '2024-11-01 00:00:00', '2024-11-30', 'admin'),
+(7, '알고리즘 강의 20% 할인', '/qc/admin/upload/20241120085251119634.png', '알고리즘 강의 수강료 20% 할인', 'percentage', 0, 20, 0, '2024-11-09 00:00:00', '2025-01-21', 'admin'),
+(8, 'AI 강의 패키지 할인', '/qc/admin/upload/20241120085326172682.png', 'AI 강의 패키지 최대 30% 할인', 'percentage', 0, 30, 1, '2024-09-05 00:00:00', '2024-12-24', 'admin'),
+(9, '여름 시즌 강의 할인', '/qc/admin/upload/20241120085404158672.png', '여름 동안 모든 강의 5% 할인', 'percentage', 0, 5, 0, '2024-07-01 00:00:00', '2024-09-30', 'admin'),
+(10, '초보자 전용 할인 쿠폰', '/qc/admin/upload/20241120085440136439.png', '초보자를 위한 기본 강의 7,000원 할인', 'fixed', 7000, 0, 0, '2024-10-31 00:00:00', '2024-12-03', 'admin');
 
 --
--- 테이블 구조 `coupons_list`
---
-
-CREATE TABLE `coupons_list` (
-  `cid` int(11) NOT NULL,
-  `coupon_name` varchar(100) NOT NULL COMMENT '쿠폰명',
-  `coupon_image` varchar(100) NOT NULL COMMENT '쿠폰이미지',
-  `coupon_type` varchar(100) NOT NULL COMMENT '쿠폰타입',
-  `coupon_price` double DEFAULT NULL COMMENT '할인금액',
-  `coupon_ratio` double DEFAULT NULL COMMENT '할인비율',
-  `status` tinyint(4) DEFAULT 0 COMMENT '상태',
-  `regdate` datetime DEFAULT current_timestamp() COMMENT '등록일',
-  `userid` varchar(100) DEFAULT NULL COMMENT '등록한유저',
-  `max_value` double DEFAULT NULL COMMENT '최대할인금액',
-  `use_min_price` double DEFAULT NULL COMMENT '최소사용금액'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -622,12 +598,6 @@ ALTER TABLE `coupons`
   ADD PRIMARY KEY (`cid`);
 
 --
--- 테이블의 인덱스 `coupons_list`
---
-ALTER TABLE `coupons_list`
-  ADD PRIMARY KEY (`cid`);
-
---
 -- 테이블의 인덱스 `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
@@ -720,13 +690,6 @@ ALTER TABLE `board_reply`
 --
 ALTER TABLE `coupons`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- 테이블의 AUTO_INCREMENT `coupons_list`
---
-ALTER TABLE `coupons_list`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
