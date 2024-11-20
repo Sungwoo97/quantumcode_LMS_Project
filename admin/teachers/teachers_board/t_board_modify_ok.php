@@ -5,15 +5,11 @@ $pid = $_POST['pid'];
 $title1 = $_POST['title'];  // 제목
 $content = $_POST['content'];  // 내용
 $img = $_POST['old_img'];  // 기존 이미지값 (새 이미지가 없으면 기존값 사용)
-$start_date = $_POST['start_date'];
-$end_date = $_POST['end_date'];
 
-echo $start_date;
-echo $end_date;
 
 // 새 이미지가 업로드 되었을 경우
 if (!empty($_FILES['file']['name'])) {
-    $target_dir = "./upload/";
+    $target_dir = "./t_upload/";
     $target_file = $target_dir . basename($_FILES['file']['name']);
 
     // 이미지 파일 업로드 처리
@@ -46,7 +42,7 @@ switch ($category) {
         die("유효하지 않은 카테고리입니다.");
 }
 
-$sql = "UPDATE board SET title='$title1',content='$content', img='$img', start_date='$start_date', end_date = '$end_date' WHERE pid= $pid";
+$sql = "UPDATE board SET title='$title1',content='$content', img='$img', WHERE pid= $pid";
 $result = $mysqli->query($sql);
 if($result){
   echo "<script>
