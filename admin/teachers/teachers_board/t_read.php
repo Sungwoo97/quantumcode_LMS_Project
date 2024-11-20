@@ -18,6 +18,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
 
+
 // 추천 쿼리
 if(!isset($_SESSION['hits'])){
   $_SESSION['hits'] =[];
@@ -43,6 +44,7 @@ if ($category === 'all') {
 }
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
+
 
 $post_date = date("Y-m-d", strtotime($data->date));
 $start_date = date("Y-m-d", strtotime($data->start_date));
@@ -99,8 +101,8 @@ switch ($category) {
     <a href="t_like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <?php if (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) : ?>
     <!-- 수정/삭제 버튼 (본인이 작성한 글일 때만 표시) -->
-    <a href="t_board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
-    <a href="t_delete.php?pid=<?=$data->pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
+    <a href="t_board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
+    <a href="t_delete.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">삭제</a>
     <?php endif; ?>
   </p>
 </div>
