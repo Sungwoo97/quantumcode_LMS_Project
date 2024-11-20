@@ -28,45 +28,48 @@ $tuition .= isset($data->dis_tuition) ? "
 <p class=\"text-decoration-line-through \"> $data->tuition </p><p class=\"active-font\"> $data->dis_tuition </p>"
   :
   "<p class=\"active-font\"> $data->tuition </p>";
-$category = $data->category;
+$category = $data->category; // A0001B0001C0001
 
 $plat = substr($category, 0, 5);
 $dev = substr($category, 5, 5);
 $tech = substr($category, 10, 5);
-$cate = [];
-$cate[] = $plat; // A0001 추가
-$cate[] = $dev;  // B0001 추가
-$cate[] = $tech; // C0001 추가
 
+$cate = [$plat, $dev, $tech];
+
+// 배열을 SQL IN 조건에 맞게 변환
 $cateArr = implode("','", $cate);
-$cate_sql = "SELECT * FROM lecture_category WHERE code IN ('$cateArr')";
+$cate_sql = "
+    SELECT 
+        c1.code AS code,
+        c1.name AS name,
+        c2.name AS pcode_name,
+        c3.name AS ppcode_name
+    FROM lecture_category c1
+    LEFT JOIN lecture_category c2 ON c1.pcode = c2.code
+    LEFT JOIN lecture_category c3 ON c1.ppcode = c3.code
+    WHERE c1.code IN ('$cateArr')
+";
+
 $cate_result = $mysqli->query($cate_sql);
 $cate_data = [];
-while ($cate_row = $cate_result->fetch_object()) {
-  $cate_data[] =  $cate_row;
+while ($row = $cate_result->fetch_object()) {
+  $cate_data[] = $row;
 }
-
 if (count($cate_data) > 0) {
   foreach ($cate_data as $list) {
-    $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->pcode}' AND pcode = '{$list->ppcode}'";
-    $ppcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$list->ppcode}'";
-
-    $pcode_result = $mysqli->query($pcode_name_sql);
-    $ppcode_result = $mysqli->query($ppcode_name_sql);
-
-    $code_name = $list->name;
-    $pcode_name = ($pcode_result && $pcode_result->num_rows > 0) ? $pcode_result->fetch_object()->name : "Unknown";
-    $ppcode_name = ($ppcode_result && $ppcode_result->num_rows > 0) ? $ppcode_result->fetch_object()->name : "Unknown";
+    if (count($cate_data) > 0) {
+      foreach ($cate_data as $list) {
+      }
+    }
   }
 }
-
 
 ?>
 
 <section class="info">
   <div>
     <div class="catogory mb-1 ">
-      <p class="small-font"><?= $ppcode_name . ' / ' . $pcode_name . ' / ' . $code_name ?></p>
+      <!-- <p class="small-font"><?= $ppcode . ' / ' . $pcode . ' / ' . $code ?></p> -->
     </div>
     <div class="title mb-2">
       <h4 class="normal-font"><?= $data->title ?></h4>
