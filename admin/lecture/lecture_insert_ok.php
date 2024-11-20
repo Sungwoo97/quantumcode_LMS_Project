@@ -18,10 +18,12 @@ $lecture_title = $_POST['title'] ?? '';
 $lecture_platforms = $_POST['platforms'] ?? '';
 $lecture_development = $_POST['development'] ?? '';
 $lecture_technologies = $_POST['technologies'] ?? '';
-$lecture_tuition = $_POST['tuition'] ?? 0;
-$lecture_disTuition = $_POST['dis_tuition'] ?? 0;
-$lecture_registDay = $_POST['regist_day'] ?? '';
-$lecture_difficult = $_POST['difficult'] ?? '';
+$lecture_tuition = is_numeric($_POST['tuition'] ?? 0) ? (float)$_POST['tuition'] : 0;
+$lecture_disTuition = is_numeric($_POST['dis_tuition'] ?? 0) ? (float)$_POST['dis_tuition'] : 0;
+$lecture_registDay = $_POST['regist_day'] ?? 0;
+$lecture_difficult = isset($_POST['difficult']) && $_POST['difficult'] !== '' 
+    ? $_POST['difficult'] 
+    : 0; // 기본값
 $lecture_ispremium = $_POST['ispremium'] ?? 0;
 $lecture_ispopular = $_POST['ispopular'] ?? 0;
 $lecture_isrecom = $_POST['isrecom'] ?? 0;
@@ -34,8 +36,9 @@ $lecture_tag = $_POST['tag'] ?? '';
 
 $lecture_coverImage = $_FILES['cover_image'] ?? '';
 $lecture_prVideo = $_FILES['pr_video'] ?? '';
-$lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
+// $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
+
 
 $lecture_videoId = $_POST['lecture_video'] ?? '';  //추가이미지의 imgid들 11,12,
 $lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
@@ -51,6 +54,7 @@ if (isset($lecture_platforms) && isset($lecture_development) && isset($lecture_t
   if ($lcid_result = $mysqli->query($lcid_sql)) {
     $lcid_data = $lcid_result->fetch_object();
     $lcid = $lcid_data->lcid;
+    //print_r($lcid);
   }
 }
 
@@ -70,7 +74,7 @@ if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_E
 if (isset($_FILES['pr_video']) && $_FILES['pr_video']['error'] == UPLOAD_ERR_OK) {
   $fileUploadResult = fileUpload($_FILES['pr_video'], 'video');
   if ($fileUploadResult) {
-    $lecture_prVideo = $fileUploadResult;
+    $lecture_prVideo =  $fileUploadResult ?: '';
   } else {
     echo "<script>
               alert('파일 첨부할 수 없습니다.');
@@ -87,6 +91,9 @@ $sql = "INSERT INTO  lecture_list
     ";
 echo $sql;
 $lecture_result = $mysqli->query($sql);
+if (!$lecture_result) {
+  echo "SQL Error: " . $mysqli->error;
+}
 $lid = $mysqli->insert_id;
 
 if ($lecture_result) { //상품이 products테이블에 등록되면
