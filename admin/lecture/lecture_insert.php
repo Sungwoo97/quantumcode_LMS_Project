@@ -104,7 +104,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
               </td>
               <th scope="row" class="insert_name">할인 수강료</th>
               <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="">
+                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" value="" placeholder="">
               </td>
             </tr>
             <tr>
