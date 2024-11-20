@@ -1,3 +1,70 @@
+/* 하루 안보기 모달 */
+.insite_modal{
+  width: 460px;
+  padding: 38px 43px 35px;
+  position: fixed;
+  left: 147px;
+  top: 10vh;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .2);
+  z-index: 1;
+  background: var(--white);
+  font-size: 15px;
+  line-height: 28px;
+  display: none;
+  p{
+    margin: 0;
+  }
+  hr{
+    color:var(--bs-primary);
+    opacity: 1;
+    margin: 12px 0;
+  }
+}
+.insite_modal.show{
+  display: block;
+}
+.modal_header img{
+  height: 67px;
+}
+.modal_header p{
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #797979;
+}
+.modal_header h2{
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 29px;
+}
+.info_link img:first-of-type{
+  margin-right: 20px;
+}
+
+.modal_info{
+  img{
+    width: 20px;
+  }
+  a{
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  span{
+    font-weight: 600;
+    color:var(--bs-primary);
+  }
+}
+.modal_work h4{
+  font-size: 15px;
+  line-height: 26px;
+  font-weight: 700;
+  color:var(--bs-primary);
+  margin-bottom: 4px;
+}
+
+
+/* 페이지 디자인 */
 aside {
   position: relative;
   width: 60%;
