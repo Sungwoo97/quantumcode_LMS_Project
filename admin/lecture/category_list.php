@@ -183,7 +183,7 @@ if (count($list) > 0) {
           <div class="row d-flex d-flex flex-column gap-3">
             <div class="d-flex gap-2 w-100">
               <select class="form-select flex-fill plats" name="platforms" id="pcode2">
-
+                <option value="" selected>Platforms</option>
                 <?php
                 if (!empty($cate)) {
                   foreach ($cate as $plat) {
@@ -227,7 +227,12 @@ if (count($list) > 0) {
     let pcode = $(`#pcode${step}`).val();
     let ppcode = null;
     let name = $('#development').val();
-    addCategory(name, pcode, ppcode, step);
+    if (!pcode && !name) {
+      alert('Platforms을 선택해주세요');
+      location.reload();
+    } else {
+      addCategory(name, pcode, ppcode, step);
+    }
   })
 
   $('.technologies').submit(function(e) {
@@ -235,12 +240,17 @@ if (count($list) > 0) {
     let step = Number($(this).attr('data-step'));
     let pcode = $(`#pcode${step}`).val();
     let ppcode = $('.plats').val();
-
     let name = $('#technologies').val();
-    addCategory(name, pcode, ppcode, step);
+    if (!pcode && !ppcode && !name) {
+      alert('Platforms과 Development를 선택해주세요');
+      location.reload();
+    } else {
+      addCategory(name, pcode, ppcode, step);
+    }
+
   })
 
-  makeOption($('.plats'), 2, $('.devs'), '');
+  //makeOption($('.plats'), 2, $('.devs'), '');
 
 
   // submit 이벤트, input의 값, 

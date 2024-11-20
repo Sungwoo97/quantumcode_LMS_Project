@@ -30,7 +30,7 @@ $coupon_del_result = $mysqli->query($coupon_del_sql);
 //삭제 완료후 쿠폰 목록으로 이동
 if($coupon_del_result){
   echo "<script>
-    alert('쿠폰 삭제 완료');
+    confirm('정말 삭제할까요?');
     location.href = 'coupon_list.php';
   </script>";
 }
