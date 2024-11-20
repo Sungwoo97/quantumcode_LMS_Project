@@ -19,7 +19,7 @@ $end_date = $_POST['end_date'] ?? null;
 //print_r($_FILES['file']['name']);
 
 //파일 업로드
-$file_name = $_FILES['file']['name'];
+$file_name = time() . '_' . $_FILES['file']['name'];
 $temp_path = $_FILES['file']['tmp_name'];
 $upload_path = $_SERVER['DOCUMENT_ROOT'].'/qc/admin/board/upload/'.$file_name;
 move_uploaded_file($temp_path,$upload_path);
