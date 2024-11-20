@@ -52,6 +52,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($sales_css)) {
       echo $sales_css;
     }
+    if (isset($chart_js)) {
+      echo $chart_js;
+    }
 
     ?>
 
