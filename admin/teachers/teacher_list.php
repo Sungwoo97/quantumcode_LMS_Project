@@ -82,17 +82,15 @@ LEFT JOIN
 GROUP BY 
     t.id  -- teacher별로 그룹화
 ORDER BY 
-    lecture_count DESC; " //중복된 lecture 개수가 많은 순으로 정렬
+    lecture_count DESC"; //중복된 lecture 개수가 많은 순으로 정렬
 // $result3 = $mysqli->query($sql3);
 
 $join_result = $mysqli->query($join_sql);
-$join_data = $join_result->fetch_assoc();
+while($join_data = $join_result->fetch_object()){
+  $join_dataArr[] = $join_data;
+}
 
-print_r($join_data)
-
-// $row_num = $page_data['cnt'];  
-
-
+// print_r($join_dataArr)
 
 ?>
 
