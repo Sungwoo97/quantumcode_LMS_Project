@@ -99,8 +99,12 @@ if($block_end > $total_page ) $block_end = $total_page;
       </div>
       </td>
       <td class="icon_hover d-flex gap-1 justify-content-center">
-        <a href="coupon_edit.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Edit.svg" alt="" style="width: 20px;"></a>
-        <a href="coupon_del.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Trash.svg" alt="" style="width: 20px;"></a>
+        <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
+          <img src="../img/icon-img/Edit.svg" alt="수정">
+        </a>
+        <a href="coupon_del.php?cid=<?= $data->cid; ?>">
+          <img src="../img/icon-img/Trash.svg" alt="삭제">
+        </a>
       </td>
       <?php
       }
