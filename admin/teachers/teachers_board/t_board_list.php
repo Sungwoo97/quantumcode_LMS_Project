@@ -127,7 +127,7 @@ $event_result = $mysqli->query($sql);
         }
         ?>
       <tr>
-        <th><?= ($_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
+        <th><?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="t_read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
@@ -136,7 +136,7 @@ $event_result = $mysqli->query($sql);
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td>
-        <?= ($_SESSION['TUID'] == $data->user_id) ? 
+        <?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? 
           '<a href="t_board_modify.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-pen-to-square"></i></a>
           <a href="t_delete.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>' 
           : ''
