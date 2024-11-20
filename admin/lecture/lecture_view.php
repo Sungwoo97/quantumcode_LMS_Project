@@ -27,10 +27,10 @@ $data = $result->fetch_object();
 if (isset($data->dis_tuition)) {
   $tui_val = number_format($data->tuition);
   $distui_val = number_format($data->dis_tuition);
-  $tuition .= "<p class=\"text-decoration-line-through \"> $tui_val </p><p class=\"active-font\"> $distui_val </p>";
+  $tuition .= "<p class=\"text-decoration-line-through text-end \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
 } else {
   $tui_val = number_format($data->tuition);
-  $tuition .=  "<p class=\"active-font\"> $tui_val </p>";
+  $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
 }
 
 
