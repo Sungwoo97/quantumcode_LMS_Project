@@ -23,8 +23,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     <div class="row coupon">
       <div class="col-4 mb-5">
         <h6>쿠폰 이미지 등록</h6>
-          <div class="coupon_regisImg mb-3">
-            <img src="" id="coverImg" alt="">
+          <div class="coupon_regisImg d-flex justify-content-center align-items-center mb-3">
+            <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
           </div>
           <div class="input-group">
             <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
@@ -103,7 +103,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     </div>
     <div class="gap-3 mt-50 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button a href="coupon_list.php" class="btn btn-danger cancel">취소</button>
+      <button href="coupon_list.php" class="btn btn-danger cancel">취소</button>
     </div>
   </form>
 </div>
@@ -177,67 +177,65 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   });
 });
 
-  $('.cancel').click(function(e) {
-      e.preventDefault();
-      if (confirm('정말 취소할까요?')) {
-          window.location.href = $(this).attr('href');
-      }
-  });
+$('.cancel').click(function(e) {
+    e.preventDefault();
+    if (confirm('정말 취소할까요?')) {
+        window.location.href = $(this).attr('href');
+    }
+});
 
 
-  /*
   function attachFile(file){
 
-let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
-formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
+  let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
+  formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
 
 
-$.ajax({
-  url:'coupon_add_image.php',
-  data:formData,
-  cache: false, //이미지 정보를 브라우저 저장, 안한다
-  contentType:false, //전송되는 데이터 타입지정, 안한다.
-  processData:false, //전송되는 데이터 처리(해석), 안한다.
-  dataType:'json', //product_image_save.php이 반환하는 값의 타입
-  type:'POST', //파일 정보를 전달하는 방법
-  success:function(returned_data){ //coupon_add_image.php과 연결(성공)되면 할일
-    console.log(returned_data);
+  $.ajax({
+    url:'coupon_add_image.php',
+    data:formData,
+    cache: false, //이미지 정보를 브라우저 저장, 안한다
+    contentType:false, //전송되는 데이터 타입지정, 안한다.
+    processData:false, //전송되는 데이터 처리(해석), 안한다.
+    dataType:'json', //product_image_save.php이 반환하는 값의 타입
+    type:'POST', //파일 정보를 전달하는 방법
+    success:function(returned_data){ //coupon_add_image.php과 연결(성공)되면 할일
+      console.log(returned_data);
 
-    if(returned_data.result === 'size'){
-      alert('10MB 이하만 첨부할 수 있습니다.');
-      return;
-    } else if(returned_data.result === 'image'){
-      alert('이미지만 첨부할 수 있습니다.');
-      return;   
-    } else if(returned_data.result === 'error'){
-      alert('첨부실패, 관리자에게 문의하세요');
-      return;
-    } else{ //파일 첨부가 성공하면
-      let imgids = $('#coupon_imageId').val() + returned_data.imgid + ',';
-      $('#coupon_imageId').val(imgids);
-      let html = `
-        <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
-          <img src="${returned_data.savefile}" class="card-img-top" alt="...">
-          <div class="card-body">                
-            <button type="button" class="btn btn-danger btn-sm">삭제</button>
+      if(returned_data.result === 'size'){
+        alert('10MB 이하만 첨부할 수 있습니다.');
+        return;
+      } else if(returned_data.result === 'image'){
+        alert('이미지만 첨부할 수 있습니다.');
+        return;   
+      } else if(returned_data.result === 'error'){
+        alert('첨부실패, 관리자에게 문의하세요');
+        return;
+      } else{ //파일 첨부가 성공하면
+        let imgids = $('#coupon_imageId').val() + returned_data.imgid + ',';
+        $('#coupon_imageId').val(imgids);
+        let html = `
+          <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
+            <img src="${returned_data.savefile}" class="card-img-top" alt="...">
+            <div class="card-body">                
+              <button type="button" class="btn btn-danger btn-sm">삭제</button>
+            </div>
           </div>
-        </div>
-      `;
-      $('.coupon_regisImg').append(html);
+        `;
+        $('.coupon_regisImg').append(html);
+      }
     }
-  }
 
-})
-} //Attachfile
-//$('#addedImages button');
-//변수.addEventListener('이벤트종류','대상',function(){})
+  })
+  } //Attachfile
+  //$('#addedImages button');
+  //변수.addEventListener('이벤트종류','대상',function(){})
 
-$('#addedImages').on('click','button', function(){
-let imgid = $(this).closest('.card').attr('id');
-//console.log(imgid);
-file_delete(imgid);
-});
-*/
+  $('#addedImages').on('click','button', function(){
+  let imgid = $(this).closest('.card').attr('id');
+  //console.log(imgid);
+  file_delete(imgid);
+  });
 
 
 </script>
