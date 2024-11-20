@@ -185,7 +185,6 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   });
 
 
-  /*
   function attachFile(file){
 
 let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
@@ -237,7 +236,6 @@ let imgid = $(this).closest('.card').attr('id');
 //console.log(imgid);
 file_delete(imgid);
 });
-*/
 
 
 </script>

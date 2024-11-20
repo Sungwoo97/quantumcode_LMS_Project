@@ -111,34 +111,70 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
               </thead>
               <tbody>
                   <tr>
-                      <td>title</td>
-                      <td>name</td>
+                      <td>CSS 테이블 세로 간격 줄이는 방법이 뭐죠?</td>
+                      <td>CodeRookie21</td>
                       <td>2024-11-01</td>
-                      <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                      <td>
+                        <a href="">
+                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
+                        </a>
+                    </td>
                   </tr>
                   <tr>
-                      <td>title</td>
-                      <td>name</td>
+                      <td>JavaScript 함수 최적화 관련 문의</td>
+                      <td>DevGuru</td>
                       <td>2024-11-02</td>
-                      <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                      <td>
+                        <a href="">
+                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
+                        </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>React에서 상태 관리 효율적으로 구현하는 법?</td>
+                      <td>JS_Ninja</td>
+                      <td>2024-11-03</td>
+                      <td>
+                        <a href="">
+                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
+                        </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Python 웹 스크래핑 중 특정 태그 가져오기 문제</td>
+                      <td>PythonLover</td>
+                      <td>2024-11-04</td>
+                      <td>
+                        <a href="">
+                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
+                        </a>
+                      </td>
                   </tr>
               </tbody>
           </table>
+           
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm">
+              <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretLeft.svg" alt=""></a></li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretRight.svg" alt=""></a></li>
+            </ul>
+          </nav>
       </div>
     </div>
 
     <!-- Revenue Section -->
-    <div class="col-md-4 mb-4 card p-3 border-0 bg-light">
-      <h6>월별 매출</h6>
-      <h5 class="text-end mt-3">12,020,000원 <span class="text-success">(+10%)</span></h5>
+    <div class="Revenue col-md-4 card p-3 border-0 bg-light">
+      <h3 class="text-center mt-3">12,020,000원</h3>
+      <h6 class="text-center text-primary">1,091,000원(+10%)↑</h6>
       <canvas id="monthlyChart"></canvas>
     </div>
   </div>
 </div>
-
-
-
-
 
 
 
@@ -188,7 +224,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
               '#3666FF'  // 다섯 번째 막대 색상
             ],
             borderWidth: 0,
-            borderRadius: 5 // 막대 끝을 둥글게
+            borderRadius: 10 // 막대 끝을 둥글게
           }]
         },
         options: {
@@ -201,41 +237,37 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
           },
           scales: {
             x: {
-              grid: {display: false}, // X축 격자 숨김
-              ticks: {font: {size: 12} // X축 폰트 크기
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                display: false
               }
             },
             y: {
-              grid: {display: false // Y축 격자 숨김
-              },
+              grid: {display: false},
               ticks: {
-                align: 'start', // Y축 레이블 좌측 정렬
-                padding: 10, // 여백 추가 (선택사항)
+                align: 'start',
+                padding: 20,
                   font: {
                   size: 14}, // Y축 폰트 크기
                 color: '#333'}// Y축 텍스트 색상
             }
           }
-        },
-        elements: {
-            bar: {
-                maxBarThickness: 10 // 막대 최대 두께를 20px로 제한
-            }
         }
       });
 
   // Monthly Revenue Chart
   const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
   const monthlyChart = new Chart(monthlyCtx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: ['7월', '8월', '9월', '10월', '11월', '12월'],
       datasets: [{
         label: '월별 매출',
         data: [8000000, 8500000, 9000000, 9500000, 10000000, 12020000],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
-        fill: false
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
       }]
     },
     options: {
