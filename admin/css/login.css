@@ -3,7 +3,7 @@ aside {
   width: 60%;
   height: 100vh;
   background: url(../img/core-img/Login_Logo.svg) no-repeat var(--bs-light);
-  background-position: right 123px top 225px;
+  background-position: right 123px top 40%;
 }
 aside h2,
 aside h3 {
@@ -57,7 +57,7 @@ form .form-floating,
     width: 60%;
     height: 100vh;
     background: url(../img/core-img/Login_Logo.svg) no-repeat var(--bs-primary);
-    background-position: right 123px top 225px;
+    background-position: right 123px top 40%;
   }
   .login_sns_teacher {
     width: 60%;
