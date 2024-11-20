@@ -71,26 +71,49 @@ while($data = $result->fetch_object()){
 }
 
 
+// $join_sql = "SELECT 
+//     t.*,
+//     COUNT(l.t_id) AS lecture_count
+// FROM 
+//     teachers t
+// LEFT JOIN 
+//     lecture_list l
+// ON 
+//     t.id = l.t_id
+// GROUP BY 
+//     t.id;"; 
+
+// $join_result = $mysqli->query($join_sql);
+// while($join_data = $join_result->fetch_object()){
+//   $join_dataArr[] = $join_data;
+// }
+
+// print_r($join_dataArr)
+
+
+
+
 $join_sql = "SELECT 
-    t.id AS teacher_id,  -- teacher의 id
-    t.name AS teacher_name,  -- teacher의 이름
-    COUNT(l.lid) AS lecture_count  -- 중복되는 lecture 개수
+    t.*,
+    COUNT(l.t_id) AS lecture_count
 FROM 
     teachers t
 LEFT JOIN 
-    lecture_list l ON t.id = l.t_id  -- teachers의 id와 lecture_list의 t_id가 일치하는 행을 결합
+    lecture_list l
+ON 
+    t.id = l.t_id
 GROUP BY 
-    t.id  -- teacher별로 그룹화
-ORDER BY 
-    lecture_count DESC"; //중복된 lecture 개수가 많은 순으로 정렬
-// $result3 = $mysqli->query($sql3);
+    t.id;"; 
+
 
 $join_result = $mysqli->query($join_sql);
+$lecture_counts = [];  
+
 while($join_data = $join_result->fetch_object()){
-  $join_dataArr[] = $join_data;
+    $lecture_counts[] = $join_data->lecture_count;  
 }
 
-print_r($join_dataArr)
+// print_r($lecture_counts)
 
 ?>
 
