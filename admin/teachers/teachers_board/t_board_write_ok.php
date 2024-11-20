@@ -19,10 +19,15 @@ $end_date = $_POST['end_date'] ?? null;
 //print_r($_FILES['file']['name']);
 
 //파일 업로드
-$file_name = time() . '_' . $_FILES['file']['name'];
+$file_name = time() . '_' . $_FILES['file']['name']; //이미지 중복 방지
 $temp_path = $_FILES['file']['tmp_name'];
-$upload_path = '/qc/admin/board/upload'.$file_name;
-move_uploaded_file($temp_path,$upload_path);
+$upload_path = $_SERVER['DOCUMENT_ROOT'] . '/qc/admin/board/upload/' . $file_name; //절대경로로 관리자 upload 폴더로 저장
+
+if (move_uploaded_file($temp_path, $upload_path)) {
+    //이미지 출력을 위해 데이터베이스 값 넣기 경로
+    $img_path = '/qc/admin/board/upload/' . $file_name;
+}
+
 
 strpos($_FILES['file']['type'], 'image') !== false ? $is_img = 1 : $is_img = 0;
 
@@ -38,7 +43,7 @@ if($_FILES['file']['size'] >$max_file_size ){
 }
 
 
-$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date, user_id) VALUES ('$category', '$title1', '$content', '$upload_path', $is_img, '$start_date', '$end_date','$user_id')";
+$sql = "INSERT INTO board (category, title, content, img, is_img, start_date, end_date, user_id) VALUES ('$category', '$title1', '$content', '$img_path ', $is_img, '$start_date', '$end_date','$user_id')";
 $result = $mysqli->query($sql);
 
 switch ($category) {
