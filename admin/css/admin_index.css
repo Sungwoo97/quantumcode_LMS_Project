@@ -30,3 +30,33 @@
   height: 100%;
   text-align: center;
 }
+.QnA table{
+  --bs-table-bg:none;
+  font-size: 14px;
+  font-weight: 400;
+}
+.table tbody tr td,
+.table thead tr th {
+  padding: 0.3rem;
+}
+thead tr th{
+  color:var(--primary) !important;
+  font-weight: 700;
+}
+.QnA tbody, 
+.QnA td, 
+.QnA tfoot, 
+.QnA th, 
+.QnA thead
+.QnA tr{
+  border: none;
+}
+.QnA tbody tr {
+  border-bottom: 1px solid var(--medium_gray);
+}
+.QnA tbody tr:last-child {
+  border-bottom: none;
+}
+.Revenue h3{
+  font-weight: 700;
+}
