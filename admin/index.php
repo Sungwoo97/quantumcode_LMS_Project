@@ -168,7 +168,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     </div>
 
     <!-- Revenue Section -->
-    <div class="Revenue col-md-4 mb-4 card p-3 border-0 bg-light">
+    <div class="Revenue col-md-4 card p-3 border-0 bg-light">
       <h3 class="text-center mt-3">12,020,000원</h3>
       <h6 class="text-center text-primary">1,091,000원(+10%)↑</h6>
       <canvas id="monthlyChart"></canvas>
@@ -261,15 +261,13 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
   // Monthly Revenue Chart
   const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
   const monthlyChart = new Chart(monthlyCtx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: ['7월', '8월', '9월', '10월', '11월', '12월'],
       datasets: [{
         label: '월별 매출',
         data: [8000000, 8500000, 9000000, 9500000, 10000000, 12020000],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
-        fill: false
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
       }]
     },
     options: {
