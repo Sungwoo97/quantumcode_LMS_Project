@@ -23,8 +23,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     <div class="row coupon">
       <div class="col-4 mb-5">
         <h6>쿠폰 이미지 등록</h6>
-          <div class="coupon_regisImg mb-3">
-            <img src="" id="coverImg" alt="">
+          <div class="coupon_regisImg d-flex justify-content-center align-items-center mb-3">
+            <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
           </div>
           <div class="input-group">
             <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
