@@ -26,7 +26,10 @@ if($search_keyword){
 $page_sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE 1=1 $search_where";
 $page_result = $mysqli->query($page_sql);
 $page_data = $page_result->fetch_assoc();
-$row_num = $page_data['cnt'];
+
+//print_r($page_data); Array ( [cnt] => 22 )
+
+$row_num = $page_data['cnt'];  //echo $row_num; 22
 
 
 //페이지네이션 
@@ -66,6 +69,29 @@ $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
+
+
+$join_sql = "SELECT 
+    t.id AS teacher_id,  -- teacher의 id
+    t.name AS teacher_name,  -- teacher의 이름
+    COUNT(l.lid) AS lecture_count  -- 중복되는 lecture 개수
+FROM 
+    teachers t
+LEFT JOIN 
+    lecture_list l ON t.id = l.t_id  -- teachers의 id와 lecture_list의 t_id가 일치하는 행을 결합
+GROUP BY 
+    t.id  -- teacher별로 그룹화
+ORDER BY 
+    lecture_count DESC; " //중복된 lecture 개수가 많은 순으로 정렬
+// $result3 = $mysqli->query($sql3);
+
+$join_result = $mysqli->query($join_sql);
+$join_data = $join_result->fetch_assoc();
+
+print_r($join_data)
+
+// $row_num = $page_data['cnt'];  
+
 
 
 ?>
