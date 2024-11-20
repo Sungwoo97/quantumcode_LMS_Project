@@ -14,12 +14,12 @@ if (!isset($id)) {
 }
 
 
-$lecture_title = $_POST['title'];
+$lecture_title = $_POST['title'] ?? '';
 $lecture_platforms = $_POST['platforms'] ?? '';
 $lecture_development = $_POST['development'] ?? '';
 $lecture_technologies = $_POST['technologies'] ?? '';
 $lecture_tuition = $_POST['tuition'] ?? 0;
-$lecture_disTuition = $_POST['dis_tuition'] ?? 0;
+$lecture_disTuition = $_POST['dis_tuition'] ?? '';
 $lecture_registDay = $_POST['regist_day'] ?? 0;
 $lecture_difficult = $_POST['difficult'] ?? '';
 $lecture_ispremium = $_POST['ispremium'] ?? 0;
@@ -27,7 +27,7 @@ $lecture_ispopular = $_POST['ispopular'] ?? 0;
 $lecture_isrecom = $_POST['isrecom'] ?? 0;
 $lecture_isfree = $_POST['isfree'] ?? 0;
 $lecture_subTitle = $_POST['sub_title'] ?? '';
-$lecture_desc = rawurldecode($_POST['lecture_description']);
+$lecture_desc = rawurldecode($_POST['lecture_description'] ?? '');
 
 $lucture_objectives = $_POST['objectives'] ?? '';
 $lecture_tag = $_POST['tag'] ?? '';
@@ -37,10 +37,9 @@ $lecture_prVideo = $_FILES['pr_video'] ?? '';
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
 
-$lecture_videoId = $_POST['lecture_video'];  //추가이미지의 imgid들 11,12,
+$lecture_videoId = $_POST['lecture_video'] ?? '';  //추가이미지의 imgid들 11,12,
 $lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
 
-print_r($_POST);
 
 $expiration_day = date("Y-m-d", strtotime("+3 months", strtotime($lecture_registDay)));
 
