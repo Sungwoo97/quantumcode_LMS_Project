@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-20 04:52
+-- 생성 시간: 24-11-20 04:57
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -137,8 +137,8 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `likes` int(11) NOT NULL DEFAULT 0
+  `l_pid` int(11) NOT NULL,
+  `user_id` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -609,7 +609,8 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`);
+  ADD PRIMARY KEY (`pid`),
+  ADD UNIQUE KEY `l_pid` (`l_pid`,`user_id`);
 
 --
 -- 테이블의 인덱스 `board_reply`
