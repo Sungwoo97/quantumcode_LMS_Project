@@ -4,25 +4,22 @@ $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.c
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $cid = $_GET['cid'];
-
 $sql = "SELECT * FROM coupons WHERE cid = $cid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
-
 ?>
 
-<!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
 <div class="coupon_edit container">
-  <form action="coupon_edit_ok.php" id="coupon_submit" method="POST">
+  <form action="coupon_edit_ok.php" id="coupon_submit" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="cid" value="<?= $cid; ?>"> 
   <div class="row coupon">
     <div class="col-4 mb-5">
       <h6>쿠폰 이미지 등록</h6>
-          <div class="coupon_regisImg mb-3">
-            <img src="" id="coverImg" alt="">
+          <div class="coupon_regisImg d-flex justify-content-center align-items-center mb-3">
+            <img src="<?=$data->coupon_image;?>" id="coverImg" alt="">
           </div>
           <div class="input-group">
-            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
+            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
           </div>
       </div>
 
@@ -122,11 +119,29 @@ $data = $result->fetch_object();
             };
             reader.readAsDataURL(file);
         } else {
-            target.attr('src', '/qc/admin/<?= $data->coupon_image ?>'); // 기존 이미지로 되돌리기
+            target.attr('src', ''); // 기존 이미지로 되돌리기
         }
     });
 }
-  addCover($('#coupon_image'), $('#coverImg'));
+
+let coupon_image = $('#coupon_image');
+coupon_image.on('change',(e)=>{
+    let file = e.target.files;
+
+    const reader = new FileReader(); 
+    reader.onloadend = (e)=>{ 
+      let attachment = e.target.result;
+      if(attachment){
+        let target = $('#coverImg');
+        target.attr('src',attachment)
+      }
+    }
+    reader.readAsDataURL(file); 
+  });
+
+
+
+addCover($('#coupon_image'), $('#coverImg'));
 
   //할인구분
   document.addEventListener('DOMContentLoaded', () => {

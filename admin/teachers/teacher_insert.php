@@ -26,7 +26,7 @@ if(!isset($_SESSION['AUID'])){
       <div class="col-4 mb-5">
         <h6>강사 이미지 등록</h6>
         <div class="teacher_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >

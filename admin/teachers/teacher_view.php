@@ -32,69 +32,92 @@ $lecture_result = $mysqli->query($sql2); //쿼리 실행 결과
 while($lecture_data = $lecture_result->fetch_object()){
   $lecture_dataArr[] = $lecture_data;
 }
-
 // print_r($lecture_dataArr)
+
 ?>
 
 <div class="container">
   <Form action="" id="teacher_save" method="" enctype="multipart/form-data">
     <div class="row teacher">
-      <div class="col-4 mb-5">
+      <div class="col-3 mb-5">
         <div class="teacher_coverImg2 mb-3">
-          <img src="<?= $data->cover_image; ?>" id="coverImg" alt="" width="400" height="300">
+          <img src="<?= $data->cover_image; ?>" id="coverImg" alt="" width="200" height="200" style="object-fit: cover; border-radius: 25%;">
         </div>
-        <div class="col-12 mb-3">
-          <table class="table">
-            <tbody>
-              <tr scope="row">
-                <th scope="row" class="insert_name">최고 인기 강의 </th>
-                <td>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="아직 구현 전" disabled>
-                </td>
-              </tr>
-              <tr scope="row">
-                <th scope="row" class="insert_name">누적 회원 수 </th>
-                <td >
-                  <input type="text" class="form-control" name="name" id="name" placeholder="아직 구현 전"  disabled>
-                </td>
-              </tr>
-              <tr scope="row">
-                <th scope="row" class="insert_id">이번 달 매출 </th>
-                <td colspan="3">
-                  <input type="text" class="form-control" name="id" id="id" placeholder="아직 구현 전"  disabled>
-                </td>
-              </tr>
-              <tr scope="row">
-                <th scope="row" class="insert_birth">올해 총 매출 </th>
-                <td colspan="3">
-                  <input type="text" class="form-control" name="birth" id="birth" placeholder="아직 구현 전"  disabled>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <h5>이름 : <?= $data->name; ?></h5>
+          <h6>아이디  : <?= $data->id; ?></h6>
         </div>
+        <hr>
+        <div class="d-flex justify-content-center align-items-center gap-5">
+
+          <div class="text-center">
+            <p>총 수강생 수</p>
+            <p><?= $data->student_number ?></p>
+          </div>
+          <div class="text-center">
+            <p>수강평 수</p>
+            <p> </p>
+          </div>
+          <div class="text-center">
+            <p>강의 평점</p>
+            <p>4.6</p>
+          </div>
+
+        </div>
+        <hr>
+        <nav>
+          <ul>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none">홈</a>
+            </li>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none">모든 강의</a>
+            </li>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none">매출</a>
+            </li>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none">개인 정보</a>
+            </li>
+          </ul>
+        </nav>
+
       </div>
 
 
+      <div class="col-9 mb-3">
+        <table class="table">
+          <h4>강사 소개글</h4>
+          <tbody>
+            <tr>
+              <textarea disabled><?= $data->teacher_detail; ?></textarea>
+            </tr>
+          </tbody>
+        </table>
+        
+        <hr>
 
-      <div class="col-8 mb-3">
-        <!--  -->
         <?php
           if (isset($lecture_dataArr)) {
         ?>
-        <h3>현재 진행 중인 강의</h3>
+        <h4>현재 진행 중인 강의 TOP4</h4>
         <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 -->
           <?php
           foreach ($lecture_dataArr as $item) {
           ?> 
-          <div class="card m-3" style="width: 22rem;"> <!-- 개별 카드 -->
-            <img class="card-img-top" src="<?= $item->cover_image?>" alt="Card image cap" width="300" height="200">
-            <div class="card-body">
-              <h5 class="card-title"><?= $item->title?></h5>
-              <p class="card-text"><?= $item->description?></p>
-              <a href="/qc/admin/lecture/lecture_view.php?lid=<?= $item->lid; ?>" class="btn btn-primary" >해당 강의 보러가기</a>
-            </div>
+          <div class="card m-3 shadow-lg" style="width: 25rem; height: 24rem; border-radius: 15px; overflow: hidden;"> 
+          <!-- 이미지 섹션 -->
+          <img class="card-img-top" src="<?= $item->cover_image ?>" alt="Card image cap" style="height: 12rem; object-fit: cover;">
+
+          <!-- 카드 본문 -->
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-primary fw-bold"><?= $item->title ?></h5>
+            <p class="card-text text-muted"><?= $item->description ?></p>
+            <a href="/qc/admin/lecture/lecture_view.php?lid=<?= $item->lid; ?>" class="btn btn-primary mt-auto" style="border-radius: 10px;">
+              해당 강의 보러가기
+            </a>
           </div>
+        </div>
           <?php
           }
           ?>
@@ -103,133 +126,69 @@ while($lecture_data = $lecture_result->fetch_object()){
         }
         ?>
 
+
         
-        <!--  -->
         <hr>
-        <table class="table">
-          <h3>강사 월별 매출 현황</h3>
-          <thead class="visually-hidden">
-            <tr>
-              <th scope="col">11111111111111111구분</th>
-              <th scope="col">111111내용111111111</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr scope="row">
-              <th scope="row" class="insert_name">회원 고유 ID</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $data->tid; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_name">이름</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $data->name; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_id">아이디</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $data->id; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_birth">생년월일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="birth" id="birth" placeholder=<?= $data->birth; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_email">이메일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="email" id="email" placeholder=<?= $data->email; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_number">전화번호</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="number" id="number" placeholder=<?= $data->number; ?>  disabled>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">가입일</th>
-              <td class="twoculumn_table">
-                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $data->reg_date; ?> disabled></input>
-                <span></span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">강사 요약</th>
-              <td class="twoculumn_table">
-                <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control"  name="teacher_detail" id="teacher_detail"  disabled><?= $data->teacher_detail; ?></textarea>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <hr>
-        <table class="table">
-          <thead class="visually-hidden">
-            <tr>
-              <th scope="col">11111111111111111구분</th>
-              <th scope="col">111111내용111111111</th>
-            </tr>
-          </thead>
-          <tbody>
-            <h3>강사 개인 정보</h3>
-            <tr scope="row">
-              <th scope="row" class="insert_name">회원 고유 ID</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $data->tid; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_name">이름</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="name" id="name" placeholder=<?= $data->name; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_id">아이디</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="id" id="id" placeholder=<?= $data->id; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_birth">생년월일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="birth" id="birth" placeholder=<?= $data->birth; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_email">이메일</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="email" id="email" placeholder=<?= $data->email; ?>  disabled>
-              </td>
-            </tr>
-            <tr scope="row">
-              <th scope="row" class="insert_number">전화번호</th>
-              <td colspan="3">
-                <input type="text" class="form-control" name="number" id="number" placeholder=<?= $data->number; ?>  disabled>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">가입일</th>
-              <td class="twoculumn_table">
-                <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder=<?= $data->reg_date; ?> disabled></input>
-                <span></span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">강사 요약</th>
-              <td class="twoculumn_table">
-                <label for="teacher_detail" class="bold"></label>
-                <textarea class="form-control"  name="teacher_detail" id="teacher_detail"  disabled><?= $data->teacher_detail; ?></textarea>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">강사 개인 정보</h4>
+
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">구분</th>
+            <th scope="col" class="text-center">내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">회원 고유 ID</th>
+            <td>
+              <input type="text" class="form-control" name="name" id="name" placeholder="<?= $data->tid; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">이름</th>
+            <td>
+              <input type="text" class="form-control" name="name" id="name" placeholder="<?= $data->name; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">아이디</th>
+            <td>
+              <input type="text" class="form-control" name="id" id="id" placeholder="<?= $data->id; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">생년월일</th>
+            <td>
+              <input type="text" class="form-control" name="birth" id="birth" placeholder="<?= $data->birth; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">이메일</th>
+            <td>
+              <input type="text" class="form-control" name="email" id="email" placeholder="<?= $data->email; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">전화번호</th>
+            <td>
+              <input type="text" class="form-control" name="number" id="number" placeholder="<?= $data->number; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">가입일</th>
+            <td>
+              <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder="<?= $data->reg_date; ?>" disabled>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
     
       
     </div>
@@ -240,9 +199,17 @@ while($lecture_data = $lecture_result->fetch_object()){
 </div>
 
 <script>
-  
+  // 클릭 시 active 클래스 추가
+  const navLinks = document.querySelectorAll('nav ul li a');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      // 모든 링크에서 active 클래스 제거
+      navLinks.forEach((l) => l.classList.remove('active'));
+      // 클릭한 링크에 active 클래스 추가
+      link.classList.add('active');
+    });
+  });
 </script>
-
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
 ?>
