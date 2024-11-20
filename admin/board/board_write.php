@@ -42,11 +42,11 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     <div id="event-dates" style="display: none;">
       <div class="form-group d-flex gap-3">
         <label for="start_date">시작일:</label>
-        <input type="text" class="form-control datepicker w-75 mb-3" name="start_date" id="start_date">
+        <input type="text" class="form-control datepicker w-75 mb-3" name="start_date" id="start_date" autocomplete="off">
       </div>
       <div class="form-group d-flex gap-3">
         <label for="end_date">종료일:</label>
-        <input type="text" class="form-control datepicker w-75 mb-3" name="end_date" id="end_date">
+        <input type="text" class="form-control datepicker w-75 mb-3" name="end_date" id="end_date" autocomplete="off">
       </div>
     </div>
     <div class="d-flex justify-content-end gap-3">
@@ -99,7 +99,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
-            language: 'kr' // 한글 로케일
+            language: 'kr', // 한글 로케일
+            startDate: '0d',  // 오늘 날짜 이후만 선택 가능
+            endDate: '+1m'    // 오늘부터 1개월 후까지 선택 가능
         });
 
     });

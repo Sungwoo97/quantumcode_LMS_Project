@@ -1,5 +1,6 @@
 <?php
 $title = "강사 목록";
+$teacherOutline_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacherOutline.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
@@ -66,27 +67,12 @@ while($data = $result->fetch_object()){
   $dataArr[] = $data;
 }
 
-$join_sql = " SELECT 
-    t.id AS teacher_id,
-    COUNT(l.t_id) AS lecture_count
-FROM 
-    teachers t
-LEFT JOIN 
-    lecture_list l
-ON 
-    t.id = l.t_id
-GROUP BY 
-    t.id;";
-
-$join_result = $mysqli->query($join_sql);
-print_r($join_result);
-
 
 ?>
 
 <div class="container">
   <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
+    <h5>현재 강사 수 : <?= $row_num; ?> 명</h5>
     <div class="d-flex gap-3 w-30 mt-3 align-items-center">
     <tr>
         <td colspan="3">
