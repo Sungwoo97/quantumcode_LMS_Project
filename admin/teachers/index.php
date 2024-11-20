@@ -143,10 +143,10 @@ $tid = $_SESSION['TUIDX'];
             </button>
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=notice">공지사항</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=event">이벤트</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=qna">Q&A</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=free">자유게시판</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teachers_board/t_board_list.php?category=notice">공지사항</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teachers_board/t_board_list.php?category=event">이벤트</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teachers_board/t_board_list.php?category=qna">Q&A</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teachers_board/t_board_list.php?category=free">자유게시판</a></li>
           </ul>
         </div>
       </div>
