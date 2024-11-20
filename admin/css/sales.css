@@ -1,5 +1,4 @@
-
-.sales .row  {
+.sales .row {
   --bs-gutter-x: 24px; /* 행 간격 */
   --bs-gutter-y: 24px; /* 열 간격 */
 }
@@ -20,23 +19,21 @@
   position: relative;
 }
 
-.sales dl{
+.sales dl {
   height: 100%;
- 
 }
-
 
 /* 제목 스타일 */
 .sales dt {
   font-weight: bold; /* 굵은 글꼴 */
   font-size: 1.2rem; /* 제목 크기 */
   color: var(--darkBlue); /* 색상 */
- /* 선 스타일용 */
+  /* 선 스타일용 */
   margin-bottom: 8px; /* 아래 여백 */
 }
 
 .sales dt::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: 0;
@@ -47,7 +44,6 @@
 }
 
 .sales dd {
- 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,16 +52,16 @@
   margin: 0; /* 기본 여백 제거 */
   color: #212529; /* 텍스트 색상 */
 
-  .red{
+  .red {
     font-size: 1.3rem;
-    color: var(--secondary)
+    color: var(--secondary);
   }
-  .blue{
+  .blue {
     font-size: 1.3rem;
-    color: var(--primary)
+    color: var(--primary);
   }
 }
-.sales .sales_box dd{
+.sales .sales_box dd {
   height: 80%;
 }
 
@@ -74,6 +70,6 @@
   height: 300px;
 }
 
-.sales .data_table{
+.sales .data_table {
   font-size: 1rem;
 }
