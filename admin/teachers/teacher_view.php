@@ -32,8 +32,8 @@ $lecture_result = $mysqli->query($sql2); //쿼리 실행 결과
 while($lecture_data = $lecture_result->fetch_object()){
   $lecture_dataArr[] = $lecture_data;
 }
-
 // print_r($lecture_dataArr)
+
 ?>
 
 <div class="container">
@@ -41,7 +41,7 @@ while($lecture_data = $lecture_result->fetch_object()){
     <div class="row teacher">
       <div class="col-3 mb-5">
         <div class="teacher_coverImg2 mb-3">
-          <img src="<?= $data->cover_image; ?>" id="coverImg" alt="" width="200" height="200">
+          <img src="<?= $data->cover_image; ?>" id="coverImg" alt="" width="200" height="200" style="object-fit: cover; border-radius: 25%;">
         </div>
         <div>
           <h5>이름 : <?= $data->name; ?></h5>
@@ -49,18 +49,20 @@ while($lecture_data = $lecture_result->fetch_object()){
         </div>
         <hr>
         <div class="d-flex justify-content-center align-items-center gap-5">
+
           <div class="text-center">
             <p>총 수강생 수</p>
-            <p>1</p>
+            <p><?= $data->student_number ?></p>
           </div>
           <div class="text-center">
-            <p>수강평</p>
-            <p>33</p>
+            <p>수강평 수</p>
+            <p> </p>
           </div>
           <div class="text-center">
             <p>강의 평점</p>
             <p>4.6</p>
           </div>
+
         </div>
         <hr>
         <nav>
