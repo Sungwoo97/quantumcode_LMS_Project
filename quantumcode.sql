@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-20 04:42
+-- 생성 시간: 24-11-20 04:52
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-20 02:04:44', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-20 09:38:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -127,7 +127,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (95, NULL, '123456789123456789', 'ㅁㄹㄴㅁㄻㄹㄴㅁ', NULL, NULL, '2024-11-18 07:21:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
 (96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', NULL, NULL, '2024-11-18 07:22:23', NULL, 2, 0, 'notice', './upload/', 0, NULL, NULL),
 (98, NULL, '135', '135151351', NULL, NULL, '2024-11-18 09:01:25', NULL, 1, 0, 'event', './upload/', 0, '2024-11-18 00:00:00', '2024-11-27 00:00:00'),
-(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 2, 1, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 1, 0, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -137,16 +137,9 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `l_pid` int(11) NOT NULL,
-  `user_id` varchar(100) NOT NULL
+  `name` int(11) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 테이블의 덤프 데이터 `board_like`
---
-
-INSERT INTO `board_like` (`pid`, `l_pid`, `user_id`) VALUES
-(1, 101, 'admin');
 
 -- --------------------------------------------------------
 
@@ -373,8 +366,8 @@ CREATE TABLE `lecture_list` (
   `isrecom` tinyint(4) NOT NULL COMMENT '추천강의',
   `tuition` double NOT NULL COMMENT '수강료',
   `dis_tuition` double DEFAULT NULL COMMENT '할인 수강료',
-  `regist_day` datetime NOT NULL COMMENT '수강시작일',
-  `expiration_day` datetime DEFAULT NULL COMMENT '수강마감일',
+  `regist_day` date NOT NULL COMMENT '수강시작일',
+  `expiration_day` date DEFAULT NULL COMMENT '수강마감일',
   `sub_title` varchar(250) DEFAULT NULL COMMENT '강의 요약',
   `description` text NOT NULL COMMENT '강의 설명',
   `learning_obj` text DEFAULT NULL COMMENT '강의 목표',
@@ -390,11 +383,11 @@ CREATE TABLE `lecture_list` (
 --
 
 INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
-(1, 'A0001B0001C0001', '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11 00:00:00', '2025-02-11 00:00:00', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0),
-(4, 'A0001B0001C0001', '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01 00:00:00', '2025-02-01 00:00:00', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
-(5, 'A0001B0001C0004', '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02 00:00:00', '2025-02-02 00:00:00', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
-(6, 'A0001B0001C0004', '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18 00:00:00', '2025-01-18 00:00:00', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
-(7, 'A0001B0002C0001', '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04 00:00:00', '2025-02-04 00:00:00', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0);
+(1, 'A0001B0001C0001', '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0),
+(4, 'A0001B0001C0001', '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
+(5, 'A0001B0001C0004', '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
+(6, 'A0001B0001C0004', '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
+(7, 'A0001B0002C0001', '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0);
 
 -- --------------------------------------------------------
 
@@ -410,6 +403,16 @@ CREATE TABLE `lecture_video` (
   `video_desc` text DEFAULT NULL COMMENT '강의 설명',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '등록 시간'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 영상 테이블';
+
+--
+-- 테이블의 덤프 데이터 `lecture_video`
+--
+
+INSERT INTO `lecture_video` (`lvid`, `lid`, `t_id`, `video_lecture`, `video_desc`, `regdate`) VALUES
+(4, 0, 'admin', '/qc/admin/upload/20241120043618208750.mp4', NULL, '2024-11-20 12:36:18'),
+(5, 0, 'admin', '/qc/admin/upload/20241120043618151080.mp4', NULL, '2024-11-20 12:36:18'),
+(6, 0, 'admin', '/qc/admin/upload/20241120044508959883.mp4', NULL, '2024-11-20 12:45:08'),
+(7, 0, 'admin', '/qc/admin/upload/20241120044508183600.mp4', NULL, '2024-11-20 12:45:08');
 
 -- --------------------------------------------------------
 
@@ -606,8 +609,7 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`),
-  ADD UNIQUE KEY `b_pid` (`l_pid`,`user_id`);
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 테이블의 인덱스 `board_reply`
@@ -707,7 +709,7 @@ ALTER TABLE `board`
 -- 테이블의 AUTO_INCREMENT `board_like`
 --
 ALTER TABLE `board_like`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_reply`
@@ -755,7 +757,7 @@ ALTER TABLE `lecture_list`
 -- 테이블의 AUTO_INCREMENT `lecture_video`
 --
 ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=4;
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=8;
 
 --
 -- 테이블의 AUTO_INCREMENT `members`
