@@ -1,7 +1,7 @@
 <?php
 $title = '쿠폰 목록';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+$coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
 
@@ -38,12 +38,6 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 ?>
 
-
-<!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
-<head>
-<link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css?v=<?= time(); ?>">
-</head>
-
 <form action="" class="coupon_serch d-flex align-items-center justify-content-between" id="search_form">
   <div class="couponlist_view d-flex">
     <button class="Rows"><img src="../img/icon-img/Rows.svg" alt="박스형 리스트"></button>
@@ -70,7 +64,7 @@ if($block_end > $total_page ) $block_end = $total_page;
 <table class="mt-3 table table-hover text-center couponlist">
   <thead>
     <tr>
-      <th scope="col"></th>
+      <th scope="col">check</th>
       <th scope="col">No</th>
       <th scope="col" style="width: 35%;">쿠폰 이름</th>
       <th scope="col" style="width: 10%;">할인율</th>

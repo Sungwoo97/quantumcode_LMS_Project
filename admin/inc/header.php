@@ -1,10 +1,9 @@
 <?php
 session_start();
-//print_r($_SESSION); 
+// print_r($_SESSION); 
 if (!isset($title)) {
   $title = '';
 }
-isset($coupon_css) ? $coupon_css : '';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 ?>
 
@@ -44,6 +43,19 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($board_css)) {
       echo $board_css;
     }
+    if (isset($coupon_css)) {
+      echo $coupon_css;
+    }
+    if (isset($admin_index_css)) {
+      echo $admin_index_css;
+    }
+    if (isset($sales_css)) {
+      echo $sales_css;
+    }
+    if (isset($chart_js)) {
+      echo $chart_js;
+    }
+
     ?>
 
 
@@ -55,6 +67,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="http://<?=$_SERVER['HTTP_HOST'];?>/qc/admin/js/jquery.number.min.js"></script>
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
@@ -89,7 +102,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="">매출목록</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -124,9 +137,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_instructor" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <li><a href="#">강사 개요</a></li>
+            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_overview.php">강사 총괄</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_list.php">강사 목록</a></li>
             <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_insert.php">강사 등록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_overview.php">강사 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
