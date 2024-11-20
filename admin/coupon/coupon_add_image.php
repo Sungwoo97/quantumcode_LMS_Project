@@ -1,12 +1,11 @@
 <?php
-
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
 $fileUploadResult = fileUpload($_FILES['savefile'],'image');
-$cid = $_POST['cid'];
 if($fileUploadResult) {
-  $sql = "INSERT INTO coupons_image (cid, image_coupon) VALUES ($cid ,'$fileUploadResult')";
+  $sql = "INSERT INTO coupons_image (cimgid, image_coupon) VALUES ($cimgid ,'$fileUploadResult')";
   $result = $mysqli->query($sql);
   $imgid = $mysqli->insert_id; //테이블에 자동으로 저장되는 고유번호 조회
   $return_data = array('result'=>'성공', 'imgid'=>$imgid, 'savefile'=>$fileUploadResult); //연관배열
