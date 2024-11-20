@@ -12,6 +12,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 //   ";
 // }
 
+
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -42,6 +43,7 @@ if ($category === 'all') {
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
+//이벤트 카테고리 날짜 값 변경문
 $post_date = date("Y-m-d", strtotime($data->date));
 $start_date = date("Y-m-d", strtotime($data->start_date));
 $end_date = date("Y-m-d", strtotime($data->end_date));
@@ -104,7 +106,6 @@ switch ($category) {
 <!-- 댓글 -->
 <form action="board_reply_ok.php" method="POST">
   <input type="hidden" name="pid" value="<?=$pid?>">
-  <input type="hidden" name="user_id" value="<?=$data->user_id?>">
   <input type="hidden" name="category" value="<?=$data->category?>">
   <div class="d-flex gap-3 mb-3 align-items-center">
     <p>댓글 입력:</p> 
@@ -117,7 +118,7 @@ switch ($category) {
   <ul class="list-group list-group-flush">
     <?php
     // 댓글 쿼리
-      $sql = "SELECT * FROM board_reply WHERE b_pid = $pid";
+      $sql = "SELECT * FROM board_reply WHERE b_pid = $pid ORDER BY date DESC";
       $reply_result = $mysqli->query($sql);
 
       while($data = $reply_result -> fetch_object()){
