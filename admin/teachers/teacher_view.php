@@ -1,6 +1,8 @@
 <?php
 $title = '강사 상세 페이지';
 $teacher_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacher.css\" rel=\"stylesheet\">";
+$chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
+
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 if(!isset($_SESSION['AUID'])){
