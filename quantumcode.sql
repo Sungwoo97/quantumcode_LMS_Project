@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-20 04:57
+-- 생성 시간: 24-11-20 07:24
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -137,8 +137,8 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `l_pid` int(11) NOT NULL,
-  `user_id` varchar(100) NOT NULL
+  `name` int(11) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -205,42 +205,18 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`cid`, `coupon_name`, `coupon_image`, `coupon_content`, `coupon_type`, `coupon_price`, `coupon_ratio`, `status`, `startdate`, `enddate`, `userid`) VALUES
-(1, '프론트엔드 강의 10% 할인', '쿠폰_10%.jpg', '프론트엔드 강의 구매 시 10% 할인 적용', 'percentage', NULL, 10, 0, '2024-05-15 01:02:16', '2024-12-31', 'admin'),
-(2, '첫 강의 무료 쿠폰', '쿠폰_무료.jpg', '신규 회원 첫 강의 무료 제공', 'fixed', 0, NULL, 1, '2024-11-03 01:02:16', '2025-01-01', 'user123'),
-(3, '5만원 이상 구매 시 5천원 할인', '쿠폰_5천원.jpg', '5만원 이상 강의 구매 시 5천원 할인', 'fixed', 5000, NULL, 1, '2024-09-10 01:02:16', '2024-12-31', 'admin'),
-(4, '백엔드 강의 패키지 15% 할인', '쿠폰_15%.jpg', '백엔드 강의 패키지에 대해 15% 할인', 'percentage', NULL, 15, 0, '2024-08-23 01:02:16', '2024-12-31', 'user456'),
-(5, '데이터 사이언스 강의 할인', '쿠폰_1만원.jpg', '데이터 사이언스 강의에 대해 10,000원 할인', 'fixed', 10000, NULL, 1, '2024-06-27 01:02:16', '2025-02-28', 'user789'),
-(6, '무료 체험 강의 제공', '쿠폰_무료.jpg', '특정 강의를 무료로 체험할 수 있는 쿠폰', 'fixed', 0, NULL, 1, '2024-09-25 01:02:16', '2025-01-31', 'guest'),
-(7, '알고리즘 강의 20% 할인', '쿠폰_20%.jpg', '알고리즘 강의 수강료 20% 할인', 'percentage', NULL, 20, 1, '2024-09-22 01:02:16', '2024-12-15', 'admin'),
-(8, 'AI 강의 패키지 할인', '쿠폰_30%.jpg', 'AI 강의 패키지 최대 30% 할인', 'percentage', NULL, 30, 1, '2024-04-18 01:02:16', '2025-03-31', 'user999'),
-(9, '여름 시즌 강의 할인', '쿠폰_5%.jpg', '여름 동안 모든 강의 5% 할인', 'percentage', NULL, 5, 1, '2024-05-08 01:02:16', '2025-02-15', 'user123'),
-(10, '초보자 전용 할인 쿠폰', '쿠폰_7천원.jpg', '초보자를 위한 기본 강의 7,000원 할인', 'fixed', 7000, NULL, 0, '2024-04-19 01:02:16', '2025-04-01', 'user001'),
-(11, '풀스택 개발자 과정 10% 할인', '쿠폰_10%.jpg', '풀스택 개발자 과정을 10% 할인된 가격으로 제공', 'percentage', NULL, 10, 1, '2024-07-13 01:02:16', '2024-12-31', 'user002'),
-(12, '강의 3개 이상 구매 시 20% 할인', '쿠폰_20%.jpg', '3개 이상의 강의를 구매 시 20% 할인', 'percentage', NULL, 20, 1, '2024-09-20 01:02:16', '2025-01-15', 'admin'),
-(13, '리뷰 작성자 전용 쿠폰', '쿠폰_5천원.jpg', '강의 리뷰를 작성한 사용자에게 제공되는 5,000원 할인 쿠폰', 'fixed', 5000, NULL, 0, '2024-11-13 01:02:16', '2025-02-28', 'user003'),
-(14, 'VIP 고객 감사 할인', '쿠폰_25%.jpg', 'VIP 고객 대상 25% 할인 쿠폰', 'percentage', NULL, 25, 1, '2024-01-10 01:02:16', '2025-03-31', 'user004'),
-(15, '이벤트 참가자 쿠폰', '쿠폰_무료.jpg', '특별 이벤트 참가자에게 제공되는 강의 1개 무료 쿠폰', 'fixed', 0, NULL, 1, '2024-08-26 01:02:16', '2025-04-01', 'user005');
-
--- --------------------------------------------------------
+(1, '프론트엔드 강의 10% 할인', '/qc/admin/upload/20241120084829512142.png', '프론트엔드 강의 구매 시 10% 할인 적용', 'percentage', 0, 10, 1, '2024-09-11 00:00:00', '2025-02-06', 'admin'),
+(2, '첫 강의 무료 쿠폰', '/qc/admin/upload/20241120084958134303.png', '신규 회원 첫 강의 무료 제공', 'percentage', 0, 100, 1, '2023-01-20 00:00:00', '2095-12-31', 'admin'),
+(3, '5만원 이상 구매 시 5천원 할인', '/qc/admin/upload/20241120085051148019.png', '5만원 이상 구매 시 5천원 할인', 'fixed', 5000, 0, 1, '2023-01-20 00:00:00', '2024-12-07', 'admin'),
+(4, '백엔드 강의 패키지 15% 할인', '/qc/admin/upload/20241120085116476668.png', '백엔드 강의 패키지에 대해 15% 할인', 'percentage', 0, 15, 1, '2024-11-13 00:00:00', '2024-11-27', 'admin'),
+(5, '데이터 사이언스 강의 할인', '/qc/admin/upload/20241120085143832055.png', '데이터 사이언스 강의에 대해 10,000원 할인', 'fixed', 10000, 0, 0, '2024-07-29 00:00:00', '2024-10-31', 'admin'),
+(6, '무료 체험 강의 제공', '/qc/admin/upload/20241120085218187242.png', '특정 강의를 무료로 체험할 수 있는 쿠폰', 'percentage', 0, 100, 1, '2024-11-01 00:00:00', '2024-11-30', 'admin'),
+(7, '알고리즘 강의 20% 할인', '/qc/admin/upload/20241120085251119634.png', '알고리즘 강의 수강료 20% 할인', 'percentage', 0, 20, 0, '2024-11-09 00:00:00', '2025-01-21', 'admin'),
+(8, 'AI 강의 패키지 할인', '/qc/admin/upload/20241120085326172682.png', 'AI 강의 패키지 최대 30% 할인', 'percentage', 0, 30, 1, '2024-09-05 00:00:00', '2024-12-24', 'admin'),
+(9, '여름 시즌 강의 할인', '/qc/admin/upload/20241120085404158672.png', '여름 동안 모든 강의 5% 할인', 'percentage', 0, 5, 0, '2024-07-01 00:00:00', '2024-09-30', 'admin'),
+(10, '초보자 전용 할인 쿠폰', '/qc/admin/upload/20241120085440136439.png', '초보자를 위한 기본 강의 7,000원 할인', 'fixed', 7000, 0, 0, '2024-10-31 00:00:00', '2024-12-03', 'admin');
 
 --
--- 테이블 구조 `coupons_list`
---
-
-CREATE TABLE `coupons_list` (
-  `cid` int(11) NOT NULL,
-  `coupon_name` varchar(100) NOT NULL COMMENT '쿠폰명',
-  `coupon_image` varchar(100) NOT NULL COMMENT '쿠폰이미지',
-  `coupon_type` varchar(100) NOT NULL COMMENT '쿠폰타입',
-  `coupon_price` double DEFAULT NULL COMMENT '할인금액',
-  `coupon_ratio` double DEFAULT NULL COMMENT '할인비율',
-  `status` tinyint(4) DEFAULT 0 COMMENT '상태',
-  `regdate` datetime DEFAULT current_timestamp() COMMENT '등록일',
-  `userid` varchar(100) DEFAULT NULL COMMENT '등록한유저',
-  `max_value` double DEFAULT NULL COMMENT '최대할인금액',
-  `use_min_price` double DEFAULT NULL COMMENT '최소사용금액'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -357,6 +333,7 @@ INSERT INTO `lecture_data` (`lid`, `lecture_completion`, `lecture_name`, `lectur
 CREATE TABLE `lecture_list` (
   `lid` int(11) NOT NULL COMMENT '강의 고유번호',
   `category` varchar(100) NOT NULL COMMENT '강의 카테고리',
+  `lcid` int(11) DEFAULT NULL COMMENT '카테고리 고유번호',
   `title` varchar(500) NOT NULL COMMENT '강의 제목',
   `cover_image` varchar(100) DEFAULT NULL COMMENT '강의 커버 이미지',
   `t_id` varchar(100) NOT NULL COMMENT '강사이름',
@@ -382,12 +359,15 @@ CREATE TABLE `lecture_list` (
 -- 테이블의 덤프 데이터 `lecture_list`
 --
 
-INSERT INTO `lecture_list` (`lid`, `category`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
-(1, 'A0001B0001C0001', '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0),
-(4, 'A0001B0001C0001', '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
-(5, 'A0001B0001C0004', '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
-(6, 'A0001B0001C0004', '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
-(7, 'A0001B0002C0001', '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0);
+INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
+(1, 'A0001B0001C0001', 39, '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', 'test', 'Array', '2024-11-19 12:23:17', 0),
+(4, 'A0001B0001C0001', 36, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
+(5, 'A0001B0001C0004', 40, '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
+(6, 'A0001B0001C0004', 40, '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
+(7, 'A0001B0002C0001', 39, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0),
+(8, 'A0001B0001C0001', 36, '고양이도 좋아하는 강의', '/qc/admin/upload/20241120050608100433.jpg', 'admin', 0, 1, 0, 0, 5000, 1000, '2024-11-26', '2025-02-26', '츄르 값이면 배울 수 있다', '<p>고양이도 쉽게 배우는 html 강의</p>', '편하게 들어요 ', '1', 'html', '/qc/admin/upload/20241120050608962485.mp4', '2024-11-20 13:06:08', 0),
+(9, 'A0001B0001C0001', 36, 'test', '/qc/admin/upload/20241120065301168748.jpg', 'admin', 0, 1, 0, 0, 123, 12, '2024-11-28', '2025-02-28', '요약', '<p>설명</p>', '목표', '2', '태그', 'Array', '2024-11-20 14:53:01', 0),
+(10, 'A0001B0002C0001', 39, 'test', '/qc/admin/upload/20241120070039205892.png', 'admin', 0, 1, 0, 0, 123, 12, '2024-11-20', '2025-02-20', 'test', '<p>test</p>', 'test', '2', 'test', 'Array', '2024-11-20 15:00:39', 0);
 
 -- --------------------------------------------------------
 
@@ -412,7 +392,11 @@ INSERT INTO `lecture_video` (`lvid`, `lid`, `t_id`, `video_lecture`, `video_desc
 (4, 0, 'admin', '/qc/admin/upload/20241120043618208750.mp4', NULL, '2024-11-20 12:36:18'),
 (5, 0, 'admin', '/qc/admin/upload/20241120043618151080.mp4', NULL, '2024-11-20 12:36:18'),
 (6, 0, 'admin', '/qc/admin/upload/20241120044508959883.mp4', NULL, '2024-11-20 12:45:08'),
-(7, 0, 'admin', '/qc/admin/upload/20241120044508183600.mp4', NULL, '2024-11-20 12:45:08');
+(7, 0, 'admin', '/qc/admin/upload/20241120044508183600.mp4', NULL, '2024-11-20 12:45:08'),
+(8, 8, 'admin', '/qc/admin/upload/20241120050607919383.mp4', NULL, '2024-11-20 13:06:07'),
+(9, 8, 'admin', '/qc/admin/upload/20241120050607107252.mp4', NULL, '2024-11-20 13:06:07'),
+(10, 9, 'admin', '/qc/admin/upload/20241120065159208654.mp4', NULL, '2024-11-20 14:51:59'),
+(11, 9, 'admin', '/qc/admin/upload/20241120065159195847.mp4', NULL, '2024-11-20 14:51:59');
 
 -- --------------------------------------------------------
 
@@ -609,8 +593,7 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`),
-  ADD UNIQUE KEY `l_pid` (`l_pid`,`user_id`);
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- 테이블의 인덱스 `board_reply`
@@ -622,12 +605,6 @@ ALTER TABLE `board_reply`
 -- 테이블의 인덱스 `coupons`
 --
 ALTER TABLE `coupons`
-  ADD PRIMARY KEY (`cid`);
-
---
--- 테이블의 인덱스 `coupons_list`
---
-ALTER TABLE `coupons_list`
   ADD PRIMARY KEY (`cid`);
 
 --
@@ -723,13 +700,6 @@ ALTER TABLE `board_reply`
 --
 ALTER TABLE `coupons`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- 테이블의 AUTO_INCREMENT `coupons_list`
---
-ALTER TABLE `coupons_list`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
@@ -752,13 +722,13 @@ ALTER TABLE `lecture_data`
 -- 테이블의 AUTO_INCREMENT `lecture_list`
 --
 ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=8;
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=11;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
 --
 ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=8;
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=12;
 
 --
 -- 테이블의 AUTO_INCREMENT `members`

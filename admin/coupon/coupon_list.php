@@ -99,8 +99,12 @@ if($block_end > $total_page ) $block_end = $total_page;
       </div>
       </td>
       <td class="icon_hover d-flex gap-1 justify-content-center">
-        <a href="coupon_edit.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Edit.svg" alt="" style="width: 20px;"></a>
-        <a href="coupon_del.php?cid=<?= $data->cid; ?>"><img src="../img/icon-img/Trash.svg" alt="" style="width: 20px;"></a>
+        <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
+          <img src="../img/icon-img/Edit.svg" alt="수정">
+        </a>
+        <a href="coupon_del.php?cid=<?= $data->cid; ?>">
+          <img src="../img/icon-img/Trash.svg" alt="삭제">
+        </a>
       </td>
       <?php
       }
@@ -152,17 +156,8 @@ if($block_end > $total_page ) $block_end = $total_page;
   <div class="d-flex gap-3 justify-content-end">
     <button class="btn btn-secondary"><a href="coupon_copy.php">복사</a></button>
     <button class="btn btn-primary"><a href="coupon_regis.php">생성</a></button>
-    <button class="btn btn-danger"><a href="coupon_del.php">삭제</a></button>
+    <button class="btn btn-danger delete"><a href="coupon_del.php">삭제</a></button>
   </div>
-
-  <script>
-  $('.delete').click(function(e) {
-      e.preventDefault();
-      if (confirm('정말 삭제할까요?')) {
-          window.location.href = $(this).attr('href');
-      }
-  });
-</script>
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
