@@ -73,7 +73,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl class="">
           <dt>강의 수</dt>
           <dd>
-            <div><?= $lecture_data->cnt ?> 개</div>
+            <div><?= $manage_data->total_lecture ?> 개</div>
           </dd>
         </dl>
       </div>
