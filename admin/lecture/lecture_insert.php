@@ -121,7 +121,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
                   <option value="2">초급</option>
                   <option value="3">중급</option>
                   <option value="4">고급</option>
-                  <option value="5">전문가</option>
+                  <option value="5">전문</option>
                 </select>
               </td>
             </tr>

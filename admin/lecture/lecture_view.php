@@ -24,44 +24,46 @@ $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-$tuition .= isset($data->dis_tuition) ? "
-<p class=\"text-decoration-line-through \"> $data->tuition </p><p class=\"active-font\"> $data->dis_tuition </p>"
-  :
-  "<p class=\"active-font\"> $data->tuition </p>";
-$category = $data->category; // A0001B0001C0001
-
-$plat = substr($category, 0, 5);
-$dev = substr($category, 5, 5);
-$tech = substr($category, 10, 5);
-
-$cate = [$plat, $dev, $tech];
-
-// 배열을 SQL IN 조건에 맞게 변환
-$cateArr = implode("','", $cate);
-$cate_sql = "
-    SELECT 
-        c1.code AS code,
-        c1.name AS name,
-        c2.name AS pcode_name,
-        c3.name AS ppcode_name
-    FROM lecture_category c1
-    LEFT JOIN lecture_category c2 ON c1.pcode = c2.code
-    LEFT JOIN lecture_category c3 ON c1.ppcode = c3.code
-    WHERE c1.code IN ('$cateArr')
-";
-
-$cate_result = $mysqli->query($cate_sql);
-$cate_data = [];
-while ($row = $cate_result->fetch_object()) {
-  $cate_data[] = $row;
+if (isset($data->dis_tuition)) {
+  $tui_val = number_format($data->tuition);
+  $distui_val = number_format($data->dis_tuition);
+  $tuition .= "<p class=\"text-decoration-line-through text-end \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
+} else {
+  $tui_val = number_format($data->tuition);
+  $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
 }
-if (count($cate_data) > 0) {
-  foreach ($cate_data as $list) {
-    if (count($cate_data) > 0) {
-      foreach ($cate_data as $list) {
-      }
-    }
-  }
+
+
+$lcid = $data->lcid;
+$cate_sql = "SELECT * FROM lecture_category WHERE lcid = $lcid";
+if ($cate_result = $mysqli->query($cate_sql)) {
+  $cate_data = $cate_result->fetch_object();
+  $pcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$cate_data->pcode}' AND pcode = '{$cate_data->ppcode}'";
+  $ppcode_name_sql = "SELECT name FROM lecture_category WHERE code = '{$cate_data->ppcode}'";
+
+  $pcode_result = $mysqli->query($pcode_name_sql);
+  $ppcode_result = $mysqli->query($ppcode_name_sql);
+
+  $pcode_name = ($pcode_result && $pcode_result->num_rows > 0) ? $pcode_result->fetch_object()->name : "Unknown";
+  $ppcode_name = ($ppcode_result && $ppcode_result->num_rows > 0) ? $ppcode_result->fetch_object()->name : "Unknown";
+}
+
+switch ($data->difficult) {
+  case 1:
+    $diff = '입문';
+    break;
+  case 2:
+    $diff = '초급';
+    break;
+  case 3:
+    $diff = '중급';
+    break;
+  case 4:
+    $diff = '고급';
+    break;
+  case 5:
+    $diff = '전문';
+    break;
 }
 
 ?>
@@ -69,7 +71,7 @@ if (count($cate_data) > 0) {
 <section class="info">
   <div>
     <div class="catogory mb-1 ">
-      <!-- <p class="small-font"><?= $ppcode . ' / ' . $pcode . ' / ' . $code ?></p> -->
+      <p class="small-font"><?= $ppcode_name . ' / ' . $pcode_name . ' / ' . $cate_data->name ?></p>
     </div>
     <div class="title mb-2">
       <h4 class="normal-font"><?= $data->title ?></h4>
@@ -112,7 +114,7 @@ if (count($cate_data) > 0) {
       </dl>
       <dl class="tuitionDesc">
         <dt>난이도</dt>
-        <dd><?= $data->difficult ?></dd>
+        <dd><?= $diff ?></dd>
       </dl>
       <dl class="tuitionDesc">
         <dt>등록일</dt>
