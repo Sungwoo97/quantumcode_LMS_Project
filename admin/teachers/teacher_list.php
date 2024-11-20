@@ -73,7 +73,8 @@ if(isset($_GET['orderby'])){
 
 $join_sql = "SELECT 
     t.*,
-    COUNT(l.t_id) AS lecture_count
+    COUNT(l.t_id) AS lecture_count,
+    COUNT(l.t_id) AS lecture_num
 FROM 
     teachers t
 LEFT JOIN 
@@ -84,14 +85,14 @@ WHERE 1=1 $search_where
 GROUP BY 
     t.id
 ORDER BY $orderColumn $ordertype LIMIT $start_num, $list";
-echo $join_sql;
+// echo $join_sql;
 
 $join_result = $mysqli->query($join_sql);
 while($join_data = $join_result->fetch_object()){
   $dataArr[] = $join_data;
 }
 
-echo $dataArr;
+// print_r($dataArr)
 
 
 // $join_sql = "SELECT 
