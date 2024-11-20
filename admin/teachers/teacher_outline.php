@@ -56,8 +56,26 @@ $month_per = ($month_diff / $previous_month) * 100 ;
 
 $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
 
-?>
 
+//강사 관련
+$teacher_count_sql = "SELECT COUNT(*) AS total_teachers FROM teachers";
+$teacher_count = $mysqli->query($teacher_count_sql); 
+$t_count = $teacher_count->fetch_object();
+//print_r($t_count); stdClass Object ( [total_teachers] => 14 )
+
+//2024에 가입한 강사 수
+$teacher_2024_register = "SELECT COUNT(*) AS total_2024_teachers FROM teachers WHERE YEAR(reg_date) = 2024";
+$teacher_2024_count = $mysqli->query($teacher_2024_register); 
+$teacher_2024 = $teacher_2024_count->fetch_object();
+// print_r($teacher_2024);
+
+//2023에 가입한 강사 수
+$teacher_2023_register = "SELECT COUNT(*) AS total_2023_teachers FROM teachers WHERE YEAR(reg_date) = 2023";
+$teacher_2023_count = $mysqli->query($teacher_2023_register); 
+$teacher_2023 = $teacher_2023_count->fetch_object();
+// print_r($teacher_2023);
+
+?>
 <div class="container sales my-4">
   <!-- 강의 정보 섹션 -->
    
@@ -67,7 +85,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
         <dl class="">
           <dt>총 강사 수</dt>
           <dd>
-            <div> 개</div>
+            <div><?= $t_count->total_teachers ?>명</div>
           </dd>
         </dl>
       </div>
@@ -78,7 +96,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
         <dl>
           <dt>올해 신입 강사 수</dt>
           <dd>
-            <div> 명</div>
+            <div><?= $teacher_2024->total_2024_teachers ?>명</div>
           </dd>
         </dl>
       </div>
@@ -88,7 +106,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
         <dl>
           <dt>올해 탈퇴 강사 수</dt> <!--작년 총 강사 숫자 + 올해 신입 강사 숫자 - 지금총 강사 수 =-->
           <dd>
-            <div> 명</div>
+            <div>0명</div>
           </dd>
         </dl>
       </div>
