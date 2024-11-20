@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 
 $pid = $_POST['pid'];
@@ -6,6 +7,13 @@ $user_id = $_POST['user_id'] ?? '';
 $content = $_POST['content'];
 $category=$_POST['category'];
 
+if (isset($_SESSION['AUID'])) {
+    // 관리자 로그인 시
+    $user_id = $_SESSION['AUID'];
+  } else if (isset($_SESSION['TUID'])) {
+    // 강사 로그인 시
+    $user_id = $_SESSION['TUID'];
+  }
 
 $sql="INSERT INTO board_reply (b_pid,user_id,content) VALUES ($pid,'$user_id','$content')";
 
