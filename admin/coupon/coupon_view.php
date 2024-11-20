@@ -62,7 +62,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     <div class="row">
       <!-- 쿠폰 이미지 -->
       <div class="coupon_view_imgbox col-md-4 d-flex align-items-center justify-content-center">
-        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/upload/<?=$data->coupon_image;?>" alt="상세_쿠폰 이미지" class="coupon_view_img">
+        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/coupon/upload/<?=$data->coupon_image;?>" alt="상세_쿠폰 이미지" class="coupon_view_img">
       </div>
 
       <!-- 쿠폰 정보 -->

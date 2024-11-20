@@ -29,7 +29,7 @@ if (isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD
 }
 
 
-$sql = "INSERT INTO coupons (coupon_name, coupon_image, coupon_image, coupon_type, coupon_price, coupon_ratio, status, startdate, enddate, userid)
+$sql = "INSERT INTO coupons (coupon_name, coupon_image, coupon_content, coupon_type, coupon_price, coupon_ratio, status, startdate, enddate, userid)
         VALUES ('$coupon_name', '$coupon_image', '$coupon_content', '$coupon_type', $coupon_price, $coupon_ratio, $status, '$startdate', '$enddate', '$userid')";
 
 $result = $mysqli->query($sql); 
