@@ -39,7 +39,6 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
 ?>
 
 <div class="container">
-  <h1>gdgd</h1>
   <div class="row teacher">
     <div class="col-3 mb-5">
       <div class="teacher_coverImg2 mb-3">
@@ -73,9 +72,6 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
           </li>
           <li class="my-2">
             <a href="#" class="text-decoration-none"  id="nav_all_lectures">모든 강의</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="text-decoration-none" id="nav_sales">매출 정보</a>
           </li>
           <li class="my-2">
             <a href="#" class="text-decoration-none" id="nav_personal_info">개인 정보</a>
@@ -115,30 +111,6 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
       <?php } ?>
       <div class="d-flex justify-content-center mt-4">
         <button id="show_all_lecture" class="btn btn-primary">모든 강의 보기</button>
-      </div>
-      <hr>
-      <div class="container mt-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h4 class="card-title text-center mb-4">강사 매출 정보</h4>
-            <table class="table table-bordered table-striped">
-              <tbody>
-                <tr>
-                  <th scope="row">회원 고유 ID</th>
-                  <td>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="<?= $data->tid; ?>" disabled>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">가입일</th>
-                  <td>
-                    <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder="<?= $data->reg_date; ?>" disabled>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
       </div>
       <hr>
       <div class="container mt-4" id="personal_info">

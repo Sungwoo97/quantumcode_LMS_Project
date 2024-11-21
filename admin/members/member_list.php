@@ -1,5 +1,5 @@
 <?php
-$title = "강사 목록";
+$title = "회원 목록";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
@@ -90,7 +90,10 @@ while($data = $result->fetch_object()){
           <th scope="col">이메일</th>
           <th scope="col">가입날짜</th>
           <th scope="col">회원 등급</th>
-          <th scope="col">상세보기, 수정 삭제</th>
+          <th scope="col">상세보기</th>
+          <th scope="col">수정하기</th>
+          <th scope="col">쪽지보내기</th>
+
         </tr>
       </thead>
       <tbody>
@@ -106,8 +109,11 @@ while($data = $result->fetch_object()){
               <td><?= $item->reg_date; ?></td>
               <td><?= $item->grade; ?></td>
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
+              <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td>
+              <td>
+                <button class="btn btn-light btn-sm" id="send-message-btn" data-mid="<?= $item->mid; ?>">쪽지보내기</button>
+              </td>
           </tr>
-
           <?php
               }
             }
@@ -116,34 +122,67 @@ while($data = $result->fetch_object()){
     </table>
   </form>
   <nav aria-label="Page navigation">
-      <ul class="pagination d-flex justify-content-center">
-        <?php
-          if($block_num > 1){
-            $prev = $block_start - $block_ct;
-            echo "<li class=\"page-item\"><a class=\"page-link\" href=\"member_list.php?&search_keyword={$search_keyword}&page={$prev}\">Previous</a></li>";
-          }
-        ?>
-        
-        <?php
-          for($i=$block_start; $i<=$block_end; $i++){                
-            $page == $i ? $active = 'active': $active = '';
-        ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="member_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $i;?>"><?= $i;?></a></li>
-        <?php
-          }
-          $next = $block_end + 1;
-          if($total_block >  $block_num){
-        ?>
-        <li class="page-item"><a class="page-link" href="member_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $next;?>">Next</a></li>
-        <?php
-        }         
-        ?>
-      </ul>
-    </nav>
+    <ul class="pagination d-flex justify-content-center">
+      <?php
+        if($block_num > 1){
+          $prev = $block_start - $block_ct;
+          echo "<li class=\"page-item\"><a class=\"page-link\" href=\"member_list.php?&search_keyword={$search_keyword}&page={$prev}\">Previous</a></li>";
+        }
+      ?>
+      
+      <?php
+        for($i=$block_start; $i<=$block_end; $i++){                
+          $page == $i ? $active = 'active': $active = '';
+      ?>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="member_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $i;?>"><?= $i;?></a></li>
+      <?php
+        }
+        $next = $block_end + 1;
+        if($total_block >  $block_num){
+      ?>
+      <li class="page-item"><a class="page-link" href="member_list.php?&search_keyword=<?= $search_keyword;?>&page=<?= $next;?>">Next</a></li>
+      <?php
+      }         
+      ?>
+    </ul>
+  </nav>
+</div>
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">쪽지 보내기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="messageForm">
+          <input type="hidden" id="sender_idx" value="4"> <!-- 관리자 idx -->
+          <input type="hidden" id="receiver_mid">
+          <div class="mb-3">
+            <label for="message" class="form-label">메시지 내용</label>
+            <textarea id="message" class="form-control" placeholder="쪽지 내용을 입력하세요" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">보내기</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  
+  document.addEventListener("DOMContentLoaded", () => {
+  // 쪽지보내기 버튼 클릭 이벤트
+  document.querySelectorAll("#send-message-btn").forEach(button => {
+    button.addEventListener("click", function () {
+      const receiverMid = this.getAttribute("data-mid"); // 버튼의 data-mid 값을 가져옴
+      document.getElementById("receiver_mid").value = receiverMid; // 모달 hidden input에 설정
+
+      // Bootstrap 모달 초기화 및 표시
+      const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
+      messageModal.show();
+    });
+  });
+});
 
   
 </script>
