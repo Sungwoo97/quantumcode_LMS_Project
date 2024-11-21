@@ -82,6 +82,105 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     echo $summernote_js;
   }
   ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // accordion data를 localStorage에 저장
+      const accordion = document.getElementById('accordionFlushExample'); 
+      // const firstAccordion = document.querySelector('.accordion-item');
+      const logo = document.querySelector('.top_logo a');
+      // 로고 클릭 시
+      logo.addEventListener('click', ()=>{
+        const openId = 'nav_cate_dashboard';
+        localStorage.setItem("openAccordion", openId); // 열려 있는 상태 저장
+      })
+
+      // 이전에 열린 아코디언 상태를 localStorage에서 복원
+      const openAccordionId = localStorage.getItem('openAccordion');
+      // openAccordionId 값이 있다면 
+      if (openAccordionId) {
+        const target = document.getElementById(openAccordionId);
+        if (target) {
+          const button = target.previousElementSibling.querySelector('.accordion-button');    // 이전 형제선택자
+          button.classList.remove('collapsed');      
+          target.classList.add('show'); // 열림 상태 복원
+          // target.children[0].classList.add('active');
+          // target.firstChild.classList.add('active');
+          // target.classList.remove("collapse");
+          // target.previousElementSibling.children[0].classList.remove('collapsed');
+          const savedIndex = localStorage.getItem('openAccordionChildren');   
+          if (savedIndex) {
+            const children = Array.from(target.querySelectorAll('.accordion-child')); // accordion-child을 배열에 저장
+            // accordion-child을 배열을 index 값이 일치하는 accordion-child에 active 추가
+            const activeChild = children[parseInt(savedIndex)];   
+            if (activeChild) {
+              activeChild.classList.add('active');
+            }
+          }
+        }
+      }
+
+    // 아코디언 열림/닫힘 이벤트 리스너 추가
+    accordion.addEventListener("shown.bs.collapse", function (event) {
+      const openId = event.target.id;
+      const target = document.getElementById(openId);
+      if (target) {
+        const findActive = target.querySelector('.active');   //  accordion-child에 active가 있는 요소 선택
+        if (findActive) {
+          // 선택된 요소의 인덱스 값을 localStorage에 저장
+          const parent = findActive.parentElement; // active 요소의 부모 (ul 등)
+          const siblings = Array.from(parent.children); // 부모의 모든 자식 요소 배열
+          const index = siblings.indexOf(findActive); // active 요소의 인덱스
+          if (index !== -1) {
+            localStorage.setItem("openAccordionChildren", index); // 인덱스 저장
+          }
+        }
+    }
+      localStorage.setItem("openAccordion", openId); // 열려 있는 상태 저장
+    });
+
+    // 아코디언이 닫히면 localStorage에 저장된 값도 제거
+    accordion.addEventListener("hidden.bs.collapse", function (event) {
+      const closedId = event.target.id;
+      
+      if (localStorage.getItem("openAccordion") === closedId) {
+        localStorage.removeItem("openAccordion"); // 닫힌 상태 제거
+      }
+    });
+    
+    // accordion-button을 클릭했을 때 모든 accordion-item에서 active 제거 후 선택한 요소에서 가장 가까운 accordion-item에 active 추가
+    document.querySelectorAll('.accordion-button').forEach(button => {
+      button.addEventListener('click', function () {
+        console.log('클릭');
+        const parentItem = this.closest('.accordion-item');
+        const allParents = document.querySelectorAll('.accordion-item');
+        console.log(parentItem);
+
+        allParents.forEach(parent => parent.classList.remove('active'));
+        parentItem.classList.add('active');
+
+        // 자식 요소 초기화
+        parentItem.querySelectorAll('.accordion-child').forEach(child => child.classList.remove('active'));
+      });
+    });
+
+    // accordion-child를 클릭했을 때 전체 accordion-child에서 active를 제거하기 위해 최상위 부모를 찾고 
+    // 찾은 부모에서 모든 accordion-child에서 active를 제거 후 클릭 된 요소에 active 추가
+    document.querySelectorAll('.accordion-child').forEach(child => {
+      child.addEventListener('click', function () {
+        const parentItem = this.closest('.accordion-item');
+
+        parentItem.querySelectorAll('.accordion-child').forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
+
+        // 선택된 accordion-child의 index 값을 localStorage에 저장
+        const parent = this.closest('.accordion-collapse');
+        const children = Array.from(parent.querySelectorAll('.accordion-child'));
+        const index = children.indexOf(this);
+        localStorage.setItem('openAccordionChildren', index); 
+      });
+    });
+  });
+  </script>
 </head>
 
 <body>
@@ -111,7 +210,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -121,10 +220,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">강의 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">강의 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -134,9 +233,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_member" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_outline.php">회원 개요</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_list.php">회원 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_overview.php">회원 총괄</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_outline.php">회원 개요</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_list.php">회원 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/members/member_overview.php">회원 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -146,10 +245,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_instructor" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_outline.php">강사 개요</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_overview.php">강사 총괄</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_list.php">강사 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_insert.php">강사 등록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_outline.php">강사 개요</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_overview.php">강사 총괄</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_list.php">강사 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/teacher_insert.php">강사 등록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -159,8 +258,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_coupon" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/coupon/coupon_list.php">쿠폰 목록</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/coupon/coupon_regis.php">쿠폰 등록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/coupon/coupon_list.php">쿠폰 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/coupon/coupon_regis.php">쿠폰 등록</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -170,15 +269,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=all">전체게시판</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=notice">공지사항</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=event">이벤트</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=qna">Q&A</a></li>
-            <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=free">자유게시판</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=all">전체게시판</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=notice">공지사항</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=event">이벤트</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=qna">Q&A</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=free">자유게시판</a></li>
           </ul>
         </div>
       </div>
     </div>
+
 
     <?php
     if (!isset($_SESSION['AUID'])) {
