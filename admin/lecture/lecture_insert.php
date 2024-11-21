@@ -99,12 +99,12 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
             <tr>
               <th scope="row">수강료</th>
               <td class="twoculumn_table">
-                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="" required>
+                <input type="text" class="form-control" name="tuition" id="tuition" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">할인 수강료</th>
               <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="">
+                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" value="">
               </td>
             </tr>
             <tr>
@@ -121,7 +121,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
                   <option value="2">초급</option>
                   <option value="3">중급</option>
                   <option value="4">고급</option>
-                  <option value="5">전문가</option>
+                  <option value="5">전문</option>
                 </select>
               </td>
             </tr>

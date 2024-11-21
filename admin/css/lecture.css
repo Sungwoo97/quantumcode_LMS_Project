@@ -25,6 +25,17 @@
   display: flex !important;
   align-items: center !important;
 }
+.search {
+  width: 25%; /* .search의 너비 설정 */
+  display: flex; /* 내부 요소들을 flex 컨테이너로 설정 */
+  justify-content: flex-end; /* 내부 요소들을 오른쪽으로 정렬 */
+  gap: 0.5rem; /* 버튼과 입력 요소 간의 간격 */
+  margin-left: auto; /* 부모 컨테이너 내에서 오른쪽 끝으로 이동 */
+}
+
+.search .btn {
+  width: 25%; /* 버튼의 너비 */
+}
 
 tbody,
 td,
@@ -80,6 +91,9 @@ textarea#tag {
 .modal input {
   width: 70%;
 }
+.modal.edit input{
+  width: 100%;
+}
 .category button.btn,
 .modal button.btn {
   width: 20%;
@@ -89,6 +103,11 @@ textarea#tag {
 }
 .category h5 {
   color: var(--primary);
+}
+.table tbody tr td> img{
+  height: 50px;
+  object-fit: cover;
+  
 }
 
 /* MODAL */
