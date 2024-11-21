@@ -1,7 +1,13 @@
 <?php
 $title = '게시판';
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-$user_id = $_SESSION['TUID'] ?? '';
+if (isset($_SESSION['AUID'])) {
+  // 관리자 로그인 시
+  $user_id = $_SESSION['AUID'];
+} else if (isset($_SESSION['TUID'])) {
+  // 강사 로그인 시
+  $user_id = $_SESSION['TUID'];
+}
 
 //강사가 아닐시 로그인창으로 보내기
 // if(!isset($_SESSION['TUID'])){
@@ -73,7 +79,7 @@ $result = $mysqli->query($sql);
 $event_delete_sql = "DELETE FROM board WHERE category = 'event' AND end_date < NOW()";
 $mysqli->query($event_delete_sql);
 
-// 게시물 목록을 조회
+// 이벤트 게시물 목록을 조회
 $event_sql = "SELECT * FROM board WHERE category = 'event'";  // 이벤트 카테고리만 조회
 $event_result = $mysqli->query($sql);
 
@@ -125,6 +131,12 @@ $event_result = $mysqli->query($sql);
         if(iconv_strlen($title1) > 10){
           $title1 = iconv_substr($title1, 0, 10) . '...';
         }
+
+      // Q&A 게시판이고 본인이 쓴 글이 아닌 경우 표시하지 않음
+      if ($category === 'qna' && $_SESSION['TUID'] !== $data->user_id) {
+        continue; // 다음 게시물로 넘어감
+        }
+
         ?>
       <tr>
         <th><?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
