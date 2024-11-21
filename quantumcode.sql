@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-21 04:00
+-- 생성 시간: 24-11-21 04:08
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.0.30
+-- PHP 버전: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -121,7 +121,7 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 (95, NULL, '123456789123456789', 'ㅁㄹㄴㅁㄻㄹㄴㅁ', NULL, NULL, '2024-11-18 07:21:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
 (96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', NULL, NULL, '2024-11-18 07:22:23', NULL, 3, 0, 'notice', './upload/', 0, NULL, NULL),
 (101, NULL, '11', '11', NULL, NULL, '2024-11-19 01:08:32', NULL, 2, 1, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(102, 'kwak', '강사 이미지123456', '강사 이미지123456', NULL, NULL, '2024-11-20 04:01:16', NULL, 6, 2, 'notice', '/qc/admin/board/upload/1732080377_qqq.jpg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(102, 'kwak', '강사 이미지123456', '강사 이미지123456', NULL, NULL, '2024-11-20 04:01:16', NULL, 6, 3, 'notice', '/qc/admin/board/upload/1732080377_qqq.jpg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (103, 'admin', '관리자 뚱마루', '관리자 뚱마루', NULL, NULL, '2024-11-20 04:02:28', NULL, 4, 2, 'notice', '/qc/admin/board/upload/1732075348_qqq4.jpg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (105, 'admin', '이벤트2', '이벤트2', NULL, NULL, '2024-11-20 04:06:24', NULL, 4, 0, 'event', '/qc/admin/board/upload/1732075584_qqq2.png', 1, '2024-11-20 00:00:00', '2024-11-23 00:00:00'),
 (106, 'admin', '이벤트3', '이벤트3', NULL, NULL, '2024-11-20 04:06:44', NULL, 4, 0, 'event', '/qc/admin/board/upload/1732075604_qqq3.png', 1, '2024-11-20 00:00:00', '2024-11-30 00:00:00');
@@ -134,8 +134,8 @@ INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `name`, `pw`, `date`,
 
 CREATE TABLE `board_like` (
   `pid` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `likes` int(11) NOT NULL DEFAULT 0
+  `l_pid` int(11) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -143,11 +143,7 @@ CREATE TABLE `board_like` (
 --
 
 INSERT INTO `board_like` (`pid`, `l_pid`, `user_id`) VALUES
-(1, 101, 'kwak'),
-(3, 102, 'admin'),
-(2, 102, 'kwak'),
-(4, 103, 'admin'),
-(5, 103, 'kwak');
+(1, 102, 'admin');
 
 -- --------------------------------------------------------
 
@@ -694,7 +690,8 @@ ALTER TABLE `board`
 -- 테이블의 인덱스 `board_like`
 --
 ALTER TABLE `board_like`
-  ADD PRIMARY KEY (`pid`);
+  ADD PRIMARY KEY (`pid`),
+  ADD UNIQUE KEY `l_pid` (`l_pid`,`user_id`);
 
 --
 -- 테이블의 인덱스 `board_reply`
@@ -757,122 +754,14 @@ ALTER TABLE `sales_course`
   ADD PRIMARY KEY (`scid`);
 
 --
--- 테이블의 인덱스 `sales_management`
---
-ALTER TABLE `sales_management`
-  ADD PRIMARY KEY (`sid`);
-
---
--- 테이블의 인덱스 `sales_monthly`
---
-ALTER TABLE `sales_monthly`
-  ADD PRIMARY KEY (`msid`);
-
---
--- 테이블의 인덱스 `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`tid`);
-
---
 -- 덤프된 테이블의 AUTO_INCREMENT
 --
-
---
--- 테이블의 AUTO_INCREMENT `admins`
---
-ALTER TABLE `admins`
-  MODIFY `idx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- 테이블의 AUTO_INCREMENT `board`
---
-ALTER TABLE `board`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_like`
 --
 ALTER TABLE `board_like`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- 테이블의 AUTO_INCREMENT `board_reply`
---
-ALTER TABLE `board_reply`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- 테이블의 AUTO_INCREMENT `board_re_reply`
---
-ALTER TABLE `board_re_reply`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
-
---
--- 테이블의 AUTO_INCREMENT `coupons`
---
-ALTER TABLE `coupons`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- 테이블의 AUTO_INCREMENT `coupons_usercp`
---
-ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_category`
---
-ALTER TABLE `lecture_category`
-  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=46;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_data`
---
-ALTER TABLE `lecture_data`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_list`
---
-ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=60;
-
---
--- 테이블의 AUTO_INCREMENT `lecture_video`
---
-ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=14;
-
---
--- 테이블의 AUTO_INCREMENT `members`
---
-ALTER TABLE `members`
-  MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- 테이블의 AUTO_INCREMENT `sales_course`
---
-ALTER TABLE `sales_course`
-  MODIFY `scid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- 테이블의 AUTO_INCREMENT `sales_management`
---
-ALTER TABLE `sales_management`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT COMMENT '테이블 고유번호', AUTO_INCREMENT=2;
-
---
--- 테이블의 AUTO_INCREMENT `sales_monthly`
---
-ALTER TABLE `sales_monthly`
-  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- 테이블의 AUTO_INCREMENT `teachers`
---
-ALTER TABLE `teachers`
-  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
