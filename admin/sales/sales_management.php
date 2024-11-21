@@ -5,9 +5,16 @@ $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$lecture_sql = "SELECT count(lid) AS cnt FROM lecture_list ";
+$lecuter_result = $mysqli->query($lecture_sql);
+if ($lecuter_result) {
+  $lecture_data = $lecuter_result->fetch_object();
+}
+
+
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
-if($manage_result){
+if ($manage_result) {
   $manage_data = $manage_result->fetch_object();
 }
 
@@ -23,7 +30,7 @@ while ($data_row = $data_result->fetch_object()) {
   $time1 = $data_row->lecture_avgwatch;
   list($hours, $minutes) = explode(":", $time);
   $lectureAvgwatch = intval($hours) . "시간 " . intval($minutes) . "분";
-  
+
   $html .= " <tr class=\"border-bottom border-secondary-subtitle\">
         <th>{$data_row->lecture_name}</th>
         <td>{$lectureTime}</td>
@@ -52,9 +59,9 @@ $current_month = $month_data[0]->sales;
 $previous_month = $month_data[1]->sales;
 
 $month_diff = $current_month - $previous_month;
-$month_per = ($month_diff / $previous_month) * 100 ;
+$month_per = ($month_diff / $previous_month) * 100;
 
-$inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+$inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
 
 ?>
 
@@ -100,7 +107,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
         <dl>
           <dt>총 매출</dt>
           <dd>
-            <div ><?= number_format($manage_data->total_sales) ?>원 </div>
+            <div><?= number_format($manage_data->total_sales) ?>원 </div>
           </dd>
         </dl>
       </div>
@@ -192,7 +199,6 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
   </div>
 </div>
 <script>
-  
   fetch('sales_data.php')
     .then(response => response.json())
     .then(data => {
@@ -265,43 +271,48 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
       });
     }).catch(error => console.error('Error fetching data:', error));
 
-    fetch('sales_course.php')
+  fetch('sales_course.php')
     .then(response => response.json())
     .then(data => {
       const months = [...new Set(data.map(item => item.month))];
       const names = [...new Set(data.map(item => item.course_name))];
       const colors = ['#0E5FD9', '#64A2FF', '#0040A1', '#4F38FF'];
       const datasets = names.map(course => {
-            const sales = data
-                .filter(item => item.course_name === course)
-                .map(item => item.sales); // 강의별 매출 데이터
+        const sales = data
+          .filter(item => item.course_name === course)
+          .map(item => item.sales); // 강의별 매출 데이터
 
-            return {
-                label: course,
-                data: sales,
-                borderColor: colors,
-                
-            };
-        });
+        return {
+          label: course,
+          data: sales,
+          borderColor: colors,
+
+        };
+      });
 
       var ctx = document.getElementById('salesChart').getContext('2d');
       var salesChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-                labels: months, // x축: 월
-                datasets: datasets, // y축: 강의 매출
-                fill: false,
+        type: 'line',
+        data: {
+          labels: months, // x축: 월
+          datasets: datasets, // y축: 강의 매출
+          fill: false,
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
-                    title: { display: true, text: '1년간 강의 매출 차트' }
-                }
+            title: {
+              display: true,
+              text: '1년간 강의 매출 차트'
             }
+          }
+        }
       });
-          
-    }).catch(error => console.error('Error fetching data:', error));  
+
+    }).catch(error => console.error('Error fetching data:', error));
 </script>
 
 <?php

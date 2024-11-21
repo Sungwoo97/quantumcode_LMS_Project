@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-20 07:24
+-- 생성 시간: 24-11-20 22:18
 -- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.2.12
+-- PHP 버전: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-20 09:38:38', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-21 04:22:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +216,6 @@ INSERT INTO `coupons` (`cid`, `coupon_name`, `coupon_image`, `coupon_content`, `
 (9, '여름 시즌 강의 할인', '/qc/admin/upload/20241120085404158672.png', '여름 동안 모든 강의 5% 할인', 'percentage', 0, 5, 0, '2024-07-01 00:00:00', '2024-09-30', 'admin'),
 (10, '초보자 전용 할인 쿠폰', '/qc/admin/upload/20241120085440136439.png', '초보자를 위한 기본 강의 7,000원 할인', 'fixed', 7000, 0, 0, '2024-10-31 00:00:00', '2024-12-03', 'admin');
 
---
 -- --------------------------------------------------------
 
 --
@@ -294,7 +293,10 @@ INSERT INTO `lecture_category` (`lcid`, `code`, `pcode`, `ppcode`, `name`, `step
 (37, 'C0002', 'B0001', 'A0001', 'CSS', 3),
 (38, 'C0003', 'B0001', 'A0002', 'java', 3),
 (39, 'C0001', 'B0002', 'A0001', 'react', 3),
-(40, 'C0004', 'B0001', 'A0001', 'javascript', 3);
+(40, 'C0004', 'B0001', 'A0001', 'javascript', 3),
+(41, 'A0003', '', '', 'test', 1),
+(42, 'B0001', 'A0003', '', 'test', 2),
+(44, 'A0004', '', '', 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +335,7 @@ INSERT INTO `lecture_data` (`lid`, `lecture_completion`, `lecture_name`, `lectur
 CREATE TABLE `lecture_list` (
   `lid` int(11) NOT NULL COMMENT '강의 고유번호',
   `category` varchar(100) NOT NULL COMMENT '강의 카테고리',
-  `lcid` int(11) DEFAULT NULL COMMENT '카테고리 고유번호',
+  `lcid` int(11) DEFAULT NULL COMMENT '카테고리 고유 아이디',
   `title` varchar(500) NOT NULL COMMENT '강의 제목',
   `cover_image` varchar(100) DEFAULT NULL COMMENT '강의 커버 이미지',
   `t_id` varchar(100) NOT NULL COMMENT '강사이름',
@@ -341,8 +343,8 @@ CREATE TABLE `lecture_list` (
   `ispremium` tinyint(4) NOT NULL COMMENT '프리미엄강의',
   `ispopular` tinyint(4) NOT NULL COMMENT '인기강의',
   `isrecom` tinyint(4) NOT NULL COMMENT '추천강의',
-  `tuition` double NOT NULL COMMENT '수강료',
-  `dis_tuition` double DEFAULT NULL COMMENT '할인 수강료',
+  `tuition` int(50) NOT NULL COMMENT '수강료',
+  `dis_tuition` int(50) DEFAULT NULL COMMENT '할인 수강료',
   `regist_day` date NOT NULL COMMENT '수강시작일',
   `expiration_day` date DEFAULT NULL COMMENT '수강마감일',
   `sub_title` varchar(250) DEFAULT NULL COMMENT '강의 요약',
@@ -352,22 +354,44 @@ CREATE TABLE `lecture_list` (
   `lecture_tag` varchar(250) DEFAULT NULL COMMENT '강의관련 스킬',
   `pr_video` varchar(100) DEFAULT NULL COMMENT '홍보 영상',
   `regdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '작성시간',
-  `status` tinyint(4) NOT NULL COMMENT '상태'
+  `status` tinyint(4) NOT NULL COMMENT '상태',
+  `student_count` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 목록 테이블';
 
 --
 -- 테이블의 덤프 데이터 `lecture_list`
 --
 
-INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`) VALUES
-(1, 'A0001B0001C0001', 39, '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', 'test', 'Array', '2024-11-19 12:23:17', 0),
-(4, 'A0001B0001C0001', 36, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0),
-(5, 'A0001B0001C0004', 40, '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0),
-(6, 'A0001B0001C0004', 40, '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0),
-(7, 'A0001B0002C0001', 39, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0),
-(8, 'A0001B0001C0001', 36, '고양이도 좋아하는 강의', '/qc/admin/upload/20241120050608100433.jpg', 'admin', 0, 1, 0, 0, 5000, 1000, '2024-11-26', '2025-02-26', '츄르 값이면 배울 수 있다', '<p>고양이도 쉽게 배우는 html 강의</p>', '편하게 들어요 ', '1', 'html', '/qc/admin/upload/20241120050608962485.mp4', '2024-11-20 13:06:08', 0),
-(9, 'A0001B0001C0001', 36, 'test', '/qc/admin/upload/20241120065301168748.jpg', 'admin', 0, 1, 0, 0, 123, 12, '2024-11-28', '2025-02-28', '요약', '<p>설명</p>', '목표', '2', '태그', 'Array', '2024-11-20 14:53:01', 0),
-(10, 'A0001B0002C0001', 39, 'test', '/qc/admin/upload/20241120070039205892.png', 'admin', 0, 1, 0, 0, 123, 12, '2024-11-20', '2025-02-20', 'test', '<p>test</p>', 'test', '2', 'test', 'Array', '2024-11-20 15:00:39', 0);
+INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`, `student_count`) VALUES
+(30, 'A0001B0001C0001', 36, '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0, 80),
+(31, 'A0001B0001C0001', 36, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0, 48),
+(32, 'A0001B0001C0004', 40, '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0, 55),
+(33, 'A0001B0001C0004', 40, '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0, 65),
+(34, 'A0001B0002C0001', 39, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0, 15),
+(35, 'A0001B0001C0001', 36, '승제샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045238464976.png', 'jungsungjae', 0, 0, 0, 1, 150000, 10000, '2024-11-03', '2025-02-03', '승제샘과 함께하는 자바스크립트', '<p>승제샘과 함께하는 자바스크립트</p>', '', '1', '', 'Array', '2024-11-20 12:52:38', 0, 24),
+(36, 'A0001B0001C0004', 40, '우진샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045400399893.png', 'hyunwonjun', 0, 0, 1, 0, 100000, 10000, '2024-09-10', '2024-12-10', '우진샘과 함께하는 자바스크립트', '<p>우진샘과 함께하는 자바스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:00', 0, 29),
+(37, 'A0001B0001C0004', 40, '해원샘과 함께하는 타입스크립트', '/qc/admin/upload/20241120045459689237.jpg', 'ohhaewon', 0, 0, 1, 0, 100000, 10000, '2024-08-21', '2024-11-21', '해원샘과 함께하는 타입스크립트', '<p>해원샘과 함께하는 타입스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:59', 0, 33),
+(38, 'A0001B0002C0001', 39, '희진샘과 함께하는 신나는 리액트', '/qc/admin/upload/20241120045611111539.png', 'minheejin', 0, 0, 0, 1, 100000, 10000, '2024-09-11', '2024-12-11', '희진샘과 함께하는 신나는 리액트', '<p>희진샘과 함께하는 신나는 리액트</p>', '', '1', '', 'Array', '2024-11-20 12:56:11', 0, 39),
+(39, 'A0002B0001C0003', 38, '설민석의 nodejs', '/qc/admin/upload/20241120045754906860.png', 'sulminsuk', 0, 0, 0, 1, 123123, 10000, '2024-07-17', '2024-10-17', '설민석의 nodejs', '<p>설민석의 nodejs</p>', '', '1', '', 'Array', '2024-11-20 12:57:54', 0, 44),
+(40, 'A0001B0002C0001', 39, '설민석의 mysql', '/qc/admin/upload/20241120045823750741.jpg', 'sulminsuk', 0, 0, 1, 0, 100000, 10000, '2023-06-20', '2023-09-20', '설민석의 nodejs', '<p>설민석의 nodejs</p>', '', '1', '', 'Array', '2024-11-20 12:58:23', 0, 23),
+(41, 'A0001B0002C0001', 39, '자바스크립트', '/qc/admin/upload/20241120050013976917.png', 'kangdongwon', 0, 0, 0, 1, 100000, 10000, '2024-11-19', '2025-02-19', '자바스크립트', '<p>자바스크립트</p>', '', '2', '', 'Array', '2024-11-20 13:00:13', 0, 67),
+(42, 'A0002B0001C0003', 38, 'go언어 고수 되는 방법', '/qc/admin/upload/20241120050112128854.png', 'kwondohyung', 0, 0, 0, 1, 150000, 10000, '2024-10-22', '2025-01-22', 'go언어 고수 되는 방법', '<p>go언어 고수 되는 방법</p>', '', '1', '', 'Array', '2024-11-20 13:01:12', 0, 51),
+(43, 'A0001B0001C0002', 37, '빠니와 함께하는 css여행', '/qc/admin/upload/20241120050222832118.png', 'panibottle', 0, 0, 1, 0, 200000, 10000, '2024-09-18', '2024-12-18', '빠니와 함께하는 css여행', '<p>빠니와 함께하는 css여행</p>', '', '1', '', 'Array', '2024-11-20 13:02:22', 0, 31),
+(44, 'A0001B0001C0001', 36, '지현샘과 함께하는 c++', '/qc/admin/upload/20241120050628168178.png', 'admin', 0, 0, 0, 1, 250000, 10000, '2024-07-16', '2024-10-16', '지현샘과 함께하는 c++', '<p>지현샘과 함께하는 c++</p>', '', '2', '', 'Array', '2024-11-20 13:06:28', 0, 10),
+(45, 'A0001B0001C0001', 36, '손석구와 파이썬', '/qc/admin/upload/20241120050715385295.jpg', 'sonsuk9', 0, 0, 1, 0, 100000, 10000, '2024-09-17', '2024-12-17', '손석구와 파이썬', '<p>손석구와 파이썬</p>', '', '1', '', 'Array', '2024-11-20 13:07:15', 0, 11),
+(46, 'A0001B0001C0002', 37, 'css정석', '/qc/admin/upload/20241120050804419880.png', 'sinsungbum', 0, 0, 1, 0, 200000, 15000, '2024-09-17', '2024-12-17', 'css정석', '<p>css정석</p>', '', '2', '', 'Array', '2024-11-20 13:08:04', 0, 41),
+(47, 'A0001B0002C0001', 39, '맛있는 자바', '/qc/admin/upload/20241120050836844794.png', 'mrahn', 0, 0, 1, 0, 100000, 10000, '2024-10-30', '2025-01-30', '맛있는 자바', '<p>맛있는 자바</p>', '', '2', '', 'Array', '2024-11-20 13:08:36', 0, 18),
+(48, 'A0001B0002C0001', 39, '차갑게 배우는 리액트', '/qc/admin/upload/20241120050923524575.png', 'lucas', 0, 0, 1, 0, 100000, 10000, '2024-11-19', '2025-02-19', '차갑게 배우는 리액트', '<p>차갑게 배우는 리액트</p>', '', '3', '', 'Array', '2024-11-20 13:09:23', 0, 41),
+(49, 'A0001B0001C0001', 36, '미미미누와 같이 파이썬 공부하기', '/qc/admin/upload/20241120051030144009.jpg', 'mimiminu', 0, 0, 1, 0, 25000, 1000, '2024-10-24', '2025-01-24', '미미미누와 같이 파이썬 공부하기', '<p>미미미누와 같이 파이썬 공부하기</p>', '', '1', '', 'Array', '2024-11-20 13:10:30', 0, 63),
+(50, 'A0001B0001C0001', 36, '세아샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120051201391962.png', 'yoonsaeah', 0, 0, 0, 1, 100000, 10000, '2024-08-28', '2024-11-28', '세아샘과 함께하는 자바스크립트', '<p>세아샘과 함께하는 자바스크립트</p>', '', '1', '', 'Array', '2024-11-20 13:12:01', 0, 48),
+(51, 'A0001B0002C0001', 39, '기상과 함께하는 노드js', '/qc/admin/upload/20241120051301127737.png', 'wakeup', 0, 0, 0, 1, 145000, 15000, '2024-08-21', '2024-11-21', '기상과 함께하는 노드js', '<p>기상과 함께하는 노드js</p>', '', '1', '', 'Array', '2024-11-20 13:13:01', 0, 49),
+(52, 'A0001B0001C0001', 36, '기상샘과 함께하는 파이썬 여행', '/qc/admin/upload/20241120051342146639.jpg', 'wakeup', 0, 0, 0, 0, 254600, 10000, '2024-11-20', '2025-02-20', '기상샘과 함께하는 파이썬 여행', '<p>기상샘과 함께하는 파이썬 여행</p>', '', '1', '', 'Array', '2024-11-20 13:13:42', 0, 76),
+(53, 'A0001B0001C0001', 36, '동진샘과 함께하는 mysql', '/qc/admin/upload/20241120051431211298.jpg', 'dongjin', 0, 0, 0, 0, 325000, 25000, '2024-05-22', '2024-08-22', '동진샘과 함께하는 mysql', '<p>동진샘과 함께하는 mysql</p>', '', '1', '', 'Array', '2024-11-20 13:14:31', 0, 112),
+(54, 'A0001B0001C0001', 36, '지영샘과 함께하는 리액트 마스터', '/qc/admin/upload/20241120051508184740.png', 'easyyoung', 0, 0, 0, 1, 200000, 10000, '2024-05-14', '2024-08-14', '지영샘과 함께하는 리액트 마스터', '<p>지영샘과 함께하는 리액트 마스터</p>', '', '1', '', 'Array', '2024-11-20 13:15:08', 0, 89),
+(55, 'A0001B0002C0001', 39, '지영샘과 함께하는 go 마스터', '/qc/admin/upload/20241120051530137373.png', 'easyyoung', 0, 0, 0, 1, 100000, 10000, '2024-07-09', '2024-10-09', '지영샘과 함께하는 go 마스터', '<p>지영샘과 함께하는 go 마스터</p>', '', '1', '', 'Array', '2024-11-20 13:15:30', 0, NULL),
+(56, 'A0001B0002C0001', 39, '장윤정의 java마스터', '/qc/admin/upload/20241120051614750313.png', 'yoonjunng', 0, 0, 0, 1, 100000, 10000, '2024-08-21', '2024-11-21', '장윤정의 java마스터', '<p>장윤정의 java마스터</p>', '', '2', '', 'Array', '2024-11-20 13:16:14', 0, NULL),
+(58, 'A0001B0001C0001', 36, '풀스택을 노려보아요 - 수정', '/qc/admin/upload/20241120204752200453.png', 'admin', 0, 1, 0, 0, 10000, 0, '2024-11-20', '2025-02-20', '요요', '<p>설설</p>', '', '5', '', 'Array', '2024-11-21 04:47:52', 0, NULL),
+(59, 'A0002B0001C0003', 38, '강의강의', '/qc/admin/upload/20241120210203184454.png', 'admin', 0, 1, 0, 0, 1000, 0, '2024-11-21', '2025-02-21', '요약', '<p>설명</p>', 'ㅇㅇ', '3', 'ㅇㅇ', '/qc/admin/upload/20241120210203101228.mp4', '2024-11-21 05:02:03', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -396,7 +420,9 @@ INSERT INTO `lecture_video` (`lvid`, `lid`, `t_id`, `video_lecture`, `video_desc
 (8, 8, 'admin', '/qc/admin/upload/20241120050607919383.mp4', NULL, '2024-11-20 13:06:07'),
 (9, 8, 'admin', '/qc/admin/upload/20241120050607107252.mp4', NULL, '2024-11-20 13:06:07'),
 (10, 9, 'admin', '/qc/admin/upload/20241120065159208654.mp4', NULL, '2024-11-20 14:51:59'),
-(11, 9, 'admin', '/qc/admin/upload/20241120065159195847.mp4', NULL, '2024-11-20 14:51:59');
+(11, 9, 'admin', '/qc/admin/upload/20241120065159195847.mp4', NULL, '2024-11-20 14:51:59'),
+(12, 59, 'admin', '/qc/admin/upload/20241120210201194896.mp4', NULL, '2024-11-21 05:02:01'),
+(13, 59, 'admin', '/qc/admin/upload/20241120210201958783.mp4', NULL, '2024-11-21 05:02:01');
 
 -- --------------------------------------------------------
 
@@ -552,7 +578,7 @@ CREATE TABLE `teachers` (
   `password` varchar(128) NOT NULL,
   `email` varchar(45) NOT NULL,
   `number` int(45) NOT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `reg_date` date NOT NULL DEFAULT current_timestamp(),
   `cover_image` varchar(200) DEFAULT NULL,
   `teacher_detail` text DEFAULT NULL,
   `grade` varchar(15) NOT NULL,
@@ -560,18 +586,38 @@ CREATE TABLE `teachers` (
   `notyet` varchar(155) DEFAULT NULL,
   `main` varchar(15) NOT NULL,
   `year_sales` bigint(155) DEFAULT NULL,
-  `lecture_num` int(11) DEFAULT NULL,
-  `level` int(15) NOT NULL DEFAULT 10
+  `student_number` int(11) DEFAULT NULL,
+  `level` int(15) NOT NULL DEFAULT 10,
+  `lecture_num` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 테이블의 덤프 데이터 `teachers`
 --
 
-INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `lecture_num`, `level`) VALUES
-(1, '정승제', 'jungsungjae', '1978-12-14', '123123', 'jungsungjae@naver.com', 1099451212, '2024-11-08 00:00:00', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-19 16:54:43', NULL, '', 1500000, NULL, 10),
-(2, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-19 16:55:48', NULL, '', 1300000, NULL, 10),
-(3, '곽튜브', 'kwak', '1977-12-09', '123123', 'kwak@naver.com', 1052221234, '2024-11-07 00:00:00', '/qc/admin/upload/20241119085632209070.jpg', '여행을 가서 종종 연락이 안됌', 'Vip', '2024-11-19 17:54:27', NULL, '', 2100000, NULL, 10);
+INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `student_number`, `level`, `lecture_num`) VALUES
+(1, '정승제', 'jungsungjae', '1978-12-14', '123123', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
+(2, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
+(3, '곽튜브', 'kwak', '1977-12-09', '123123', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-19 17:54:27', NULL, '', 2100000, 68, 10, NULL),
+(4, '오해원', 'ohhaewon', '1998-12-12', '123123', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
+(5, '민희진', 'minheejin', '1992-12-12', '123123', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
+(6, '설민석', 'sulminsuk', '1992-12-12', '123123', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
+(7, '강동원', 'kangdongwon', '1982-12-12', '123123', 'kangdongwon@naver.com', 1022241299, '2023-07-01', '/qc/admin/upload/20241120030940207252.png', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:59:01', NULL, '', 1200000, 65, 10, NULL),
+(8, '권도형', 'kwondohyung', '1982-12-12', '123123', 'kwondohyung@naver.com', 1012224299, '2024-03-11', '/qc/admin/upload/20241120031027201008.png', '코인 1타 강사', 'Vip', '2024-11-20 13:00:32', NULL, '', 54000000, 44, 10, NULL),
+(9, '빠니보틀', 'panibottle', '1982-01-02', '123123', 'panibottle@naver.com', 1099991234, '2024-11-19', '/qc/admin/upload/20241120033644134389.jpg', '빠니샘과 같이하는 코딩 여행', 'Blonze', '2024-11-20 13:01:26', NULL, '', 126500, 56, 10, NULL),
+(10, '박지헌', 'parkgihyun', '1982-01-02', '123123', 'parkgihyun@naver.com', 1044991234, '2024-11-18', '/qc/admin/upload/20241120033725149648.png', '걸그룹 출신 코딩 강사', 'Gold', '2024-11-20 13:02:33', NULL, '', 2560000, 53, 10, NULL),
+(11, '손석구', 'sonsuk9', '1989-12-12', '123123', 'sonsuk9@naver.com', 2147483647, '2024-11-07', '/qc/admin/upload/20241120033953598994.jpg', '열심히 안하면 납치', 'Silver', '2024-11-20 13:06:46', NULL, '', 1765000, 51, 10, NULL),
+(12, '신승범', 'sinsungbum', '1989-12-12', '123123', 'sinsungbum@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034031211441.png', '수학강사에서 코딩강사로', 'Gold', '2024-11-20 13:07:28', NULL, '', 8906000, 75, 10, NULL),
+(13, '안성재', 'mrahn', '1989-12-12', '123123', 'mrahn@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034058941646.jpg', '요리사에서 코딩강사로', 'Vip', '2024-11-20 13:08:14', NULL, '', 2450000, 22, 10, NULL),
+(14, '윤루카스', 'lucas', '1989-12-12', '123123', 'lucas@naver.com', 2147483647, '2024-10-11', '/qc/admin/upload/20241120034130130733.jpg', '차가운 코딩강사', 'Silver', '2024-11-20 13:08:46', NULL, '', 1456700, 11, 10, NULL),
+(15, '미미미누', 'mimiminu', '1982-01-02', '123123', 'mimiminu@naver.com', 1022221234, '2023-04-27', '/qc/admin/upload/20241120043443178786.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:09:56', NULL, '', 5400000, 34, 10, NULL),
+(16, '윤세아', 'yoonsaeah', '1982-01-02', '123123', 'yoonsaeah@naver.com', 1022221265, '2023-07-07', '/qc/admin/upload/20241120044334125301.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:10:50', NULL, '', 15400000, 25, 10, NULL),
+(17, '이기상', 'wakeup', '1982-01-02', '123123', 'wakeup@naver.com', 1022221261, '2023-07-27', '/qc/admin/upload/20241120044413641480.jpg', '한국지리에서 코딩강사로', 'Silver', '2024-11-20 13:13:19', NULL, '', 23400000, 77, 10, NULL),
+(18, '이동진', 'dongjin', '1982-01-02', '123123', 'dongjin@naver.com', 1022221244, '2023-07-31', '/qc/admin/upload/20241120044447527474.jpg', '영화평론가 겸 코딩강사', 'Silver', '2024-11-20 13:13:55', NULL, '', 15430000, 66, 10, NULL),
+(19, '이지영', 'easyyoung', '1982-01-02', '123123', 'easyyoung@naver.com', 1022221288, '2023-08-10', '/qc/admin/upload/20241120044519121958.jpg', '윤리강사 겸 코딩강사', 'Silver', '2024-11-20 13:14:42', NULL, '', 15600000, 76, 10, NULL),
+(20, '장윤정', 'yoonjunng', '1982-01-02', '123123', 'yoonjunng@gmail.com', 1022221209, '2024-12-07', '/qc/admin/upload/20241120044610663632.jpg', '트로트 가수 겸 코딩강사', 'Gold', '2024-11-20 13:15:44', NULL, '', 16780000, 65, 10, NULL),
+(21, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, 27, 10, NULL),
+(22, '황재성', 'king', '1982-01-02', '123123', 'haemil123123@gmail.com', 1044421234, '2024-11-22', '/qc/admin/upload/20241120084425169587.jpg', '개그맨에서 코딩 강사로 전향한 만큼 재밌고\r\n위트넘치게 가르치겠습니다. ', 'Blonze', '2024-11-20 16:44:25', NULL, '', NULL, NULL, 10, NULL);
 
 --
 -- 덤프된 테이블의 인덱스
@@ -700,6 +746,7 @@ ALTER TABLE `board_reply`
 --
 ALTER TABLE `coupons`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
@@ -710,7 +757,7 @@ ALTER TABLE `coupons_usercp`
 -- 테이블의 AUTO_INCREMENT `lecture_category`
 --
 ALTER TABLE `lecture_category`
-  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=41;
+  MODIFY `lcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '카테고리 고유번호', AUTO_INCREMENT=46;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_data`
@@ -722,13 +769,13 @@ ALTER TABLE `lecture_data`
 -- 테이블의 AUTO_INCREMENT `lecture_list`
 --
 ALTER TABLE `lecture_list`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=11;
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의 고유번호', AUTO_INCREMENT=60;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
 --
 ALTER TABLE `lecture_video`
-  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=12;
+  MODIFY `lvid` int(11) NOT NULL AUTO_INCREMENT COMMENT '강의영상 고유번호', AUTO_INCREMENT=14;
 
 --
 -- 테이블의 AUTO_INCREMENT `members`
@@ -758,7 +805,7 @@ ALTER TABLE `sales_monthly`
 -- 테이블의 AUTO_INCREMENT `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
