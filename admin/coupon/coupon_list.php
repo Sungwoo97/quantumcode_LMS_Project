@@ -25,6 +25,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 // 목록 개수와 시작 번호 설정
 $list = 10;
 $start_num = ($page - 1) * $list;
+$layout_list = 6;
+$layout_start_num = ($page - 1) * $layout_list;
 $block_ct = 5;
 $block_num = ceil($page/$block_ct);
 
@@ -125,9 +127,9 @@ if($block_end > $total_page ) $block_end = $total_page;
   </tbody>
 </table>
 
-<ul class="coupon_list layout d-flex flex-wrap justify-content-between p-0 mt-3">
+<ul class="coupon_list layout flex-wrap justify-content-between p-0 mt-3">
   <?php 
-    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $start_num, $list";
+    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $layout_start_num, $layout_list";
     $result = $mysqli->query($sql);
     while($data = $result->fetch_object()){ 
   ?>
@@ -166,7 +168,6 @@ if($block_end > $total_page ) $block_end = $total_page;
     }
   ?>
 </ul>
-
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
