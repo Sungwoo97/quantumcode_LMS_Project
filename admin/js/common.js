@@ -1,16 +1,13 @@
 
 async function makeOption(e,step,target, ppcode){
-  console.log(e,step,target, ppcode);
   let cate = e.val();
-  console.log(cate);
-//debugger;
 
   let data = new URLSearchParams({
     cate:cate,
     step:step,
     ppcode:ppcode
   });
-
+ 
 
   try{
     const response = await fetch('category_print.php',{
