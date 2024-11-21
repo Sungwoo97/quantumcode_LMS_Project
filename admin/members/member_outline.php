@@ -63,13 +63,13 @@ $member_count = $mysqli->query($member_count_sql);
 $m_count = $member_count->fetch_object();
 //print_r($m_count); 
 
-//2024에 가입한 강사 수
+//2024에 가입한 회원 수
 $member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM members WHERE YEAR(reg_date) = 2024";
 $member_2024_count = $mysqli->query($member_2024_register); 
 $member_2024 = $member_2024_count->fetch_object();
 // print_r($member_2024);
 
-//2023에 가입한 강사 수
+//2023에 가입한 회원 수
 $member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM members WHERE YEAR(reg_date) = 2023";
 $member_2023_count = $mysqli->query($member_2023_register); 
 $member_2023 = $member_2023_count->fetch_object();
@@ -133,7 +133,7 @@ foreach ($counts as $count) {
     <div class="col-md-4">
       <div class="sales_box">
         <dl>
-          <dt>올해 탈퇴 강사 수</dt> <!--작년 총 강사 숫자 + 올해 신입 강사 숫자 - 지금총 강사 수 =-->
+          <dt>올해 탈퇴 회원 수</dt> <!--작년 총 회원 숫자 + 올해 신입 회원 숫자 - 지금총 회원 수 =-->
           <dd>
             <div>0명</div>
           </dd>
@@ -181,7 +181,7 @@ foreach ($counts as $count) {
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>올해 강사 평균 매출 / 월별 강사 평균 매출</dt>
+          <dt>올해 회원 평균 매출 / 월별 회원 평균 매출</dt>
           <dd class="mt-5">
             <div class="chart-box">
               <canvas id="chart1"></canvas>
@@ -199,7 +199,7 @@ foreach ($counts as $count) {
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>이번달 매출 TOP 5 강사</dt>
+          <dt>이번달 매출 TOP 5 회원</dt>
           <dd>
             <table class="table table-hover data_table">
               <thead>
@@ -235,6 +235,8 @@ foreach ($counts as $count) {
     </div>
   </div> -->
 </div>
+
+
 <script>
  // PHP 데이터를 JavaScript로 전달
 const months = <?php echo json_encode($months); ?>;
