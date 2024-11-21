@@ -220,7 +220,8 @@ switch ($category) {
                       <?=$re_reply['content']?>
                     </div>
                     <div class="controls d-flex justify-content-end gap-1">
-                    <a href="re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
+                      <button type="button" class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#exampleModal">수정</button>
+                      <a href="re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
                     </div>
                   </div>
                 </li>
