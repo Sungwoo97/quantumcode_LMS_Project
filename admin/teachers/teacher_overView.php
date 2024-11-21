@@ -45,9 +45,6 @@ $dataArr3 = array_slice($dataArr3, 0, 4);
 
 ?>
 
-
-
-
 <div class="container">
   <div class="">
     <h2>인기강사</h2>
@@ -60,7 +57,7 @@ $dataArr3 = array_slice($dataArr3, 0, 4);
         <div class="card-body" >
           <h5 class="card-title"><?= $item->name?></h5>
           <p class="card-text"><?= $item->id?></p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
+          <a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
       <?php
@@ -80,7 +77,7 @@ $dataArr3 = array_slice($dataArr3, 0, 4);
         <div class="card-body" >
           <h5 class="card-title"><?= $item->name?></h5>
           <p class="card-text"><?= $item->id?></p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
+          <a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
       <?php
@@ -100,7 +97,7 @@ $dataArr3 = array_slice($dataArr3, 0, 4);
         <div class="card-body" >
           <h5 class="card-title"><?= $item->name?></h5>
           <p class="card-text"><?= $item->id?></p>
-          <a href="/qc/admin/lecture/lecture_view.php?lid=" class="btn btn-primary">강사 상세정보</a>
+          <a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary">강사 상세정보</a>
         </div>
       </div>
       <?php

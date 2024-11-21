@@ -17,15 +17,16 @@ $coverImage = $cover_data->cover_image;
 unlink($_SERVER['DOCUMENT_ROOT'].$coverImage);
 
 $pr_sql = "SELECT pr_video FROM lecture_list WHERE lid = $lid";
-$pr_result = $mysqli->query($pr_sql);
-$pr_data = $pr_result->fetch_object();
-$prVedio = $pr_data->pr_video;
-
-unlink($_SERVER['DOCUMENT_ROOT'].$prVedio);
+if($pr_result = $mysqli->query($pr_sql)){
+  
+  $pr_data = $pr_result->fetch_object();
+  $prVedio = $pr_data->pr_video;
+  
+  unlink($_SERVER['DOCUMENT_ROOT'].$prVedio);
+}
 
 $del_sql = "DELETE FROM lecture_list WHERE lid = $lid";
 $del_result = $mysqli->query($del_sql);
-
 
 
 $addvideo_sql = "SELECT video_lecture FROM lecture_video WHERE lid = $lid";

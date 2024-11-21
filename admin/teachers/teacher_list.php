@@ -26,7 +26,10 @@ if($search_keyword){
 $page_sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE 1=1 $search_where";
 $page_result = $mysqli->query($page_sql);
 $page_data = $page_result->fetch_assoc();
-$row_num = $page_data['cnt'];
+
+//print_r($page_data); Array ( [cnt] => 22 )
+
+$row_num = $page_data['cnt'];  //echo $row_num; 22
 
 
 //페이지네이션 
@@ -61,33 +64,40 @@ if(isset($_GET['orderby'])){
   $orderColumn = 'tid' ;
 }
 
-$sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
-$result = $mysqli->query($sql); //쿼리 실행 결과
-while($data = $result->fetch_object()){
-  $dataArr[] = $data;
-}
+// $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; 
+// $result = $mysqli->query($sql); //쿼리 실행 결과
+// while($data = $result->fetch_object()){
+//   $dataArr[] = $data;
+// }
 
-$join_sql = " SELECT 
-    t.id AS teacher_id,
-    COUNT(l.t_id) AS lecture_count
+
+$join_sql = "SELECT 
+    t.*,
+    COUNT(l.t_id) AS lecture_count,
+    COUNT(l.t_id) AS lecture_num
 FROM 
     teachers t
 LEFT JOIN 
     lecture_list l
 ON 
     t.id = l.t_id
+WHERE 1=1 $search_where 
 GROUP BY 
-    t.id;";
+    t.id
+ORDER BY $orderColumn $ordertype LIMIT $start_num, $list";
+// echo $join_sql;
 
 $join_result = $mysqli->query($join_sql);
-// print_r($join_result);
+while($join_data = $join_result->fetch_object()){
+  $dataArr[] = $join_data;
+}
 
 
 ?>
 
 <div class="container">
   <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
+    <h5>현재 강사 수 : <?= $row_num; ?> 명</h5>
     <div class="d-flex gap-3 w-30 mt-3 align-items-center">
     <tr>
         <td colspan="3">
@@ -188,6 +198,3 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
 ?>
 
 
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
-?>
