@@ -1,20 +1,13 @@
 <?php
-$title = '매출 관리';
+$title = '회원 개요';
 $sales_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$lecture_sql = "SELECT count(lid) AS cnt FROM lecture_list ";
-$lecuter_result = $mysqli->query($lecture_sql);
-if ($lecuter_result) {
-  $lecture_data = $lecuter_result->fetch_object();
-}
-
-
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
-if ($manage_result) {
+if($manage_result){
   $manage_data = $manage_result->fetch_object();
 }
 
@@ -30,7 +23,7 @@ while ($data_row = $data_result->fetch_object()) {
   $time1 = $data_row->lecture_avgwatch;
   list($hours, $minutes) = explode(":", $time);
   $lectureAvgwatch = intval($hours) . "시간 " . intval($minutes) . "분";
-
+  
   $html .= " <tr class=\"border-bottom border-secondary-subtitle\">
         <th>{$data_row->lecture_name}</th>
         <td>{$lectureTime}</td>
@@ -59,31 +52,58 @@ $current_month = $month_data[0]->sales;
 $previous_month = $month_data[1]->sales;
 
 $month_diff = $current_month - $previous_month;
-$month_per = ($month_diff / $previous_month) * 100;
+$month_per = ($month_diff / $previous_month) * 100 ;
 
-$inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+$inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>". number_format($month_diff) ."원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+
 
 //회원 관련
 $member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
 $member_count = $mysqli->query($member_count_sql); 
 $m_count = $member_count->fetch_object();
+//print_r($m_count); 
+
 //2024에 가입한 강사 수
 $member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM members WHERE YEAR(reg_date) = 2024";
 $member_2024_count = $mysqli->query($member_2024_register); 
 $member_2024 = $member_2024_count->fetch_object();
+// print_r($member_2024);
+
 //2023에 가입한 강사 수
 $member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM members WHERE YEAR(reg_date) = 2023";
 $member_2023_count = $mysqli->query($member_2023_register); 
 $member_2023 = $member_2023_count->fetch_object();
+// print_r($member_2023);
 
-//강의관련
-$lecture_num = "SELECT COUNT(*) AS total_lectures FROM `lecture_list`";
-$lecture_nums = $mysqli->query($lecture_num); 
-$lecture_counts = $lecture_nums->fetch_object();
+
+//월별 데이터
+// 월별 데이터 쿼리
+$sql = "SELECT DATE_FORMAT(reg_date, '%Y-%m') AS month, COUNT(*) AS member_count
+        FROM members
+        GROUP BY DATE_FORMAT(reg_date, '%Y-%m')
+        ORDER BY month ASC";
+$result = $mysqli->query($sql);
+
+$months = [];
+$counts = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $months[] = $row['month'];
+        $counts[] = $row['member_count'];
+    }
+}
+
+// 누적 회원 수 계산
+$cumulativeCounts = [];
+$runningTotal = 0;
+foreach ($counts as $count) {
+    $runningTotal += $count;
+    $cumulativeCounts[] = $runningTotal;
+}
 ?>
 
 
-
+?>
 
 
 <div class="container sales my-4">
@@ -92,9 +112,20 @@ $lecture_counts = $lecture_nums->fetch_object();
     <div class="col-md-4">
       <div class="sales_box">
         <dl class="">
-          <dt>강의 수</dt>
+          <dt>총 회원 수</dt>
           <dd>
-            <div><?= $lecture_counts->total_lectures ?> 개</div>
+            <div><?= $m_count->total_members ?>명</div>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="sales_box">
+        
+        <dl>
+          <dt>올해 신입 회원 수</dt>
+          <dd>
+            <div><?= $member_2024->total_2024_members ?>명</div>
           </dd>
         </dl>
       </div>
@@ -102,19 +133,9 @@ $lecture_counts = $lecture_nums->fetch_object();
     <div class="col-md-4">
       <div class="sales_box">
         <dl>
-          <dt>총 수강생</dt>
+          <dt>올해 탈퇴 강사 수</dt> <!--작년 총 강사 숫자 + 올해 신입 강사 숫자 - 지금총 강사 수 =-->
           <dd>
-            <div><?= $m_count->total_members ?> 명</div>
-          </dd>
-        </dl>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="sales_box">
-        <dl>
-          <dt>평점</dt>
-          <dd>
-            <div><?= $manage_data->total_grade ?> 점</div>
+            <div>0명</div>
           </dd>
         </dl>
       </div>
@@ -128,7 +149,7 @@ $lecture_counts = $lecture_nums->fetch_object();
         <dl>
           <dt>총 매출</dt>
           <dd>
-            <div><?= number_format($manage_data->total_sales) ?>원 </div>
+            <div ><?= number_format($manage_data->total_sales) ?>원 </div>  <!--성우 씨 꺼 가져다 씀-->
           </dd>
         </dl>
       </div>
@@ -140,20 +161,16 @@ $lecture_counts = $lecture_nums->fetch_object();
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>이번 달 수익</dt>
-          <dd>
-            <div class="mt-5"><?= number_format($current_month) ?> 원
-              <br><?= $inc_sales ?>
-            </div>
-          </dd>
+          <dt>월별 신입 회원 증가 그래프</dt>
+          <dd class="mt-5"><canvas id="registrationChart"></canvas></dd>
         </dl>
       </div>
     </div>
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>종합 매출</dt>
-          <dd class="mt-5"><canvas id="monthly_data"></canvas></dd>
+          <dt>모든 회원 증가 그래프</dt>
+          <dd class="mt-5"><canvas id="registrationChart2"></canvas></dd>
         </dl>
       </div>
     </div>
@@ -164,7 +181,7 @@ $lecture_counts = $lecture_nums->fetch_object();
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>강의 완강률</dt>
+          <dt>올해 강사 평균 매출 / 월별 강사 평균 매출</dt>
           <dd class="mt-5">
             <div class="chart-box">
               <canvas id="chart1"></canvas>
@@ -182,7 +199,7 @@ $lecture_counts = $lecture_nums->fetch_object();
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
-          <dt>강의 정보</dt>
+          <dt>이번달 매출 TOP 5 강사</dt>
           <dd>
             <table class="table table-hover data_table">
               <thead>
@@ -199,14 +216,13 @@ $lecture_counts = $lecture_nums->fetch_object();
               </tbody>
             </table>
           </dd>
-
         </dl>
       </div>
     </div>
   </div>
 
   <!-- 종합 데이터 섹션 -->
-  <div class="row g-4">
+  <!-- <div class="row g-4">
     <div class="col-12">
       <div class="sales_chart">
         <dl>
@@ -217,125 +233,103 @@ $lecture_counts = $lecture_nums->fetch_object();
         </dl>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <script>
-  fetch('sales_data.php')
-    .then(response => response.json())
-    .then(data => {
-      const months = data.map(item => item.month);
-      const sales = data.map(item => item.sales);
-      const monthly_data = document.getElementById('monthly_data');
-      new Chart(monthly_data, {
-        type: 'bar', // 막대 차트
-        data: {
-          labels: months, // x축 레이블
-          datasets: [{
-            label: '월 별 매출',
-            data: sales, // y축 데이터
-            backgroundColor: 'rgba(112, 134, 253, 1)',
+ // PHP 데이터를 JavaScript로 전달
+const months = <?php echo json_encode($months); ?>;
+const counts = <?php echo json_encode($counts); ?>;
+const cumulativeCounts = <?php echo json_encode($cumulativeCounts); ?>;
 
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
+// 월별 회원 증가 그래프 (선형 차트)
+const ctx1 = document.getElementById('registrationChart').getContext('2d');
+new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: months,
+        datasets: [{
+            label: '월별 등록 회원 수',
+            data: counts,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
             y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }).catch(error => console.error('Error fetching data:', error));
-
-  fetch('sales_complate.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      const colors = ['#0E5FD9', '#64A2FF', '#0040A1'];
-      data.forEach((item, index) => {
-        const ctx = document.getElementById(`chart${index + 1}`).getContext('2d');
-
-        new Chart(ctx, {
-
-          type: 'doughnut',
-          data: {
-            labels: ['완강률', '미강률'], // 레이블 설정
-            datasets: [{
-              data: [parseFloat(item.lecture_completion), 100 - parseFloat(item.lecture_completion)],
-              backgroundColor: [colors[index], '#ffffff'], // 색상
-            }]
-          },
-          options: {
-            plugins: {
-              title: {
-                display: true,
-                text: item.lecture_name // 강의 이름
-              },
-              legend: {
-                display: false // 범례 비활성화
-              },
-              tooltip: {
-                callbacks: {
-                  label: function(tooltipItem) {
-                    const value = tooltipItem.raw;
-                    const total = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
-                    const percentage = ((value / total) * 100).toFixed(1);
-                    return `${value} (${percentage}%)`;
-                  }
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '회원 수'
                 }
-              }
             },
-            cutout: '70%' // 도넛 가운데 비율
-          }
-        });
-      });
-    }).catch(error => console.error('Error fetching data:', error));
-
-  fetch('sales_course.php')
-    .then(response => response.json())
-    .then(data => {
-      const months = [...new Set(data.map(item => item.month))];
-      const names = [...new Set(data.map(item => item.course_name))];
-      const colors = ['#0E5FD9', '#64A2FF', '#0040A1', '#4F38FF'];
-      const datasets = names.map(course => {
-        const sales = data
-          .filter(item => item.course_name === course)
-          .map(item => item.sales); // 강의별 매출 데이터
-
-        return {
-          label: course,
-          data: sales,
-          borderColor: colors,
-
-        };
-      });
-
-      var ctx = document.getElementById('salesChart').getContext('2d');
-      var salesChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: months, // x축: 월
-          datasets: datasets, // y축: 강의 매출
-          fill: false,
+            x: {
+                title: {
+                    display: true,
+                    text: '월'
+                }
+            }
         },
-        options: {
-          responsive: true,
-          plugins: {
+        plugins: {
             legend: {
-              position: 'top'
+                display: true,
+                position: 'top'
             },
             title: {
-              display: true,
-              text: '1년간 강의 매출 차트'
+                display: true,
+                text: '회원 월별 등록 현황'
             }
-          }
         }
-      });
+    }
+});
 
-    }).catch(error => console.error('Error fetching data:', error));
+// 누적 회원 증가 그래프 (막대 차트)
+const ctx2 = document.getElementById('registrationChart2').getContext('2d');
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: [{
+            label: '누적 회원 수',
+            data: cumulativeCounts,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '누적 회원 수'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: '월'
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            },
+            title: {
+                display: true,
+                text: '회원 누적 증가 현황'
+            }
+        }
+    }
+});
 </script>
 
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
-?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php'); ?>
