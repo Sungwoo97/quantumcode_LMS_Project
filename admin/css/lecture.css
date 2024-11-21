@@ -267,6 +267,7 @@ section.desc{
 }
 .review .btn, .reply .btn, .rereply .btn{
   width:70px; 
+  height: 38px;
 }
 .reply, .rereply{
   padding: 20px ;

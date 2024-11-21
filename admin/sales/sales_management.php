@@ -11,6 +11,18 @@ if ($lecuter_result) {
   $lecture_data = $lecuter_result->fetch_object();
 }
 
+$sum_sql = "SELECT SUM(student_count) AS sc FROM lecture_list ";
+$sum_result = $mysqli->query($sum_sql);
+if ($sum_result) {
+  $sum_data = $sum_result->fetch_object();
+}
+
+$avg_sql = "SELECT SUM(review) AS review FROM lecture_review ";
+$avg_result = $mysqli->query($avg_sql);
+if ($avg_result) {
+  $avg_data = $avg_result->fetch_object();
+}
+
 
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
@@ -73,7 +85,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl class="">
           <dt>강의 수</dt>
           <dd>
-            <div><?= $manage_data->total_lecture ?> 개</div>
+            <div><?= $lecture_data->cnt ?> 개</div>
           </dd>
         </dl>
       </div>
@@ -83,7 +95,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl>
           <dt>총 수강생</dt>
           <dd>
-            <div><?= $manage_data->total_student ?> 명</div>
+            <div><?= $sum_data->sc ?> 명</div>
           </dd>
         </dl>
       </div>
@@ -93,7 +105,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl>
           <dt>평점</dt>
           <dd>
-            <div><?= $manage_data->total_grade ?> 점</div>
+            <div><?= $avg_data->review ?> 점</div>
           </dd>
         </dl>
       </div>
