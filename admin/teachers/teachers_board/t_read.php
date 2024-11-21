@@ -15,6 +15,14 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 // }
 
 
+if (isset($_SESSION['AUID'])) {
+  // 관리자 로그인 시
+  $user_id = $_SESSION['AUID'];
+} else if (isset($_SESSION['TUID'])) {
+  // 강사 로그인 시
+  $user_id = $_SESSION['TUID'];
+}
+
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
@@ -208,7 +216,9 @@ switch ($category) {
                       <?=$re_reply['content']?>
                     </div>
                     <div class="controls d-flex justify-content-end gap-1">
-                    <a href="t_re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
+                    <?php if ($re_reply['user_id'] === $user_id): ?>
+                      <a href="t_re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
+                    <?php endif; ?>
                     </div>
                   </div>
                 </li>
