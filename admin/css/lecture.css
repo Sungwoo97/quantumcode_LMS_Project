@@ -256,3 +256,22 @@ section.desc{
     font-size: 24px;
   }
 }
+
+.review{
+  padding: 20px;
+  border :  1px solid var(--primary);
+  border-radius: 15px;
+  *{
+    margin-bottom: 0;
+  }
+}
+.review .btn, .reply .btn, .rereply .btn{
+  width:70px; 
+}
+.reply, .rereply{
+  padding: 20px ;
+  border :  1px solid var(--primary);
+  border-radius: 15px;
+  margin-left: 100px;
+}
+
