@@ -5,7 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $id = $_POST['id'];
 $password = $_POST['password'];
-// $password = hash('sha512',$password);
+$password = hash('sha512',$password);
 
 $sql = "SELECT * FROM teachers WHERE id='$id' and password = '$password'";
 $result = $mysqli->query($sql);

@@ -157,19 +157,19 @@ while ($video_data = $video_result->fetch_object()) {
               <td colspan="3">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispremium" <?php echo $lecture_data->ispremium ? 'checked' : ''; ?> value="<?= $lecture_data->ispremium ?>" id="ispremium">
+                    <input class="form-check-input me-2" type="checkbox" name="ispremium" <?= $lecture_data->ispremium ? 'checked' : '' ?> value="<?= $lecture_data->ispremium ?>" id="ispremium">
                     <label class="form-check-label" for="ispremium">프리미엄</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispopular" <?php echo $lecture_data->ispopular ? 'checked' : ''; ?> value="<?= $lecture_data->ispopular ?>" id="ispopular">
+                    <input class="form-check-input me-2" type="checkbox" name="ispopular" <?= $lecture_data->ispopular ? 'checked' : '' ?> value="<?= $lecture_data->ispopular ?>" id="ispopular">
                     <label class="form-check-label" for="ispopular">인기 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isrecom" <?php echo $lecture_data->isrecom ? 'checked' : ''; ?> value="<?= $lecture_data->isrecom ?>" id="isrecom">
+                    <input class="form-check-input me-2" type="checkbox" name="isrecom" <?= $lecture_data->isrecom ? 'checked' : '' ?> value="<?= $lecture_data->isrecom ?>" id="isrecom">
                     <label class="form-check-label" for="isrecom">추천 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isfree" <?php echo $lecture_data->isfree ? 'checked' : ''; ?> value="<?= $lecture_data->isfree ?>" id="isfree">
+                    <input class="form-check-input me-2" type="checkbox" name="isfree" <?= $lecture_data->isfree ? 'checked' : '' ?> value="<?= $lecture_data->isfree ?>" id="isfree">
                     <label class="form-check-label" for="isfree">무료 강의</label>
                   </div>
                 </div>
