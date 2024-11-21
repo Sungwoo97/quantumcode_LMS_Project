@@ -7,7 +7,6 @@ $pid = $_POST['pid'];
 $content = $_POST['content'];
 $category=$_POST['category'];
 
-echo $r_pid;
 
 if (isset($_SESSION['AUID'])) {
     // 관리자 로그인 시
@@ -25,21 +24,26 @@ $result = $mysqli->query($sql);
 
 
 switch ($category) {
-  case 'qna':
-      $redirect_url = "/qc/admin/board/read.php?pid=$pid&category=qna";
-      break;
-  case 'notice':
-      $redirect_url = "/qc/admin/board/read.php?pid=$pid&category=notice";
-      break;
-  case 'event':
-      $redirect_url = "/qc/admin/board/read.php?pid=$pid&category=event";
-      break;
-  case 'free':
-      $redirect_url = "/qc/admin/board/read.php?pid=$pid&category=free";
-      break;
-  default:
-      die("카테고리를 선택 해주세요.");
-}
+	case 'all':
+		$redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=$pid&category=all"; 
+		break;
+	case 'qna':
+		$redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=$pid&category=all"; 
+		break;
+	case 'notice':
+		$redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=$pid&category=all";  
+		break;
+	case 'event':
+		$redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=$pid&category=all";  
+		break;
+	case 'free':
+		$redirect_url = "/qc/admin/teachers/teachers_board/t_read.php?pid=$pid&category=all"; 
+		$un_redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php';
+		break;
+	default:
+		die("침몰");
+  }
+  
 
 
 if ($result) {
