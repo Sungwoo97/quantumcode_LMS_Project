@@ -182,8 +182,34 @@ switch ($category) {
             </div>
             <div class="controls d-flex justify-content-end gap-1">
               <button class="btn btn-secondary sm" onclick="toggleReplyForm(<?=$replay_id?>)">대댓글</button>
+              <?php if (isset($user_id) && $user_id == $reply['user_id']) : ?>
               <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$replay_id?>">수정</button>
               <a href="reply_delete.php?pid=<?=$replay_id?>&b_pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
+              <?php endif; ?>
+
+            </div>
+            <!-- modal -->
+            <div class="modal fade" id="reply_edit<?=$replay_id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <form action="t_board_reply_modify_ok.php" method="POST" class="modal-content">
+                  <input type="hidden" name="pid" value="<?=$reply['pid']?>">
+                  <input type="hidden" name="b_pid" value="<?=$pid?>">
+                  <input type="hidden" name="category" value="<?=$category?>">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 수정</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <?=$reply['user_id']?>
+                    <hr>
+                    <textarea name="content" class="form-control mt-3"> <?=$reply['content']?></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">확인</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </li>
