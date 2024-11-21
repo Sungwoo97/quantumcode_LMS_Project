@@ -13,20 +13,25 @@ if (!isset($id)) {
   ";
 }
 
+var_dump($_POST);
+
 $lid = $_POST['lid'];
 
-$lecture_title = $_POST['title'];
+$lecture_title = $_POST['title'] ?? '';
 $lecture_platforms = $_POST['platforms'] ?? '';
 $lecture_development = $_POST['development'] ?? '';
 $lecture_technologies = $_POST['technologies'] ?? '';
-$lecture_tuition = $_POST['tuition'] ?? 0;
-$lecture_disTuition = $_POST['dis_tuition'] ?? 0;
+$lecture_tuition = is_numeric($_POST['tuition'] ?? 0) ? (float)$_POST['tuition'] : 0;
+$lecture_disTuition = is_numeric($_POST['dis_tuition'] ?? 0) ? (float)$_POST['dis_tuition'] : 0;
 $lecture_registDay = $_POST['regist_day'] ?? 0;
-$lecture_difficult = $_POST['difficult'] ?? '';
-$lecture_ispremium = $_POST['ispremium'] ?? 0;
-$lecture_ispopular = $_POST['ispopular'] ?? 0;
-$lecture_isrecom = $_POST['isrecom'] ?? 0;
-$lecture_isfree = $_POST['isfree'] ?? 0;
+$lecture_difficult = isset($_POST['difficult']) && $_POST['difficult'] !== ''
+  ? $_POST['difficult']
+  : 0; // 기본값
+$lecture_ispremium = isset($_POST['ispremium']) ? 1 : 0;
+$lecture_ispopular = isset($_POST['ispopular']) ? 1 : 0;
+$lecture_isrecom = isset($_POST['isrecom']) ? 1 : 0;
+$lecture_isfree = isset($_POST['isfree']) ? 1 : 0;
+
 $lecture_subTitle = $_POST['sub_title'] ?? '';
 $lecture_desc = rawurldecode($_POST['lecture_description']);
 
@@ -37,7 +42,7 @@ $lecture_coverImage = $_FILES['cover_image'] ?? null;
 $lecture_prVideo = null;
 $lecture_prVideoUrl = $_POST['pr_videoUrl'] ?? '';
 // $lecture_addVideosUrl = $_FILES['add_videosUrl'];
-print_r($_POST);
+
 
 $expiration_day = date("Y-m-d", strtotime("+3 months", strtotime($lecture_registDay)));
 
@@ -121,7 +126,7 @@ $lecture_result = $mysqli->query($sql);
 if ($result) {
   echo
   "<script>
-    alert('강의가 등록되었습니다.');
+    alert('강의가 수정되었습니다.');
     location.href = 'lecture_list.php';
     </script>";
 }
