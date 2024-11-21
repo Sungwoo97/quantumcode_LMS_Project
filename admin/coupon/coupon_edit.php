@@ -77,16 +77,13 @@ $data = $result->fetch_object();
             <tr scope="row">
               <th scope="row" class="insert_name">활성화</th>
               <td colspan="3">
-                <div class="d-flex gap-3">
-                  <div class="d-flex align-items-center justify-content-start">
-                  <input class="form-check-input me-2" type="checkbox" name="coupon_activate" value="1" id="coupon_activate" <?= $data->status == 1 ? 'checked' : ''; ?>>
-                    <label class="form-check-label" for="coupon_activate">활성화</label>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate" <?= $data->status == 0 ? 'checked' : ''; ?>>
-                    <label class="form-check-label" for="coupon_deactivate">비활성화</label>
-                  </div>
-                  </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="coupon_activate" id="coupon_activate" value="1" <?= $data->status == 1 ? 'checked' : ''; ?>>
+                  <label class="form-check-label" for="coupon_activate">활성화</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="coupon_deactivate" id="coupon_deactivate" value="0" <?= $data->status == 0 ? 'checked' : ''; ?>>
+                  <label class="form-check-label" for="coupon_deactivate">비활성화</label>
                 </div>
               </td>
             </tr>

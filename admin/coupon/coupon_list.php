@@ -25,6 +25,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 // 목록 개수와 시작 번호 설정
 $list = 10;
 $start_num = ($page - 1) * $list;
+$layout_list = 6;
+$layout_start_num = ($page - 1) * $layout_list;
 $block_ct = 5;
 $block_num = ceil($page/$block_ct);
 
@@ -77,7 +79,7 @@ if($block_end > $total_page ) $block_end = $total_page;
 <table class="mt-3 table table-hover text-center couponlist">
   <thead>
     <tr>
-      <th scope="col">check</th>
+      <th scope="col"><i class="fa-solid fa-check"></i></th>
       <th scope="col">No</th>
       <th scope="col" style="width: 35%;">쿠폰 이름</th>
       <th scope="col" style="width: 10%;">할인율</th>
@@ -125,9 +127,9 @@ if($block_end > $total_page ) $block_end = $total_page;
   </tbody>
 </table>
 
-<ul class="coupon_list layout d-flex flex-wrap justify-content-between p-0 mt-3">
+<ul class="coupon_list layout flex-wrap justify-content-between p-0 mt-3">
   <?php 
-    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $start_num, $list";
+    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $layout_start_num, $layout_list";
     $result = $mysqli->query($sql);
     while($data = $result->fetch_object()){ 
   ?>
@@ -142,7 +144,7 @@ if($block_end > $total_page ) $block_end = $total_page;
         <p><?= $data->	startdate.' - '.$data->	enddate; ?></p>
       </div>
       <div class="coupon_content">
-          <h3><?= $data->coupon_name ?></h3>
+          <a class="name" href="coupon_view.php?cid=<?= $data->cid; ?>"><?= $data->coupon_name ?></a>
           <p class="mt-2 mb-2"><?= $data->coupon_content ?></p>
           <div class="d-flex justify-content-between align-items-center">
             <p><?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio." %" : "무료") ?></p>
@@ -151,8 +153,12 @@ if($block_end > $total_page ) $block_end = $total_page;
               <input class="form-check-input" type="checkbox" role="switch" id="coupon_switchToggle" data-id="<?= $data->cid ?>" <?= $data->status ? 'checked' : '' ?>>
               <label class="form-check-label" for="coupon_switchToggle"></label>
             </div class="icon_hover">
-              <a href=""><img src="../img/icon-img/Edit.svg" alt="수정" style="width: 24px;"></a>
-              <a href=""><img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 24px;"></a>
+            <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
+              <img src="../img/icon-img/Edit.svg" alt="수정" style="width: 22px;">
+            </a>
+            <a href="coupon_del.php?cid=<?= $data->cid; ?>">
+              <img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 22px;">
+            </a>
             </div>
           </div>
       </div>
@@ -162,7 +168,6 @@ if($block_end > $total_page ) $block_end = $total_page;
     }
   ?>
 </ul>
-
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
