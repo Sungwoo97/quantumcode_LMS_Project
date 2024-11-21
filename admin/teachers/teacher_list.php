@@ -1,6 +1,5 @@
 <?php
 $title = "강사 목록";
-$teacherOutline_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacherOutline.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
