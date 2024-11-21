@@ -47,6 +47,12 @@ table a {
   height: 32px;
   background: none;
 }
+.couponlist_view button.active svg path {
+  fill: var(--bs-primary) !important;
+}
+.couponlist_view button:not(.active) svg path {
+  fill: #ebebeb !important;
+}
 .btn a {
   text-decoration: none;
   color: white;
@@ -75,6 +81,44 @@ table a {
   align-items: center;
 }
 
+/* Layout 목차 */
+.coupon_list.layout li{
+  list-style: none;
+  border: solid 1px var(--lineGray);
+}
+.coupon_item .top_line,
+.coupon_item .checkbox{
+  display: flex;
+  justify-content: space-between;
+}
+.coupon_item{
+  display: flex;
+  gap:2rem;
+  transition: 0.3s;
+  flex: 0 0 calc(50% - 0.5rem);
+  margin-bottom: 1rem;
+}
+.coupon_item img.thumbnail{
+  background: var(--bs-gray-200);
+  object-fit: contain;
+  padding : 0 20px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.coupon_item:hover{
+  background-color: #EFF6FF;
+}
+.coupon_item:hover img.thumbnail{
+  background: white;
+}
+.coupon_content h3{
+  font-size: 20px;
+  font-weight: 700;
+}
+.coupon_content p{
+  font-weight: 600;
+  color:var(--bs-gray-600);
+}
 /* Regis, edit - 등록 및 수정 */
 
 .coupon_cpImg {
