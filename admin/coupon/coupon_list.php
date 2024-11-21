@@ -55,6 +55,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       </svg>
     </button>
   </div>
+
  <div class="couponlist_search d-flex gap-3">
     <select class="form-select" name="search_cat" aria-label="할인 구분 선택">
       <option selected>할인 구분</option>
@@ -102,7 +103,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       <td>
         <a href="coupon_view.php?cid=<?= $data->cid; ?>"><?= $data->coupon_name ?></a>
       </td>
-      <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "할인 없음") ?></td>
+      <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "무료") ?></td>
       <td><?= $data->	startdate.'~'.$data->	enddate; ?> </td>
       <td>
       <div class="form-check form-switch d-flex justify-content-center">
@@ -123,6 +124,45 @@ if($block_end > $total_page ) $block_end = $total_page;
       ?>
   </tbody>
 </table>
+
+<ul class="coupon_list layout d-flex flex-wrap justify-content-between p-0 mt-3">
+  <?php 
+    $sql = "SELECT * FROM coupons ORDER BY cid DESC LIMIT $start_num, $list";
+    $result = $mysqli->query($sql);
+    while($data = $result->fetch_object()){ 
+  ?>
+  <li class="coupon_item col-6 p-4">
+    <img src="<?= $data->coupon_image ?>" alt="" class="col-3 thumbnail">
+    <div class="ect">
+      <div class="top_line mb-4">
+        <div class="checkbox">
+          <input type="checkbox" id="coupon<?= $data->cid ?>">
+          <label for="coupon1" class="ms-2 coupon_title">No. <?= $data->cid ?> </label>
+        </div>
+        <p><?= $data->	startdate.' - '.$data->	enddate; ?></p>
+      </div>
+      <div class="coupon_content">
+          <h3><?= $data->coupon_name ?></h3>
+          <p class="mt-2 mb-2"><?= $data->coupon_content ?></p>
+          <div class="d-flex justify-content-between align-items-center">
+            <p><?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio." %" : "무료") ?></p>
+            <div class="d-flex gap-2 align-items-center">
+            <div class="form-check form-switch d-flex justify-content-between align-items-center">
+              <input class="form-check-input" type="checkbox" role="switch" id="coupon_switchToggle" data-id="<?= $data->cid ?>" <?= $data->status ? 'checked' : '' ?>>
+              <label class="form-check-label" for="coupon_switchToggle"></label>
+            </div class="icon_hover">
+              <a href=""><img src="../img/icon-img/Edit.svg" alt="수정" style="width: 24px;"></a>
+              <a href=""><img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 24px;"></a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </li>
+  <?php
+    }
+  ?>
+</ul>
+
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
@@ -170,6 +210,48 @@ if($block_end > $total_page ) $block_end = $total_page;
     <button class="btn btn-primary"><a href="coupon_regis.php">생성</a></button>
     <button class="btn btn-danger delete"><a href="coupon_del.php">삭제</a></button>
   </div>
+
+
+  
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+  const rowsButton = document.querySelector('.Rows');
+  const layoutButton = document.querySelector('.Layout');
+  const tableView = document.querySelector('.couponlist'); // table
+  const ulView = document.querySelector('.coupon_list'); // ul
+
+  // 초기 상태 설정
+  function initializeView() {
+    tableView.classList.add('active'); // table 활성화
+    ulView.classList.remove('active'); // ul 비활성화
+  }
+
+  // Rows 버튼 클릭
+  rowsButton.addEventListener('click', (e)=>{
+    e.preventDefault();
+    tableView.classList.add('active');
+    ulView.classList.remove('active');
+    rowsButton.classList.add('active');
+    layoutButton.classList.remove('active');
+  });
+
+  // Layout 버튼 클릭
+  layoutButton.addEventListener('click', (e)=>{
+    e.preventDefault();
+    ulView.classList.add('active');
+    tableView.classList.remove('active');
+    layoutButton.classList.add('active');
+    rowsButton.classList.remove('active');
+  });
+
+  // 초기 상태
+  initializeView();
+});
+</script>
+
+
+
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');

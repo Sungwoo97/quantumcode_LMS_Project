@@ -72,21 +72,23 @@ if($block_end > $total_page ) $block_end = $total_page;
       <div class="ect">
         <div class="top_line mb-4">
           <div class="checkbox">
-            <input type="checkbox" id="coupon1">
-            <label for="coupon1" class="ms-2 coupon_title">No. 01 </label>
+            <input type="checkbox" id="coupon<?= $data->cid ?>">
+            <label for="coupon1" class="ms-2 coupon_title">No. <?= $data->cid ?> </label>
           </div>
-          <small>1980.01.01 - 2999.12.31</small>
+          <p>1980.01.01 - 2999.12.31</p>
         </div>
         <div class="coupon_content">
             <h3>Welcome 회원가입</h3>
-            <p>회원가입 시 제공 중급 할인 쿠폰</p>
-            <div class="d-flex justify-content-between">
+            <p class="mt-2 mb-2">회원가입 시 제공 중급 할인 쿠폰</p>
+            <div class="d-flex justify-content-between align-items-center">
               <p>₩ 5,000 원</p>
-              <div class="icon_hover">
+              <div class="d-flex gap-2 align-items-center">
+              <div class="form-check form-switch d-flex justify-content-between align-items-center">
                 <input class="form-check-input" type="checkbox" role="switch" id="coupon_switchToggle" data-id="<?= $data->cid ?>" <?= $data->status ? 'checked' : '' ?>>
                 <label class="form-check-label" for="coupon_switchToggle"></label>
-                <a href=""><img src="../img/icon-img/Edit.svg" alt="수정"></a>
-                <a href=""><img src="../img/icon-img/Trash.svg" alt="삭제"></a>
+              </div class="icon_hover">
+                <a href=""><img src="../img/icon-img/Edit.svg" alt="수정" style="width: 24px;"></a>
+                <a href=""><img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 24px;"></a>
               </div>
             </div>
         </div>
@@ -95,7 +97,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     <?php
       }
     ?>
-</ul>
+  </ul>
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
