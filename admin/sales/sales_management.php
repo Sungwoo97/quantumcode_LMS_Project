@@ -11,6 +11,18 @@ if ($lecuter_result) {
   $lecture_data = $lecuter_result->fetch_object();
 }
 
+$sum_sql = "SELECT SUM(student_count) AS sc FROM lecture_list ";
+$sum_result = $mysqli->query($sum_sql);
+if ($sum_result) {
+  $sum_data = $sum_result->fetch_object();
+}
+
+$avg_sql = "SELECT SUM(review) AS review FROM lecture_review ";
+$avg_result = $mysqli->query($avg_sql);
+if ($avg_result) {
+  $avg_data = $avg_result->fetch_object();
+}
+
 
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
@@ -63,7 +75,28 @@ $month_per = ($month_diff / $previous_month) * 100;
 
 $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
 
+//회원 관련
+$member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
+$member_count = $mysqli->query($member_count_sql);
+$m_count = $member_count->fetch_object();
+//2024에 가입한 강사 수
+$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM members WHERE YEAR(reg_date) = 2024";
+$member_2024_count = $mysqli->query($member_2024_register);
+$member_2024 = $member_2024_count->fetch_object();
+//2023에 가입한 강사 수
+$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM members WHERE YEAR(reg_date) = 2023";
+$member_2023_count = $mysqli->query($member_2023_register);
+$member_2023 = $member_2023_count->fetch_object();
+
+//강의관련
+$lecture_num = "SELECT COUNT(*) AS total_lectures FROM `lecture_list`";
+$lecture_nums = $mysqli->query($lecture_num);
+$lecture_counts = $lecture_nums->fetch_object();
 ?>
+
+
+
+
 
 <div class="container sales my-4">
   <!-- 강의 정보 섹션 -->
@@ -73,7 +106,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl class="">
           <dt>강의 수</dt>
           <dd>
-            <div><?= $manage_data->total_lecture ?> 개</div>
+            <div><?= $lecture_counts->total_lectures ?> 개</div>
           </dd>
         </dl>
       </div>
@@ -83,7 +116,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl>
           <dt>총 수강생</dt>
           <dd>
-            <div><?= $manage_data->total_student ?> 명</div>
+            <div><?= $m_count->total_members ?> 명</div>
           </dd>
         </dl>
       </div>
@@ -93,7 +126,7 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_dif
         <dl>
           <dt>평점</dt>
           <dd>
-            <div><?= $manage_data->total_grade ?> 점</div>
+            <div><?= $avg_data->review ?> 점</div>
           </dd>
         </dl>
       </div>

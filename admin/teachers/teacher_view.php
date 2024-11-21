@@ -39,7 +39,6 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
 ?>
 
 <div class="container">
-  <h1>gdgd</h1>
   <div class="row teacher">
     <div class="col-3 mb-5">
       <div class="teacher_coverImg2 mb-3">
@@ -75,10 +74,7 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
             <a href="#" class="text-decoration-none"  id="nav_all_lectures">모든 강의</a>
           </li>
           <li class="my-2">
-            <a href="#" class="text-decoration-none" id="nav_sales">매출</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="text-decoration-none">개인 정보</a>
+            <a href="#" class="text-decoration-none" id="nav_personal_info">개인 정보</a>
           </li>
           <?php } ?> 
         </ul>
@@ -117,7 +113,7 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
         <button id="show_all_lecture" class="btn btn-primary">모든 강의 보기</button>
       </div>
       <hr>
-      <div class="container mt-4">
+      <div class="container mt-4" id="personal_info">
         <div class="card shadow-sm">
           <div class="card-body">
             <h4 class="card-title text-center mb-4">강사 개인 정보</h4>
@@ -241,11 +237,132 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
         });
     });
 
-    //오늘안에 끝내기
-    $('#nav_all_lectures').click(function () {
+  //모든강의 ajax로 가져오기
+  $('#nav_all_lectures').click(function (e) {
+    e.preventDefault(); // 기본 동작 막기
+    const tid = <?= json_encode($tid) ?>; // 현재 페이지의 tid 가져오기
 
-      
+    $('#main_content').empty(); // 기존 콘텐츠 숨기기.내용을 지우거나 .hide()로 숨길 수도 있음
+
+    // Ajax 요청
+    $.ajax({
+        async: false,
+        url: `/qc/admin/teachers/get_all_lectures.php?tid=${tid}`,
+        method: 'GET',
+        dataType: 'json',
+        error: function (xhr, status, error) {
+            console.error('Error fetching lectures:', error);
+            alert('강의를 가져오는 중 오류가 발생했습니다.');
+        },
+        success: function (data) {
+            console.log(data);
+            if (data.error) {
+                alert(`Error: ${data.error}`);
+                return;
+            }
+
+            // 새로운 강의 데이터를 렌더링
+            const $lectureContainer = $('<div class="d-flex flex-wrap justify-content-center"></div>'); // 새로운 컨테이너 생성
+            $.each(data.result, function (index, item) {
+                const lectureCard = `
+                    <div class="card m-3 shadow-lg" style="width: 18rem; height: 22rem; border-radius: 15px; overflow: hidden;">
+                        <img class="card-img-top" src="${item.cover_image}" alt="강의 이미지" style="height: 12rem; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary fw-bold">${item.title}</h5>
+                            <p class="card-text text-muted">${item.description}</p>
+                            <a href="/qc/admin/lecture/lecture_view.php?lid=${item.lid}" class="btn btn-primary mt-auto" style="border-radius: 10px;">
+                                해당 강의 보러가기
+                            </a>
+                        </div>
+                    </div>`;
+                $lectureContainer.append(lectureCard);
+            });
+
+            // main_content 영역에 새로운 데이터를 추가
+            $('#main_content').append($lectureContainer);
+        },
     });
+});
+
+
+
+///////////////////////////////////////////////////////////////////
+//개인정보에서 자기소개만 가져오기
+$('#nav_personal_info').click(function (e) {
+    e.preventDefault(); // 기본 동작 막기
+
+    // 기존 콘텐츠 비우기
+    $('#main_content').empty();
+
+    // personal_info HTML 추가
+    $('#main_content').html(`
+        <div class="container mt-4" id="personal_info">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h4 class="card-title text-center mb-4">강사 개인 정보</h4>
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-center">구분</th>
+                      <th scope="col" class="text-center">내용</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">회원 고유 ID</th>
+                      <td>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="<?= $data->tid; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">이름</th>
+                      <td>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="<?= $data->name; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">아이디</th>
+                      <td>
+                        <input type="text" class="form-control" name="id" id="id" placeholder="<?= $data->id; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">생년월일</th>
+                      <td>
+                        <input type="text" class="form-control" name="birth" id="birth" placeholder="<?= $data->birth; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">이메일</th>
+                      <td>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="<?= $data->email; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">전화번호</th>
+                      <td>
+                        <input type="text" class="form-control" name="number" id="number" placeholder="<?= $data->number; ?>" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">가입일</th>
+                      <td>
+                        <input type="text" class="form-control" name="reg_date" id="reg_date" placeholder="<?= $data->reg_date; ?>" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+        <Form action="" id="teacher_save" method="" enctype="multipart/form-data">
+        <div class="mt-3 d-flex justify-content-end">
+          <a href="teacher_update.php?tid=<?= $data->tid; ?>" class="btn btn-primary btn-md">수정하기</a>
+        </div>
+      </Form>
+    `);
+});
+
 
 
 

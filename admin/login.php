@@ -52,7 +52,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
     <p class="mb-3">기획 및 디자인 : 팀원 전체</p>
     <h4>- 구현 완료 페이지 -</h4>
       <p>나승일 : </p>
-      <p>윤준호 : </p>
+      <p>윤준호 : 회원, 강사</p>
       <p>남성우 : </p>
       <p>김유진 :  로그인, 쿠폰관리, 헤더 (조회, 등록, 수정)</p>
   </div>
