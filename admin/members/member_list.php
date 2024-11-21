@@ -21,6 +21,7 @@ if($search_keyword){
   $search_where .= " and (name LIKE '%$search_keyword%')";
 }
 
+
 //데이터의 개수 조회
 $page_sql = "SELECT COUNT(*) AS cnt FROM members WHERE 1=1 $search_where";
 $page_result = $mysqli->query($page_sql);
@@ -111,7 +112,8 @@ while($data = $result->fetch_object()){
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td>
               <td>
-                <button class="btn btn-light btn-sm" id="send-message-btn" data-mid="<?= $item->mid; ?>">쪽지보내기</button>
+                <!-- <button class="btn btn-light btn-sm" id="send-message-btn" data-mid=<== $itemmid; ?>>쪽지보내기</button> -->
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->mid; ?>" >쪽지보내기</button>
               </td>
           </tr>
           <?php
@@ -155,12 +157,13 @@ while($data = $result->fetch_object()){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="messageForm">
-          <input type="hidden" id="sender_idx" value="4"> <!-- 관리자 idx -->
-          <input type="hidden" id="receiver_mid">
+        <form id="sendMessageForm" method="post">
+          <input type="hidden" id="sender_idx" name="sender_idx" value=<?=($_SESSION['AUIDX']);?>> 
+          <input type="hidden" id="receiver_mid" name="receiver_mid" value=<?=($_SESSION['AUID']);?> > 
           <div class="mb-3">
             <label for="message" class="form-label">메시지 내용</label>
-            <textarea id="message" class="form-control" placeholder="쪽지 내용을 입력하세요" required></textarea>
+            <textarea id="message" name="message" class="form-control" placeholder="쪽지 내용을 입력하세요" rows="10" maxlength="2000" required></textarea>
+            <small class="form-text text-muted">최대 2000자까지 입력할 수 있습니다.</small>
           </div>
           <button type="submit" class="btn btn-primary">보내기</button>
         </form>
@@ -169,19 +172,38 @@ while($data = $result->fetch_object()){
   </div>
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-  // 쪽지보내기 버튼 클릭 이벤트
-  document.querySelectorAll("#send-message-btn").forEach(button => {
-    button.addEventListener("click", function () {
-      const receiverMid = this.getAttribute("data-mid"); // 버튼의 data-mid 값을 가져옴
-      document.getElementById("receiver_mid").value = receiverMid; // 모달 hidden input에 설정
 
-      // Bootstrap 모달 초기화 및 표시
-      const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
-      messageModal.show();
-    });
-  });
+<script>
+document.getElementById("messageModal").addEventListener("show.bs.modal", function (event) {
+    const button = event.relatedTarget; // 버튼에서 데이터 가져오기
+    const receiverMid = button.getAttribute("data-mid"); // data-mid 값 가져오기
+    document.getElementById("receiver_mid").value = receiverMid; // 숨겨진 input에 설정
+});
+
+// 메시지 전송
+document.getElementById("sendMessageForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 기본 폼 전송 막기
+
+    const senderIdx = document.getElementById("sender_idx").value;
+    const receiverMid = document.getElementById("receiver_mid").value;
+    const message = document.getElementById("message").value;
+
+    fetch("send_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ sender_idx: senderIdx, receiver_mid: receiverMid, message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(data.message); // 성공 메시지 표시
+            const modal = bootstrap.Modal.getInstance(document.getElementById("messageModal"));
+            modal.hide(); // 모달 닫기
+        } else {
+            alert(data.message); // 오류 메시지 표시
+        }
+    })
+    .catch(error => console.error("Error:", error));
 });
 
   
