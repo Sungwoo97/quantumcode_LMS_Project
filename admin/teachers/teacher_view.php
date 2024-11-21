@@ -72,10 +72,10 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
             <a href="teacher_view.php?tid=<?= $data->tid;?>" class="text-decoration-none">홈</a>
           </li>
           <li class="my-2">
-            <a href="teacher_overview_allLecture.php?tid=<?= $data->tid;?>" class="text-decoration-none">모든 강의</a>
+            <a href="#" class="text-decoration-none"  id="nav_all_lectures">모든 강의</a>
           </li>
           <li class="my-2">
-            <a href="#" class="text-decoration-none" id="sales">매출</a>
+            <a href="#" class="text-decoration-none" id="nav_sales">매출</a>
           </li>
           <li class="my-2">
             <a href="#" class="text-decoration-none">개인 정보</a>
@@ -182,11 +182,6 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
         </div>
       </Form>
     </div>
-    <div class="col-9 mb-3" id="sales_content" style="display: none;">
-      <h4>강사 매출 정보</h4>
-      <p>여기에 강사의 매출 데이터를 표시합니다.</p>
-    </div>
-    
   </div>
 </div>
 
@@ -206,7 +201,7 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
     // "모든 강의 보기" 버튼 클릭 이벤트
     $('#show_all_lecture').click(function () {
         const tid = <?= json_encode($tid) ?>; // 현재 페이지의 tid 가져오기
-
+        $(this).hide();
         // Ajax 요청
         $.ajax({
           //async, url, data(여기선 필요없을듯), type(여기선 필요없을듯), dataType 등이 요구됌
@@ -219,18 +214,18 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
                 alert('강의를 가져오는 중 오류가 발생했습니다.');
             },
             success: function (data) {
+              console.log(data);
                 if (data.error) {
                     alert(`Error: ${data.error}`);
                     return;
                 }
-
                 // 강의 데이터 렌더링
                 const $lectureContainer = $('.d-flex.flex-wrap');
                 $lectureContainer.empty(); // 기존 강의 삭제
 
-                $.each(data, function (index, item) {
+                $.each(data.result, function (index, item) {
                     const lectureCard = `
-                        <div class="card m-3 shadow-lg" style="width: 25rem; height: 24rem; border-radius: 15px; overflow: hidden;">
+                        <div class="card m-3 shadow-lg" style="width: 18rem; height: 22rem; border-radius: 15px; overflow: hidden;">
                             <img class="card-img-top" src="${item.cover_image}" alt="강의 이미지" style="height: 12rem; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title text-primary fw-bold">${item.title}</h5>
@@ -243,53 +238,23 @@ $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
                     $lectureContainer.append(lectureCard);
                 });
             },
-            
         });
     });
 
-    $('#sales').click(function () {
-      $('#main_content').hide();// 기존 콘텐츠 숨기기
-      $('#sales_content').show();// 새로운 콘텐츠 표시
+    //오늘안에 끝내기
+    $('#nav_all_lectures').click(function () {
+
+      
     });
 
 
-  // document.getElementById('show_all_lecture').addEventListener('click', function () {
-  //       const tid = <?= json_encode($tid) ?>; // 현재 페이지의 tid 가져오기
 
-  //       // Ajax 요청
-  //       fetch(`/qc/admin/teachers/get_all_lectures.php?tid=${tid}`)
-  //           .then(response => {
-  //               if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-  //               return response.json(); // JSON 형식으로 변환
-  //           })
-  //           .then(data => {
-  //               if (data.error) {
-  //                   alert(`Error: ${data.error}`);
-  //                   return;
-  //               }
 
-  //               // 강의 데이터 렌더링
-  //               const lectureContainer = document.querySelector('.d-flex.flex-wrap');
-  //               lectureContainer.innerHTML = ''; // 기존 강의 삭제
 
-  //               data.forEach(item => {
-  //                   const lectureCard = `
-  //                       <div class="card m-3 shadow-lg" style="width: 25rem; height: 24rem; border-radius: 15px; overflow: hidden;">
-  //                           <img class="card-img-top" src="${item.cover_image}" alt="강의 이미지" style="height: 12rem; object-fit: cover;">
-  //                           <div class="card-body d-flex flex-column">
-  //                               <h5 class="card-title text-primary fw-bold">${item.title}</h5>
-  //                               <p class="card-text text-muted">${item.description}</p>
-  //                               <a href="/qc/admin/lecture/lecture_view.php?lid=${item.lid}" class="btn btn-primary mt-auto" style="border-radius: 10px;">
-  //                                   해당 강의 보러가기
-  //                               </a>
-  //                           </div>
-  //                       </div>`;
-  //                   lectureContainer.innerHTML += lectureCard;
-  //               });
-  //           })
-  //           .catch(error => console.error('Error fetching lectures:', error));
-  //   });
 
+
+
+    
 
 </script>
 
