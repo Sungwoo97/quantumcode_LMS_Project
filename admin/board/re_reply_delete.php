@@ -15,8 +15,9 @@ $re_reply_pid = $_GET['re_reply_pid']; // 대댓글 pid
 if ($re_reply_pid && $reply_id) {
   // 댓글의 pid와 대댓글의 r_pid가 일치하는 대댓글을 삭제
   $sql = "DELETE FROM board_re_reply WHERE pid = $re_reply_pid AND r_pid = $reply_id";
-  $result = $mysqli->query($sql);
-}
+} 
+
+
 
 switch ($category) {
 	case 'all':
@@ -40,19 +41,17 @@ switch ($category) {
   }
   
 
-if($mysqli->query($sql) === true){
-  echo "<script>
-  alert('대댓글 삭제 성공');
-  location.href='$redirect_url';
-  </script>";
-}else{
-  echo "<script>
-  alert('대댓글 삭제 실패');
-  location.href='$un_redirect_url';
-  </script>";
-}
-
-
+	if($mysqli->query($sql)){
+		echo "<script>
+		alert('대댓글 삭제 성공');
+		location.href='$redirect_url';
+		</script>";
+	}else{
+		echo "<script>
+		alert('대댓글 삭제 실패');
+		location.href='$un_redirect_url';
+		</script>";
+	}
 
 
 
