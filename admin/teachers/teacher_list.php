@@ -92,52 +92,6 @@ while($join_data = $join_result->fetch_object()){
   $dataArr[] = $join_data;
 }
 
-// print_r($dataArr)
-
-
-// $join_sql = "SELECT 
-//     t.*,
-//     COUNT(l.t_id) AS lecture_count
-// FROM 
-//     teachers t
-// LEFT JOIN 
-//     lecture_list l
-// ON 
-//     t.id = l.t_id
-// GROUP BY 
-//     t.id;"; 
-
-// $join_result = $mysqli->query($join_sql);
-// while($join_data = $join_result->fetch_object()){
-//   $join_dataArr[] = $join_data;
-// }
-
-// print_r($join_dataArr)
-
-
-
-
-// $join_sql = "SELECT 
-//     t.*,
-//     COUNT(l.t_id) AS lecture_count
-// FROM 
-//     teachers t
-// LEFT JOIN 
-//     lecture_list l
-// ON 
-//     t.id = l.t_id
-// GROUP BY 
-//     t.id;"; 
-
-
-// $join_result = $mysqli->query($join_sql);
-// $lecture_counts = [];  
-
-// while($join_data = $join_result->fetch_object()){
-//     $lecture_counts[] = $join_data->lecture_count;  
-// }
-
-// print_r($lecture_counts)
 
 ?>
 
@@ -244,6 +198,3 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
 ?>
 
 
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
-?>
