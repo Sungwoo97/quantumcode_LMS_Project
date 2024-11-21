@@ -103,8 +103,6 @@ foreach ($counts as $count) {
 ?>
 
 
-?>
-
 
 <div class="container sales my-4">
   <!-- 강의 정보 섹션 -->
