@@ -119,7 +119,6 @@ while ($data = $result->fetch_object()) {
         </div>
       </div>
     </div>
-
     <div class="col-md-4 amount_member">
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
@@ -159,21 +158,20 @@ while ($data = $result->fetch_object()) {
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-md-4 amount_sales">
-    <div class="card border-0 shadow-sm p-3">
-      <div class="card-header bg-white border-0 pb-2 d-flex">
-        <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
-      </div>
-      <div class="card-body">
-        <canvas id="top5TeachersChart"></canvas>
+    <div class="col-md-4 amount_sales">
+      <div class="card border-0 shadow-sm p-3">
+        <div class="card-header bg-white border-0 pb-2 d-flex">
+          <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="top5TeachersChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="col-md-4 amount_sales">
+<!-- <div class="col-md-4 amount_sales">
   <div class="card border-0 shadow-sm p-3">
     <div class="card-header bg-white border-0 pb-2 d-flex">
       <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
@@ -183,7 +181,7 @@ while ($data = $result->fetch_object()) {
     </div>
   </div>
 </div>
-</div>
+</div> -->
 
 <!-- Popular Courses -->
 <div class="row mt-4 ms-0 me-0 d-flex justify-content-between">
@@ -266,9 +264,10 @@ while ($data = $result->fetch_object()) {
 
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
+    <h6>월별 매출</h6>
     <h3 class="text-center mt-3">12,020,000원</h3>
     <h6 class="text-center text-primary">1,091,000원(+10%)↑</h6>
-    <canvas id="monthlyChart"></canvas>
+    <canvas id="monthlyChart" height="400"></canvas>
   </div>
 </div>
 </div>
@@ -277,27 +276,27 @@ while ($data = $result->fetch_object()) {
 
 <!-- Chart.js Scripts -->
 <script>
-  // Sales Chart
-  const salesCtx = document.getElementById('salesChart').getContext('2d');
-  const salesChart = new Chart(salesCtx, {
-    type: 'bar',
-    data: {
-      labels: ['강사1', '강사2', '강사3', '강사4', '강사5'],
-      datasets: [{
-        label: '강사 매출',
-        data: [7000000, 6000000, 5500000, 5000000, 4500000],
-        backgroundColor: 'rgba(54, 162, 235, 0.5)'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
-  });
+  // // Sales Chart
+  // const salesCtx = document.getElementById('salesChart').getContext('2d');
+  // const salesChart = new Chart(salesCtx, {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['강사1', '강사2', '강사3', '강사4', '강사5'],
+  //     datasets: [{
+  //       label: '강사 매출',
+  //       data: [7000000, 6000000, 5500000, 5000000, 4500000],
+  //       backgroundColor: 'rgba(54, 162, 235, 0.5)'
+  //     }]
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       legend: {
+  //         display: false
+  //       }
+  //     }
+  //   }
+  // });
 
   fetch('sales/sales_data.php')
     .then(response => response.json())
