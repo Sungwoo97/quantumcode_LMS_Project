@@ -3,6 +3,10 @@ $title = '대시보드';
 $admin_index_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/admin_index.css\" rel=\"stylesheet\">";
 $chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+
+$board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
+$board_result = $mysqli->query($board_sql);
+
 ?>
 
 <div class="dashboard container m-0">
@@ -110,46 +114,22 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
                   </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>CSS 테이블 세로 간격 줄이는 방법이 뭐죠?</td>
-                      <td>CodeRookie21</td>
-                      <td>2024-11-01</td>
-                      <td>
-                        <a href="">
-                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-                        </a>
-                    </td>
-                  </tr>
-                  <tr>
-                      <td>JavaScript 함수 최적화 관련 문의</td>
-                      <td>DevGuru</td>
-                      <td>2024-11-02</td>
-                      <td>
-                        <a href="">
-                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-                        </a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>React에서 상태 관리 효율적으로 구현하는 법?</td>
-                      <td>JS_Ninja</td>
-                      <td>2024-11-03</td>
-                      <td>
-                        <a href="">
-                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-                        </a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>Python 웹 스크래핑 중 특정 태그 가져오기 문제</td>
-                      <td>PythonLover</td>
-                      <td>2024-11-04</td>
-                      <td>
-                        <a href="">
-                        <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-                        </a>
-                      </td>
-                  </tr>
+              <?php
+              while($board_data = $board_result->fetch_object()){
+              ?>
+              <tr>
+                <td><?=$board_data->title?></td>
+                <td><?=$board_data->user_id?></td>
+                <td><?=$board_data->date?></td>
+                <td>
+                  <a href="board/board_modify.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                  <a href="board/delete.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+                </td>
+              </tr>
+              <?php
+              }
+              ?>
+
               </tbody>
           </table>
            
