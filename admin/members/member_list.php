@@ -112,7 +112,6 @@ while($data = $result->fetch_object()){
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td>
               <td>
-                <!-- <button class="btn btn-light btn-sm" id="send-message-btn" data-mid=<== $itemmid; ?>>쪽지보내기</button> -->
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->mid; ?>" >쪽지보내기</button>
               </td>
           </tr>
@@ -158,8 +157,10 @@ while($data = $result->fetch_object()){
       </div>
       <div class="modal-body">
         <form id="sendMessageForm" method="post">
-          <input type="hidden" id="sender_idx" name="sender_idx" value=<?=($_SESSION['AUIDX']);?>> 
-          <input type="hidden" id="receiver_mid" name="receiver_mid" value=<?=($_SESSION['AUID']);?> > 
+          <!-- 수정: sender_idx는 관리자 정보를 세션에서 가져오므로 유지 -->
+          <input type="hidden" id="sender_idx" name="sender_idx" value="<?= $_SESSION['AUIDX'] ?>"> 
+          <!-- 수정: receiver_mid는 JavaScript로 설정되므로 기본값을 제거 -->
+          <input type="hidden" id="receiver_mid" name="receiver_mid" value="<?= $item->mid;?>"> 
           <div class="mb-3">
             <label for="message" class="form-label">메시지 내용</label>
             <textarea id="message" name="message" class="form-control" placeholder="쪽지 내용을 입력하세요" rows="10" maxlength="2000" required></textarea>
@@ -174,26 +175,34 @@ while($data = $result->fetch_object()){
 
 
 <script>
+
 document.getElementById("messageModal").addEventListener("show.bs.modal", function (event) {
-    const button = event.relatedTarget; // 버튼에서 데이터 가져오기
+    const button = event.relatedTarget; // 버튼에서 data-mid 가져오기
     const receiverMid = button.getAttribute("data-mid"); // data-mid 값 가져오기
     document.getElementById("receiver_mid").value = receiverMid; // 숨겨진 input에 설정
 });
 
-// 메시지 전송
+// 메시지 전송 처리
 document.getElementById("sendMessageForm").addEventListener("submit", function (e) {
     e.preventDefault(); // 기본 폼 전송 막기
 
-    const senderIdx = document.getElementById("sender_idx").value;
-    const receiverMid = document.getElementById("receiver_mid").value;
+    // 폼 데이터 가져오기
+    const sender_idx = document.getElementById("sender_idx").value;
+    const receiver_mid = document.getElementById("receiver_mid").value;
     const message = document.getElementById("message").value;
 
+    // POST 요청 보내기
     fetch("send_message.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ sender_idx: senderIdx, receiver_mid: receiverMid, message })
+        body: new URLSearchParams({ 
+        sender_idx: sender_idx, 
+        receiver_mid: receiver_mid, 
+        message: message 
+        })
     })
-    .then(response => response.json())
+    .then(response => response.json()
+    )
     .then(data => {
         if (data.status === "success") {
             alert(data.message); // 성공 메시지 표시
@@ -205,7 +214,6 @@ document.getElementById("sendMessageForm").addEventListener("submit", function (
     })
     .catch(error => console.error("Error:", error));
 });
-
   
 </script>
 
