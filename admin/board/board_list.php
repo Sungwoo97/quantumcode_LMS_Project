@@ -135,7 +135,7 @@ $event_result = $mysqli->query($sql);
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td>
-          <a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square"></i></a>
+          <a href="board_modify.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
           <a href="delete.php?pid=<?=$data->pid?>&category=<?=$category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
         </td>
       </tr>
