@@ -83,7 +83,7 @@ switch ($data->difficult) {
     </div>
   </div>
   <ul>
-    <li class="review"> <img src="../img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
+    <li class=""> <img src="../img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
     <li class="like"><img src="../img/icon-img/Heart.svg" alt="">500+</li>
     <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
   </ul>

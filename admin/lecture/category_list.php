@@ -12,11 +12,53 @@ if (!isset($_SESSION['AUID'])) {
   ";
 }
 
-$sql = "SELECT * FROM lecture_category WHERE step = 1 ";
+
+$sql = "SELECT * FROM lecture_category WHERE step = 1";
 $result = $mysqli->query($sql);
 while ($data = $result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
   $cate[] = $data; //$cate1배열에 $data할당
 }
+
+
+$search = '';
+
+$plat = $_GET['plat'] ?? '';
+$search_keyword = $_GET['search_keyword'] ?? '';
+
+
+if ($plat) {
+  $search .= " and (code LIKE '$plat')";
+}
+if ($search_keyword) {
+  $search .= " and (name LIKE '%$search_keyword%')";
+}
+//데이터의 개수 조회
+$page_sql = "SELECT COUNT(*) AS cnt FROM lecture_category WHERE step = 3 AND 1=1 $search";
+$page_result = $mysqli->query($page_sql);
+$page_data = $page_result->fetch_assoc();
+$row_num = $page_data['cnt'];
+
+//페이지네이션 
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+} else {
+  $page = 1;
+}
+
+$length = 10;
+$start_num = ($page - 1) * $length;
+$block_ct = 5;
+$block_num = ceil($page / $block_ct); //$page1/5 0.2 = 1
+
+$block_start = (($block_num - 1) * $block_ct) + 1;
+$block_end = $block_start + $block_ct - 1;
+
+$total_page = ceil($row_num / $length); //총75개 10개씩, 8
+$total_block = ceil($total_page / $block_ct);
+
+if ($block_end > $total_page) $block_end = $total_page;
+
+
 
 // $cate_sql = "SELECT * FROM lecture_category WHERE step = 2 ";
 // $cate_result = $mysqli->query($cate_sql) ;
@@ -25,7 +67,7 @@ while ($data = $result->fetch_object()) { //조회된 값들 마다 할일, 값�
 // }
 $html = '';
 $list = array();
-$list_sql = "SELECT * FROM lecture_category WHERE step = 3";
+$list_sql = "SELECT * FROM lecture_category WHERE step = 3 AND 1=1 $search ORDER BY lcid LIMIT $start_num, $length";
 $list_result = $mysqli->query($list_sql);
 while ($list_data = $list_result->fetch_object()) { //조회된 값들 마다 할일, 값이 있으면 $data할당
   $list[] = $list_data; //$cate1배열에 $data할당
@@ -123,10 +165,13 @@ if (count($list) > 0) {
         <button class=" btn btn-primary " data-bs-toggle="modal" data-bs-target="#technologiesModal" id="technologies_btn">등록</button>
       </div>
     </div>
-    <div class="col-3 mb-5 d-flex align-items-end gap-2">
-      <input type="text" name="keywords" class="form-control ">
+    <form class="col-3 mb-5 d-flex align-items-end gap-2">
+      <input type="hidden" name="plat" value="">
+      <input type="hidden" name="dev" value="">
+      <input type="hidden" name="tech" value="">
+      <input type="text" name="search_keyword" class="form-control ">
       <button class=" btn btn-secondary ">검색</button>
-    </div>
+    </form>
   </div>
   <table class="table table-hover text-center">
     <thead>
@@ -143,6 +188,31 @@ if (count($list) > 0) {
     </tbody>
   </table>
 </div>
+<nav aria-label="Page navigation">
+  <ul class="pagination d-flex justify-content-center">
+    <?php
+    if ($block_num > 1) {
+      $prev = $block_start - $block_ct;
+      echo "<li class=\"page-item\"><a class=\"page-link\" href=\"category_list.php?search_keyword={$search_keyword}&page={$prev}\"><img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\"></a></li>";
+    }
+    ?>
+    <?php
+    for ($i = $block_start; $i <= $block_end; $i++) {
+      // if($page == $i) {$active = 'active';} else {$active = '';}
+      $page == $i ? $active = 'active' : $active = '';
+    ?>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="category_list.php?search_keyword=<?= $search_keyword; ?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+    <?php
+    }
+    $next = $block_end + 1;
+    if ($total_block >  $block_num) {
+    ?>
+      <li class="page-item"><a class="page-link" href="category_list.php?search_keyword=<?= $search_keyword; ?>&page=<?= $next; ?>"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next"></a></li>
+    <?php
+    }
+    ?>
+  </ul>
+</nav>
 <div class="modal fade" id="platformsModal" tabindex="1001" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -317,7 +387,7 @@ if (count($list) > 0) {
   //makeOption($('.plats'), 2, $('.devs'), '');
 
 
-  // submit 이벤트, input의 값, 
+
   function addCategory(name, pcode, ppcode, step) {
     let data = {
       name: name,
@@ -349,6 +419,7 @@ if (count($list) > 0) {
 
   $('#plat').on('change', '.plat', function() {
     let platValue = $(this).val();
+    //location.href = `?plat=${platValue}`;
     makeOption($(this), 2, $('.dev'), '').then(() => {
       $('.dev').trigger('change'); // dev의 change 이벤트 실행
     })
@@ -364,68 +435,67 @@ if (count($list) > 0) {
     makeOption($(this), 2, $('.devs'), '');
   });
 
-  $('.edit').on('click', '.cate_edit', function () {
+  $('.edit').on('click', '.cate_edit', function() {
     const lcid = $(this).attr('data-id'); // 카테고리 ID
     const name = $(`#editName${lcid}`).val(); // 수정된 이름
-    console.log(lcid , name);
+    console.log(lcid, name);
     if (!name) {
-        alert('카테고리 이름을 입력해주세요.');
-        return;
+      alert('카테고리 이름을 입력해주세요.');
+      return;
     }
 
-    let data =  {
+    let data = {
       lcid: lcid,
       name: name
     }
     $.ajax({
-        url: 'category_modify.php',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function (response) {
-            if (response.result === 1) {
-                alert('수정이 완료되었습니다.');
-                location.reload(); // 페이지 새로고침
-            } else {
-                alert('수정 실패: ' + response.error);
-            }
-        },
-        error: function (error) {
-            console.error(error);
-            alert('수정 중 오류가 발생했습니다.');
+      url: 'category_modify.php',
+      type: 'POST',
+      data: data,
+      dataType: 'json',
+      success: function(response) {
+        if (response.result === 1) {
+          alert('수정이 완료되었습니다.');
+          location.reload(); // 페이지 새로고침
+        } else {
+          alert('수정 실패: ' + response.error);
         }
+      },
+      error: function(error) {
+        console.error(error);
+        alert('수정 중 오류가 발생했습니다.');
+      }
     });
   });
 
-  $('.edit').on('click', '.cate_del', function () {
-    
-    if(confirm('정말 삭제하시겠습니까?')){
+  $('.edit').on('click', '.cate_del', function() {
+
+    if (confirm('정말 삭제하시겠습니까?')) {
       const lcid = $(this).attr('data-id'); // 카테고리 ID
       console.log(lcid);
       let data = {
-        lcid:lcid
+        lcid: lcid
       }
       $.ajax({
-          url: 'category_delete.php',
-          type: 'POST',
-          data: data,
-          dataType: 'json',
-          success: function (response) {
-              if (response.result === 1) {
-                  alert('삭제가 완료되었습니다.');
-                  location.reload(); // 페이지 새로고침
-              } else {
-                  alert('삭제 실패: ' + response.error);
-              }
-          },
-          error: function (error) {
-              console.error(error);
-              alert('삭제 중 오류가 발생했습니다.');
+        url: 'category_delete.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(response) {
+          if (response.result === 1) {
+            alert('삭제가 완료되었습니다.');
+            location.reload(); // 페이지 새로고침
+          } else {
+            alert('삭제 실패: ' + response.error);
           }
+        },
+        error: function(error) {
+          console.error(error);
+          alert('삭제 중 오류가 발생했습니다.');
+        }
       });
     }
   });
-
 </script>
 
 <?php
