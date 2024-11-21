@@ -17,7 +17,7 @@ if ($sum_result) {
   $sum_data = $sum_result->fetch_object();
 }
 
-$avg_sql = "SELECT SUM(review) AS review FROM lecture_review ";
+$avg_sql = "SELECT AVG(review) AS review FROM lecture_review ";
 $avg_result = $mysqli->query($avg_sql);
 if ($avg_result) {
   $avg_data = $avg_result->fetch_object();

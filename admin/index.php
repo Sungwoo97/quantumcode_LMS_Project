@@ -27,6 +27,13 @@ if ($reg2023_TNumber > 0) {
   $increasePercentage = 0; // 2023년 값이 0일 경우 증가율은 정의할 수 없음
 }
 
+// 매출 관련 SQL
+$manage_sql = "SELECT * FROM sales_management";
+$manage_result = $mysqli->query($manage_sql);
+if ($manage_result) {
+  $manage_data = $manage_result->fetch_object();
+}
+
 //회원 관련. 모든 회원 수
 $member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
 $member_count = $mysqli->query($member_count_sql);
@@ -265,7 +272,7 @@ while ($data = $result->fetch_object()) {
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
     <h6>월별 매출</h6>
-    <h3 class="text-center mt-3">12,020,000원</h3>
+    <h3 class="text-center mt-3"><?= number_format($manage_data->total_sales) ?>원</h3>
     <h6 class="text-center text-primary">1,091,000원(+10%)↑</h6>
     <canvas id="monthlyChart" height="400"></canvas>
   </div>
