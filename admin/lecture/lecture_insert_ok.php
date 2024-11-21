@@ -21,13 +21,13 @@ $lecture_technologies = $_POST['technologies'] ?? '';
 $lecture_tuition = is_numeric($_POST['tuition'] ?? 0) ? (float)$_POST['tuition'] : 0;
 $lecture_disTuition = is_numeric($_POST['dis_tuition'] ?? 0) ? (float)$_POST['dis_tuition'] : 0;
 $lecture_registDay = $_POST['regist_day'] ?? 0;
-$lecture_difficult = isset($_POST['difficult']) && $_POST['difficult'] !== '' 
-    ? $_POST['difficult'] 
-    : 0; // 기본값
-$lecture_ispremium = $_POST['ispremium'] ?? 0;
-$lecture_ispopular = $_POST['ispopular'] ?? 0;
-$lecture_isrecom = $_POST['isrecom'] ?? 0;
-$lecture_isfree = $_POST['isfree'] ?? 0;
+$lecture_difficult = isset($_POST['difficult']) && $_POST['difficult'] !== ''
+  ? $_POST['difficult']
+  : 0; // 기본값
+$lecture_ispremium = isset($_POST['ispremium']) ? 1 : 0;
+$lecture_ispopular = isset($_POST['ispopular']) ? 1 : 0;
+$lecture_isrecom = isset($_POST['isrecom']) ? 1 : 0;
+$lecture_isfree = isset($_POST['isfree']) ? 1 : 0;
 $lecture_subTitle = $_POST['sub_title'] ?? '';
 $lecture_desc = rawurldecode($_POST['lecture_description'] ?? '');
 
