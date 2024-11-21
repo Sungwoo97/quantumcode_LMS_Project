@@ -84,16 +84,13 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
             <tr scope="row">
               <th scope="row" class="insert_name">활성화</th>
               <td colspan="3">
-                <div class="d-flex gap-3">
-                  <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_activate" value="1" id="coupon_activate">
-                    <label class="form-check-label" for="coupon_activate">활성화</label>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="coupon_deactivate" value="0" id="coupon_deactivate">
-                    <label class="form-check-label" for="coupon_deactivate">비활성화</label>
-                  </div>
-                  </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="coupon_activate" id="coupon_activate" value="1">
+                  <label class="form-check-label" for="inlineRadio1">활성화</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="coupon_deactivate" id="coupon_deactivate" value="0">
+                  <label class="form-check-label" for="inlineRadio2">비활성화</label>
                 </div>
               </td>
             </tr>
