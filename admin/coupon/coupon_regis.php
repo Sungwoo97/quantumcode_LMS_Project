@@ -16,7 +16,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 ?>
 
 <div class="coupon_regis container">
-  <form action="coupon_regis_ok.php" id="coupon_submit" method="POST">
+  <form action="coupon_regis_ok.php" id="coupon_submit" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="coupon_imageId" id="coupon_imageId" value="">
   <input type="hidden" id="coupon_description" name="coupon_description" value="">
   
@@ -27,7 +27,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
             <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
           </div>
           <div class="input-group">
-            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image" enctype="multipart/form-data">
+            <input type="file" class="form-control" accept="image/*" name="coupon_image" id="coupon_image">
           </div>
       </div>
 

@@ -34,7 +34,7 @@ $userid = $_SESSION['AUID'] ?? 'admin';
 //쿠폰 썸네일 변경 되었다면
 if(isset($_FILES['coupon_image']) && $_FILES['coupon_image']['error'] == UPLOAD_ERR_OK){
   
-  $fileUploadResult = fileUpload($_FILES['coupon_image']);
+  $fileUploadResult = fileUpload($_FILES['coupon_image'], 'image');
 
   if($fileUploadResult) {
       $thumbnail = $fileUploadResult;
