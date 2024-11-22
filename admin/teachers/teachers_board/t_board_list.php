@@ -18,19 +18,37 @@ if (isset($_SESSION['AUID'])) {
 //     </script>
 //   ";
 // }
+//검색창 검색어 받기
+$search_keyword = $_POST['search_keyword'] ?? '';
+
+// 검색 조건
+$search_where = '';
+if ($search_keyword) {
+    $search_where = " AND board.title LIKE '%$search_keyword%'";
+}
 
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
-// 카테고리별 게시물 개수 조회 (전체 게시판이 아닌 카테고리별로)
-if ($category == 'all') {
-  $page_sql = "SELECT COUNT(*) AS count FROM board";
-} else {
-  $page_sql = "SELECT COUNT(*) AS count FROM board WHERE category = '$category'";
+// 카테고리 값 받기
+$category = $_GET['category'] ?? 'all';
+
+$category = isset($_GET['category']) ? $_GET['category'] : 'all';
+
+
+// 게시글 수 쿼리
+$count_sql = "SELECT COUNT(*) as total FROM board WHERE 1=1";
+
+if ($category !== 'all') {
+    $count_sql .= " AND category = '$category'";
 }
-$page_result = $mysqli->query($page_sql);
-$page_data = $page_result->fetch_object();
-$row_num = $page_data->count;
+if ($search_keyword) {
+    $count_sql .= " AND content LIKE '%$search_keyword%'";
+}
+
+// 실행 및 결과 가져오기
+$count_result = $mysqli->query($count_sql);
+$total_count = $count_result->fetch_object()->total;
 
 // 페이지 번호 계산
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -40,7 +58,7 @@ $list = 10; // 한 페이지에 표시할 게시물 개수
 $start_num = ($page - 1) * $list;
 
 // 전체 페이지 계산
-$total_page = ceil($row_num / $list);
+$total_page = ceil($total_count / $list);
 
 // 페이지네이션을 위한 블록 크기 (각 블록에 포함할 페이지 개수)
 $block_ct = 5;  // 블록당 페이지 수
@@ -66,10 +84,10 @@ $next = min($total_page, $block_end + 1);
 
 
 
-if($category == 'all') {
-  $sql = "SELECT * FROM board ORDER BY pid DESC LIMIT $start_num,$list";
+if ($category == 'all') {
+  $sql = "SELECT * FROM board WHERE 1=1 $search_where ORDER BY pid DESC LIMIT $start_num, $list";
 } else {
-  $sql = "SELECT * FROM board WHERE category = '$category' ORDER BY pid DESC LIMIT $start_num,$list";
+  $sql = "SELECT * FROM board WHERE category = '$category' $search_where ORDER BY pid DESC LIMIT $start_num, $list";
 }
 
 $result = $mysqli->query($sql);
@@ -92,13 +110,20 @@ $event_result = $mysqli->query($sql);
 
 ?>
 <div class="container">
-    <select id="categorySelect" class="form-select w-25 mb-3" name="category">
+<form action="t_board_list.php?category=<?=$category?>" method="POST" class="board_serch d-flex align-items-center justify-content-between mb-3">
+    <select id="categorySelect" class="form-select w-25" name="category">
       <option value="all">전체 게시판</option>
       <option value="notice" <?= $category == 'notice' ? 'selected' : '' ?>>공지사항</option>
       <option value="free" <?= $category == 'free' ? 'selected' : '' ?>>자유게시판</option>
       <option value="event" <?= $category == 'event' ? 'selected' : '' ?>>이벤트</option>
       <option value="qna" <?= $category == 'qna' ? 'selected' : '' ?>>질문과답변</option>
     </select>
+    <div class="d-flex w-100 justify-content-end gap-3">
+      <input type="text" class="form-control w-25" name="search_keyword" placeholder="게시물 제목을 입력 해주세요" value="<?=$search_keyword?>">
+      <button type="submit" class="btn btn-primary">검색</button>
+    </div>
+  </form>
+
 
   <table class="table table-hover mb-3">
     <thead>
@@ -179,7 +204,7 @@ $event_result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+        <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>&search_keyword=<?=$search_keyword?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
