@@ -133,6 +133,9 @@ $event_result = $mysqli->query($sql);
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
         <th scope="col">내용</th>
+        <?php if($category == 'qna'):?>
+        <th scope="col">답변상태</th>
+        <?php endif?>
         <th scope="col">등록일</th>
         <th scope="col">추천수</th>
         <th scope="col">조회수</th>
@@ -150,11 +153,22 @@ $event_result = $mysqli->query($sql);
           $icon = "<i class=\"fa-solid fa-dove\" style=\"color: red;\"></i>";
         }else{
           $icon = '';
-        }
+        };
+
+        if($data->status == 1){
+          $answer_icon = "<i class=\"fa-regular fa-paper-plane\"></i> 완료";
+        }else{
+          $answer_icon = '미완료';
+        };
+
+        $content = $data->content;
         $title1 = $data->title;
         // 제목이 길 경우 10글자로 자르기
         if(iconv_strlen($title1) > 10){
           $title1 = iconv_substr($title1, 0, 10) . '...';
+        }
+        if(iconv_strlen($content) > 10){
+          $content = iconv_substr($content, 0, 10) . '...';
         }
 
       // Q&A 게시판이고 본인이 쓴 글이 아닌 경우 표시하지 않음
@@ -168,7 +182,11 @@ $event_result = $mysqli->query($sql);
         <th scope="row"><?= $data->pid ?></th>
         <td><a href="t_read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
-        <td><?=$data->content ?></td>
+        <td><?=$content ?></td>
+        <?php if($category == 'qna'):?>
+        <td><?=$answer_icon ?></td>
+        <?php endif?>
+        <td><?= $data->category === 'notice' ? '공지사항' : ($data->category === 'event' ? '이벤트' : ($data->category === 'qna' ? '질문과답변' : ($data->category === 'free' ? '자유게시판' : ($data->category)))) ?></td>
         <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
