@@ -37,6 +37,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($summernote_css)) {
       echo $summernote_css;
     }
+    if (isset($slick_css)) {
+      echo $slick_css;
+    }
     if (isset($lecture_css)) {
       echo $lecture_css;
     }
@@ -77,20 +80,23 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.5.2/jquery-migrate.min.js" integrity="sha512-BzvgYEoHXuphX+g7B/laemJGYFdrq4fTKEo+B3PurSxstMZtwu28FHkPKXu6dSBCzbUWqz/rMv755nUwhjQypw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
   }
+  if (isset($slick_js)) {
+    echo $slick_js;
+  }
   ?>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       // accordion data를 localStorage에 저장
-      const accordion = document.getElementById('accordionFlushExample'); 
+      const accordion = document.getElementById('accordionFlushExample');
       // const firstAccordion = document.querySelector('.accordion-item');
       const logo = document.querySelector('.top_logo a');
       // 로고 클릭 시
-      logo.addEventListener('click', ()=>{
+      logo.addEventListener('click', () => {
         const openId = 'nav_cate_dashboard';
         localStorage.setItem("openAccordion", openId); // 열려 있는 상태 저장
       })
@@ -101,18 +107,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       if (openAccordionId) {
         const target = document.getElementById(openAccordionId);
         if (target) {
-          const button = target.previousElementSibling.querySelector('.accordion-button');    // 이전 형제선택자
-          button.classList.remove('collapsed');      
+          const button = target.previousElementSibling.querySelector('.accordion-button'); // 이전 형제선택자
+          button.classList.remove('collapsed');
           target.classList.add('show'); // 열림 상태 복원
           // target.children[0].classList.add('active');
           // target.firstChild.classList.add('active');
           // target.classList.remove("collapse");
           // target.previousElementSibling.children[0].classList.remove('collapsed');
-          const savedIndex = localStorage.getItem('openAccordionChildren');   
+          const savedIndex = localStorage.getItem('openAccordionChildren');
           if (savedIndex) {
             const children = Array.from(target.querySelectorAll('.accordion-child')); // accordion-child을 배열에 저장
             // accordion-child을 배열을 index 값이 일치하는 accordion-child에 active 추가
-            const activeChild = children[parseInt(savedIndex)];   
+            const activeChild = children[parseInt(savedIndex)];
             if (activeChild) {
               activeChild.classList.add('active');
             }
@@ -120,67 +126,67 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
         }
       }
 
-    // 아코디언 열림/닫힘 이벤트 리스너 추가
-    accordion.addEventListener("shown.bs.collapse", function (event) {
-      const openId = event.target.id;
-      const target = document.getElementById(openId);
-      if (target) {
-        const findActive = target.querySelector('.active');   //  accordion-child에 active가 있는 요소 선택
-        if (findActive) {
-          // 선택된 요소의 인덱스 값을 localStorage에 저장
-          const parent = findActive.parentElement; // active 요소의 부모 (ul 등)
-          const siblings = Array.from(parent.children); // 부모의 모든 자식 요소 배열
-          const index = siblings.indexOf(findActive); // active 요소의 인덱스
-          if (index !== -1) {
-            localStorage.setItem("openAccordionChildren", index); // 인덱스 저장
+      // 아코디언 열림/닫힘 이벤트 리스너 추가
+      accordion.addEventListener("shown.bs.collapse", function(event) {
+        const openId = event.target.id;
+        const target = document.getElementById(openId);
+        if (target) {
+          const findActive = target.querySelector('.active'); //  accordion-child에 active가 있는 요소 선택
+          if (findActive) {
+            // 선택된 요소의 인덱스 값을 localStorage에 저장
+            const parent = findActive.parentElement; // active 요소의 부모 (ul 등)
+            const siblings = Array.from(parent.children); // 부모의 모든 자식 요소 배열
+            const index = siblings.indexOf(findActive); // active 요소의 인덱스
+            if (index !== -1) {
+              localStorage.setItem("openAccordionChildren", index); // 인덱스 저장
+            }
           }
         }
-    }
-      localStorage.setItem("openAccordion", openId); // 열려 있는 상태 저장
-    });
+        localStorage.setItem("openAccordion", openId); // 열려 있는 상태 저장
+      });
 
-    // 아코디언이 닫히면 localStorage에 저장된 값도 제거
-    accordion.addEventListener("hidden.bs.collapse", function (event) {
-      const closedId = event.target.id;
-      
-      if (localStorage.getItem("openAccordion") === closedId) {
-        localStorage.removeItem("openAccordion"); // 닫힌 상태 제거
-      }
-    });
-    
-    // accordion-button을 클릭했을 때 모든 accordion-item에서 active 제거 후 선택한 요소에서 가장 가까운 accordion-item에 active 추가
-    document.querySelectorAll('.accordion-button').forEach(button => {
-      button.addEventListener('click', function () {
-        console.log('클릭');
-        const parentItem = this.closest('.accordion-item');
-        const allParents = document.querySelectorAll('.accordion-item');
-        console.log(parentItem);
+      // 아코디언이 닫히면 localStorage에 저장된 값도 제거
+      accordion.addEventListener("hidden.bs.collapse", function(event) {
+        const closedId = event.target.id;
 
-        allParents.forEach(parent => parent.classList.remove('active'));
-        parentItem.classList.add('active');
+        if (localStorage.getItem("openAccordion") === closedId) {
+          localStorage.removeItem("openAccordion"); // 닫힌 상태 제거
+        }
+      });
 
-        // 자식 요소 초기화
-        parentItem.querySelectorAll('.accordion-child').forEach(child => child.classList.remove('active'));
+      // accordion-button을 클릭했을 때 모든 accordion-item에서 active 제거 후 선택한 요소에서 가장 가까운 accordion-item에 active 추가
+      document.querySelectorAll('.accordion-button').forEach(button => {
+        button.addEventListener('click', function() {
+          console.log('클릭');
+          const parentItem = this.closest('.accordion-item');
+          const allParents = document.querySelectorAll('.accordion-item');
+          console.log(parentItem);
+
+          allParents.forEach(parent => parent.classList.remove('active'));
+          parentItem.classList.add('active');
+
+          // 자식 요소 초기화
+          parentItem.querySelectorAll('.accordion-child').forEach(child => child.classList.remove('active'));
+        });
+      });
+
+      // accordion-child를 클릭했을 때 전체 accordion-child에서 active를 제거하기 위해 최상위 부모를 찾고 
+      // 찾은 부모에서 모든 accordion-child에서 active를 제거 후 클릭 된 요소에 active 추가
+      document.querySelectorAll('.accordion-child').forEach(child => {
+        child.addEventListener('click', function() {
+          const parentItem = this.closest('.accordion-item');
+
+          parentItem.querySelectorAll('.accordion-child').forEach(item => item.classList.remove('active'));
+          this.classList.add('active');
+
+          // 선택된 accordion-child의 index 값을 localStorage에 저장
+          const parent = this.closest('.accordion-collapse');
+          const children = Array.from(parent.querySelectorAll('.accordion-child'));
+          const index = children.indexOf(this);
+          localStorage.setItem('openAccordionChildren', index);
+        });
       });
     });
-
-    // accordion-child를 클릭했을 때 전체 accordion-child에서 active를 제거하기 위해 최상위 부모를 찾고 
-    // 찾은 부모에서 모든 accordion-child에서 active를 제거 후 클릭 된 요소에 active 추가
-    document.querySelectorAll('.accordion-child').forEach(child => {
-      child.addEventListener('click', function () {
-        const parentItem = this.closest('.accordion-item');
-
-        parentItem.querySelectorAll('.accordion-child').forEach(item => item.classList.remove('active'));
-        this.classList.add('active');
-
-        // 선택된 accordion-child의 index 값을 localStorage에 저장
-        const parent = this.closest('.accordion-collapse');
-        const children = Array.from(parent.querySelectorAll('.accordion-child'));
-        const index = children.indexOf(this);
-        localStorage.setItem('openAccordionChildren', index); 
-      });
-    });
-  });
   </script>
 </head>
 
