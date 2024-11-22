@@ -92,7 +92,7 @@ while($data = $result->fetch_object()){
           <th scope="col">가입날짜</th>
           <th scope="col">회원 등급</th>
           <th scope="col">상세보기</th>
-          <th scope="col">수정하기</th>
+          <!-- <th scope="col">수정하기</th> -->
           <th scope="col">쪽지보내기</th>
 
         </tr>
@@ -110,7 +110,7 @@ while($data = $result->fetch_object()){
               <td><?= $item->reg_date; ?></td>
               <td><?= $item->grade; ?></td>
               <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
-              <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td>
+              <!-- <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td> -->
               <td>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->mid; ?>" >쪽지보내기</button>
               </td>
@@ -160,7 +160,7 @@ while($data = $result->fetch_object()){
           <!-- 수정: sender_idx는 관리자 정보를 세션에서 가져오므로 유지 -->
           <input type="hidden" id="sender_idx" name="sender_idx" value="<?= $_SESSION['AUIDX'] ?>"> 
           <!-- 수정: receiver_mid는 JavaScript로 설정되므로 기본값을 제거 -->
-          <input type="hidden" id="receiver_mid" name="receiver_mid" value="<?= $item->mid;?>"> 
+          <input type="hidden" id="receiver_mid" name="receiver_mid" value=""> 
           <div class="mb-3">
             <label for="message" class="form-label">메시지 내용</label>
             <textarea id="message" name="message" class="form-control" placeholder="쪽지 내용을 입력하세요" rows="10" maxlength="2000" required></textarea>
@@ -204,7 +204,7 @@ document.getElementById("sendMessageForm").addEventListener("submit", function (
     .then(response => response.json()
     )
     .then(data => {
-        console.log(data)
+      console.log(data);
         if (data.status === "success") {
             alert(data.message); // 성공 메시지 표시
             const modal = bootstrap.Modal.getInstance(document.getElementById("messageModal"));
