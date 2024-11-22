@@ -59,9 +59,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 
 <script>
-  // 취소 버튼 클릭 시 이전 페이지로 돌아가기
+  // 취소 버튼 클릭 시 게시물 페이지로 돌아가기
   document.getElementById('cancel').addEventListener('click', function() {
-    window.history.back();  // 이전 페이지로 돌아가기
+    window.location.href = 't_board_list.php'; 
   });
 
 
