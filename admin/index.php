@@ -34,6 +34,30 @@ if ($manage_result) {
   $manage_data = $manage_result->fetch_object();
 }
 
+$month = date("n");
+for ($i = 2; $i <= 3; $i++) {
+  $monthArr[] = date("n", strtotime("-{$i} months", $month));
+}
+
+$month_data = [];
+
+foreach ($monthArr as $month) {
+  $month_sql = "SELECT  sales FROM sales_monthly WHERE month = '{$month}월' ";
+  $month_result = $mysqli->query($month_sql);
+  while ($month_row = $month_result->fetch_object()) {
+    array_push($month_data, $month_row);
+  }
+}
+
+$current_month = $month_data[0]->sales;
+$previous_month = $month_data[1]->sales;
+
+$month_diff = $current_month - $previous_month;
+$month_per = ($month_diff / $previous_month) * 100;
+
+$inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+
+
 //회원 관련. 모든 회원 수
 $member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
 $member_count = $mysqli->query($member_count_sql);
@@ -58,6 +82,14 @@ if ($reg2023_M_Number > 0) {
   $M_increasePercentage = round($M_increasePercentage, 2);
 } else {
   $M_increasePercentage = 0;
+}
+
+//인기 강의 출력
+$popular_sql = "SELECT title, student_count FROM lecture_list WHERE student_count is not null ORDER BY student_count DESC LIMIT 5";
+$popular_result = $mysqli->query($popular_sql);
+while ($popular_row = $popular_result->fetch_object()) {
+  $popular_label[] = $popular_row->title;
+  $popular_data[] = $popular_row->student_count;
 }
 
 //매출 상위 5명 강사 
@@ -196,7 +228,7 @@ while ($data = $result->fetch_object()) {
     <div class="mb-4 card p-3 border-0 bg-light">
       <h6>인기 강의</h6>
       <div class="chart-container">
-        <canvas id="popularCoursesChart"></canvas>
+        <canvas id="popularCoursesChart" height="150"></canvas>
       </div>
     </div>
 
@@ -273,7 +305,7 @@ while ($data = $result->fetch_object()) {
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
     <h6>월별 매출</h6>
     <h3 class="text-center mt-3"><?= number_format($manage_data->total_sales) ?>원</h3>
-    <h6 class="text-center text-primary">1,091,000원(+10%)↑</h6>
+    <h6 class="text-center text-primary"><?= $inc_sales ?></h6>
     <canvas id="monthlyChart" height="400"></canvas>
   </div>
 </div>
@@ -342,19 +374,17 @@ while ($data = $result->fetch_object()) {
   //most popular chart
   const ctx = document.getElementById('popularCoursesChart').getContext('2d');
 
+
+  const popularLabel = <?php echo json_encode($popular_label); ?>; // 강사 이름 배열
+  const popularData = <?php echo json_encode($popular_data); ?>;
+
   const popularCoursesChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [
-        '프론트엔드를 위한 자바스크립트 첫 걸음',
-        '고농축 프론트엔드 풀코스',
-        '코어 자바스크립트',
-        'A-Z부터 따라하며 배우는 리액트',
-        'Vue.js 시작하기'
-      ],
+      labels: popularLabel,
       datasets: [{
-        label: '인기 강의',
-        data: [3102, 2497, 2459, 2270, 1989],
+        label: '수강생',
+        data: popularData,
         backgroundColor: [
           '#FF6B6B', // 첫 번째 막대 색상
           '#6BCBFF', // 두 번째 막대 색상
@@ -367,6 +397,8 @@ while ($data = $result->fetch_object()) {
       }]
     },
     options: {
+      categoryPercentage: 0.6, // 기본값: 0.8
+      barPercentage: 1, // 기본값: 0.9
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
@@ -385,7 +417,8 @@ while ($data = $result->fetch_object()) {
             drawBorder: false
           },
           ticks: {
-            display: false
+            display: false,
+            align: 'start',
           }
         },
         y: {
@@ -393,10 +426,9 @@ while ($data = $result->fetch_object()) {
             display: false
           },
           ticks: {
-            align: 'start',
             padding: 20,
             font: {
-              size: 14
+              size: 12
             }, // Y축 폰트 크기
             color: '#333'
           } // Y축 텍스트 색상
@@ -488,106 +520,106 @@ while ($data = $result->fetch_object()) {
         }
       }
     });
-
-    // most popular chart
-    const popularCtx = document.getElementById('popularCoursesChart').getContext('2d');
-    new Chart(popularCtx, {
-      type: 'bar',
-      data: {
-        labels: [
-          '프론트엔드를 위한 자바스크립트 첫 걸음',
-          '고농축 프론트엔드 풀코스',
-          '코어 자바스크립트',
-          'A-Z부터 따라하며 배우는 리액트',
-          'Vue.js 시작하기'
-        ],
-        datasets: [{
-          label: '인기 강의',
-          data: [3102, 2497, 2459, 2270, 1989],
-          backgroundColor: ['#FF6B6B', '#6BCBFF', '#A28DFF', '#6BD1FF', '#3666FF'],
-          borderWidth: 0,
-          borderRadius: 10
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            enabled: true
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              display: false
-            }
-          },
-          y: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              align: 'start',
-              padding: 20,
-              font: {
-                size: 14
-              },
-              color: '#333'
-            }
-          }
-        }
-      }
-    });
-
-    // Monthly Revenue Chart
-    const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-    new Chart(monthlyCtx, {
-      type: 'bar',
-      data: {
-        labels: ['7월', '8월', '9월', '10월', '11월', '12월'],
-        datasets: [{
-          label: '월별 매출',
-          data: [8000000, 8500000, 9000000, 9500000, 10000000, 12020000],
-          backgroundColor: 'rgba(54, 162, 235, 0.5)'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: '월별 매출 데이터'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: '매출 (원)'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: '월'
-            }
-          }
-        }
-      }
-    });
   });
+  // most popular chart
+  // const popularCtx = document.getElementById('popularCoursesChart').getContext('2d');
+  // new Chart(popularCtx, {
+  //   type: 'bar',
+  //   data: {
+  //     labels: [
+  //       '프론트엔드를 위한 자바스크립트 첫 걸음',
+  //       '고농축 프론트엔드 풀코스',
+  //       '코어 자바스크립트',
+  //       'A-Z부터 따라하며 배우는 리액트',
+  //       'Vue.js 시작하기'
+  //     ],
+  //     datasets: [{
+  //       label: '인기 강의',
+  //       data: [3102, 2497, 2459, 2270, 1989],
+  //       backgroundColor: ['#FF6B6B', '#6BCBFF', '#A28DFF', '#6BD1FF', '#3666FF'],
+  //       borderWidth: 0,
+  //       borderRadius: 10
+  //     }]
+  //   },
+  //   options: {
+  //     indexAxis: 'y',
+  //     responsive: true,
+  //     maintainAspectRatio: false,
+  //     plugins: {
+  //       legend: {
+  //         display: false
+  //       },
+  //       tooltip: {
+  //         enabled: true
+  //       }
+  //     },
+  //     scales: {
+  //       x: {
+  //         grid: {
+  //           display: false
+  //         },
+  //         ticks: {
+  //           display: false
+  //         }
+  //       },
+  //       y: {
+  //         grid: {
+  //           display: false
+  //         },
+  //         ticks: {
+  //           align: 'start',
+  //           padding: 20,
+  //           font: {
+  //             size: 14
+  //           },
+  //           color: '#333'
+  //         }
+  //       }
+  //     }
+  //   }
+  // });
+
+  // Monthly Revenue Chart
+  // const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+  // new Chart(monthlyCtx, {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['7월', '8월', '9월', '10월', '11월', '12월'],
+  //     datasets: [{
+  //       label: '월별 매출',
+  //       data: [8000000, 8500000, 9000000, 9500000, 10000000, 12020000],
+  //       backgroundColor: 'rgba(54, 162, 235, 0.5)'
+  //     }]
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       legend: {
+  //         display: false
+  //       },
+  //       title: {
+  //         display: true,
+  //         text: '월별 매출 데이터'
+  //       }
+  //     },
+  //     scales: {
+  //       y: {
+  //         beginAtZero: true,
+  //         title: {
+  //           display: true,
+  //           text: '매출 (원)'
+  //         }
+  //       },
+  //       x: {
+  //         title: {
+  //           display: true,
+  //           text: '월'
+  //         }
+  //       }
+  //     }
+  //   }
+  // });
+
 
 
 
