@@ -12,11 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //echo json_encode($_POST);  //만약, 된다면 입력한 데이터가 잘 출력이 되야함. 잘된다
 
 
-
-
     // // POST 데이터 받기
     $sender_idx = $_POST['sender_idx']; // 클라이언트에서 보낸 sender_idx
-    $receiver_mid = $_POST['receiver_mid']; // 클라이언트에서 보낸 receiver_mid
+    $receiver_tid = $_POST['receiver_tid']; // 클라이언트에서 보낸 receiver_mid
     $message = $_POST['message']; // 클라이언트에서 보낸 message
 
     // // 데이터 출력 확인
@@ -28,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // }
 
     // // 메시지 저장 쿼리 실행
-    $sql = "INSERT INTO tomembermessages (sender_id, receiver_id, message_content, sent_at) VALUES (?, ?, ?, NOW())";
+    $sql = "INSERT INTO toteachermessages (sender_id, receiver_id, message_content, sent_at) VALUES (?, ?, ?, NOW())";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("iis", $sender_idx, $receiver_mid, $message);
+    $stmt->bind_param("iis", $sender_idx, $receiver_tid, $message);
 
     if ($stmt->execute() === true) {
         $result = array('status'=>'success', 'message' => '쪽지를 성공적으로 보냈습니다.');
