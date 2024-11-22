@@ -50,7 +50,6 @@ $list = 10; // 한 페이지에 표시할 게시물 개수
 $start_num = ($page - 1) * $list;
 
 // 전체 페이지 계산
-//$total_page = ceil($row_num / $list);
 $total_page = ceil($total_count / $list);
 
 // 페이지네이션을 위한 블록 크기 (각 블록에 포함할 페이지 개수)
