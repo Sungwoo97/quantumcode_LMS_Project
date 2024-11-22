@@ -129,6 +129,9 @@ while($join_data = $join_result->fetch_object()){
           <th scope="col">올해 매출</th>
           <th scope="col">강사 등급</th>
           <th scope="col">상세보기, 수정 삭제</th>
+          <th scope="col">쪽지 보내기</th>
+
+
         </tr>
       </thead>
       <tbody>
@@ -146,6 +149,9 @@ while($join_data = $join_result->fetch_object()){
               <td><?= $item->year_sales; ?></td>
               <td><?= $item->grade; ?></td>
               <td><a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
+              <td>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->tid; ?>" >쪽지보내기</button>
+              </td>
           </tr>
 
           <?php
@@ -180,6 +186,30 @@ while($join_data = $join_result->fetch_object()){
         ?>
       </ul>
     </nav>
+</div>
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">쪽지 보내기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="sendMessageForm" method="post">
+          <!-- 수정: sender_idx는 관리자 정보를 세션에서 가져오므로 유지 -->
+          <input type="hidden" id="sender_idx" name="sender_idx" value="<?= $_SESSION['AUIDX'] ?>"> 
+          <!-- 수정: receiver_mid는 JavaScript로 설정되므로 기본값을 제거 -->
+          <input type="hidden" id="receiver_mid" name="receiver_mid" value="<?= $item->tid;?>"> 
+          <div class="mb-3">
+            <label for="message" class="form-label">메시지 내용</label>
+            <textarea id="message" name="message" class="form-control" placeholder="쪽지 내용을 입력하세요" rows="10" maxlength="2000" required></textarea>
+            <small class="form-text text-muted">최대 2000자까지 입력할 수 있습니다.</small>
+          </div>
+          <button type="submit" class="btn btn-primary">보내기</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
