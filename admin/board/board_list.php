@@ -101,7 +101,7 @@ $result = $mysqli->query($sql);
       <option value="qna" <?= $category == 'qna' ? 'selected' : '' ?>>질문과답변</option>
     </select>
     <div class="d-flex w-100 justify-content-end gap-3">
-      <input type="text" class="form-control w-25" name="search_keyword" placeholder="제목을 입력 해주세요" value="<?=$search_keyword?>">
+      <input type="text" class="form-control w-25" name="search_keyword" placeholder="게시물 제목을 입력 해주세요" value="<?=$search_keyword?>">
       <button type="submit" class="btn btn-primary">검색</button>
     </div>
   </form>
@@ -159,10 +159,10 @@ $result = $mysqli->query($sql);
         <td class="answer_td"><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$content ?></td>
-        <td><?= $data->category === 'notice' ? '공지사항' : ($data->category === 'event' ? '이벤트' : ($data->category === 'qna' ? '질문과답변' : ($data->category === 'free' ? '자유게시판' : ($data->category)))) ?></td>
         <?php if($category == 'qna'):?>
         <td><?=$answer_icon ?></td>
         <?php endif?>
+        <td><?= $data->category === 'notice' ? '공지사항' : ($data->category === 'event' ? '이벤트' : ($data->category === 'qna' ? '질문과답변' : ($data->category === 'free' ? '자유게시판' : ($data->category)))) ?></td>
         <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
