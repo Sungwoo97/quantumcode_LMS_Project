@@ -136,6 +136,7 @@ $event_result = $mysqli->query($sql);
         <?php if($category == 'qna'):?>
         <th scope="col">답변상태</th>
         <?php endif?>
+        <th scope="col">카테고리</th>
         <th scope="col">등록일</th>
         <th scope="col">추천수</th>
         <th scope="col">조회수</th>
