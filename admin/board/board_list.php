@@ -165,7 +165,7 @@ $result = $mysqli->query($sql);
       <tr>
         <th><input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="<?= $data->pid ?>"></th>
         <th scope="row"><?= $data->pid ?></th>
-        <td class="answer_td"><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
+        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$content ?></td>
         <?php if($category == 'qna'):?>
