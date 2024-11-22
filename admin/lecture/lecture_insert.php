@@ -116,7 +116,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
               <th scope="row" class="insert_name">난이도</th>
               <td>
                 <select class="form-select " name="difficult" required>
-                  <option value="0" selected>난이도</option>
+                  <option value="" selected>난이도</option>
                   <option value="1">입문</option>
                   <option value="2">초급</option>
                   <option value="3">중급</option>

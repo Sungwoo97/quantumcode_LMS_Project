@@ -49,6 +49,9 @@ if ($cate_result = $mysqli->query($cate_sql)) {
 }
 
 switch ($data->difficult) {
+  case 0:
+    $diff = ' ';
+    break;
   case 1:
     $diff = '입문';
     break;
