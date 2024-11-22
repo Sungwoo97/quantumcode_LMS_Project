@@ -5,6 +5,7 @@ if (!isset($title)) {
   $title = '';
 }
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -194,7 +195,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <nav class="d-flex flex-column align-items-center justify-content-between">
     <div class="nav_aside_menu">
       <h1 class="top_logo d-flex justify-content-center">
-        <a href="<?php echo isset($_SESSION['AUID']) ? '/qc/admin/index.php' : '/qc/admin/login.php'; ?>">
+        <a href="<?php echo isset($_SESSION['TUID']) ? '/qc/admin/teachers/index.php' : '/qc/admin/login.php'; ?>">
           <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/core-img/Normal_Logo.svg" alt="탑 로고">
         </a>
       </h1>
@@ -226,10 +227,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">강의 목록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_list.php">강의 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_insert.php">강의 등록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/category_list.php">카테고리 관리</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_review.php">수강평</a></li>
           </ul>
         </div>
         <div class="accordion-item">

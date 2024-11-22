@@ -1,7 +1,7 @@
 <?php
 // session_start();
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/teachers/inc/header.php');
 
 $id = $_POST['id'];
 $password = $_POST['password'];
