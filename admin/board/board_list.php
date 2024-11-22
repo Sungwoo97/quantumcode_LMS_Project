@@ -98,6 +98,7 @@ if ($category == 'all') {
 
 $result = $mysqli->query($sql);
 
+
 ?>
 
 <div class="container">
