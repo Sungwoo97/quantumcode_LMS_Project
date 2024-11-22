@@ -1,5 +1,15 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 // GET 데이터 수신
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';

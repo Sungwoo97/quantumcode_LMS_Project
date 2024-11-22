@@ -3,20 +3,21 @@ $title = '강의 등록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 
-$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
 if (!isset($id)) {
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
+      alert('강사로 로그인해주세요');
       location.href = '../login.php';
     </script>
   ";
 }
 
-// echo $id;
+
+echo $id;
 
 // $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 // if ($result = $mysqli->query($sql)) {

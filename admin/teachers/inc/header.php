@@ -6,6 +6,15 @@ if (!isset($title)) {
 }
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 ?>
 
@@ -137,7 +146,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
           <ul id="nav_cate_member" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/members/member_outline.php">회원 개요</a></li>
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/members/member_list.php">회원 목록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/members/member_overview.php">회원 총괄</a></li>
           </ul>
         </div>
         <div class="accordion-item">
@@ -158,7 +166,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/board/board_list.php?category=all">내가 쓴 게시글</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=all">전체게시판</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=notice">공지사항</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=event">이벤트</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=qna">Q&A</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=free">자유게시판</a></li>
           </ul>
         </div>
       </div>

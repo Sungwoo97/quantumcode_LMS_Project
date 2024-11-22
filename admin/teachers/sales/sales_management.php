@@ -2,8 +2,17 @@
 $title = '매출 관리';
 $sales_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 $lecture_sql = "SELECT count(lid) AS cnt FROM lecture_list ";
 $lecuter_result = $mysqli->query($lecture_sql);

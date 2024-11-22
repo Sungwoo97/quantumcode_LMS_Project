@@ -1,17 +1,16 @@
 <?php
 $title = '게시판';
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-$user_id = $_SESSION['TUID'] ?? '';
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
-//강사가 아닐시 로그인창으로 보내기
-// if(!isset($_SESSION['TUID'])){
-//   echo "
-//     <script>
-//       alert('강사로 로그인해주세요');
-//       location.href = '../login_teacher.php';
-//     </script>
-//   ";
-// }
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';

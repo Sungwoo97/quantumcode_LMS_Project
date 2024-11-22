@@ -1,5 +1,15 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 
 $pid = $_GET['pid'];  // 댓글 ID
 $b_pid = $_GET['b_pid'];  // 게시물 ID (댓글이 속한 게시물의 PID)

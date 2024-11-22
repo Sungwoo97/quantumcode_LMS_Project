@@ -5,14 +5,18 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
 
-if(!isset($_SESSION['AUID'])){
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
+      alert('강사로 로그인해주세요');
       location.href = '../login.php';
     </script>
   ";
 }
+
 $cid = $_POST['cid'];
 if (!isset($cid)) {
   echo "<script>alert('쿠폰정보가 없습니다.'); 
