@@ -204,6 +204,7 @@ document.getElementById("sendMessageForm").addEventListener("submit", function (
     .then(response => response.json()
     )
     .then(data => {
+        console.log(data)
         if (data.status === "success") {
             alert(data.message); // 성공 메시지 표시
             const modal = bootstrap.Modal.getInstance(document.getElementById("messageModal"));
