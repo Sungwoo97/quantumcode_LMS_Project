@@ -31,10 +31,10 @@ if(!isset($_SESSION['hits'][$pid])){
 
  
 if ($category === 'all') {
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid";
+  $sql = "SELECT * FROM board WHERE pid = $pid";
 } else {
   // 카테고리가 'all'이 아닌 경우, 카테고리 조건을 추가하여 쿼리 실행
-  $sql = "SELECT title, likes, hit, content, user_id, category, img, is_img, date, start_date, end_date FROM board WHERE pid = $pid AND category = '$category'";
+  $sql = "SELECT * FROM board WHERE pid = $pid AND category = '$category'";
 }
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
@@ -90,6 +90,9 @@ switch ($category) {
 </div>
 <div class="d-flex justify-content-end">
   <p class="d-flex gap-3">
+    <?php if($category == 'qna'):?>
+    <a href="board_answer_ok.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">답변완료</a>
+    <?php endif?>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
     <a href="board_modify.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">수정</a>
@@ -147,113 +150,113 @@ switch ($category) {
         }
     }
 
-    // 댓글과 대댓글 출력
-    foreach ($replys as $replay_id => $reply) {
-        ?>
-        <!-- 댓글 출력 -->
-        <li class="list-group-item mb-3" style="border: 1px solid blue; border-radius:15px">
-          <div class="contents">
-            <div class="d-flex justify-content-between">
-              <small><?=$reply['user_id']?></small>
-              <small><?=$reply['date']?></small>
-            </div>
-            <hr>
-            <div class="content">
-              <?=$reply['content']?>
-            </div>
-            <div class="controls d-flex justify-content-end gap-1">
-              <button class="btn btn-secondary sm" onclick="toggleReplyForm(<?=$replay_id?>)">대댓글</button>
-              <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$replay_id?>">수정</button>
-              <a href="reply_delete.php?pid=<?=$replay_id?>&b_pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
-            </div>
-            <!-- modal -->
-            <div class="modal fade" id="reply_edit<?=$replay_id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <form action="board_reply_modify_ok.php" method="POST" class="modal-content">
-                  <input type="hidden" name="pid" value="<?=$reply['pid']?>">
-                  <input type="hidden" name="b_pid" value="<?=$pid?>">
-                  <input type="hidden" name="category" value="<?=$category?>">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <?=$reply['user_id']?>
-                    <hr>
-                    <textarea name="content" class="form-control mt-3"> <?=$reply['content']?></textarea>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">확인</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-                  </div>
-                </form>
-              </div>
+  // 댓글과 대댓글 출력
+  foreach ($replys as $replay_id => $reply) {
+      ?>
+      <!-- 댓글 출력 -->
+      <li class="list-group-item mb-3" style="border: 1px solid blue; border-radius:15px">
+        <div class="contents">
+          <div class="d-flex justify-content-between">
+            <small><?=$reply['user_id']?></small>
+            <small><?=$reply['date']?></small>
+          </div>
+          <hr>
+          <div class="content">
+            <?=$reply['content']?>
+          </div>
+          <div class="controls d-flex justify-content-end gap-1">
+            <button class="btn btn-secondary sm" onclick="toggleReplyForm(<?=$replay_id?>)">대댓글</button>
+            <button class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#reply_edit<?=$replay_id?>">수정</button>
+            <a href="reply_delete.php?pid=<?=$replay_id?>&b_pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger sm">삭제</a>
+          </div>
+          <!-- modal -->
+          <div class="modal fade" id="reply_edit<?=$replay_id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <form action="board_reply_modify_ok.php" method="POST" class="modal-content">
+                <input type="hidden" name="pid" value="<?=$reply['pid']?>">
+                <input type="hidden" name="b_pid" value="<?=$pid?>">
+                <input type="hidden" name="category" value="<?=$category?>">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 수정</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <?=$reply['user_id']?>
+                  <hr>
+                  <textarea name="content" class="form-control mt-3"> <?=$reply['content']?></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">확인</button>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                </div>
+              </form>
             </div>
           </div>
-        </li>
+        </div>
+      </li>
 
-        <!-- 대댓글 입력폼-->
-        <form action="board_re_reply_ok.php" method="POST" id="replyForm<?=$replay_id?>" style="display:none;">
-          <input type="hidden" name="r_pid" value="<?=$replay_id?>">
-          <input type="hidden" name="pid" value="<?=$pid?>">
-          <input type="hidden" name="category" value="<?=$data->category?>">
-          <div class="d-flex gap-3 mb-3 align-items-center">
-            <p>댓글 입력:</p> 
-            <input name="content" class="form-control w-50" placeholder="내용입력."></textarea>
-            <button class="btn btn-primary btn-sm ">등록</button>
-          </div>
-        </form>
+      <!-- 대댓글 입력폼-->
+      <form action="board_re_reply_ok.php" method="POST" id="replyForm<?=$replay_id?>" style="display:none;">
+        <input type="hidden" name="r_pid" value="<?=$replay_id?>">
+        <input type="hidden" name="pid" value="<?=$pid?>">
+        <input type="hidden" name="category" value="<?=$data->category?>">
+        <div class="d-flex gap-3 mb-3 align-items-center">
+          <p>댓글 입력:</p> 
+          <input name="content" class="form-control w-50" placeholder="내용입력."></textarea>
+          <button class="btn btn-primary btn-sm ">등록</button>
+        </div>
+      </form>
 
-        <!-- 대댓글 출력 -->
-        <?php if (!empty($reply['replies'])): ?>
-          <ul class="list-group list-group-flush ms-4 mt-2"><i class="fa-regular fa-hand-point-right"></i>
-                   
-              <?php foreach ($reply['replies'] as $re_reply): ?>
-                <li class="list-group-item mb-3 w-100" style="border: 1px solid red; border-radius:15px">
-                  <div class="contents">
-                    <div class="d-flex justify-content-between">
-                      <small><?=$re_reply['user_id']?></small>
-                      <small><?=$re_reply['date']?></small>
-                    </div>
-                    <hr>
-                    <div class="content">
-                      <?=$re_reply['content']?>
-                    </div>
-                    <div class="controls d-flex justify-content-end gap-1">
-                      <button type="button" class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#re_reply_edit<?=$re_reply['pid']?>">수정</button>
-                      <a href="re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
-                    </div>
+      <!-- 대댓글 출력 -->
+      <?php if (!empty($reply['replies'])): ?>
+        <ul class="list-group list-group-flush ms-4 mt-2"><i class="fa-regular fa-hand-point-right"></i>
+                  
+            <?php foreach ($reply['replies'] as $re_reply): ?>
+              <li class="list-group-item mb-3 w-100" style="border: 1px solid red; border-radius:15px">
+                <div class="contents">
+                  <div class="d-flex justify-content-between">
+                    <small><?=$re_reply['user_id']?></small>
+                    <small><?=$re_reply['date']?></small>
                   </div>
-                  <!-- 대댓글 수정 Modal -->
-                  <div class="modal fade" id="re_reply_edit<?=$re_reply['pid']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <form action="re_reply_modify_ok.php" method="POST" class="modal-content">
-                        <input type="hidden" name="category" value="<?=$category?>">
-                        <input type="hidden" name="b_pid" value="<?=$reply['pid']?>">
-                        <input type="hidden" name="pid" value="<?=$re_reply['pid']?>">
-                        <input type="hidden" name="r_pid" value="<?=$re_reply['r_pid']?>">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">대댓글 수정</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <?=$re_reply['user_id']?>
-                          <hr/>
-                          <textarea name="content" class="form-control mt-3"> <?=$re_reply['content']?></textarea>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">확인</button>
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-                        </div>
-                      </form>
-                    </div>
+                  <hr>
+                  <div class="content">
+                    <?=$re_reply['content']?>
                   </div>
-                </li>
-              <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+                  <div class="controls d-flex justify-content-end gap-1">
+                    <button type="button" class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#re_reply_edit<?=$re_reply['pid']?>">수정</button>
+                    <a href="re_reply_delete.php?re_reply_pid=<?=$re_reply['pid']?>&pid=<?=$pid?>&reply_id=<?=$reply['pid']?>&category=<?=$category?>" class="btn btn-danger btn-sm">삭제</a>
+                  </div>
+                </div>
+                <!-- 대댓글 수정 Modal -->
+                <div class="modal fade" id="re_reply_edit<?=$re_reply['pid']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <form action="re_reply_modify_ok.php" method="POST" class="modal-content">
+                      <input type="hidden" name="category" value="<?=$category?>">
+                      <input type="hidden" name="b_pid" value="<?=$reply['pid']?>">
+                      <input type="hidden" name="pid" value="<?=$re_reply['pid']?>">
+                      <input type="hidden" name="r_pid" value="<?=$re_reply['r_pid']?>">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">대댓글 수정</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <?=$re_reply['user_id']?>
+                        <hr/>
+                        <textarea name="content" class="form-control mt-3"> <?=$re_reply['content']?></textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">확인</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+      <?php endif; ?>
 
-        <?php
+      <?php
     }
     ?>
   </ul>
