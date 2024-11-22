@@ -50,7 +50,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
     </div>
     <div class="d-flex justify-content-end gap-3">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button id="cancle" class="btn btn-danger">취소</button>
+      <button id="cancel" class="btn btn-danger">취소</button>
     </div>
   </div>
 </form>
@@ -60,7 +60,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 <script>
   // 취소 버튼 클릭 시 이전 페이지로 돌아가기
-  document.getElementById('cancle').addEventListener('click', function() {
+  document.getElementById('cancel').addEventListener('click', function() {
     window.history.back();  // 이전 페이지로 돌아가기
   });
 
