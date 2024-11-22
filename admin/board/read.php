@@ -94,7 +94,7 @@ switch ($category) {
       <a href="board_answer_ok.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-primary">답변완료</a>
     <?php endif?>
     <?php if($category == 'qna' && $data -> status == 1):?>
-      <a href="board_answer_ok.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">답변취소</a>
+      <a href="board_answer_cancel.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-danger">답변취소</a>
     <?php endif?>
     <a href="<?=$redirect_url?>" class="btn btn-secondary">목록</a>
     <a href="like_up.php?pid=<?=$pid?>&category=<?=$category?>" class="btn btn-info">추천</a>
