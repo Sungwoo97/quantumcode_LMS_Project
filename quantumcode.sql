@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-11-21 10:03
+-- 생성 시간: 24-11-22 08:41
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-21 09:30:57', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-22 16:32:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -451,12 +451,12 @@ CREATE TABLE `lecture_list` (
 
 INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `t_id`, `isfree`, `ispremium`, `ispopular`, `isrecom`, `tuition`, `dis_tuition`, `regist_day`, `expiration_day`, `sub_title`, `description`, `learning_obj`, `difficult`, `lecture_tag`, `pr_video`, `regdate`, `status`, `student_count`) VALUES
 (62, 'A0001B0001C0001', 56, '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0, 80),
-(63, 'A0001B0001C0001', 57, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0, 48),
+(63, 'A0001B0001C0001', 57, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241122071638378822.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0, 48),
 (64, 'A0001B0001C0004', 58, '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0, 55),
 (65, 'A0001B0001C0004', 59, '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0, 65),
-(66, 'A0001B0002C0001', 60, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0, 15),
-(67, 'A0001B0001C0001', 61, '승제샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045238464976.png', 'jungsungjae', 0, 0, 0, 1, 150000, 10000, '2024-11-03', '2025-02-03', '승제샘과 함께하는 자바스크립트', '<p>승제샘과 함께하는 자바스크립트</p>', '', '1', '', 'Array', '2024-11-20 12:52:38', 0, 24),
-(68, 'A0001B0001C0004', 62, '우진샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045400399893.png', 'hyunwonjun', 0, 0, 1, 0, 100000, 10000, '2024-09-10', '2024-12-10', '우진샘과 함께하는 자바스크립트', '<p>우진샘과 함께하는 자바스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:00', 0, 29),
+(66, 'A0001B0002C0004', 60, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241122071647461853.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0, 15),
+(67, 'A0001B0001C0001', 61, '승제샘과 함께하는 자바스크립트', '/qc/admin/upload/20241122071657315140.png', 'jungsungjae', 0, 0, 0, 1, 150000, 10000, '2024-11-03', '2025-02-03', '승제샘과 함께하는 자바스크립트', '<p>승제샘과 함께하는 자바스크립트</p>', '', '1', '', 'Array', '2024-11-20 12:52:38', 0, 24),
+(68, 'A0001B0001C0001', 62, '우진샘과 함께하는 자바스크립트', '/qc/admin/upload/20241122071732111117.jpg', 'hyunwonjun', 0, 0, 1, 0, 100000, 10000, '2024-09-10', '2024-12-10', '우진샘과 함께하는 자바스크립트', '<p>우진샘과 함께하는 자바스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:00', 0, 29),
 (69, 'A0001B0001C0004', 63, '해원샘과 함께하는 타입스크립트', '/qc/admin/upload/20241120045459689237.jpg', 'ohhaewon', 0, 0, 1, 0, 100000, 10000, '2024-08-21', '2024-11-21', '해원샘과 함께하는 타입스크립트', '<p>해원샘과 함께하는 타입스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:59', 0, 33),
 (70, 'A0001B0002C0001', 64, '희진샘과 함께하는 신나는 리액트', '/qc/admin/upload/20241120045611111539.png', 'minheejin', 0, 0, 0, 1, 100000, 10000, '2024-09-11', '2024-12-11', '희진샘과 함께하는 신나는 리액트', '<p>희진샘과 함께하는 신나는 리액트</p>', '', '1', '', 'Array', '2024-11-20 12:56:11', 0, 39),
 (71, 'A0002B0001C0003', 65, '설민석의 nodejs', '/qc/admin/upload/20241120045754906860.png', 'sulminsuk', 0, 0, 0, 1, 123123, 10000, '2024-07-17', '2024-10-17', '설민석의 nodejs', '<p>설민석의 nodejs</p>', '', '1', '', 'Array', '2024-11-20 12:57:54', 0, 44),
@@ -478,10 +478,10 @@ INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `
 (87, 'A0001B0002C0001', 81, '지영샘과 함께하는 go 마스터', '/qc/admin/upload/20241120051530137373.png', 'easyyoung', 0, 0, 0, 1, 100000, 10000, '2024-07-09', '2024-10-09', '지영샘과 함께하는 go 마스터', '<p>지영샘과 함께하는 go 마스터</p>', '', '1', '', 'Array', '2024-11-20 13:15:30', 0, NULL),
 (88, 'A0001B0002C0001', 82, '장윤정의 java마스터', '/qc/admin/upload/20241120051614750313.png', 'yoonjunng', 0, 0, 0, 1, 100000, 10000, '2024-08-21', '2024-11-21', '장윤정의 java마스터', '<p>장윤정의 java마스터</p>', '', '2', '', 'Array', '2024-11-20 13:16:14', 0, NULL),
 (89, 'A0001B0001C0001', 56, '관리자가 등록한 강의', '/qc/admin/upload/20241119042317924625.png', 'admin', 0, 0, 0, 1, 1000, 1000, '2024-11-11', '2025-02-11', 'test', '<p>test</p>', '', '1', '', 'Array', '2024-11-19 12:23:17', 0, 80),
-(90, 'A0001B0001C0001', 57, '곽튜브와 함께 하는 css강좌', '/qc/admin/upload/20241119085758118186.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0, 48),
+(90, 'A0001B0001C0001', 57, '곽튜브와 함께 하는 자바2', '/qc/admin/upload/20241122071752662987.png', 'kwak', 0, 0, 0, 1, 100000, 10000, '2024-11-01', '2025-02-01', '여행가듯 가르치는 강사', '<p>초보자를 위한 css html 강의!</p>', '', '1', '', 'Array', '2024-11-19 16:57:58', 0, 48),
 (91, 'A0001B0001C0004', 58, '곽튜브와 함께하는 react 여행', '/qc/admin/upload/20241119085915834304.png', 'kwak', 0, 1, 0, 0, 150000, 15000, '2024-11-02', '2025-02-02', '곽튜브와 함께하는 신나는 리액트 여행', '<p>곽튜브와 함께하는 신나는 리액트 여행</p>', '', '2', '', 'Array', '2024-11-19 16:59:15', 0, 55),
 (92, 'A0001B0001C0004', 59, '곽샘과 함께하는 신나는 자바스크립트 여행', '/qc/admin/upload/20241119090036113948.png', 'kwak', 0, 0, 0, 1, 1000000, 10000, '2024-10-18', '2025-01-18', '평생 무료로 1:1 멘토링까지 해주는 강의', '<p>평생 무료로 1:1 멘토링까지 해주는 강의</p>', '', '1', '', 'Array', '2024-11-19 17:00:36', 0, 65),
-(93, 'A0001B0002C0001', 60, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241119095514163495.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0, 15),
+(93, 'A0001B0002C0004', 60, '곽샘과 함께하는 mysql', '/qc/admin/upload/20241122071809777892.jpg', 'kwak', 0, 0, 0, 1, 100000, 100000, '2024-11-04', '2025-02-04', '즐거운 mysql 여행', '<p>즐거운 mysql 코딩여행</p>', '', '3', '', 'Array', '2024-11-19 17:55:14', 0, 15),
 (94, 'A0001B0001C0001', 61, '승제샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045238464976.png', 'jungsungjae', 0, 0, 0, 1, 150000, 10000, '2024-11-03', '2025-02-03', '승제샘과 함께하는 자바스크립트', '<p>승제샘과 함께하는 자바스크립트</p>', '', '1', '', 'Array', '2024-11-20 12:52:38', 0, 24),
 (95, 'A0001B0001C0004', 62, '우진샘과 함께하는 자바스크립트', '/qc/admin/upload/20241120045400399893.png', 'hyunwonjun', 0, 0, 1, 0, 100000, 10000, '2024-09-10', '2024-12-10', '우진샘과 함께하는 자바스크립트', '<p>우진샘과 함께하는 자바스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:00', 0, 29),
 (96, 'A0001B0001C0004', 63, '해원샘과 함께하는 타입스크립트', '/qc/admin/upload/20241120045459689237.jpg', 'ohhaewon', 0, 0, 1, 0, 100000, 10000, '2024-08-21', '2024-11-21', '해원샘과 함께하는 타입스크립트', '<p>해원샘과 함께하는 타입스크립트</p>', '', '2', '', 'Array', '2024-11-20 12:54:59', 0, 33),
@@ -663,21 +663,6 @@ INSERT INTO `members` (`mid`, `name`, `id`, `birth`, `password`, `email`, `numbe
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `messages`
---
-
-CREATE TABLE `messages` (
-  `id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
-  `message_content` text NOT NULL,
-  `sent_at` datetime DEFAULT current_timestamp(),
-  `is_read` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- 테이블 구조 `sales_course`
 --
 
@@ -825,28 +810,73 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `student_number`, `level`, `lecture_num`) VALUES
-(1, '정승제', 'jungsungjae', '1978-12-14', '123123', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
-(2, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
-(3, '곽튜브', 'kwak', '1977-12-09', '123123', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-19 17:54:27', NULL, '', 2100000, 68, 10, NULL),
-(4, '오해원', 'ohhaewon', '1998-12-12', '123123', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
-(5, '민희진', 'minheejin', '1992-12-12', '123123', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
-(6, '설민석', 'sulminsuk', '1992-12-12', '123123', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
-(7, '강동원', 'kangdongwon', '1982-12-12', '123123', 'kangdongwon@naver.com', 1022241299, '2023-07-01', '/qc/admin/upload/20241120030940207252.png', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:59:01', NULL, '', 1200000, 65, 10, NULL),
-(8, '권도형', 'kwondohyung', '1982-12-12', '123123', 'kwondohyung@naver.com', 1012224299, '2024-03-11', '/qc/admin/upload/20241120031027201008.png', '코인 1타 강사', 'Vip', '2024-11-20 13:00:32', NULL, '', 54000000, 44, 10, NULL),
-(9, '빠니보틀', 'panibottle', '1982-01-02', '123123', 'panibottle@naver.com', 1099991234, '2024-11-19', '/qc/admin/upload/20241120033644134389.jpg', '빠니샘과 같이하는 코딩 여행', 'Blonze', '2024-11-20 13:01:26', NULL, '', 126500, 56, 10, NULL),
-(10, '박지헌', 'parkgihyun', '1982-01-02', '123123', 'parkgihyun@naver.com', 1044991234, '2024-11-18', '/qc/admin/upload/20241120033725149648.png', '걸그룹 출신 코딩 강사', 'Gold', '2024-11-20 13:02:33', NULL, '', 2560000, 53, 10, NULL),
-(11, '손석구', 'sonsuk9', '1989-12-12', '123123', 'sonsuk9@naver.com', 2147483647, '2024-11-07', '/qc/admin/upload/20241120033953598994.jpg', '열심히 안하면 납치', 'Silver', '2024-11-20 13:06:46', NULL, '', 1765000, 51, 10, NULL),
-(12, '신승범', 'sinsungbum', '1989-12-12', '123123', 'sinsungbum@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034031211441.png', '수학강사에서 코딩강사로', 'Gold', '2024-11-20 13:07:28', NULL, '', 8906000, 75, 10, NULL),
-(13, '안성재', 'mrahn', '1989-12-12', '123123', 'mrahn@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034058941646.jpg', '요리사에서 코딩강사로', 'Vip', '2024-11-20 13:08:14', NULL, '', 2450000, 22, 10, NULL),
-(14, '윤루카스', 'lucas', '1989-12-12', '123123', 'lucas@naver.com', 2147483647, '2024-10-11', '/qc/admin/upload/20241120034130130733.jpg', '차가운 코딩강사', 'Silver', '2024-11-20 13:08:46', NULL, '', 1456700, 11, 10, NULL),
-(15, '미미미누', 'mimiminu', '1982-01-02', '123123', 'mimiminu@naver.com', 1022221234, '2023-04-27', '/qc/admin/upload/20241120043443178786.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:09:56', NULL, '', 5400000, 34, 10, NULL),
-(16, '윤세아', 'yoonsaeah', '1982-01-02', '123123', 'yoonsaeah@naver.com', 1022221265, '2023-07-07', '/qc/admin/upload/20241120044334125301.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:10:50', NULL, '', 15400000, 25, 10, NULL),
-(17, '이기상', 'wakeup', '1982-01-02', '123123', 'wakeup@naver.com', 1022221261, '2023-07-27', '/qc/admin/upload/20241120044413641480.jpg', '한국지리에서 코딩강사로', 'Silver', '2024-11-20 13:13:19', NULL, '', 23400000, 77, 10, NULL),
-(18, '이동진', 'dongjin', '1982-01-02', '123123', 'dongjin@naver.com', 1022221244, '2023-07-31', '/qc/admin/upload/20241120044447527474.jpg', '영화평론가 겸 코딩강사', 'Silver', '2024-11-20 13:13:55', NULL, '', 15430000, 66, 10, NULL),
-(19, '이지영', 'easyyoung', '1982-01-02', '123123', 'easyyoung@naver.com', 1022221288, '2023-08-10', '/qc/admin/upload/20241120044519121958.jpg', '윤리강사 겸 코딩강사', 'Silver', '2024-11-20 13:14:42', NULL, '', 15600000, 76, 10, NULL),
-(20, '장윤정', 'yoonjunng', '1982-01-02', '123123', 'yoonjunng@gmail.com', 1022221209, '2024-12-07', '/qc/admin/upload/20241120044610663632.jpg', '트로트 가수 겸 코딩강사', 'Gold', '2024-11-20 13:15:44', NULL, '', 16780000, 65, 10, NULL),
-(21, '현우진', 'hyunwonjun', '1987-12-09', '123123', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, 27, 10, NULL),
-(22, '황재성', 'king', '1982-01-02', '123123', 'haemil123123@gmail.com', 1044421234, '2024-11-22', '/qc/admin/upload/20241120084425169587.jpg', '개그맨에서 코딩 강사로 전향한 만큼 재밌고\r\n위트넘치게 가르치겠습니다. ', 'Blonze', '2024-11-20 16:44:25', NULL, '', NULL, NULL, 10, NULL);
+(1, '정승제', 'jungsungjae', '1978-12-14', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
+(2, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
+(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-22 16:37:59', NULL, '', 2100000, 68, 10, NULL),
+(4, '오해원', 'ohhaewon', '1998-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
+(5, '민희진', 'minheejin', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
+(6, '설민석', 'sulminsuk', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
+(7, '강동원', 'kangdongwon', '1982-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kangdongwon@naver.com', 1022241299, '2023-07-01', '/qc/admin/upload/20241120030940207252.png', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:59:01', NULL, '', 1200000, 65, 10, NULL),
+(8, '권도형', 'kwondohyung', '1982-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwondohyung@naver.com', 1012224299, '2024-03-11', '/qc/admin/upload/20241120031027201008.png', '코인 1타 강사', 'Vip', '2024-11-20 13:00:32', NULL, '', 54000000, 44, 10, NULL),
+(9, '빠니보틀', 'panibottle', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'panibottle@naver.com', 1099991234, '2024-11-19', '/qc/admin/upload/20241120033644134389.jpg', '빠니샘과 같이하는 코딩 여행', 'Blonze', '2024-11-20 13:01:26', NULL, '', 126500, 56, 10, NULL),
+(10, '박지헌', 'parkgihyun', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'parkgihyun@naver.com', 1044991234, '2024-11-18', '/qc/admin/upload/20241120033725149648.png', '걸그룹 출신 코딩 강사', 'Gold', '2024-11-20 13:02:33', NULL, '', 2560000, 53, 10, NULL),
+(11, '손석구', 'sonsuk9', '1989-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sonsuk9@naver.com', 2147483647, '2024-11-07', '/qc/admin/upload/20241120033953598994.jpg', '열심히 안하면 납치', 'Silver', '2024-11-20 13:06:46', NULL, '', 1765000, 51, 10, NULL),
+(12, '신승범', 'sinsungbum', '1989-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sinsungbum@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034031211441.png', '수학강사에서 코딩강사로', 'Gold', '2024-11-20 13:07:28', NULL, '', 8906000, 75, 10, NULL),
+(13, '안성재', 'mrahn', '1989-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'mrahn@naver.com', 2147483647, '2024-10-24', '/qc/admin/upload/20241120034058941646.jpg', '요리사에서 코딩강사로', 'Vip', '2024-11-20 13:08:14', NULL, '', 2450000, 22, 10, NULL),
+(14, '윤루카스', 'lucas', '1989-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'lucas@naver.com', 2147483647, '2024-10-11', '/qc/admin/upload/20241120034130130733.jpg', '차가운 코딩강사', 'Silver', '2024-11-20 13:08:46', NULL, '', 1456700, 11, 10, NULL),
+(15, '미미미누', 'mimiminu', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'mimiminu@naver.com', 1022221234, '2023-04-27', '/qc/admin/upload/20241120043443178786.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:09:56', NULL, '', 5400000, 34, 10, NULL),
+(16, '윤세아', 'yoonsaeah', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'yoonsaeah@naver.com', 1022221265, '2023-07-07', '/qc/admin/upload/20241120044334125301.jpg', '고대 출신의 코딩괴물', 'Silver', '2024-11-20 13:10:50', NULL, '', 15400000, 25, 10, NULL),
+(17, '이기상', 'wakeup', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'wakeup@naver.com', 1022221261, '2023-07-27', '/qc/admin/upload/20241120044413641480.jpg', '한국지리에서 코딩강사로', 'Silver', '2024-11-20 13:13:19', NULL, '', 23400000, 77, 10, NULL),
+(18, '이동진', 'dongjin', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'dongjin@naver.com', 1022221244, '2023-07-31', '/qc/admin/upload/20241120044447527474.jpg', '영화평론가 겸 코딩강사', 'Silver', '2024-11-20 13:13:55', NULL, '', 15430000, 66, 10, NULL),
+(19, '이지영', 'easyyoung', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'easyyoung@naver.com', 1022221288, '2023-08-10', '/qc/admin/upload/20241120044519121958.jpg', '윤리강사 겸 코딩강사', 'Silver', '2024-11-20 13:14:42', NULL, '', 15600000, 76, 10, NULL),
+(20, '장윤정', 'yoonjunng', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'yoonjunng@gmail.com', 1022221209, '2024-12-07', '/qc/admin/upload/20241120044610663632.jpg', '트로트 가수 겸 코딩강사', 'Gold', '2024-11-20 13:15:44', NULL, '', 16780000, 65, 10, NULL),
+(21, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, 27, 10, NULL),
+(22, '황재성', 'king', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemil123123@gmail.com', 1044421234, '2024-11-22', '/qc/admin/upload/20241120084425169587.jpg', '개그맨에서 코딩 강사로 전향한 만큼 재밌고\r\n위트넘치게 가르치겠습니다. ', 'Blonze', '2024-11-20 16:44:25', NULL, '', NULL, NULL, 10, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `tomembermessages`
+--
+
+CREATE TABLE `tomembermessages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `message_content` text NOT NULL,
+  `sent_at` datetime DEFAULT current_timestamp(),
+  `is_read` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `tomembermessages`
+--
+
+INSERT INTO `tomembermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sent_at`, `is_read`) VALUES
+(1, 4, 1, 'test', '2024-11-22 15:09:05', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `toteachermessages`
+--
+
+CREATE TABLE `toteachermessages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `message_content` text NOT NULL,
+  `sent_at` datetime DEFAULT current_timestamp(),
+  `is_read` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `toteachermessages`
+--
+
+INSERT INTO `toteachermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sent_at`, `is_read`) VALUES
+(1, 4, 1, '222', '2024-11-22 15:07:24', 0),
+(2, 4, 2, '123123sf', '2024-11-22 15:07:41', 0);
 
 --
 -- 덤프된 테이블의 인덱스
@@ -938,12 +968,6 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`mid`);
 
 --
--- 테이블의 인덱스 `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`id`);
-
---
 -- 테이블의 인덱스 `sales_course`
 --
 ALTER TABLE `sales_course`
@@ -966,6 +990,18 @@ ALTER TABLE `sales_monthly`
 --
 ALTER TABLE `teachers`
   ADD PRIMARY KEY (`tid`);
+
+--
+-- 테이블의 인덱스 `tomembermessages`
+--
+ALTER TABLE `tomembermessages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 테이블의 인덱스 `toteachermessages`
+--
+ALTER TABLE `toteachermessages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 덤프된 테이블의 AUTO_INCREMENT
@@ -1056,12 +1092,6 @@ ALTER TABLE `members`
   MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- 테이블의 AUTO_INCREMENT `messages`
---
-ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- 테이블의 AUTO_INCREMENT `sales_course`
 --
 ALTER TABLE `sales_course`
@@ -1084,6 +1114,18 @@ ALTER TABLE `sales_monthly`
 --
 ALTER TABLE `teachers`
   MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- 테이블의 AUTO_INCREMENT `tomembermessages`
+--
+ALTER TABLE `tomembermessages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `toteachermessages`
+--
+ALTER TABLE `toteachermessages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
