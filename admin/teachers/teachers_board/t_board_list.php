@@ -193,7 +193,7 @@ $event_result = $mysqli->query($sql);
         <td><?=$data->hit ? $data->hit : 0 ?></td>
         <td>
         <?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? 
-          '<a href="t_board_modify.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-pen-to-square"></i></a>
+          '<a href="t_board_modify.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-pen-to-square" style="color:black"></i></a>
           <a href="t_delete.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>' 
           : ''
         ?>
