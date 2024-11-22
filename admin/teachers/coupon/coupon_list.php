@@ -1,10 +1,17 @@
 <?php
 $title = '쿠폰 목록';
 $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
-$cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
-
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 $search_where = '';
 
 $search_keyword = $_GET['search_keyword'] ?? '';

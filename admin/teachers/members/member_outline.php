@@ -3,7 +3,7 @@ $title = '회원 개요';
 $sales_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);

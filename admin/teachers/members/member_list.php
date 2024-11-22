@@ -1,6 +1,6 @@
 <?php
 $title = "회원 목록";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 
 // if(!isset($_SESSION['AUID'])){

@@ -1,13 +1,14 @@
 <?php
 $title = "게시판 수정";
 $board_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
-//강사가 아닐시 로그인창으로 보내기
-if(!isset($_SESSION['TUID'])){
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
   echo "
     <script>
       alert('강사로 로그인해주세요');
-      location.href = '../login_teacher.php';
+      location.href = '../login.php';
     </script>
   ";
 }

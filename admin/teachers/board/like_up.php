@@ -1,14 +1,16 @@
 <?php
 session_start();
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
-if (isset($_SESSION['AUID'])) {
-  // 관리자 로그인 시
-  $user_id = $_SESSION['AUID'];
-} else if (isset($_SESSION['TUID'])) {
-  // 강사 로그인 시
-  $user_id = $_SESSION['TUID'];
-}
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('강사로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
 if (!isset($user_id)) {
   echo "<script>
       alert('로그인 후 추천 가능합니다.');
