@@ -12,17 +12,35 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 //   ";
 // }
 
+//검색창 검색어 받기
+$search_keyword = $_POST['search_keyword'] ?? '';
+
+// 검색 조건
+$search_where = '';
+if ($search_keyword) {
+    $search_where = " AND board.title LIKE '%$search_keyword%'";
+}
+
+// 카테고리 값 받기
+$category = $_GET['category'] ?? 'all';
+
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 
-// 카테고리별 게시물 개수 조회 (전체 게시판이 아닌 카테고리별로)
-if ($category == 'all') {
-  $page_sql = "SELECT COUNT(*) AS count FROM board";
-} else {
-  $page_sql = "SELECT COUNT(*) AS count FROM board WHERE category = '$category'";
+
+// 게시글 수 쿼리
+$count_sql = "SELECT COUNT(*) as total FROM board WHERE 1=1";
+
+if ($category !== 'all') {
+    $count_sql .= " AND category = '$category'";
 }
-$page_result = $mysqli->query($page_sql);
-$page_data = $page_result->fetch_object();
-$row_num = $page_data->count;
+if ($search_keyword) {
+    $count_sql .= " AND content LIKE '%$search_keyword%'";
+}
+
+// 실행 및 결과 가져오기
+$count_result = $mysqli->query($count_sql);
+$total_count = $count_result->fetch_object()->total;
+
 
 // 페이지 번호 계산
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -32,7 +50,8 @@ $list = 10; // 한 페이지에 표시할 게시물 개수
 $start_num = ($page - 1) * $list;
 
 // 전체 페이지 계산
-$total_page = ceil($row_num / $list);
+//$total_page = ceil($row_num / $list);
+$total_page = ceil($total_count / $list);
 
 // 페이지네이션을 위한 블록 크기 (각 블록에 포함할 페이지 개수)
 $block_ct = 5;  // 블록당 페이지 수
@@ -67,20 +86,11 @@ $event_result = $mysqli->query($event_sql);
 
 
 
-//검색창 검색어 받기
-$search_keyword = $_POST['search_keyword'] ?? '';
 
-// 검색 조건
-$search_where = '';
-if ($search_keyword) {
-    $search_where = " AND board.title LIKE '%$search_keyword%'";
-}
-
-// 카테고리 값 받기
-$category = $_GET['category'] ?? 'all';
 
 
 // SQL 쿼리 작성
+
 if ($category == 'all') {
   $sql = "SELECT * FROM board WHERE 1=1 $search_where ORDER BY pid DESC LIMIT $start_num, $list";
 } else {
@@ -183,7 +193,7 @@ $result = $mysqli->query($sql);
         if ($block_num > 1) { //prev 버튼
           $prev = $block_start - $block_ct;
           echo "<li class=\"page-item prev\">
-              <a class=\"page-link\" href=\"board_list.php?search_keyword=<?=$search_keyword?>&category={$category}&page={$prev}\">
+              <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
                   <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
               </a>
           </li>";
@@ -195,14 +205,14 @@ $result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?search_keyword=<?=$search_keyword?>&category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>&search_keyword=<?=$search_keyword?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
         if($total_block >  $block_num){ //next 버튼
       ?>
       <li class="page-item next">
-        <a class="page-link" href="board_list.php?search_keyword=<?=$search_keyword?>&category=<?=$category?>&page=<?= $next;?>">
+        <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
           <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
         </a>
       </li>
