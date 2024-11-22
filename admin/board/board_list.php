@@ -72,7 +72,7 @@ $result = $mysqli->query($sql);
 $event_delete_sql = "DELETE FROM board WHERE category = 'event' AND end_date < NOW()";
 $mysqli->query($event_delete_sql);
 
-// 게시물 목록을 조회
+// 이벤트 게시물 목록을 조회
 $event_sql = "SELECT * FROM board WHERE category = 'event'";  // 이벤트 카테고리만 조회
 $event_result = $mysqli->query($sql);
 
@@ -101,6 +101,9 @@ $event_result = $mysqli->query($sql);
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
         <th scope="col">내용</th>
+        <?php if($category == 'qna'):?>
+        <th scope="col">답변상태</th>
+        <?php endif?>
         <th scope="col">등록일</th>
         <th scope="col">추천수</th>
         <th scope="col">조회수</th>
@@ -119,6 +122,13 @@ $event_result = $mysqli->query($sql);
         }else{
           $icon = '';
         }
+
+        if($data->status == 1){
+          $answer_icon = "<i class=\"fa-regular fa-paper-plane\"></i> 완료";
+        }else{
+          $answer_icon = '미완료';
+        }
+
         $title1 = $data->title;
         // 제목이 길 경우 10글자로 자르기
         if(iconv_strlen($title1) > 10){
@@ -128,9 +138,12 @@ $event_result = $mysqli->query($sql);
       <tr>
         <th><input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="<?= $data->pid ?>"></th>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
+        <td class="answer_td"><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$data->content ?></td>
+        <?php if($category == 'qna'):?>
+        <td><?=$answer_icon ?></td>
+        <?php endif?>
         <td><?=$post_date ?></td>
         <td><?=$data->likes ? $data->likes : 0 ?></td>
         <td><?=$data->hit ? $data->hit : 0 ?></td>
