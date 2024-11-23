@@ -6,17 +6,9 @@ if (!isset($title)) {
 }
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
-$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
-if (!isset($id)) {
-  echo "
-    <script>
-      alert('강사로 로그인해주세요');
-      location.href = '../login.php';
-    </script>
-  ";
-}
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -173,6 +165,19 @@ if (!isset($id)) {
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=free">자유게시판</a></li>
           </ul>
         </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav_cate_Sales" aria-expanded="false" aria-controls="nav_cate_Sales">
+              <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/icon-img/ChartLineUp.svg" alt="매출관리 아이콘"> 쪽지 관리
+            </button>
+          </h2>
+          <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/messages/AllMessage.php">모든 쪽지</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/messages/sendMessage.php">보낸 쪽지</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/messages/getMessage.php">받은 쪽지</a></li>
+
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -191,7 +196,7 @@ if (!isset($id)) {
       <div class="admin_account">
         <div class="d-flex gap-3 align-items-center mb-4">
           <img src="/qc/admin/img/core-img/어드민_이미지.png" alt="">
-          <p class="tt_02"><?= $_SESSION['TUID'] ?></p>
+          <p class="tt_02"><?= $_SESSION['TUID'] ?> </p>
         </div>
         <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/logout.php">로그아웃</a>
       </div>
