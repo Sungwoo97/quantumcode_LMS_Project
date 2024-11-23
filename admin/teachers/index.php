@@ -4,6 +4,24 @@ $admin_index_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/adm
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
+// print_r($_SESSION); //Array ( [TUIDX] => 3 [TUID] => kwak [TUNAME] => 곽튜브 ) 
+$id = $_SESSION['TUIDX']; //print_r($id); 3
+
+
+$message_sql = "SELECT COUNT(*) AS unread_count FROM `toteachermessages` WHERE `receiver_id` = $id AND `is_read` = 0";
+$result = $mysqli->query($message_sql); // 쿼리 실행 결과
+$data = $result->fetch_object();
+
+//print_r($data); stdClass Object ( [unread_count] => 1 )
+
+if ($data && $data->unread_count > 0) {
+  $unread_count = $data->unread_count; // 읽지 않은 쪽지 개수
+  echo "
+    <script>
+      alert('안 읽은 쪽지가 {$unread_count}개 있습니다.');
+    </script>
+  ";
+}
 
 ?>
 

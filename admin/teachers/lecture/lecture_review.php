@@ -1,9 +1,9 @@
 <?php
 $title = '수강평';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
+$id = isset($_SESSION['AUID']);
 if (!isset($id)) {
   echo "
     <script>
