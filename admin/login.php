@@ -54,7 +54,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
       <p>나승일 : </p>
       <p>윤준호 : 회원, 강사, 강사개인페이지, 로그인(기능)</p>
       <p>남성우 : </p>
-      <p>김유진 :  로그인(디자인), 쿠폰관리, 헤더 (조회, 등록, 수정)</p>
+      <p>김유진 :  로그인(디자인), 헤더, 쿠폰(등록·수정·삭제)</p>
   </div>
   <hr>
   <div class="modal_control d-flex justify-content-between align-items-center">
