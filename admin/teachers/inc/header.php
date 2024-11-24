@@ -122,7 +122,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_list.php">강의 목록</a></li>
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_insert.php">강의 등록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_review.php">수강평</a></li>
+            
           </ul>
         </div>
         <div class="accordion-item">
@@ -144,7 +144,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
           </h2>
           <ul id="nav_cate_board" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=all">전체게시판</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list.php?category=all">내가 쓴 글</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/board/board_list_mine.php">내가 쓴 글</a></li>
           </ul>
         </div>
         <div class="accordion-item">

@@ -436,6 +436,7 @@ while ($data = $result->fetch_object()) {
       }
     }
   });
+  
   document.addEventListener('DOMContentLoaded', function() {
     // top5 강사 매출 차트
     const teacherNames = <?php echo json_encode($name); ?>; // 강사 이름 배열

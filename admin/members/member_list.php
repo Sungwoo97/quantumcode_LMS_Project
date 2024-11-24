@@ -3,14 +3,16 @@ $title = "회원 목록";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
-// if(!isset($_SESSION['AUID'])){
-//   echo "
-//     <script>
-//       alert('관리자로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
+$id = $_SESSION['AUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
 
 //검색
 $search_where = ''; //초기화
@@ -61,19 +63,8 @@ while($data = $result->fetch_object()){
 
 <div class="container">
   <form action="">
-    <h3>현재 강사 수 : <?= $row_num; ?> 명</h3>
     <div class="d-flex gap-3 w-30 mt-3 align-items-center">
-    <tr>
-        <td colspan="3">
-          <div class="d-flex gap-3">
-            <select class="form-select mt-3" name="sort_order" >
-              <option value="" selected>정렬 기준을 선택해 주세요</option>
-              <option value="">등록일 빠른 순</option>
-              <option value="">등록일 늦은 순</option>
-            </select>
-          </div>
-        </td>
-      </tr>
+      <h3>현재 회원 수 : <?= $row_num; ?> 명</h3>
       <input type="text" class="form-control w-25 ms-auto" name="search_keyword" id="search">
       <button class="btn btn-primary btn-sm w-20">검색</button>
     </div>     

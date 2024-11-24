@@ -2,16 +2,7 @@
 $title = '게시판';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
-// $id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
-// if (!isset($id)) {
-//   echo "
-//     <script>
-//       alert('강사로 로그인해주세요');
-//       location.href = '../login.php';
-//     </script>
-//   ";
-// }
-$id = $_SESSION['TUID'];
+$id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
 if (!isset($id)) {
   echo "
     <script>
@@ -68,13 +59,18 @@ $next = min($total_page, $block_end + 1);
 
 
 
-if($category == 'all') {
-  $sql = "SELECT * FROM board ORDER BY pid DESC LIMIT $start_num,$list";
-} else {
-  $sql = "SELECT * FROM board WHERE category = '$category' ORDER BY pid DESC LIMIT $start_num,$list";
-}
+$user_id = $_SESSION['TUID'];
 
+// SQL 쿼리 작성
+$sql = "SELECT * FROM board WHERE user_id = '$user_id'";
+
+// 쿼리 실행
 $result = $mysqli->query($sql);
+
+
+
+
+
 
 
 // 종료일이 지난 게시물을 자동으로 삭제
@@ -86,22 +82,14 @@ $event_sql = "SELECT * FROM board WHERE category = 'event'";  // 이벤트 카�
 $event_result = $mysqli->query($sql);
 
 
-
-
-
-
-
-
 ?>
-<div class="container">
-    <select id="categorySelect" class="form-select w-25 mb-3" name="category">
-      <option value="all">전체 게시판</option>
-      <option value="notice" <?= $category == 'notice' ? 'selected' : '' ?>>공지사항</option>
-      <option value="free" <?= $category == 'free' ? 'selected' : '' ?>>자유게시판</option>
-      <option value="event" <?= $category == 'event' ? 'selected' : '' ?>>이벤트</option>
-      <option value="qna" <?= $category == 'qna' ? 'selected' : '' ?>>질문과답변</option>
-    </select>
 
+
+
+
+
+
+<div class="container">
   <table class="table table-hover mb-3">
     <thead>
       <tr>
@@ -137,7 +125,7 @@ $event_result = $mysqli->query($sql);
       <tr>
         <th><?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
+        <td><a href="t_read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$data->content ?></td>
         <td><?=$post_date ?></td>
@@ -146,7 +134,7 @@ $event_result = $mysqli->query($sql);
         <td>
         <?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? 
           '<a href="board_modify.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-pen-to-square"></i></a>
-          <a href="delete.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>' 
+          <a href="t_delete.php?pid='.$data->pid.'&category='.$category.'"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>' 
           : ''
         ?>
         </td>
@@ -163,7 +151,7 @@ $event_result = $mysqli->query($sql);
         if ($block_num > 1) { //prev 버튼
           $prev = $block_start - $block_ct;
           echo "<li class=\"page-item prev\">
-              <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
+              <a class=\"page-link\" href=\"t_board_list.php?category={$category}&page={$prev}\">
                   <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
               </a>
           </li>";
@@ -175,14 +163,14 @@ $event_result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
         if($total_block >  $block_num){ //next 버튼
       ?>
       <li class="page-item next">
-        <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
+        <a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $next;?>">
           <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
         </a>
       </li>
@@ -198,27 +186,7 @@ $event_result = $mysqli->query($sql);
   </div>
 </div>
 
-<!-- <script>
-  // 카테고리 선택 시
-  const cate = document.querySelector('#categorySelect');
-  cate.addEventListener('change', function(e) {
-    e.preventDefault();
-    const category = this.value;
 
-    // AJAX 요청으로 데이터만 갱신
-    $.ajax({
-      url: 'board_list.php',  // 요청할 PHP 파일
-      type: 'GET',
-      data: { category: category },  // 보낼 데이터 (카테고리 값)
-      success: function(data) {
-        $('#board_list').html($(data).find('#board_list').html());
-      },
-      error: function(xhr, status, error) {
-        console.error('AJAX Error:', error);
-      }
-    });
-  });
-</script> -->
 
 <script>
   // 카테고리 선택 시
