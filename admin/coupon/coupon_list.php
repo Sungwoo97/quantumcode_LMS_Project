@@ -79,7 +79,7 @@ if($block_end > $total_page ) $block_end = $total_page;
 <table class="mt-3 table table-hover text-center couponlist">
   <thead>
     <tr>
-      <th scope="col"><i class="fa-solid fa-check"></i></th>
+      <th scope="col"><input type="checkbox" id="selectAll"></th>
       <th scope="col">No</th>
       <th scope="col" style="width: 35%;">쿠폰 이름</th>
       <th scope="col" style="width: 10%;">할인율</th>
@@ -96,7 +96,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     ?>
     <tr>
       <td scope="row">
-      <input class="form-check-input listcheck" name="cid_check[]" type="checkbox" value="" id="cid<?= $data->cid; ?>">
+      <input type="checkbox" class="coupon-check" data-cid="<?= $data->cid; ?>" data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>">
       </td>
       <th scope="row">
         <input type="hidden" name="cid[]" value="<?= $data->cid; ?>">
@@ -227,10 +227,10 @@ if($block_end > $total_page ) $block_end = $total_page;
   <div class="d-flex gap-3 justify-content-end">
     <button class="btn btn-secondary"><a href="coupon_copy.php">복사</a></button>
     <button class="btn btn-primary"><a href="coupon_regis.php">생성</a></button>
-    <button class="btn btn-danger">삭제</button>
+    <button class="btn btn-danger" id="bulkDeleteBtn" data-bs-toggle="modal" data-bs-target="#bulkDeleteModal">삭제</button>
   </div>
 
-<!-- 삭제 모달 -->
+<!-- 개별삭제 모달 -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -249,7 +249,24 @@ if($block_end > $total_page ) $block_end = $total_page;
     </div>
 </div>
 
-  
+<!-- 일괄 삭제 모달 -->
+<div class="modal fade" id="bulkDeleteModal" tabindex="-1" aria-labelledby="bulkDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal_header d-flex flex-column text-center">
+        <h5 class="modal-title" id="bulkDeleteModalLabel">선택한 쿠폰 삭제 확인</h5>
+        <p class="mt-2 mb-0">아래 쿠폰을 삭제하시겠습니까? 삭제된 쿠폰은 복구할 수 없습니다.</p>
+      </div>
+      <div class="modal-body">
+        <ul id="selectedCouponsList"></ul>
+      </div>
+      <div class="modal_footer">
+        <button type="button" id="confirmBulkDelete" class="btn btn-danger">예</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -285,31 +302,94 @@ if($block_end > $total_page ) $block_end = $total_page;
   // 초기 상태
   initializeView();
 
+  //모달
   const deleteButtons = document.querySelectorAll('.delete-btn'); // 삭제 버튼
-    const modalBody = document.querySelector('#deleteModal .modal-body'); // 모달 본문
-    const confirmDelete = document.querySelector('#deleteModal .btn-danger'); // 모달의 "예" 버튼
+  const modalBody = document.querySelector('#deleteModal .modal-body'); // 모달 본문
+  const confirmDelete = document.querySelector('#deleteModal .btn-danger'); // 모달의 "예" 버튼
 
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const couponId = this.getAttribute('data-cid');
-            const couponName = this.getAttribute('data-name');
-            const couponPrice = this.getAttribute('data-price');
-            const couponDates = this.getAttribute('data-dates');
-
-            // 모달 내용 업데이트
-            modalBody.innerHTML = `
-                <ul>
-                    <li>쿠폰 번호 : [ ${couponId} ]</li>
-                    <li>쿠폰 이름 : [ ${couponName} ]</li>
-                    <li>할인 금액 : [ ${couponPrice} ]</li>
-                    <li>사용 기간 : [ ${couponDates} ]</li>
-                </ul>
-            `;
-
-            // "예" 버튼의 링크 업데이트
-            confirmDelete.setAttribute('href', `coupon_del.php?cid=${couponId}`);
-        });
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const couponId = this.getAttribute('data-cid');
+      const couponName = this.getAttribute('data-name');
+      const couponPrice = this.getAttribute('data-price');
+      const couponDates = this.getAttribute('data-dates');
+      modalBody.innerHTML = `
+          <ul>
+              <li>쿠폰 번호 : [ ${couponId} ]</li>
+              <li>쿠폰 이름 : [ ${couponName} ]</li>
+              <li>할인 금액 : [ ${couponPrice} ]</li>
+              <li>사용 기간 : [ ${couponDates} ]</li>
+          </ul>
+      `;
+      confirmDelete.setAttribute('href', `coupon_del.php?cid=${couponId}`);
     });
+  });
+
+  const selectAllCheckbox = document.getElementById('selectAll');
+  const couponCheckboxes = document.querySelectorAll('.coupon-check');
+  const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+  const confirmBulkDelete = document.getElementById('confirmBulkDelete');
+  const selectedCouponsList = document.getElementById('selectedCouponsList');
+
+  // 전체 선택/해제 기능
+  selectAllCheckbox.addEventListener('change', function () {
+      const isChecked = this.checked;
+      couponCheckboxes.forEach(checkbox => {
+          checkbox.checked = isChecked;
+      });
+  });
+
+  // 삭제 버튼 클릭 시 선택된 쿠폰 정보를 모달에 표시
+  bulkDeleteBtn.addEventListener('click', function () {
+    const selectedCoupons = Array.from(couponCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => ({
+        id: checkbox.getAttribute('data-cid'),
+        name: checkbox.getAttribute('data-name')
+      }));
+    if (selectedCoupons.length === 0) {
+      alert('삭제할 쿠폰을 선택하세요.');
+      return;
+    }
+
+    selectedCouponsList.innerHTML = selectedCoupons
+      .map(coupon => `<li>${coupon.name} (ID: ${coupon.id})</li>`)
+      .join('');
+
+    confirmBulkDelete.dataset.ids = JSON.stringify(selectedCoupons.map(coupon => coupon.id));
+});
+
+
+
+confirmBulkDelete.addEventListener('click', function () {
+  const idsToDelete = JSON.parse(this.dataset.ids || '[]');
+
+    if (idsToDelete.length === 0) {
+        alert('삭제할 쿠폰이 없습니다.');
+        return;
+    }
+
+    fetch('coupon_bulk_delete.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: idsToDelete })
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('선택한 쿠폰이 삭제되었습니다.');
+            location.reload();
+        } else {
+            alert(data.message || '삭제 실패');
+        }
+    })
+    .catch(error => {
+        console.error('Fetch 오류:', error);
+        alert('삭제 중 문제가 발생했습니다.');
+    });
+  });
 });
 
 
