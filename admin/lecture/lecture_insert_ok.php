@@ -109,6 +109,6 @@ if ($lecture_result) { //상품이 products테이블에 등록되면
 if ($lecture_result) {
   echo "<script>
     alert('강의가 등록되었습니다.');
-    location.href = 'lecture_list.php';
+    location.href = 'lecture_listView.php';
     </script>";
 }
