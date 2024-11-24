@@ -108,9 +108,14 @@ if($block_end > $total_page ) $block_end = $total_page;
       <td><?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "무료") ?></td>
       <td><?= $data->	startdate.'~'.$data->	enddate; ?> </td>
       <td>
-      <div class="form-check form-switch d-flex justify-content-center">
-        <input class="form-check-input" type="checkbox" role="switch" id="coupon_switchToggle" data-id="<?= $data->cid ?>" <?= $data->status ? 'checked' : '' ?>>
-        <label class="form-check-label" for="coupon_switchToggle"></label>
+      <div class="form-check form-switch d-flex justify-content-center align-items-center">
+        <input class="form-check-input" 
+          type="checkbox" 
+          role="switch" 
+          data-id="<?= $data->cid ?>" 
+          id="coupon_switchToggle<?= $data->cid ?>" 
+          <?= $data->status ? 'checked' : '' ?>>
+        <label class="form-check-label" for="coupon_switchToggle<?= $data->cid ?>"></label>
       </div>
       </td>
       <td class="icon_hover d-flex gap-1 justify-content-center">
@@ -155,25 +160,32 @@ if($block_end > $total_page ) $block_end = $total_page;
           <p class="mt-2 mb-2"><?= $data->coupon_content ?></p>
           <div class="d-flex justify-content-between align-items-center">
             <p><?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio." %" : "무료") ?></p>
-            <div class="d-flex gap-2 align-items-center">
-            <div class="form-check form-switch d-flex justify-content-between align-items-center">
-              <input class="form-check-input" type="checkbox" role="switch" id="coupon_switchToggle" data-id="<?= $data->cid ?>" <?= $data->status ? 'checked' : '' ?>>
-              <label class="form-check-label" for="coupon_switchToggle"></label>
-            </div class="icon_hover">
-            <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
-              <img src="../img/icon-img/Edit.svg" alt="수정" style="width: 22px;">
-            </a>
-            <button type="button" 
-              class="delete-btn" 
-              data-bs-toggle="modal" 
-              data-bs-target="#deleteModal" 
-              data-cid="<?= $data->cid; ?>" 
-              data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>" 
-              data-price="<?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio.'%' : '무료'); ?>" 
-              data-dates="<?= $data->startdate.' ~ '.$data->enddate; ?>">
-              <img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 22px;">
-            </button>
-            </div>
+              <div class="d-flex gap-2 align-items-center">
+                <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                  <input class="form-check-input" 
+                    type="checkbox" 
+                    role="switch" 
+                    data-id="<?= $data->cid ?>" 
+                    id="coupon_switchToggle<?= $data->cid ?>" 
+                    <?= $data->status ? 'checked' : '' ?>>
+                  <label class="form-check-label" for="coupon_switchToggle<?= $data->cid ?>"></label>
+                </div>
+                <div class="icon_hover">
+                  <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
+                    <img src="../img/icon-img/Edit.svg" alt="수정" style="width: 22px;">
+                  </a>
+                  <button type="button" 
+                    class="delete-btn" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#deleteModal" 
+                    data-cid="<?= $data->cid; ?>" 
+                    data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>" 
+                    data-price="<?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio.'%' : '무료'); ?>" 
+                    data-dates="<?= $data->startdate.' ~ '.$data->enddate; ?>">
+                    <img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 22px;">
+                  </button>
+                </div>
+              </div>
           </div>
       </div>
     </div>
@@ -270,6 +282,8 @@ if($block_end > $total_page ) $block_end = $total_page;
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
+
+  //레이어 뷰 변수
   const rowsButton = document.querySelector('.Rows');
   const layoutButton = document.querySelector('.Layout');
   const tableView = document.querySelector('.couponlist'); // table
@@ -280,8 +294,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     tableView.classList.add('active'); // table 활성화
     ulView.classList.remove('active'); // ul 비활성화
   }
-
-  // Rows 버튼 클릭
+  // Rows 버튼 레이어뷰
   rowsButton.addEventListener('click', (e)=>{
     e.preventDefault();
     tableView.classList.add('active');
@@ -289,8 +302,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     rowsButton.classList.add('active');
     layoutButton.classList.remove('active');
   });
-
-  // Layout 버튼 클릭
+  // Layout버튼 박스뷰
   layoutButton.addEventListener('click', (e)=>{
     e.preventDefault();
     ulView.classList.add('active');
@@ -298,15 +310,31 @@ if($block_end > $total_page ) $block_end = $total_page;
     layoutButton.classList.add('active');
     rowsButton.classList.remove('active');
   });
-
-  // 초기 상태
+  // 초기 상태 실행
   initializeView();
 
-  //모달
-  const deleteButtons = document.querySelectorAll('.delete-btn'); // 삭제 버튼
-  const modalBody = document.querySelector('#deleteModal .modal-body'); // 모달 본문
-  const confirmDelete = document.querySelector('#deleteModal .btn-danger'); // 모달의 "예" 버튼
 
+  //개별삭제 모달 변수
+  const deleteButtons = document.querySelectorAll('.delete-btn'); 
+  const modalBody = document.querySelector('#deleteModal .modal-body'); 
+  const confirmDelete = document.querySelector('#deleteModal .btn-danger');
+  
+  //일괄삭제 모달 변수
+  const selectAllCheckbox = document.getElementById('selectAll');
+  const couponCheckboxes = document.querySelectorAll('.coupon-check');
+  const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+  const confirmBulkDelete = document.getElementById('confirmBulkDelete');
+  const selectedCouponsList = document.getElementById('selectedCouponsList');
+
+  // 전체 선택/해제 기능
+  selectAllCheckbox.addEventListener('change', function () {
+      const isChecked = this.checked;
+      couponCheckboxes.forEach(checkbox => {
+          checkbox.checked = isChecked;
+      });
+  });
+
+  // 개별삭제 모달 스크립트
   deleteButtons.forEach(button => {
     button.addEventListener('click', function () {
       const couponId = this.getAttribute('data-cid');
@@ -325,21 +353,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     });
   });
 
-  const selectAllCheckbox = document.getElementById('selectAll');
-  const couponCheckboxes = document.querySelectorAll('.coupon-check');
-  const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
-  const confirmBulkDelete = document.getElementById('confirmBulkDelete');
-  const selectedCouponsList = document.getElementById('selectedCouponsList');
-
-  // 전체 선택/해제 기능
-  selectAllCheckbox.addEventListener('change', function () {
-      const isChecked = this.checked;
-      couponCheckboxes.forEach(checkbox => {
-          checkbox.checked = isChecked;
-      });
-  });
-
-  // 삭제 버튼 클릭 시 선택된 쿠폰 정보를 모달에 표시
+  // 일괄삭제 모달 스크립트
   bulkDeleteBtn.addEventListener('click', function () {
     const selectedCoupons = Array.from(couponCheckboxes)
       .filter(checkbox => checkbox.checked)
@@ -357,40 +371,70 @@ if($block_end > $total_page ) $block_end = $total_page;
       .join('');
 
     confirmBulkDelete.dataset.ids = JSON.stringify(selectedCoupons.map(coupon => coupon.id));
-});
+  });
 
+  confirmBulkDelete.addEventListener('click', function () {
+    const idsToDelete = JSON.parse(this.dataset.ids || '[]');
 
+      if (idsToDelete.length === 0) {
+          alert('삭제할 쿠폰이 없습니다.');
+          return;
+      }
 
-confirmBulkDelete.addEventListener('click', function () {
-  const idsToDelete = JSON.parse(this.dataset.ids || '[]');
-
-    if (idsToDelete.length === 0) {
-        alert('삭제할 쿠폰이 없습니다.');
-        return;
-    }
-
-    fetch('coupon_bulk_delete.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ids: idsToDelete })
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('선택한 쿠폰이 삭제되었습니다.');
-            location.reload();
-        } else {
-            alert(data.message || '삭제 실패');
-        }
-    })
-    .catch(error => {
-        console.error('Fetch 오류:', error);
-        alert('삭제 중 문제가 발생했습니다.');
+      fetch('coupon_bulk_delete.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids: idsToDelete })
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+          if (data.success) {
+              alert('선택한 쿠폰이 삭제되었습니다.');
+              location.reload();
+          } else {
+              alert(data.message || '삭제 실패');
+          }
+      })
+      .catch(error => {
+          console.error('Fetch 오류:', error);
+          alert('삭제 중 문제가 발생했습니다.');
+      });
     });
   });
-});
+
+  // 활성화 스위치 토글 선택
+  const toggleSwitches = document.querySelectorAll('.form-check-input'); 
+  toggleSwitches.forEach(switchToggle => {
+    switchToggle.addEventListener('change', function () {
+      const couponId = this.getAttribute('data-id'); // 쿠폰 ID 가져오기
+      const newStatus = this.checked ? 1 : 0; // 활성화 상태: 체크 여부에 따라 값 설정
+
+      // 서버로 상태 업데이트 요청
+      fetch('toggle_status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cid: couponId, status: newStatus })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+            alert(`쿠폰 ID ${couponId} 상태가 ${newStatus ? '활성화' : '비활성화'}로 변경되었습니다.`);
+          } else {
+            alert('상태 변경에 실패했습니다. 다시 시도해주세요.');
+            // 스위치 상태를 되돌림
+            this.checked = !this.checked;
+          }
+      })
+      .catch(error => {
+        console.error('에러 발생:', error);
+        alert('서버와의 통신 중 문제가 발생했습니다.');
+        // 스위치 상태를 되돌림
+        this.checked = !this.checked;
+      });
+    });
+  });
 
 
 </script>
