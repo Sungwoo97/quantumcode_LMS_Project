@@ -282,8 +282,12 @@ section.desc{
   padding: 20px;
   border :  1px solid var(--primary);
   border-radius: 15px;
+  
   *{
     margin-bottom: 0;
+  }
+  img{
+    
   }
 }
 .review .btn, .reply .btn, .rereply .btn{
