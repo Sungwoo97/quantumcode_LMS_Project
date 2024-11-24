@@ -2,9 +2,9 @@
 $title = '강의 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+// print_r($_SESSION); Array ( [TUIDX] => 3 [TUID] => kwak [TUNAME] => 곽튜브 ) 
 
-
-$id = isset($_SESSION['AUID']);
+$id = isset($_SESSION['TUID']);
 if (!isset($id)) {
   echo "
     <script>

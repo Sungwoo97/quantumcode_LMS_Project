@@ -5,6 +5,19 @@ $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$id = $_SESSION['AUID'];
+if (!isset($id)) {
+  echo "
+    <script>
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
+    </script>
+  ";
+}
+
+
+
+
 $manage_sql = "SELECT * FROM sales_management";
 $manage_result = $mysqli->query($manage_sql);
 if($manage_result){
@@ -175,7 +188,7 @@ foreach ($counts as $count) {
   </div>
 
   <!-- 강의 정보 섹션 -->
-  <div class="row g-4">
+  <!-- <div class="row g-4">
     <div class="col-md-6">
       <div class="sales_chart">
         <dl>
@@ -210,14 +223,14 @@ foreach ($counts as $count) {
                 </tr>
               </thead>
               <tbody>
-                <?= $html ?>
+                
               </tbody>
             </table>
           </dd>
         </dl>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- 종합 데이터 섹션 -->
   <!-- <div class="row g-4">
