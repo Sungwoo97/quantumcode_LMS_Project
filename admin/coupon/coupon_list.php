@@ -117,9 +117,16 @@ if($block_end > $total_page ) $block_end = $total_page;
         <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
           <img src="../img/icon-img/Edit.svg" alt="수정">
         </a>
-        <a href="coupon_del.php?cid=<?= $data->cid; ?>">
-          <img src="../img/icon-img/Trash.svg" alt="삭제">
-        </a>
+        <button type="button" 
+          class="delete-btn" 
+          data-bs-toggle="modal" 
+          data-bs-target="#deleteModal" 
+          data-cid="<?= $data->cid; ?>" 
+          data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>" 
+          data-price="<?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio.'%' : '무료'); ?>" 
+          data-dates="<?= $data->startdate.' ~ '.$data->enddate; ?>">
+          <img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 22px;">
+        </button>
       </td>
       <?php
       }
@@ -156,9 +163,16 @@ if($block_end > $total_page ) $block_end = $total_page;
             <a href="coupon_edit.php?cid=<?= $data->cid; ?>">
               <img src="../img/icon-img/Edit.svg" alt="수정" style="width: 22px;">
             </a>
-            <a href="coupon_del.php?cid=<?= $data->cid; ?>">
+            <button type="button" 
+              class="delete-btn" 
+              data-bs-toggle="modal" 
+              data-bs-target="#deleteModal" 
+              data-cid="<?= $data->cid; ?>" 
+              data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>" 
+              data-price="<?= $data->coupon_price ? '₩ '.number_format($data->coupon_price) : ($data->coupon_ratio ? $data->coupon_ratio.'%' : '무료'); ?>" 
+              data-dates="<?= $data->startdate.' ~ '.$data->enddate; ?>">
               <img src="../img/icon-img/Trash.svg" alt="삭제" style="width: 22px;">
-            </a>
+            </button>
             </div>
           </div>
       </div>
@@ -213,9 +227,27 @@ if($block_end > $total_page ) $block_end = $total_page;
   <div class="d-flex gap-3 justify-content-end">
     <button class="btn btn-secondary"><a href="coupon_copy.php">복사</a></button>
     <button class="btn btn-primary"><a href="coupon_regis.php">생성</a></button>
-    <button class="btn btn-danger delete"><a href="coupon_del.php">삭제</a></button>
+    <button class="btn btn-danger">삭제</button>
   </div>
 
+<!-- 삭제 모달 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal_header d-flex flex-column text-center">
+              <h5 class="modal-title" id="deleteModalLabel">쿠폰 삭제 확인</h5>
+              <p class="mt-2 mb-0">이 쿠폰을 삭제하시겠습니까? 삭제된 쿠폰은 복구할 수 없습니다.</p>
+            </div>
+            <div class="modal-body">
+                <!-- JavaScript가 여기에 데이터를 삽입 -->
+            </div>
+            <div class="modal_footer d-flex gap-3 justify-content-center">
+              <a href="coupon_del.php" class="btn btn-danger">예</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
+            </div>
+        </div>
+    </div>
+</div>
 
   
 
@@ -252,7 +284,35 @@ if($block_end > $total_page ) $block_end = $total_page;
 
   // 초기 상태
   initializeView();
+
+  const deleteButtons = document.querySelectorAll('.delete-btn'); // 삭제 버튼
+    const modalBody = document.querySelector('#deleteModal .modal-body'); // 모달 본문
+    const confirmDelete = document.querySelector('#deleteModal .btn-danger'); // 모달의 "예" 버튼
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const couponId = this.getAttribute('data-cid');
+            const couponName = this.getAttribute('data-name');
+            const couponPrice = this.getAttribute('data-price');
+            const couponDates = this.getAttribute('data-dates');
+
+            // 모달 내용 업데이트
+            modalBody.innerHTML = `
+                <ul>
+                    <li>쿠폰 번호 : [ ${couponId} ]</li>
+                    <li>쿠폰 이름 : [ ${couponName} ]</li>
+                    <li>할인 금액 : [ ${couponPrice} ]</li>
+                    <li>사용 기간 : [ ${couponDates} ]</li>
+                </ul>
+            `;
+
+            // "예" 버튼의 링크 업데이트
+            confirmDelete.setAttribute('href', `coupon_del.php?cid=${couponId}`);
+        });
+    });
 });
+
+
 </script>
 
 
