@@ -16,7 +16,7 @@ if (!isset($id)) {
 ?>
 
 
-<form action="t_board_write_ok.php" method="POST" enctype="multipart/form-data" class="row">
+<form action="board_write_ok.php" method="POST" enctype="multipart/form-data" class="row">
   <div class="mb-3 col-4">
     <div class="box mb-3">
       <img id="imgPreview" src="#" alt="이미지 미리보기" style="display:none; width: 100%; height: 100%; object-fit: contain;">
@@ -107,5 +107,5 @@ if (!isset($id)) {
 </script>
  
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/teachers/inc/footer.php');
 ?>
