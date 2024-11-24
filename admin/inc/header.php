@@ -227,10 +227,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
           </h2>
           <ul id="nav_cate_lecture" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_list.php">강의 목록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_insert.php">강의 등록</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/category_list.php">카테고리 관리</a></li>
-            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/teachers/lecture/lecture_review.php">수강평</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_list.php">강의 목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_insert.php">강의 등록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/category_list.php">카테고리 관리</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/lecture/lecture_review.php">수강평</a></li>
           </ul>
         </div>
         <div class="accordion-item">
