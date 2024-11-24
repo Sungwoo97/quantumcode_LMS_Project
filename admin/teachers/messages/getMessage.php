@@ -48,7 +48,11 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 $message_sql = "SELECT * FROM toteachermessages";
 $message_result = $mysqli->query($message_sql);
-$message_data = $message_result->fetch_object();
+$dataArr = []; // 배열 초기화
+while($m_data = $message_result->fetch_object()){
+  $dataArr[] = $m_data;
+}
+
 
 // print_r($message_data); //stdClass Object ( [id] => 3 [sender_id] => 4 [receiver_id] => 2 [message_content] => to 우진쌤 [sent_at] => 2024-11-24 04:30:01 [is_read] => 0 )
 
@@ -90,25 +94,33 @@ $message_data = $message_result->fetch_object();
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row"><?= $message_data->id; ?></th>
-          <td><?= $message_data->sender_id; ?></td>
-          <td><?= $message_data->sender_name; ?></td>
-          <td>
-            <a href="#" 
-              class="text-primary message-link" 
-              data-bs-toggle="modal" 
-              data-bs-target="#messageModal" 
-              data-message="<?= htmlspecialchars($message_data->message_content, ENT_QUOTES, 'UTF-8'); ?>"
-              data-id="<?= $message_data->id; ?>">
-              <?= mb_strimwidth($message_data->message_content, 0, 20, "...", "UTF-8"); ?>
-            </a>
-          </td>
-          <td><?= $message_data->sent_at; ?></td>
-          <td>
-            <?= $message_data->is_read ? "읽음" : "읽지 않음"; ?>
-          </td>
-        </tr>
+        <?php if (!empty($dataArr)): ?>
+          <?php foreach ($dataArr as $item): ?>
+            <tr>
+              <th scope="row"><?= $item->id; ?></th>
+              <td><?= $item->sender_id; ?></td>
+              <td><?= $item->sender_name; ?></td>
+              <td>
+                <a href="#" 
+                   class="text-primary message-link" 
+                   data-bs-toggle="modal" 
+                   data-bs-target="#messageModal" 
+                   data-message="<?= htmlspecialchars($item->message_content, ENT_QUOTES, 'UTF-8'); ?>"
+                   data-id="<?= $item->id; ?>">
+                  <?= mb_strimwidth($item->message_content, 0, 20, "...", "UTF-8"); ?>
+                </a>
+              </td>
+              <td><?= $item->sent_at; ?></td>
+              <td>
+                <?= $item->is_read ? "읽음" : "읽지 않음"; ?>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <tr>
+            <td colspan="6" class="text-center">표시할 메시지가 없습니다.</td>
+          </tr>
+        <?php endif; ?>
       </tbody>
     </table>
 
