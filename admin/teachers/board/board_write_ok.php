@@ -48,16 +48,16 @@ $result = $mysqli->query($sql);
 
 switch ($category) {
   case 'qna':
-      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=qna';
+      $redirect_url = '/qc/admin/teachers/board/board_list.php';
       break;
   case 'notice':
-      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=notice';
+      $redirect_url = '/qc/admin/teachers/board/board_list.php';
       break;
   case 'event':
-      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=event';
+      $redirect_url = '/qc/admin/teachers/board/board_list.php';
       break;
   case 'free':
-      $redirect_url = '/qc/admin/teachers/teachers_board/t_board_list.php?category=free';
+      $redirect_url = '/qc/admin/teachers/board/board_list.php';
       break;
   default:
       die("카테고리를 선택 해주세요.");

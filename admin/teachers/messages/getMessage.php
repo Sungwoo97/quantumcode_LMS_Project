@@ -91,6 +91,7 @@ while($m_data = $message_result->fetch_object()){
           <th scope="col">쪽지 내용</th>
           <th scope="col">보낸 시각</th>
           <th scope="col">읽음 여부</th>
+          <th scope="col">답장 보내기</th>
         </tr>
       </thead>
       <tbody>
@@ -113,6 +114,10 @@ while($m_data = $message_result->fetch_object()){
               <td><?= $item->sent_at; ?></td>
               <td>
                 <?= $item->is_read ? "읽음" : "읽지 않음"; ?>
+              </td>
+              <td>
+                <!-- 누구냐한테 보내는 게 필요. 답신이므로,, 보낸사람, 즉 $item->sender_id; 가 필요하다. -->
+               <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal2" data-mid="<?= $item->sender_id; ?>" >쪽지보내기</button>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -152,7 +157,7 @@ while($m_data = $message_result->fetch_object()){
     </nav>
 </div>
 
-<!-- 모달 창 -->
+<!-- 모달 창1 -->
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -171,6 +176,35 @@ while($m_data = $message_result->fetch_object()){
   </div>
 </div>
 
+
+
+<div class="modal fade" id="messageModal2" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">쪽지 보내기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="sendMessageForm" method="post">
+          <!-- 수정: sender_idx는 관리자 정보를 세션에서 가져오므로 유지 -->
+          <input type="hidden" id="sender_idx" name="sender_idx" value="<?= $_SESSION['TUIDX'] ?>"> 
+          <input type="hidden" id="sender_name" name="sender_name" value="<?= $_SESSION['TUNAME'] ?>"> 
+          <input type="hidden" id="receiver_name" name="receiver_name" value="<?= $item->sender_name; ?>"> 
+
+          <!-- 수정: receiver_tid는 JavaScript로 설정되므로 기본값을 제거 -->
+          <input type="hidden" id="receiver_tid" name="receiver_tid" value=""> 
+          <div class="mb-3">
+            <label for="message" class="form-label">메시지 내용</label>
+            <textarea id="message" name="message" class="form-control" placeholder="쪽지 내용을 입력하세요" rows="10" maxlength="2000" required></textarea>
+            <small class="form-text text-muted">최대 2000자까지 입력할 수 있습니다.</small>
+          </div>
+          <button type="submit" class="btn btn-primary">보내기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -220,6 +254,57 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+
+
+//쪽지 보내기
+document.getElementById("messageModal2").addEventListener("show.bs.modal", function (event) {
+    const button = event.relatedTarget; // 버튼에서 data-mid 가져오기
+    const receiverTid = button.getAttribute("data-mid"); // data-mid 값 가져오기
+    document.getElementById("receiver_tid").value = receiverTid; // 숨겨진 input에 설정
+    });
+
+// 메시지 전송 처리
+document.getElementById("sendMessageForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 기본 폼 전송 막기
+
+    // 폼 데이터 가져오기
+    const sender_idx = document.getElementById("sender_idx").value;
+    const sender_name = document.getElementById("sender_name").value;
+    const receiver_name = document.getElementById("receiver_name").value;
+    const receiver_tid = document.getElementById("receiver_tid").value;
+    const message = document.getElementById("message").value;
+
+    // POST 요청 보내기
+    fetch("send_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ 
+        sender_idx: sender_idx, 
+        sender_name: sender_name, 
+        receiver_name: receiver_name, 
+        receiver_tid: receiver_tid, 
+        message: message 
+        })
+    })
+    .then(response => response.json()
+    )
+    .then(data => {
+      console.log(data);
+        if (data.status === "success") {
+            alert(data.message); // 성공 메시지 표시
+            const modal = bootstrap.Modal.getInstance(document.getElementById("messageModal"));
+            modal.hide(); // 모달 닫기
+        } else {
+            alert(data.message); // 오류 메시지 표시
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+
+
+
 </script>
 
 
