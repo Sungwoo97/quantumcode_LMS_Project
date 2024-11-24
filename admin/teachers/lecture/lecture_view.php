@@ -2,7 +2,8 @@
 $title = '강의 보기';
 $reset_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/reset.css\" rel=\"stylesheet\">";
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
 
 $id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
 if (!isset($id)) {
@@ -83,8 +84,8 @@ switch ($data->difficult) {
     </div>
   </div>
   <ul>
-    <li class=""> <img src="../img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
-    <li class="like"><img src="../img/icon-img/Heart.svg" alt="">500+</li>
+    <li class=""> <img src="../../img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
+    <li class="like"><img src="../../img/icon-img/Heart.svg" alt="">500+</li>
     <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
   </ul>
 </section>
