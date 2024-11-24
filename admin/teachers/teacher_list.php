@@ -198,6 +198,7 @@ while($join_data = $join_result->fetch_object()){
         <form id="sendMessageForm" method="post">
           <!-- 수정: sender_idx는 관리자 정보를 세션에서 가져오므로 유지 -->
           <input type="hidden" id="sender_idx" name="sender_idx" value="<?= $_SESSION['AUIDX'] ?>"> 
+          <input type="hidden" id="sender_name" name="sender_name" value="<?= $_SESSION['AUNAME'] ?>"> 
           <!-- 수정: receiver_tid는 JavaScript로 설정되므로 기본값을 제거 -->
           <input type="hidden" id="receiver_tid" name="receiver_tid" value=""> 
           <div class="mb-3">
@@ -233,6 +234,7 @@ document.getElementById("sendMessageForm").addEventListener("submit", function (
 
     // 폼 데이터 가져오기
     const sender_idx = document.getElementById("sender_idx").value;
+    const sender_name = document.getElementById("sender_name").value;
     const receiver_tid = document.getElementById("receiver_tid").value;
     const message = document.getElementById("message").value;
 
@@ -242,6 +244,7 @@ document.getElementById("sendMessageForm").addEventListener("submit", function (
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ 
         sender_idx: sender_idx, 
+        sender_name: sender_name, 
         receiver_tid: receiver_tid, 
         message: message 
         })

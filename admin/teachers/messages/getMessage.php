@@ -1,5 +1,5 @@
 <?php
-$title = "강사 목록";
+$title = "쪽지 관리";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 //검색
@@ -11,7 +11,7 @@ if($search_keyword){
 }
 
 //데이터의 개수 조회
-$page_sql = "SELECT COUNT(*) AS cnt FROM teachers WHERE 1=1 $search_where";
+$page_sql = "SELECT COUNT(*) AS cnt FROM toteachermessages WHERE 1=1 $search_where";
 $page_result = $mysqli->query($page_sql);
 $page_data = $page_result->fetch_assoc();
 
@@ -44,50 +44,22 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 
 
-$ordertype = $_GET['orderby'] ?? 'ASC';
-
-if(isset($_GET['orderby'])){
-  $orderColumn = 'year_sales' ;
-}else{
-  $orderColumn = 'tid' ;
-}
-
-// $sql = "SELECT * FROM teachers WHERE 1=1 $search_where ORDER BY $orderColumn $ordertype LIMIT $start_num, $list"; 
-// $result = $mysqli->query($sql); //쿼리 실행 결과
-// while($data = $result->fetch_object()){
-//   $dataArr[] = $data;
-// }
 
 
-$join_sql = "SELECT 
-    t.*,
-    COUNT(l.t_id) AS lecture_count,
-    COUNT(l.t_id) AS lecture_num
-FROM 
-    teachers t
-LEFT JOIN 
-    lecture_list l
-ON 
-    t.id = l.t_id
-WHERE 1=1 $search_where 
-GROUP BY 
-    t.id
-ORDER BY $orderColumn $ordertype LIMIT $start_num, $list";
-// echo $join_sql;
+$message_sql = "SELECT * FROM toteachermessages";
+$message_result = $mysqli->query($message_sql);
+$message_data = $message_result->fetch_object();
 
-$join_result = $mysqli->query($join_sql);
-while($join_data = $join_result->fetch_object()){
-  $dataArr[] = $join_data;
-}
+// print_r($message_data); //stdClass Object ( [id] => 3 [sender_id] => 4 [receiver_id] => 2 [message_content] => to 우진쌤 [sent_at] => 2024-11-24 04:30:01 [is_read] => 0 )
 
 
 ?>
 
 <div class="container">
   <form action="">
-    <h5>현재 강사 수 : <?= $row_num; ?> 명</h5>
-    <div class="d-flex gap-3 w-30 mt-3 align-items-center">
-    <tr>
+    <h5>현재 쪽지 수 : <?= $row_num; ?> 개</h5>
+    <!-- <div class="d-flex gap-3 w-30 mt-3 align-items-center">
+      <tr>
         <td colspan="3">
           <div class="d-flex gap-3">
             <select class="form-select mt-3" id="sort_order" >
@@ -102,53 +74,44 @@ while($join_data = $join_result->fetch_object()){
       </tr>
       <input type="text" class="form-control w-25 ms-auto" name="search_keyword" id="search">
       <button class="btn btn-primary btn-sm w-20">검색</button>
-    </div>     
+    </div>      -->
     <hr> 
     
     <!-- <form action="plist_update.php" method="GET"> -->
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">No. </th>
-          <th scope="col">이름</th>
-          <th scope="col">아이디</th>
-          <th scope="col">이메일</th>
-          <th scope="col">가입날짜</th>
-          <th scope="col">강의 갯수</th>
-          <th scope="col">올해 매출</th>
-          <th scope="col">강사 등급</th>
-          <th scope="col">상세보기</th>
-          <th scope="col">쪽지 보내기</th>
-
-
+          <th scope="col">No.</th>
+          <th scope="col">작성자 아이디</th>
+          <th scope="col">작성자 이름</th>
+          <th scope="col">쪽지 내용</th>
+          <th scope="col">보낸 시각</th>
+          <th scope="col">읽음 여부</th>
         </tr>
       </thead>
       <tbody>
-          <?php
-            if(isset($dataArr)){
-              foreach($dataArr as $item){
-          ?> 
-          <tr>
-            <th scope="row"><?= $item->tid; ?></th>
-              <td><?= $item->name; ?></td>
-              <td><?= $item->id; ?></td>
-              <td><?= $item->email; ?></td>
-              <td><?= $item->reg_date; ?></td>
-              <td><?= $item->lecture_num; ?></td>
-              <td><?= $item->year_sales; ?></td>
-              <td><?= $item->grade; ?></td>
-              <td><a href="teacher_view.php?tid=<?= $item->tid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
-              <td>
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->tid; ?>" >쪽지보내기</button>
-              </td>
-          </tr>
-
-          <?php
-              }
-            }
-          ?> 
+        <tr>
+          <th scope="row"><?= $message_data->id; ?></th>
+          <td><?= $message_data->sender_id; ?></td>
+          <td><?= $message_data->sender_name; ?></td>
+          <td>
+            <a href="#" 
+              class="text-primary message-link" 
+              data-bs-toggle="modal" 
+              data-bs-target="#messageModal" 
+              data-message="<?= htmlspecialchars($message_data->message_content, ENT_QUOTES, 'UTF-8'); ?>"
+              data-id="<?= $message_data->id; ?>">
+              <?= mb_strimwidth($message_data->message_content, 0, 20, "...", "UTF-8"); ?>
+            </a>
+          </td>
+          <td><?= $message_data->sent_at; ?></td>
+          <td>
+            <?= $message_data->is_read ? "읽음" : "읽지 않음"; ?>
+          </td>
+        </tr>
       </tbody>
     </table>
+
   </form>
   <nav aria-label="Page navigation">
       <ul class="pagination d-flex justify-content-center">
@@ -177,10 +140,76 @@ while($join_data = $join_result->fetch_object()){
     </nav>
 </div>
 
+<!-- 모달 창 -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">쪽지 내용</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 메시지가 동적으로 삽입됩니다 -->
+        <p id="modalMessageContent"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // 모든 메시지 링크에 이벤트 리스너 추가
+    const messageLinks = document.querySelectorAll('[data-bs-target="#messageModal"]');
+    const modalMessageContent = document.getElementById('modalMessageContent');
 
+    messageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            // data-message 속성에서 메시지 내용 가져오기
+            const messageContent = this.getAttribute('data-message');
+            // 모달의 콘텐츠 영역에 메시지 표시
+            modalMessageContent.textContent = messageContent;
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const messageLinks = document.querySelectorAll('.message-link');
+    const modalMessageContent = document.getElementById('modalMessageContent');
+
+    messageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            const messageContent = this.getAttribute('data-message');
+            const messageId = this.getAttribute('data-id');
+
+            // 메시지 내용을 모달에 표시
+            modalMessageContent.textContent = messageContent;
+
+            // AJAX 요청으로 is_read를 업데이트
+            fetch('update_is_read.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: messageId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('is_read 업데이트 성공:', data);
+                } else {
+                    console.error('is_read 업데이트 실패:', data.message);
+                }
+            })
+            .catch(error => console.error('에러 발생:', error));
+        });
+    });
+});
 </script>
+
 
 
 <?php

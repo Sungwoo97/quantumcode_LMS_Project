@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sender_idx = $_POST['sender_idx']; // 클라이언트에서 보낸 sender_idx
     $receiver_tid = $_POST['receiver_tid']; // 클라이언트에서 보낸 receiver_mid
     $message = $_POST['message']; // 클라이언트에서 보낸 message
+    $sender_name = $_POST['sender_name']; 
 
     // // 데이터 출력 확인
     // var_dump($sender_idx, $receiver_mid, $message);
@@ -26,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // }
 
     // // 메시지 저장 쿼리 실행
-    $sql = "INSERT INTO toteachermessages (sender_id, receiver_id, message_content, sent_at) VALUES (?, ?, ?, NOW())";
+    $sql = "INSERT INTO toteachermessages (sender_id, receiver_id, message_content, sender_name, sent_at) VALUES (?, ?, ?, ?, NOW())";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("iis", $sender_idx, $receiver_tid, $message);
+    $stmt->bind_param("iiss", $sender_idx, $receiver_tid, $message, $sender_name);
 
     if ($stmt->execute() === true) {
         $result = array('status'=>'success', 'message' => '쪽지를 성공적으로 보냈습니다.');
