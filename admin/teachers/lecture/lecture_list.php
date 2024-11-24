@@ -1,7 +1,8 @@
 <?php
 $title = '강의 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
 
 $id = isset($_SESSION['AUID']);
 if (!isset($id)) {
@@ -13,7 +14,7 @@ if (!isset($id)) {
   ";
 }
 
-echo $id;
+
 
 $search = '';
 
@@ -23,7 +24,7 @@ if ($search_keyword) {
   $search .= " and (title LIKE '%$search_keyword%' OR description LIKE '%$search_keyword%')";
 }
 //데이터의 개수 조회
-$page_sql = "SELECT COUNT(*) AS cnt FROM lecture_list WHERE 1=1 $search";
+$page_sql = "SELECT COUNT(*) AS cnt FROM lecture_list WHERE t_id ='{$_SESSION['TUID']}' AND 1=1 $search";
 $page_result = $mysqli->query($page_sql);
 $page_data = $page_result->fetch_assoc();
 $row_num = $page_data['cnt'];
@@ -51,7 +52,7 @@ if ($block_end > $total_page) $block_end = $total_page;
 
 $html = '';
 $list = array();
-$sql = "SELECT * FROM lecture_list WHERE 1=1 $search ORDER BY lid LIMIT $start_num, $length";
+$sql = "SELECT * FROM lecture_list WHERE t_id ='{$_SESSION['TUID']}' AND  1=1 $search ORDER BY lid LIMIT $start_num, $length";
 $result = $mysqli->query($sql);
 while ($data = $result->fetch_object()) {
   $list[] = $data;
@@ -111,7 +112,7 @@ if (count($list) > 0) {
     <td>{$diff}</td>
     <td>{$category}</td>
     <td>{$list->regist_day}</td>
-    <td><a href=\"lecture_modify.php?lid={$list->lid}\"><img src=\"../img/icon-img/Edit.svg\" width=\"20\"></a></td>
+    <td><a href=\"lecture_modify.php?lid={$list->lid}\"><img src=\"../../img/icon-img/Edit.svg\" width=\"20\"></a></td>
   </tr>";
     $i++;
   }

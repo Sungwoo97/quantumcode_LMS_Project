@@ -1,7 +1,8 @@
 <?php
 $title = '수강평';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
 
 $id = isset($_SESSION['AUID']);
 if (!isset($id)) {
@@ -29,7 +30,7 @@ while ($review_data = $review_result->fetch_object()) {
     $reply .=
       "<div class=\"rereply d-flex gap-3 align-items-center mb-3 ml-3\">
         <div>
-          <img src=\"../img/core-img/어드민_이미지.png\" alt=\"\">
+          <img src=\"../../img/core-img/어드민_이미지.png\" alt=\"\">
         </div>
         <div>
           <h3>{$reply_data->t_id}</h3>
@@ -48,12 +49,12 @@ while ($review_data = $review_result->fetch_object()) {
   }
   $review .= "<div class=\"review d-flex gap-3 align-items-center mb-3\">
     <div>
-      <img src=\"{$review_data->profile_image}\" width=\"50\" alt=\"\">
+      <img src=\"../{$review_data->profile_image}\" width=\"50\" alt=\"\">
     </div>
     <div>
       <h5>{$review_data->username}</h5>
       <h6>{$review_data->regist_day}</h6>
-      <img src=\"../img/icon-img/review.svg\" alt=\"\">
+      <img src=\"../../img/icon-img/review.svg\" alt=\"\">
     </div>
     <div class=\"w-100\">
       <p class=\"w-100\">{$review_data->comment}</p>

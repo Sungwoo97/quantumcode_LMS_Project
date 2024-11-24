@@ -39,6 +39,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     if (isset($summernote_css)) {
       echo $summernote_css;
     }
+    if (isset($slick_css)) {
+      echo $slick_css;
+    }
     if (isset($lecture_css)) {
       echo $lecture_css;
     }
@@ -83,6 +86,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <?php
   if (isset($summernote_js)) {
     echo $summernote_js;
+  }
+  if (isset($slick_js)) {
+    echo $slick_js;
   }
   ?>
 </head>
