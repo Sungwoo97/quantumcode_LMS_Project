@@ -145,7 +145,7 @@ if($block_end > $total_page ) $block_end = $total_page;
     <div class="ect">
       <div class="top_line mb-4">
         <div class="checkbox">
-          <input type="checkbox" id="coupon<?= $data->cid ?>">
+          <input type="checkbox" class="coupon-check" data-cid="<?= $data->cid; ?>" data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES); ?>">
           <label for="coupon1" class="ms-2 coupon_title">No. <?= $data->cid ?> </label>
         </div>
         <p><?= $data->	startdate.' - '.$data->	enddate; ?></p>

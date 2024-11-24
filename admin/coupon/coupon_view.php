@@ -55,7 +55,17 @@ if($block_end > $total_page ) $block_end = $total_page;
   <ul class="list-unstyled d-flex gap-3 justify-content-end">
     <li><button class="btn btn-secondary btn-sm" id="goback">목록</button></li>
     <li><a href="coupon_edit.php?cid=<?=$cid;?>" class="btn btn-primary btn-sm">수정</a></li>
-    <li><a href="coupon_del.php?cid=<?=$cid;?>" class="btn btn-danger btn-sm">삭제</a></li>
+    <li><button type="button" 
+            class="btn btn-danger btn-sm" 
+            data-bs-toggle="modal" 
+            data-bs-target="#deleteModal" 
+            data-cid="<?= $data->cid ?>" 
+            data-name="<?= htmlspecialchars($data->coupon_name, ENT_QUOTES) ?>" 
+            data-price="<?= $data->coupon_price ? number_format($data->coupon_price).'원' : ($data->coupon_ratio ? $data->coupon_ratio."%" : "할인 없음") ?>" 
+            data-dates="<?= $data->startdate.' ~ '.$data->enddate ?>">
+        삭제
+    </button>
+</li>
   </ul>
   <!-- 쿠폰 상세정보 -->
   <div class="mt-2 p-3 border">
@@ -169,10 +179,64 @@ if($block_end > $total_page ) $block_end = $total_page;
   </ul>
 </nav>
 </div>
+
+<!-- 삭제 모달 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal_header d-flex flex-column text-center">
+                <h5 class="modal-title" id="deleteModalLabel">쿠폰 삭제 확인</h5>
+              </div>
+            <div class="modal-body">
+                <!-- JavaScript에서 동적으로 업데이트 -->
+            </div>
+            <div class="modal_footer d-flex gap-3 justify-content-center">
+              <a href="#" class="btn btn-danger">예</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
   $('#goback').click(function(){
     history.back();
   }); 
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteButtons = document.querySelectorAll('button[data-bs-toggle="modal"]'); // 삭제 버튼들
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const couponId = this.getAttribute('data-cid');
+            const couponName = this.getAttribute('data-name');
+            const couponPrice = this.getAttribute('data-price');
+            const couponDates = this.getAttribute('data-dates');
+
+            // 모달 내용 업데이트
+            const modalTitle = deleteModal.querySelector('.modal-title');
+            const modalBody = deleteModal.querySelector('.modal-body');
+            const confirmDeleteButton = deleteModal.querySelector('.btn-danger');
+
+            modalTitle.textContent = `쿠폰 삭제 확인`;
+            modalBody.innerHTML = `
+                <p>정말로 이 쿠폰을 삭제하시겠습니까?</p>
+                <ul>
+                    <li>쿠폰 이름: [ ${couponName} ]</li>
+                    <li>쿠폰 번호: [ ${couponId} ]</li>
+                    <li>할인 금액: [ ${couponPrice} ]</li>
+                    <li>사용 기간: [ ${couponDates} ]</li>
+                </ul>
+            `;
+            confirmDeleteButton.href = `coupon_del.php?cid=${couponId}`;
+        });
+    });
+});
+
+
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/footer.php');
