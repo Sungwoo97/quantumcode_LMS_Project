@@ -53,6 +53,6 @@ $addvideo_del_result = $mysqli->query($addvideo_del_sql);
 if ($del_result) {
   echo "<script>
     alert('강의가 삭제되었습니다.');
-    location.href = 'lecture_list.php';
+    location.href = 'lecture_listView.php';
     </script>";
 }
