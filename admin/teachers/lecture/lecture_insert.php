@@ -3,7 +3,7 @@ $title = '강의 등록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 
 $id = isset($_SESSION['AUID']) ;
@@ -17,7 +17,6 @@ if (!isset($id)) {
 }
 
 
-echo $id;
 
 // $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 // if ($result = $mysqli->query($sql)) {
@@ -42,7 +41,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="../img/icon-img/no-image.png" id="coverImg" alt="">
+          <img src="../../img/icon-img/no-image.png" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>

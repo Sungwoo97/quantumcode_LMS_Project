@@ -91,7 +91,7 @@ if (count($list) > 0) {
         <td>{$pcode_name}</td>
         <td>{$list->name}</td>
         <td><a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#editModal{$list->lcid}\">
-                <img src=\"../img/icon-img/Edit.svg\" id=\"edit{$list->lcid}\" width=\"20\">
+                <img src=\"../../img/icon-img/Edit.svg\" id=\"edit{$list->lcid}\" width=\"20\">
             </a>
         </td>
       </tr>
