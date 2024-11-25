@@ -17,7 +17,7 @@ $upload_path = $_SERVER['DOCUMENT_ROOT'] . '/qc/admin/board/upload/' . $file_nam
 
 if (move_uploaded_file($temp_path, $upload_path)) {
     //이미지 출력을 위해 데이터베이스 값 넣기 경로
-    $img_path = '/qc/admin/board/upload/' . $file_name;
+    $img = '/qc/admin/board/upload/' . $file_name;
 }
 
 
@@ -41,7 +41,7 @@ switch ($category) {
         die("유효하지 않은 카테고리입니다.");
 }
 
-$sql = "UPDATE board SET title='$title1',content='$content', img='$img_path', start_date='$start_date', end_date = '$end_date' WHERE pid= $pid";
+$sql = "UPDATE board SET title='$title1',content='$content', img='$img', start_date='$start_date', end_date = '$end_date' WHERE pid= $pid";
 $result = $mysqli->query($sql);
 if($result){
   echo "<script>
