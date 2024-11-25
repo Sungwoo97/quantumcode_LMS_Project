@@ -49,7 +49,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
         <input type="text" class="form-control datepicker w-75 mb-3" name="end_date" id="end_date" autocomplete="off">
       </div>
     </div>
-    <div class="d-flex justify-content-end gap-3">
+    <div class="d-flex justify-content-end gap-3" style="margin-right:155px;">
       <button type="submit" class="btn btn-primary">등록</button>
       <button id="cancle" class="btn btn-danger">취소</button>
     </div>
@@ -60,9 +60,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 
 <script>
-  // 취소 버튼 클릭 시 이전 페이지로 돌아가기
+  // 취소 버튼 클릭 시 게시물 페이지로 돌아가기
   document.getElementById('cancle').addEventListener('click', function() {
-    window.history.back();  // 이전 페이지로 돌아가기
+    window.location.href = 'board_list.php'; 
   });
 
 
