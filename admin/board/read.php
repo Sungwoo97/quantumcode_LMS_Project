@@ -200,9 +200,9 @@ switch ($category) {
 
       <!-- 대댓글 입력폼-->
       <form action="board_re_reply_ok.php" method="POST" id="replyForm<?=$replay_id?>" style="display:none;">
-        <input type="hidden" name="r_pid" value="<?=$replay_id?>">
-        <input type="hidden" name="pid" value="<?=$pid?>">
-        <input type="hidden" name="category" value="<?=$data->category?>">
+      <input type="hidden" name="r_pid" value="<?=$replay_id?>">
+          <input type="hidden" name="pid" value="<?=$pid?>">
+          <input type="hidden" name="category" value="<?=$data->category?>">
         <div class="d-flex gap-3 mb-3 align-items-center">
           <p>댓글 입력:</p> 
           <input name="content" class="form-control w-50" placeholder="내용입력."></textarea>
@@ -238,7 +238,7 @@ switch ($category) {
                       <input type="hidden" name="b_pid" value="<?=$reply['pid']?>">
                       <input type="hidden" name="pid" value="<?=$re_reply['pid']?>">
                       <input type="hidden" name="r_pid" value="<?=$re_reply['r_pid']?>">
-                      <input type="hidden" name="board_list" value="<?=$pid?>">
+                      <input type="hidden" name="list_pid" value="<?=$pid?>">
                       <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">대댓글 수정</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
