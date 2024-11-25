@@ -28,7 +28,7 @@ if(!isset($_SESSION['hits'][$pid])){
 
   $_SESSION['hits'][$pid] = true;
 };
-echo $_SESSION['hits'];
+
 
  
 if ($category === 'all') {
