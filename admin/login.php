@@ -54,32 +54,19 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       <p class="mb-3">기획 및 디자인 : 팀원 전체</p>
       <h4>- 구현 완료 페이지 -</h4>
       <p>나승일 : 게시판 </p>
-        코드 : <a href="https://github.com/Naseungil/quantumcode" target="_blank">
-        깃허브</a>
-        <img src="img/icon-img/icons_figma.svg" alt="깃허브 아이콘" class="github">
-      </p>
-    </div>
-    <p>개발환경 : html5, css3, javascript, php, mySQL</p>
-  </div>
-  <hr>
-  <div class="modal_work">
-    <h4>업무분담</h4>
-    <p class="mb-3">기획 및 디자인 : 팀원 전체</p>
-    <h4>- 구현 완료 페이지 -</h4>
-      <p>나승일 : 게시판 관리</p>
       <p>윤준호 : 회원, 강사, 강사개인페이지, 로그인(기능)</p>
-      <p>남성우 : 강의, 매출</p>
-      <p>김유진 :  로그인(디자인), 헤더, 쿠폰(등록·수정·삭제)</p>
+      <p>남성우 : 강의, 매출 관리</p>
+      <p>김유진 : 로그인(디자인), 헤더, 쿠폰(등록·수정·삭제)</p>
+    </div>
+    <hr>
+    <div class="modal_control d-flex justify-content-between align-items-center">
+      <form>
+        <label for="modal_check">하루 동안 보지 않기 </label>
+        <input type="checkbox" id="modal_check">
+      </form>
+      <button class="btn">닫기</button>
+    </div>
   </div>
-  <hr>
-  <div class="modal_control d-flex justify-content-between align-items-center">
-    <form>
-      <label for="modal_check">하루 동안 보지 않기 </label>
-      <input type="checkbox" id="modal_check">
-    </form>
-    <button class="btn">닫기</button>
-  </div>
-</div>
 
   <div class="d-flex">
     <aside>
