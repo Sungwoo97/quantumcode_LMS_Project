@@ -3,7 +3,8 @@ $title = '강의 수정';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
+
 
 $id = isset($_SESSION['AUID']) ?  $_SESSION['AUID'] : $_SESSION['TUID'];
 if (!isset($id)) {
@@ -54,7 +55,7 @@ while ($video_data = $video_result->fetch_object()) {
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="<?= $lecture_data->cover_image ?>" id="coverImg" alt="">
+          <img src="<?=  $lecture_data->cover_image ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" value="<?= $lecture_data->cover_image ?>">
@@ -157,19 +158,19 @@ while ($video_data = $video_result->fetch_object()) {
               <td colspan="3">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispremium" <?php echo $lecture_data->ispremium ? 'checked' : ''; ?> value="<?= $lecture_data->ispremium ?>" id="ispremium">
+                    <input class="form-check-input me-2" type="checkbox" name="ispremium" <?= $lecture_data->ispremium ? 'checked' : '' ?> value="<?= $lecture_data->ispremium ?>" id="ispremium">
                     <label class="form-check-label" for="ispremium">프리미엄</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="ispopular" <?php echo $lecture_data->ispopular ? 'checked' : ''; ?> value="<?= $lecture_data->ispopular ?>" id="ispopular">
+                    <input class="form-check-input me-2" type="checkbox" name="ispopular" <?= $lecture_data->ispopular ? 'checked' : '' ?> value="<?= $lecture_data->ispopular ?>" id="ispopular">
                     <label class="form-check-label" for="ispopular">인기 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isrecom" <?php echo $lecture_data->isrecom ? 'checked' : ''; ?> value="<?= $lecture_data->isrecom ?>" id="isrecom">
+                    <input class="form-check-input me-2" type="checkbox" name="isrecom" <?= $lecture_data->isrecom ? 'checked' : '' ?> value="<?= $lecture_data->isrecom ?>" id="isrecom">
                     <label class="form-check-label" for="isrecom">추천 강의</label>
                   </div>
                   <div class="d-flex align-items-center flex-grow-1 justify-content-start">
-                    <input class="form-check-input me-2" type="checkbox" name="isfree" <?php echo $lecture_data->isfree ? 'checked' : ''; ?> value="<?= $lecture_data->isfree ?>" id="isfree">
+                    <input class="form-check-input me-2" type="checkbox" name="isfree" <?= $lecture_data->isfree ? 'checked' : '' ?> value="<?= $lecture_data->isfree ?>" id="isfree">
                     <label class="form-check-label" for="isfree">무료 강의</label>
                   </div>
                 </div>

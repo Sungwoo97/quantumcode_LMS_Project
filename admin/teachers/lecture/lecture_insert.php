@@ -3,20 +3,20 @@ $title = '강의 등록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 
-$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+$id = isset($_SESSION['AUID']) ;
 if (!isset($id)) {
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
+      alert('강사로 로그인해주세요');
       location.href = '../login.php';
     </script>
   ";
 }
 
-// echo $id;
+
 
 // $sql = "SELECT MAX(lid) AS last_lid FROM lecture_list";
 // if ($result = $mysqli->query($sql)) {
@@ -41,7 +41,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="" id="coverImg" alt="">
+          <img src="../../img/icon-img/no-image.png" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" required>
@@ -99,12 +99,12 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
             <tr>
               <th scope="row">수강료</th>
               <td class="twoculumn_table">
-                <input type="text" class="form-control" name="tuition" id="tuition" placeholder="" required>
+                <input type="text" class="form-control" name="tuition" id="tuition" required>
                 <span></span>
               </td>
               <th scope="row" class="insert_name">할인 수강료</th>
               <td>
-                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" placeholder="">
+                <input type="text" class="form-control" name="dis_tuition" id="dis_tuition" value="">
               </td>
             </tr>
             <tr>
@@ -121,7 +121,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
                   <option value="2">초급</option>
                   <option value="3">중급</option>
                   <option value="4">고급</option>
-                  <option value="5">전문가</option>
+                  <option value="5">전문</option>
                 </select>
               </td>
             </tr>
@@ -220,7 +220,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         }
         reader.readAsDataURL(file);
       } else {
-        target.attr('src', '');
+        target.attr('src', '../img/icon-img/no-image.png');
       }
     });
   }
@@ -375,7 +375,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
   });
 
   $("#regist_day").datepicker({
-    format: "yy-mm-dd"
+    format: "yyyy-mm-dd"
   });
 
   $('#lecture_submit').submit(function(e) {

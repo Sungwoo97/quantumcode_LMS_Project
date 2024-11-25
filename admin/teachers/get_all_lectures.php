@@ -18,8 +18,6 @@ $data = $result->fetch_object();
 
 
 $sql2 = "SELECT * FROM lecture_list WHERE t_id ='$data->id'";
-
-
 $result2 = $mysqli->query($sql2);
 
 
