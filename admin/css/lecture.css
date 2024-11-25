@@ -149,6 +149,15 @@ section.info{
   padding: 24px;
   gap: 64px;
 }
+section.slide{
+ 
+  .cover img{
+ 
+    width: 100%;
+    height: 200px;
+    
+  }
+}
 
 p{
   margin-bottom : 0;
@@ -163,6 +172,10 @@ p{
   font-size: 24px;
   line-height: 40px;
 }
+.font{
+  font-size: 20px;
+  line-height: 29px;
+}
 .learnObj p{
   color: #ABABAB;
 }
@@ -175,12 +188,20 @@ section h6{
   line-height: 24px;
 }
 
-.info ul{
+.info ul, .slide ul{
   list-style: none;
   padding-left: 0;
   display: flex;
   flex-direction: column;
   gap:5px;
+}
+.slide li{
+  font-size: 12px;
+}
+.slide .like img{
+  filter: invert(1);
+  width: 15px;
+  height: 15px;
 }
 
 .tag{
@@ -256,3 +277,73 @@ section.desc{
     font-size: 24px;
   }
 }
+
+.review{
+  padding: 20px;
+  border :  1px solid var(--primary);
+  border-radius: 15px;
+  
+  *{
+    margin-bottom: 0;
+  }
+  img{
+    
+  }
+}
+.review .btn, .reply .btn, .rereply .btn{
+  width:70px; 
+  height: 38px;
+}
+.reply, .rereply{
+  padding: 20px ;
+  border :  1px solid var(--primary);
+  border-radius: 15px;
+  margin-left: 100px;
+}
+
+.content .slick-prev, .content  .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.5rem;
+  border-style: none;
+  background: transparent;
+  width: 15px;
+  height: 15px;
+}
+
+.content .slick-prev{
+  left: -25px;
+}
+
+.content .slick-next{
+  right: -25px;
+}
+
+/* .slide{
+
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+} */
+
+.slick-slide {
+  margin-left: 24px; 
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
+.slick-slide:first-child{
+  margin-left: 0; 
+}
+
+.slick-list {
+  text-align: left; /* 슬라이더 전체를 왼쪽 정렬 */
+}
+
+.slick-track{
+  display: flex;
+  justify-content: flex-start;
+}
+

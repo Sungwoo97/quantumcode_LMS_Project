@@ -6,11 +6,12 @@ $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
-$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+// $id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+$id = $_SESSION['TUID'];
 if (!isset($id)) {
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
+      alert('강사로 로그인해주세요');
       location.href = '../login.php';
     </script>
   ";
@@ -116,7 +117,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
               <th scope="row" class="insert_name">난이도</th>
               <td>
                 <select class="form-select " name="difficult" required>
-                  <option value="0" selected>난이도</option>
+                  <option value="" selected>난이도</option>
                   <option value="1">입문</option>
                   <option value="2">초급</option>
                   <option value="3">중급</option>

@@ -20,9 +20,9 @@
         });
     });
     </script>
-    </body>
+  </body>
 
-    </html>
+</html>
     <?php
     $mysqli->close();
     ?>

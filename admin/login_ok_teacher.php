@@ -1,11 +1,11 @@
 <?php
 // session_start();
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/teachers/inc/header.php');
 
 $id = $_POST['id'];
 $password = $_POST['password'];
-// $password = hash('sha512',$password);
+$password = hash('sha512',$password);
 
 $sql = "SELECT * FROM teachers WHERE id='$id' and password = '$password'";
 $result = $mysqli->query($sql);
@@ -17,7 +17,6 @@ if($data){
   $_SESSION['TUIDX'] = $data->tid;
   $_SESSION['TUID'] = $data->id;
   $_SESSION['TUNAME'] = $data->name;
-  $tid = $_SESSION['TUIDX'];
 
   echo "<script>
     alert('강사님 반갑습니다.');

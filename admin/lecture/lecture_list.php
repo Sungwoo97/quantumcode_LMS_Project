@@ -3,11 +3,11 @@ $title = '강의 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
+$id = $_SESSION['TUID'];
 if (!isset($id)) {
   echo "
     <script>
-      alert('관리자로 로그인해주세요');
+      alert('강사로 로그인해주세요');
       location.href = '../login.php';
     </script>
   ";
@@ -60,6 +60,7 @@ while ($data = $result->fetch_object()) {
 
 if (count($list) > 0) {
   $i = 1;
+  $i = $i + $start_num;
   foreach ($list as $list) {
     $lcid = $list->lcid;
     $cate_sql = "SELECT * FROM lecture_category WHERE lcid = $lcid";
@@ -93,7 +94,7 @@ if (count($list) > 0) {
         $diff = '전문';
         break;
     }
-    if ($list->dis_tuition>0) {
+    if ($list->dis_tuition > 0) {
       $tui_val =  number_format($list->dis_tuition);
     } else {
       $tui_val = number_format($list->tuition);
