@@ -7,7 +7,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 
 // $id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
-$id = $_SESSION['TUID'];
+$id = $_SESSION['AUID'];
 if (!isset($id)) {
   echo "
     <script>
