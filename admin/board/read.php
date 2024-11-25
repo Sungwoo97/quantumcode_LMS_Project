@@ -238,6 +238,7 @@ switch ($category) {
                       <input type="hidden" name="b_pid" value="<?=$reply['pid']?>">
                       <input type="hidden" name="pid" value="<?=$re_reply['pid']?>">
                       <input type="hidden" name="r_pid" value="<?=$re_reply['r_pid']?>">
+                      <input type="hidden" name="board_list" value="<?=$pid?>">
                       <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">대댓글 수정</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
