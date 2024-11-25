@@ -7,7 +7,7 @@ $pid = $_POST['pid'];
 $content = $_POST['content'];
 $category=$_POST['category'];
 
-echo $r_pid;
+// echo $r_pid;
 
 if (isset($_SESSION['AUID'])) {
     // 관리자 로그인 시
