@@ -115,7 +115,6 @@ while ($data = $result->fetch_object()) {
 
 
 $chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
 $board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
 $board_result = $mysqli->query($board_sql);
