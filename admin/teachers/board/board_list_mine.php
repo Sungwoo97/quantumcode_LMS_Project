@@ -163,7 +163,7 @@ $event_result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
