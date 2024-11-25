@@ -17,7 +17,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
 
 
-// 추천 쿼리
+// 조회수 쿼리
 if(!isset($_SESSION['hits'])){
   $_SESSION['hits'] =[];
 }
@@ -28,6 +28,7 @@ if(!isset($_SESSION['hits'][$pid])){
 
   $_SESSION['hits'][$pid] = true;
 };
+echo $_SESSION['hits'];
 
  
 if ($category === 'all') {
