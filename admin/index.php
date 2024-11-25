@@ -110,16 +110,13 @@ while ($data = $result->fetch_object()) {
 }
 //print_r($name);Array ( [0] => 권도형 [1] => 이기상 [2] => 장윤정 [3] => 이지영 [4] => 이동진 )
 //print_r($sale)Array ( [0] => 54000000 [1] => 23400000 [2] => 16780000 [3] => 15600000 [4] => 15430000 )
-
-
-
-
 $chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 $board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
 $board_result = $mysqli->query($board_sql);
-
 ?>
+
+
 
 <div class="dashboard container m-0">
   <!-- Summary Section -->
@@ -238,32 +235,7 @@ $board_result = $mysqli->query($board_sql);
       </div>
     </div>
 
- 
-
-      <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm">
-          <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretLeft.svg" alt=""></a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretRight.svg" alt=""></a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-    <!-- Popular Courses -->
-    <div class="row mt-4 ms-0 me-0 d-flex justify-content-between" >
-      <div class="row col-md-8">
-        <div class="mb-4 card p-3 border-0 bg-light">
-            <h6>인기 강의</h6>
-            <div class="chart-container">
-            <canvas id="popularCoursesChart"></canvas>
-        </div>
-      </div>
-  
-      <div class="QnA card p-3 border-0 bg-light">
+    <div class="QnA card p-3 border-0 bg-light">
         <div class="d-flex justify-content-between">
           <h6>Q&A</h6>
           <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
