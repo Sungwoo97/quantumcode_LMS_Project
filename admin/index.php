@@ -111,7 +111,7 @@ while ($data = $result->fetch_object()) {
 //print_r($name);Array ( [0] => 권도형 [1] => 이기상 [2] => 장윤정 [3] => 이지영 [4] => 이동진 )
 //print_r($sale)Array ( [0] => 54000000 [1] => 23400000 [2] => 16780000 [3] => 15600000 [4] => 15430000 )
 
-?>
+
 
 
 $chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
@@ -239,60 +239,7 @@ $board_result = $mysqli->query($board_sql);
       </div>
     </div>
 
-    <div class="QnA card p-3 border-0 bg-light">
-      <h6>Q&A</h6>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CSS 테이블 세로 간격 줄이는 방법이 뭐죠?</td>
-            <td>CodeRookie21</td>
-            <td>2024-11-01</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>JavaScript 함수 최적화 관련 문의</td>
-            <td>DevGuru</td>
-            <td>2024-11-02</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>React에서 상태 관리 효율적으로 구현하는 법?</td>
-            <td>JS_Ninja</td>
-            <td>2024-11-03</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Python 웹 스크래핑 중 특정 태그 가져오기 문제</td>
-            <td>PythonLover</td>
-            <td>2024-11-04</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+ 
 
       <nav aria-label="Page navigation example">
         <ul class="pagination pagination-sm">
