@@ -89,7 +89,7 @@ $sql = "INSERT INTO  lecture_list
     VALUES
     ('$lecture_cate', '$lcid' ,'$lecture_title', '$lecture_coverImage', '$id', $lecture_isfree, $lecture_ispremium, $lecture_ispopular, $lecture_isrecom, $lecture_tuition, $lecture_disTuition, '$lecture_registDay', '$expiration_day', '$lecture_subTitle', '$lecture_desc', '$lecture_objectives', $lecture_difficult, '$lecture_tag', '$lecture_prVideo')
     ";
-echo $sql;
+
 $lecture_result = $mysqli->query($sql);
 if (!$lecture_result) {
   echo "SQL Error: " . $mysqli->error;
