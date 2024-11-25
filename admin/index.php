@@ -114,6 +114,13 @@ while ($data = $result->fetch_object()) {
 ?>
 
 
+$chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
+include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+
+$board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
+$board_result = $mysqli->query($board_sql);
+
+?>
 
 <div class="dashboard container m-0">
   <!-- Summary Section -->
@@ -300,6 +307,50 @@ while ($data = $result->fetch_object()) {
       </nav>
     </div>
   </div>
+    <!-- Popular Courses -->
+    <div class="row mt-4 ms-0 me-0 d-flex justify-content-between" >
+      <div class="row col-md-8">
+        <div class="mb-4 card p-3 border-0 bg-light">
+            <h6>인기 강의</h6>
+            <div class="chart-container">
+            <canvas id="popularCoursesChart"></canvas>
+        </div>
+      </div>
+  
+      <div class="QnA card p-3 border-0 bg-light">
+        <div class="d-flex justify-content-between">
+          <h6>Q&A</h6>
+          <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            while($board_data = $board_result->fetch_object()){
+            ?>
+            <tr>
+              <td><a href="board/read.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>" style="text-decoration:none; color:black;"><?=$board_data->title?></a></td>
+              <td><?=$board_data->user_id?></td>
+              <td><?=$board_data->date?></td>
+              <td>
+                <a href="board/board_modify.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
+                <a href="board/delete.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+              </td>
+            </tr>
+            <?php
+            }
+            ?>
+            </tbody>
+        </table>
+      </div>
+    </div>
 
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
