@@ -110,7 +110,10 @@ while ($data = $result->fetch_object()) {
 }
 //print_r($name);Array ( [0] => 권도형 [1] => 이기상 [2] => 장윤정 [3] => 이지영 [4] => 이동진 )
 //print_r($sale)Array ( [0] => 54000000 [1] => 23400000 [2] => 16780000 [3] => 15600000 [4] => 15430000 )
+$chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
+$board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
+$board_result = $mysqli->query($board_sql);
 ?>
 
 
