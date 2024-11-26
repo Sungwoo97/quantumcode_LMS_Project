@@ -272,7 +272,7 @@ if($block_end > $total_page ) $block_end = $total_page;
       <div class="modal-body">
         <ul id="selectedCouponsList"></ul>
       </div>
-      <div class="modal_footer">
+      <div class="modal_footer d-flex gap-3 justify-content-center">
         <button type="button" id="confirmBulkDelete" class="btn btn-danger">예</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
       </div>

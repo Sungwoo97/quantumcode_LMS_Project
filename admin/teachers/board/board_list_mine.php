@@ -125,7 +125,7 @@ $event_result = $mysqli->query($sql);
       <tr>
         <th><?= (isset($_SESSION['TUID']) && $_SESSION['TUID'] == $data->user_id) ? '<input type="checkbox" id="selectAll" class="delete_checkbox form-check-input" value="' . $data->pid . '">' : '' ?></th>
         <th scope="row"><?= $data->pid ?></th>
-        <td><a href="t_read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
+        <td><a href="read.php?pid=<?=$data->pid?>&category=<?=$category?>"><?=$title1?> <?=$icon?></a></td>
         <td><?=$data->user_id?></td>
         <td><?=$data->content ?></td>
         <td><?=$post_date ?></td>
@@ -151,7 +151,7 @@ $event_result = $mysqli->query($sql);
         if ($block_num > 1) { //prev 버튼
           $prev = $block_start - $block_ct;
           echo "<li class=\"page-item prev\">
-              <a class=\"page-link\" href=\"t_board_list.php?category={$category}&page={$prev}\">
+              <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
                   <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
               </a>
           </li>";
@@ -163,14 +163,14 @@ $event_result = $mysqli->query($sql);
         for ($i = $block_start; $i <= $block_end; $i++) {                
           $active = ($page == $i) ? 'active' : '';
       ?>
-      <li class="page-item <?= $active; ?>"><a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $i; ?>"><?= $i; ?></a></li>
       <?php
         }
         $next = $block_end + 1;
         if($total_block >  $block_num){ //next 버튼
       ?>
       <li class="page-item next">
-        <a class="page-link" href="t_board_list.php?category=<?=$category?>&page=<?= $next;?>">
+        <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
           <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
         </a>
       </li>
