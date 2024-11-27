@@ -1,6 +1,6 @@
 <?php 
 	// ![수정필요] 카카오 API 환경설정 파일 
-	include_once "./controller/config.php";
+	include_once "./config.php";
 	
 
 	// 정보치환 
@@ -17,5 +17,5 @@
 
 <div class="kakao-login">
 	<a href="<?php echo $login_auth_url ?>" id="kakao-login"><img alt="resource preview" src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"></a>
-	<button onclick="location.href='./controller/logout.php'"  >session_destroy</button>
+	<button onclick="location.href='./logout.php'"  >session_destroy</button>
 </div>
