@@ -91,7 +91,7 @@ switch ($category) {
     </div>
   <?php endif; ?>
   <!-- //카테고리값 이벤트 일시 폼 출력 -->
-    <div class="d-flex justify-content-end gap-3">
+    <div class="d-flex justify-content-end gap-3" style="margin-right:155px;">
       <button class="btn btn-primary">등록</button>
       <a href="<?=$redirect_url?>" class="btn btn-danger">취소</a>
     </div>
