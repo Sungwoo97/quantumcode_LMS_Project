@@ -17,20 +17,24 @@ if (!isset($id)) {
 
 
 $tuition = '';
+$member_data = [];
 $lid = $_GET['lid'];
+$course_sql = "SELECT * FROM courses_management WHERE lid = $lid";
+$course_result = $mysqli->query($course_sql);
+while ($course_row = $course_result->fetch_object()) {
+  $member_sql = "SELECT * FROM members WHERE mid = $course_row->mid";
+  $member_result = $mysqli->query($member_sql);
+  $member_data[] = $member_result->fetch_object();
+}
+
+
+
 
 $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-if ($data->dis_tuition > 0) {
-  $tui_val = number_format($data->tuition);
-  $distui_val = number_format($data->dis_tuition);
-  $tuition .= "<p class=\"text-decoration-line-through text-end \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
-} else {
-  $tui_val = number_format($data->tuition);
-  $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
-}
+
 
 
 $lcid = $data->lcid;
@@ -47,26 +51,7 @@ if ($cate_result = $mysqli->query($cate_sql)) {
   $ppcode_name = ($ppcode_result && $ppcode_result->num_rows > 0) ? $ppcode_result->fetch_object()->name : "Unknown";
 }
 
-switch ($data->difficult) {
-  case 0:
-    $diff = ' ';
-    break;
-  case 1:
-    $diff = '입문';
-    break;
-  case 2:
-    $diff = '초급';
-    break;
-  case 3:
-    $diff = '중급';
-    break;
-  case 4:
-    $diff = '고급';
-    break;
-  case 5:
-    $diff = '전문';
-    break;
-}
+
 
 ?>
 
@@ -90,8 +75,37 @@ switch ($data->difficult) {
     <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
   </ul>
 </section>
-<section class="desc row mt-5">
+<section class="desc row">
+  <h3 class="mb-3">수강생</h3>
+  <table class="table table-hover mb-3">
+    <thead>
+      <tr>
+        <th scope="col">회원명</th>
+        <th scope="col">이메일</th>
+        <th scope="col">진행율</th>
+        <th scope="col">가입일</th>
+        <th scope="col">등급</th>
+        <th scope="col">마지막 로그인</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      foreach ($member_data as $member) {
 
+      ?>
+        <tr>
+          <td><?= $member->name ?></td>
+          <td><?= $member->email ?></td>
+          <td><?= $member->progress ?></td>
+          <td><?= $member->reg_date ?></td>
+          <td><?= $member->grade ?></td>
+          <td><?= $member->last_login ?></td>
+        </tr>
+      <?php
+      }
+      ?>
+    </tbody>
+  </table>
 </section>
 
 <aside>
