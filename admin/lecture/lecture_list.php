@@ -3,7 +3,7 @@ $title = '강의 목록';
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$id = $_SESSION['TUID'];
+$id = $_SESSION['AUID'];
 if (!isset($id)) {
   echo "
     <script>

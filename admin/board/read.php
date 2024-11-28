@@ -81,7 +81,7 @@ switch ($category) {
 내용:<?=$data->content?>
 </div>
 <div>
-  <?php
+<?php
   // 이미지가 있을시 출력
     if($data->is_img == 1){
       echo "<img src=\"{$data->img}\" width=\"300\" class=\"mb-3\">";
