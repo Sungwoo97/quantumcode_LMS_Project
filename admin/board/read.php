@@ -17,9 +17,9 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null;
 
 
-// 조회수 쿼리
-if(!isset($_SESSION['hits'])){
-  $_SESSION['hits'] =[];
+// 추천 쿼리
+if (!isset($_SESSION['hits'])) {
+  $_SESSION['hits'] = [];
 }
 
 if (!isset($_SESSION['hits'][$pid])) {
@@ -30,7 +30,6 @@ if (!isset($_SESSION['hits'][$pid])) {
 };
 
 
- 
 if ($category === 'all') {
   $sql = "SELECT * FROM board WHERE pid = $pid";
 } else {
@@ -82,7 +81,7 @@ switch ($category) {
   내용:<?= $data->content ?>
 </div>
 <div>
-<?php
+  <?php
   // 이미지가 있을시 출력
   if ($data->is_img == 1) {
     echo "<img src=\"{$data->img}\" width=\"300\" class=\"mb-3\">";
@@ -222,30 +221,9 @@ switch ($category) {
                   <small><?= $re_reply['user_id'] ?></small>
                   <small><?= $re_reply['date'] ?></small>
                 </div>
-                <!-- 대댓글 수정 Modal -->
-                <div class="modal fade" id="re_reply_edit<?=$re_reply['pid']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <form action="re_reply_modify_ok.php" method="POST" class="modal-content">
-                      <input type="hidden" name="category" value="<?=$category?>">
-                      <input type="hidden" name="b_pid" value="<?=$reply['pid']?>">
-                      <input type="hidden" name="pid" value="<?=$re_reply['pid']?>">
-                      <input type="hidden" name="r_pid" value="<?=$re_reply['r_pid']?>">
-                      <input type="hidden" name="list_pid" value="<?=$pid?>">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">대댓글 수정</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <?=$re_reply['user_id']?>
-                        <hr/>
-                        <textarea name="content" class="form-control mt-3"> <?=$re_reply['content']?></textarea>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">확인</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-                      </div>
-                    </form>
-                  </div>
+                <hr>
+                <div class="content">
+                  <?= $re_reply['content'] ?>
                 </div>
                 <div class="controls d-flex justify-content-end gap-1">
                   <button type="button" class="btn btn-primary sm" data-bs-toggle="modal" data-bs-target="#re_reply_edit<?= $re_reply['pid'] ?>">수정</button>
