@@ -164,7 +164,7 @@ switch ($category) {
             <small><?= $reply['date'] ?></small>
           </div>
           <hr>
-          <div class="content">
+          <div class="content mb-3">
             <?= $reply['content'] ?>
           </div>
           <div class="controls d-flex justify-content-end gap-1">
@@ -222,7 +222,7 @@ switch ($category) {
                   <small><?= $re_reply['date'] ?></small>
                 </div>
                 <hr>
-                <div class="content">
+                <div class="mb-3">
                   <?= $re_reply['content'] ?>
                 </div>
                 <div class="controls d-flex justify-content-end gap-1">
