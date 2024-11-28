@@ -5,6 +5,7 @@ $username = 'quantumcode';
 $dbpassword = '12345';
 $dbname = 'quantumcode';
 
+// $connect = mysqli_connect($hostname, $username, $dbpassword, $dbname);
 $mysqli = new mysqli($hostname, $username, $dbpassword, $dbname);
 
 if ($mysqli->connect_errno) { 

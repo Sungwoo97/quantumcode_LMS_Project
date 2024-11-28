@@ -110,9 +110,7 @@ while ($data = $result->fetch_object()) {
 }
 //print_r($name);Array ( [0] => 권도형 [1] => 이기상 [2] => 장윤정 [3] => 이지영 [4] => 이동진 )
 //print_r($sale)Array ( [0] => 54000000 [1] => 23400000 [2] => 16780000 [3] => 15600000 [4] => 15430000 )
-
-$chart_js="<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
+$chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 $board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
 $board_result = $mysqli->query($board_sql);
@@ -240,7 +238,10 @@ $board_result = $mysqli->query($board_sql);
     </div>
 
     <div class="QnA card p-3 border-0 bg-light">
-      <h6>Q&A</h6>
+      <div class="d-flex justify-content-between">
+        <h6>Q&A</h6>
+        <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
+      </div>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -251,106 +252,25 @@ $board_result = $mysqli->query($board_sql);
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>CSS 테이블 세로 간격 줄이는 방법이 뭐죠?</td>
-            <td>CodeRookie21</td>
-            <td>2024-11-01</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>JavaScript 함수 최적화 관련 문의</td>
-            <td>DevGuru</td>
-            <td>2024-11-02</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>React에서 상태 관리 효율적으로 구현하는 법?</td>
-            <td>JS_Ninja</td>
-            <td>2024-11-03</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Python 웹 스크래핑 중 특정 태그 가져오기 문제</td>
-            <td>PythonLover</td>
-            <td>2024-11-04</td>
-            <td>
-              <a href="">
-                <img src="img/icon-img/Edit.svg" alt="" style="width: 20px;">
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm">
-          <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretLeft.svg" alt=""></a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#"><img src="img/icon-img/CaretRight.svg" alt=""></a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-    <!-- Popular Courses -->
-    <div class="row mt-4 ms-0 me-0 d-flex justify-content-between" >
-      <div class="row col-md-8">
-        <div class="mb-4 card p-3 border-0 bg-light">
-            <h6>인기 강의</h6>
-            <div class="chart-container">
-            <canvas id="popularCoursesChart"></canvas>
-        </div>
-      </div>
-  
-      <div class="QnA card p-3 border-0 bg-light">
-        <div class="d-flex justify-content-between">
-          <h6>Q&A</h6>
-          <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>등록일</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-            while($board_data = $board_result->fetch_object()){
-            ?>
+          <?php
+          while ($board_data = $board_result->fetch_object()) {
+          ?>
             <tr>
-              <td><a href="board/read.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>" style="text-decoration:none; color:black;"><?=$board_data->title?></a></td>
-              <td><?=$board_data->user_id?></td>
-              <td><?=$board_data->date?></td>
+              <td><a href="board/read.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>" style="text-decoration:none; color:black;"><?= $board_data->title ?></a></td>
+              <td><?= $board_data->user_id ?></td>
+              <td><?= $board_data->date ?></td>
               <td>
-                <a href="board/board_modify.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
-                <a href="board/delete.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+                <a href="board/board_modify.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
+                <a href="board/delete.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
               </td>
             </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-        </table>
-      </div>
+          <?php
+          }
+          ?>
+        </tbody>
+      </table>
     </div>
+  </div>
 
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
@@ -487,7 +407,7 @@ $board_result = $mysqli->query($board_sql);
       }
     }
   });
-  
+
   document.addEventListener('DOMContentLoaded', function() {
     // top5 강사 매출 차트
     const teacherNames = <?php echo json_encode($name); ?>; // 강사 이름 배열
