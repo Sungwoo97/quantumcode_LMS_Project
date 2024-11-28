@@ -12,9 +12,48 @@ if (!isset($id)) {
     </script>
   ";
 }
+$courseArr = [];
+$course_sql = "SELECT cm.*, m.name, m.progress, l.title, l.expiration_day  
+FROM courses_management cm
+JOIN members m ON m.mid = cm.mid
+JOIN lecture_list l ON l.lid = cm.lid";
+$course_result = $mysqli->query($course_sql);
+while ($row = $course_result->fetch_object()) {
+  $courseArr[] = $row;
+}
+
 
 ?>
-<pre>
+
+<table class="table table-hover mb-3">
+  <thead>
+    <tr>
+      <th scope="col">회원명</th>
+      <th scope="col">강의명</th>
+      <th scope="col">진도율</th>
+      <th scope="col">시작일</th>
+      <th scope="col">종료일</th>
+      <th scope="col">상태</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    foreach ($courseArr as $course) {
+
+    ?>
+      <tr>
+        <td><?= $course->name ?></td>
+        <td><?= $course->title ?></td>
+        <td><?= $course->progress ?></td>
+        <td><?= $course->start_date ?></td>
+        <td><?= $course->expiration_day ?></td>
+        <td><?= $course->status ?></td>
+      </tr>
+    <?php
+    }
+    ?>
+  </tbody>
+  <pre>
 목적: 전체 수강 신청 내역 및 학습 진행 상황을 확인.
 주요 기능:
 수강생 이름, 이메일, 등록일, 강의명, 수강 상태(진행 중, 완료, 중단 등) 표시.
@@ -30,6 +69,6 @@ if (!isset($id)) {
 
 </pre>
 
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
-?>
+  <?php
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
+  ?>
