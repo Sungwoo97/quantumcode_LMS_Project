@@ -13,7 +13,7 @@ if (!isset($id)) {
   ";
 }
 
-var_dump($_POST);
+
 
 $lid = $_POST['lid'];
 
@@ -127,6 +127,6 @@ if ($result) {
   echo
   "<script>
     alert('강의가 수정되었습니다.');
-    location.href = 'lecture_list.php';
+    location.href = 'lecture_listView.php';
     </script>";
 }
