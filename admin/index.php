@@ -235,39 +235,39 @@ $board_result = $mysqli->query($board_sql);
     </div>
 
     <div class="QnA card p-3 border-0 bg-light">
-        <div class="d-flex justify-content-between">
-          <h6>Q&A</h6>
-          <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>등록일</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-            while($board_data = $board_result->fetch_object()){
-            ?>
+      <div class="d-flex justify-content-between">
+        <h6>Q&A</h6>
+        <a href="board/board_list.php?category=qna" style="padding-right: 2.8rem; text-decoration:none; color:black;">&#43;더보기</a>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>등록일</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          while ($board_data = $board_result->fetch_object()) {
+          ?>
             <tr>
-              <td><a href="board/read.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>" style="text-decoration:none; color:black;"><?=$board_data->title?></a></td>
-              <td><?=$board_data->user_id?></td>
-              <td><?=$board_data->date?></td>
+              <td><a href="board/read.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>" style="text-decoration:none; color:black;"><?= $board_data->title ?></a></td>
+              <td><?= $board_data->user_id ?></td>
+              <td><?= $board_data->date ?></td>
               <td>
-                <a href="board/board_modify.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
-                <a href="board/delete.php?pid=<?=$board_data->pid?>&category=<?=$board_data->category?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
+                <a href="board/board_modify.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>"><i class="fa-regular fa-pen-to-square" style="color:black;"></i></a>
+                <a href="board/delete.php?pid=<?= $board_data->pid ?>&category=<?= $board_data->category ?>"><i class="fa-regular fa-trash-can" style="color:black;"></i></a>
               </td>
             </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-        </table>
-      </div>
+          <?php
+          }
+          ?>
+        </tbody>
+      </table>
     </div>
+  </div>
 
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
@@ -404,7 +404,7 @@ $board_result = $mysqli->query($board_sql);
       }
     }
   });
-  
+
   document.addEventListener('DOMContentLoaded', function() {
     // top5 강사 매출 차트
     const teacherNames = <?php echo json_encode($name); ?>; // 강사 이름 배열

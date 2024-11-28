@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 $content = $_POST['content'];
 $b_pid = $_POST['b_pid']; //댓글 고유번호
@@ -15,33 +15,32 @@ $result = $mysqli->query($sql);
 
 switch ($category) {
   case 'all':
-      $redirect_url = "/qc/admin/board/read.php?pid=".$list_pid."&category=all";
-      break;
+    $redirect_url = "/qc/admin/board/read.php?pid=" . $list_pid . "&category=all";
+    break;
   case 'qna':
-      $redirect_url = '/qc/admin/board/read.php?pid='.$list_pid.'&category=qna'; 
-      break;
+    $redirect_url = '/qc/admin/board/read.php?pid=' . $list_pid . '&category=qna';
+    break;
   case 'notice':
-      $redirect_url = '/qc/admin/board/read.php?pid='.$list_pid.'&category=notice'; 
-      break;
+    $redirect_url = '/qc/admin/board/read.php?pid=' . $list_pid . '&category=notice';
+    break;
   case 'event':
-      $redirect_url = '/qc/admin/board/read.php?pid='.$list_pid.'&category=event'; 
-      break;
+    $redirect_url = '/qc/admin/board/read.php?pid=' . $list_pid . '&category=event';
+    break;
   case 'free':
-      $redirect_url = '/qc/admin/board/read.php?pid='.$list_pid.'&category=free'; 
-      break;
+    $redirect_url = '/qc/admin/board/read.php?pid=' . $list_pid . '&category=free';
+    break;
   default:
-      die("유효하지 않은 카테고리입니다.");
+    die("유효하지 않은 카테고리입니다.");
 }
 
-if($result){
+if ($result) {
   echo "<script>
     alert('대댓글 수정 완료');
     location.href='$redirect_url';
     </script>";
-}else{
+} else {
   echo "<script>
   alert('대댓글 수정 실패');
    history.back();
   </script>";
 }
-?>

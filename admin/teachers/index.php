@@ -32,26 +32,26 @@ if ($data && $data->unread_count > 0) {
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
           <h6 class="mb-0 fw-bold text-primary">아직 구현 전</h6>
-          <small class="ms-2">X</small>
+          <small class="ms-2"></small>
         </div>
         <div class="card-body">
           <div class="row text-center">
             <div class="col-4">
-              <h6 class="text-primary">X</h6>
+              <h6 class="text-primary"></h6>
               <p class="mb-0">
-                <span class="text-primary d-block">X</span>
-                <span class="text-dark d-block">X</span>
+                <span class="text-primary d-block"></span>
+                <span class="text-dark d-block"></span>
               </p>
             </div>
             <div class="col-4">
-              <h6 class="text-primary">X</h6>
+              <h6 class="text-primary"></h6>
 
             </div>
             <div class="col-4">
-              <h6 class="text-danger">X</h6>
+              <h6 class="text-danger"></h6>
               <p class="mb-0">
                 <span class="text-danger"></span>
-                <span class="text-dark">X</span>
+                <span class="text-dark"></span>
               </p>
             </div>
           </div>
@@ -61,25 +61,25 @@ if ($data && $data->unread_count > 0) {
     <div class="col-md-4 amount_member">
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
-          <h6 class="mb-0 fw-bold text-primary">아직 구현 전</h6>
-          <small class="ms-2">2024년 11월 기준 10월 달 대비 증감량</small>
+          <h6 class="mb-0 fw-bold text-primary">전체 회원 관리</h6>
+          <small class="ms-2"></small>
         </div>
         <div class="card-body">
           <div class="row text-center">
             <div class="col-4">
-              <h6 class="sub_tt text-primary">전체 회원</h6>
+              <h6 class="sub_tt text-primary"></h6>
               <p class="mb-0">
-                <span class="text-primary d-block">X</span>
-                <span class="text-dark d-block">X</span>
+                <span class="text-primary d-block"></span>
+                <span class="text-dark d-block"></span>
               </p>
             </div>
             <div class="col-4">
-              <h6 class="text-primary">신규 회원</h6>
+              <h6 class="text-primary"></h6>
             </div>
             <div class="col-4">
-              <h6 class="text-danger">X</h6>
+              <h6 class="text-danger"></h6>
               <p class="mb-0">
-                <span class="text-dark">X</span>
+                <span class="text-dark"></span>
               </p>
             </div>
           </div>
@@ -89,7 +89,7 @@ if ($data && $data->unread_count > 0) {
     <div class="col-md-4 amount_sales">
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
-          <h6 class="mb-0 fw-bold  text-primary">아직 구현 전</h6>
+          <h6 class="mb-0 fw-bold  text-primary">매출 관리</h6>
         </div>
         <div class="card-body">
           <canvas id="top5TeachersChart"></canvas>
