@@ -13,7 +13,7 @@ if (!isset($id)) {
   ";
 }
 $courseArr = [];
-$course_sql = "SELECT cm.*, m.name, m.progress, l.title, l.expiration_day  
+$course_sql = "SELECT cm.*, m.name,  l.title, l.expiration_day  
 FROM courses_management cm
 JOIN members m ON m.mid = cm.mid
 JOIN lecture_list l ON l.lid = cm.lid";
@@ -43,7 +43,7 @@ while ($row = $course_result->fetch_object()) {
     ?>
       <tr>
         <td><?= $course->name ?></td>
-        <td><?= $course->title ?></td>
+        <td><a href="course_view.php?lid=<?= $course->lid ?>"><?= $course->title ?></a></td>
         <td><?= $course->progress ?></td>
         <td><?= $course->start_date ?></td>
         <td><?= $course->expiration_day ?></td>
