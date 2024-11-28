@@ -32,9 +32,18 @@ $lecture_result = $mysqli->query($sql2); //쿼리 실행 결과
 while($lecture_data = $lecture_result->fetch_object()){
   $lecture_dataArr[] = $lecture_data;
 }
-
 $lecture_dataArr = array_slice($lecture_dataArr, 0, 6); //총 6개만 보여줌
-// print_r($lecture_dataArr)
+
+
+// $sql3 = "SELECT * FROM coupons_usercp WHERE userid = '$data->id'";
+// $coupon_result = $mysqli->query($sql3); //쿼리 실행 결과
+// while($coupon_data = $coupon_result->fetch_object()){
+//   $coupon_dataArr[] = $coupon_data;
+// }
+// $coupon_dataArr = array_slice($coupon_dataArr, 0, 6); //총 6개만 보여줌
+// print_r($coupon_dataArr)
+
+
 
 ?>
 
