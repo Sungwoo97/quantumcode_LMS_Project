@@ -60,7 +60,7 @@ try {
         }
 
         // DB 내 같은 이메일이 있는지 확인
-        $sql_query = "SELECT * FROM membersKAKAO WHERE memEmail = '" . $json_profile_data_array["email"] . "' ";
+        $sql_query = "SELECT * FROM membersTEST1 WHERE memEmail = '" . $json_profile_data_array["email"] . "' ";
         $result = $mysqli->query($sql_query); // 쿼리 실행
 
         if (!$result) {
@@ -75,7 +75,7 @@ try {
             $_SESSION['yes'] = 11111111;
         } else {
             // 신규 회원 처리
-            $sql_query = "INSERT INTO membersKAKAO (memName, memPassword, memEmail, memId, memProfilePath, memProfileName, memAddr)
+            $sql_query = "INSERT INTO membersTEST1 (memName, memPassword, memEmail, memId, memProfilePath, memProfileName, memAddr)
                           VALUES (
                               '" . $json_profile_data_array["nickname"] . "',
                               'kakaoPassword',
