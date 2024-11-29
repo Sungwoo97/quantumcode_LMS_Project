@@ -1,6 +1,7 @@
 <?php
 session_start(); // 세션 시작
 
+print_r('출력시작');
 echo print_r($_SESSION);
 // 세션의 모든 값을 출력
 echo "<hr/>";

@@ -52,3 +52,7 @@ function curl_kakao($url,$headers = array()){
 	curl_close($ch); 
 	return $data;		
 }
+
+//print_r($_SESSION); Array ( [nickname] => 김수경 [profile_nickname_needs_agreement] => [profile] => Array ( [nickname] => 김수경 [is_default_nickname] => ) 
+//[has_email] => 1 [email_needs_agreement] => [is_email_valid] => 1 [is_email_verified] => 1 [email] => sukyuk2@naver.com [no] => 0 [yes] => 11111111 )
+
