@@ -90,10 +90,10 @@ switch ($category) {
 </div>
 <div class="d-flex justify-content-end">
   <p class="d-flex gap-3">
-    <?php if ((string)$category === 'qna' && (int)$data->status === 0): ?>
+    <?php if (((string)$category === 'qna'|| (string)$category === 'all') && (int)$data->status === 0): ?>
       <a href="board_answer_ok.php?pid=<?= $pid ?>&category=<?= $category ?>" class="btn btn-primary">답변완료</a>
     <?php endif ?>
-    <?php if ((string)$category === 'qna' && (int)$data->status === 1): ?>
+    <?php if (((string)$category === 'qna'|| (string)$category === 'all') && (int)$data->status === 1): ?>
       <a href="board_answer_cancel.php?pid=<?= $pid ?>&category=<?= $category ?>" class="btn btn-danger">답변취소</a>
     <?php endif ?>
     <a href="<?= $redirect_url ?>" class="btn btn-secondary">목록</a>
@@ -164,7 +164,7 @@ switch ($category) {
             <small><?= $reply['date'] ?></small>
           </div>
           <hr>
-          <div class="content">
+          <div class="content mb-3">
             <?= $reply['content'] ?>
           </div>
           <div class="controls d-flex justify-content-end gap-1">
@@ -222,7 +222,7 @@ switch ($category) {
                   <small><?= $re_reply['date'] ?></small>
                 </div>
                 <hr>
-                <div class="content">
+                <div class="mb-3">
                   <?= $re_reply['content'] ?>
                 </div>
                 <div class="controls d-flex justify-content-end gap-1">
