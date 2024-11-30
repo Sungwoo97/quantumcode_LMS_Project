@@ -195,7 +195,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         </div>
         <div class="d-flex flex-column gap-2">
           <label for="tag" class="bold">강의 태그</label>
-          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag"></textarea>
+          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag" required></textarea>
         </div>
       </div>
     </div>
