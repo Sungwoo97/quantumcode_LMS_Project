@@ -1,38 +1,65 @@
 <?php
-// PHPMailer 로드 (Composer 설치 시)
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php'; // Composer 설치 경로
+// Composer autoload 파일 로드
+require '../vendor/autoload.php';
 
-// PHPMailer 인스턴스 생성
-$mail = new PHPMailer(true);
+// 데이터베이스 연결
+$mysqli = new mysqli("localhost", "quantumcode", "12345", "quantumcode");
 
-try {
-    // 서버 설정
-    $mail->isSMTP();                          // SMTP 사용
-    $mail->Host       = 'smtp.gmail.com';     // SMTP 서버 주소 (Gmail)
-    $mail->SMTPAuth   = true;                 // SMTP 인증 사용
-    $mail->Username   = 'haemilyjh@gmail.com'; // Gmail 주소
-    $mail->Password   = 'dkskWP12!@';       // Gmail 비밀번호 또는 앱 비밀번호
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS 암호화
-    $mail->Port       = 587;                  // TLS 포트 번호
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $memName = $_POST['memName'];
+    $memEmail = $_POST['memEmail'];
+    $memPassword = password_hash($_POST['memPassword'], PASSWORD_BCRYPT); // 비밀번호 암호화
+    $memAddr = $_POST['memAddr'] ?? null; // 주소 (선택 사항)
+    $token = bin2hex(random_bytes(16)); // 인증 토큰 생성
 
-    // 송신자 및 수신자 설정
-    $mail->setFrom('haemilyjh@gmail.com', 'junho');  // 보내는 사람
-    $mail->addAddress('recipient_email@example.com', 'Recipient Name'); // 받는 사람
-    $mail->addReplyTo('haemilyjh@gmail.com', 'junho'); // 회신 이메일
+    // 이메일 중복 확인
+    $stmt = $mysqli->prepare("SELECT * FROM memberskakao WHERE memEmail = ?");
+    $stmt->bind_param("s", $memEmail);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // 이메일 내용
-    $mail->isHTML(true);                      // HTML 메일 사용
-    $mail->Subject = '테스트 이메일 제목';     // 이메일 제목
-    $mail->Body    = '<h1>테스트 이메일 내용</h1>'; // HTML 형식 이메일 내용
-    $mail->AltBody = '테스트 이메일 내용 (HTML 미지원 클라이언트용)'; // 텍스트 형식
+    if ($result->num_rows > 0) {
+        echo "이미 등록된 이메일입니다.";
+        exit();
+    }
 
-    // 이메일 전송
-    $mail->send();
-    echo '이메일이 성공적으로 전송되었습니다.';
-} catch (Exception $e) {
-    echo "이메일 전송 실패: {$mail->ErrorInfo}";
+    // 회원 정보 삽입
+    $stmt = $mysqli->prepare("INSERT INTO memberskakao (memName, memPassword, memEmail, memAddr, token, is_verified, grade) VALUES (?, ?, ?, ?, ?, 0, 'bronze')");
+    $stmt->bind_param("sssss", $memName, $memPassword, $memEmail, $memAddr, $token);
+
+    if ($stmt->execute()) {
+        // 이메일 전송
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; // 구글 SMTP 서버
+            $mail->SMTPAuth = true;
+            $mail->Username = 'haemilyjh@gmail.com'; // 구글 사용자명
+            $mail->Password = 'dkskWP12!@'; // 구글 앱 비밀번호
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('haemilyjh@gmail.com', 'Your App'); // 발신자 이메일
+            $mail->addAddress($memEmail);
+
+            // 인증 링크 생성
+            $verificationLink = "http://yourdomain.com/verify.php?token=$token";
+
+            $mail->isHTML(true);
+            $mail->Subject = '회원가입 인증';
+            $mail->Body = "안녕하세요, <br> 회원가입을 완료하려면 <a href='$verificationLink'>여기를 클릭</a>하세요.";
+            $mail->AltBody = "회원가입을 완료하려면 다음 링크를 클릭하세요: $verificationLink";
+
+            $mail->send();
+            echo "인증 이메일이 발송되었습니다.";
+        } catch (Exception $e) {
+            echo "이메일 전송 실패: {$mail->ErrorInfo}";
+        }
+    } else {
+        echo "회원가입 실패: " . $stmt->error;
+    }
 }
 ?>

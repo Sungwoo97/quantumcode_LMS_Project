@@ -75,7 +75,7 @@ try {
             $_SESSION['yes'] = 11111111;
         } else {
             // 신규 회원 처리
-            $sql_query = "INSERT INTO membersKAKAO (memName, memPassword, memEmail, memId, memProfilePath, memProfileName, memAddr)
+            $sql_query = "INSERT INTO membersKAKAO (memName, memPassword, memEmail, memId, memProfilePath, memProfileName, memAddr, is_verified, is_email_verified)
                           VALUES (
                               '" . $json_profile_data_array["nickname"] . "',
                               'kakaoPassword',
@@ -83,7 +83,9 @@ try {
                               'kakaoId',
                               '',
                               '" . $json_profile_data_array["profile_image"] . "',
-                              'kakaoAddr'
+                              'kakaoAddr',
+                              1,
+                              '" . $json_profile_data_array["is_email_verified"] . "'
                           )";
 
             if (!$mysqli->query($sql_query)) {
@@ -126,5 +128,5 @@ mysqli_close($mysqli); // $connect → $mysqli 수정
 setcookie('state', '', time() - 3000);
 
 // 페이지 이동
-header("Location: ../controller/test.php");
+header("Location: ../account/test.php");
 exit;
