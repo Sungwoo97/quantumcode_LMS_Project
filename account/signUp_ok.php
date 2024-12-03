@@ -5,14 +5,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 $name = $_POST['name'] ?? '';
 $email = $_POST['email'] ?? '';
 $number = $_POST['number'] ?? '';
-// $password = hash('sha512', $password);
+// $password = hash('sha512', $password);  //추후 암호화 할것.
 $password = $_POST['password'];
 $memCreateAt = $_POST['memCreateAt'] ?? '';
 
+//암호화 하기 위한 토큰 생성
+$activation_token = bin2hex(random_bytes(16));
+$activation_token_hash = hash("sha256", $activation_token);
+
 $sql = "INSERT INTO membersKakao
-(memName, memPassword, memEmail, number, memCreatedAt)
+(memName, memPassword, memEmail, number, memCreatedAt, account_activation_token)
 VALUES
-('$name', '$password', '$email', '$number', '$memCreatedAt')";
+('$name', '$password', '$email', '$number', '$memCreatedAt', '$activation_token_hash')";
 
 echo $sql;
 
