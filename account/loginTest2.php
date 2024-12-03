@@ -88,7 +88,7 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
 
             <!-- Footer -->
             <p class="mt-5" style="font-size: 12px;">혹시 아이디 / 비밀번호가 기억이 안나신다면?</p>
-            <p class="mt-1" style="font-size: 12px;"><a href="#" class="text-decoration-none">아이디 / 비밀번호 재설정하기</a></p>
+            <p class="mt-1" style="font-size: 12px;"><a href="resetId&passwd.php" class="text-decoration-none">아이디 / 비밀번호 재설정하기</a></p>
         </div>
     </div>
 
