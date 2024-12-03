@@ -29,7 +29,7 @@ if ($mysqli->affected_rows) {
 
     $mail = require __DIR__ . "/mailer.php";
 
-    $mail->setFrom("noreply@example.com"); //일반적으로는 이렇게 해놓는다함
+    $mail->setFrom("haemilyjh@naver.com"); //일반적으로는 이렇게 해놓는다함
     $mail->addAddress($email);    //받는 사람 이메일(즉 비번 찾는사람)
     $mail->Subject = "Password Reset";
     $mail->Body = <<<END
