@@ -19,12 +19,12 @@ echo $sql;
 $member_result = $mysqli->query($sql);
 if ($member_result) {
   echo "<script>
-    alert('강사가 등록되었습니다.');
-    location.href = 'teacher_list.php';
+    alert('이메일이 전송되었습니다. 메일 인증을 해주세요.');
+    location.href = 'loginTest2.php';
     </script>";
 } else {
   echo "<script>
-    alert('등록에 실패했습니다.');
+    alert('회원등록에 실패했습니다.');
     history.back();
   </script>";
 }

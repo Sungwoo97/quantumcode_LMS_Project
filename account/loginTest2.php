@@ -68,7 +68,7 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
                 <img src="https://img.icons8.com/ios-filled/20/000000/chat--v1.png" alt="Kakao Icon" style="margin-right: 8px;">
                 카카오로 1초 만에 시작하기
             </a>
-            <button onclick="location.href='./logout.php'" class="btn btn-light w-100 mb-3">카카오 세션 종료</button>
+            <!-- <button onclick="location.href='./logout.php'" class="btn btn-light w-100 mb-3">카카오 세션 종료</button> -->
 
             <hr class="my-4">
 
