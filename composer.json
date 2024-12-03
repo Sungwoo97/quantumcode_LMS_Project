@@ -1,4 +1,11 @@
 {
+    "name": "yoonjunho/qc",
+    "authors": [
+        {
+            "name": "bluedawn123",
+            "email": "haemilyjh@naver.com"
+        }
+    ],
     "require": {
         "phpmailer/phpmailer": "^6.9"
     }
