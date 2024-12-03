@@ -1,5 +1,10 @@
 {
-    "name": "yoonjunho/qc",
+    "name": "administrator/qc",
+    "autoload": {
+        "psr-4": {
+            "Administrator\\Qc\\": "src/"
+        }
+    },
     "authors": [
         {
             "name": "bluedawn123",
