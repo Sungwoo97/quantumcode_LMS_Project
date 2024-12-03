@@ -74,3 +74,15 @@ p{
   }
 }
 
+.payment{
+  background: #ebebeb;
+  dl{
+    margin: 15px;
+    dd{
+      margin-bottom: 10px;
+    }
+  }
+  div{
+    margin: 15px;
+  }
+}
