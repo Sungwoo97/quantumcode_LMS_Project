@@ -6,20 +6,20 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . "../vendor/autoload.php";  //왜 에러...?
+require $_SERVER['DOCUMENT_ROOT'] . "/qc/vendor/autoload.php";
 
 $mail = new PHPMailer(true);
 
 // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
-$mail->isSMTP();
-$mail->SMTPAuth = true;
+$mail->isSMTP();                               // SMTP 사용
+$mail->Host = "smtp.naver.com";                // Naver SMTP 서버
+$mail->SMTPAuth = true;                        // SMTP 인증 사용
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL 암호화 사용
+$mail->Port = 465;                             // SSL 포트
+$mail->Username = "haemilyjh";                 // Naver 아이디
+$mail->Password = "dlf2tkatk!@";               // Naver 비밀번호
 
-$mail->Host = "smtp.example.com";
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-$mail->Port = 587;
-$mail->Username = "haemilyjh@gmail.com";
-$mail->Password = "dkskWP12!@";
 
 $mail->isHtml(true);
 
