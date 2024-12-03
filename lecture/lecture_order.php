@@ -130,12 +130,12 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
   const paymentBtn = document.querySelector('.payment_btn');
   const coupon = document.querySelector('#coupon');
   const total_payment = document.querySelector('.total_payment').innerText;
-  const numericValue = total_payment.replace(/[^0-9]/g, '');
+  let numericValue = total_payment.replace(/[^0-9]/g, '');
 
   paymentBtn.addEventListener('click', () => {
     const mid = "<?= $userid ?>";
     const lid = "<?= $lid ?>";
-    const total = "<?= $total ?>";
+    const total = numericValue;
     console.log(mid, lid, total);
     const data = new URLSearchParams({
       lid: lid,
@@ -164,9 +164,18 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
   })
   coupon.addEventListener('change', (e) => {
     let ucid = e.target.value;
-    let ucprice = e.target.options[selectElement.selectedIndex].getAttribute('data-price');
+    let ucprice = e.target.options[e.target.selectedIndex].getAttribute('data-price');
     console.log(ucid, ucprice);
+    numericValue -= Number(ucprice);
+    
+
+    document.querySelector('.total_payment').innerText = numberFormat(numericValue) + '원';
   })
+
+  function numberFormat(number, thousandSeparator = ',') {
+    const integerPart = Math.floor(number).toString(); // 정수 부분만 처리
+    return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+  }
 </script>
 
 
