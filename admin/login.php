@@ -29,7 +29,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <div class="insite_modal">
     <div class="modal_header d-flex flex-column justify-content-center align-items-center">
       <img src="img/core-img/Small_Logo.svg" class="mb-2" alt="포트폴리오용 모달 로고">
-      <p class="mb-4">LMS 관리자 페이지 제작 프로젝트</p>
+      <p class="mb-4">LMS 관리자 페이지 제작 프로젝트1</p>
       <h2>본 사이트는 구직용 포트폴리오 웹사이트이며, 실제로 운영되는 사이트가 아닙니다.</h2>
     </div>
     <hr>
