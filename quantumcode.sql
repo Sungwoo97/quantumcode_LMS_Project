@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-03 10:20
+-- 생성 시간: 24-12-02 09:58
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-11-25 04:52:16', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-02 17:34:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -634,15 +634,14 @@ CREATE TABLE `members` (
   `mid` int(15) NOT NULL,
   `name` varchar(111) NOT NULL,
   `id` varchar(45) NOT NULL,
-  `birth` date NOT NULL,
+  `birth` date DEFAULT NULL,
   `password` varchar(222) NOT NULL,
   `email` varchar(45) NOT NULL,
   `number` int(25) NOT NULL,
   `reg_date` date NOT NULL DEFAULT current_timestamp(),
   `member_detail` text DEFAULT NULL,
   `cover_image` varchar(111) DEFAULT NULL,
-  `grade` varchar(11) NOT NULL,
-  `progress` double DEFAULT NULL,
+  `grade` varchar(11) NOT NULL DEFAULT 'bronze',
   `last_login` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -650,57 +649,166 @@ CREATE TABLE `members` (
 -- 테이블의 덤프 데이터 `members`
 --
 
-INSERT INTO `members` (`mid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `member_detail`, `cover_image`, `grade`, `progress`, `last_login`) VALUES
-(1, '김철수', 'kimcs', '1985-05-14', '123123', 'kimcs@example.com', 1023456789, '2023-01-12', '개발을 좋아합니다.', NULL, 'silver', 45.6, '2023-12-31 12:34:56'),
-(2, '박영희', 'parkye', '1992-03-23', '123123', 'parkye@example.com', 1098765432, '2023-02-15', '취미는 독서입니다.', NULL, 'gold', 56.3, '2023-11-20 08:12:10'),
-(3, '이민수', 'leems', '1989-07-07', '123123', 'leems@example.com', 1012345678, '2023-03-20', '등산을 좋아합니다.', NULL, 'bronze', 63.2, '2023-11-15 10:50:40'),
-(4, '최수정', 'choisj', '1995-11-11', '123123', 'choisj@example.com', 1034567890, '2023-04-05', '요리를 즐깁니다.', NULL, 'vip', 78.1, '2023-11-29 14:22:30'),
-(5, '홍길동', 'honggd', '1990-02-20', '123123', 'honggd@example.com', 1045678901, '2023-05-01', '영화를 좋아합니다.', NULL, 'gold', 45, '2023-12-01 09:14:30'),
-(6, '강수진', 'kangsj', '1993-08-17', '123123', 'kangsj@example.com', 1056789012, '2023-06-10', '테니스를 즐깁니다.', NULL, 'silver', 61.2, '2023-11-05 11:30:22'),
-(7, '윤상현', 'yoonsh', '1994-12-30', '123123', 'yoonsh@example.com', 1067890123, '2023-07-08', '독서를 즐깁니다.', NULL, 'bronze', 89.5, '2023-11-19 18:50:15'),
-(8, '서준영', 'seojy', '1987-01-10', '123123', 'seojy@example.com', 1078901234, '2023-08-15', '게임을 좋아합니다.', NULL, 'vip', 47.8, '2023-10-10 08:40:30'),
-(9, '장민희', 'jangmh', '1991-09-25', '123123', 'jangmh@example.com', 1089012345, '2023-09-25', '사진 찍기를 좋아합니다.', NULL, 'gold', 69.3, '2023-11-12 15:10:25'),
-(10, '전혜진', 'jeonhj', '1986-04-14', '123123', 'jeonhj@example.com', 1090123456, '2023-10-10', '춤을 좋아합니다.', NULL, 'bronze', 88, '2023-11-01 12:45:15'),
-(11, '나현우', 'nahw', '1994-06-06', '123123', 'nahw@example.com', 1101234567, '2023-10-30', '음악 감상을 즐깁니다.', NULL, 'silver', 55.3, '2023-12-10 11:15:35'),
-(12, '신예진', 'shinyj', '1989-03-02', '123123', 'shinyj@example.com', 1112345678, '2023-11-20', '요가를 좋아합니다.', NULL, 'vip', 66.7, '2023-11-21 12:00:25'),
-(13, '고은지', 'goej', '1996-12-24', '123123', 'goej@example.com', 1123456789, '2023-12-10', '자전거를 좋아합니다.', NULL, 'gold', 74.5, '2023-11-30 14:15:10'),
-(14, '하준호', 'hajh', '1988-07-17', '123123', 'hajh@example.com', 1134567890, '2023-12-15', '해변을 좋아합니다.', NULL, 'silver', 82.4, '2023-12-20 17:10:40'),
-(15, '김다은', 'kimde', '1991-05-15', '123123', 'kimde@example.com', 1145678901, '2023-01-05', '책 읽기를 좋아합니다.', NULL, 'bronze', 54.2, '2023-01-10 13:30:50'),
-(16, '박재민', 'parkjm', '1990-08-30', '123123', 'parkjm@example.com', 1156789012, '2023-02-12', '여행을 좋아합니다.', NULL, 'vip', 68.4, '2023-02-15 12:20:30'),
-(17, '이하윤', 'leehy', '1993-11-20', '123123', 'leehy@example.com', 1167890123, '2023-03-18', '커피를 좋아합니다.', NULL, 'gold', 63.1, '2023-03-22 18:45:15'),
-(18, '최은성', 'choies', '1987-02-12', '123123', 'choies@example.com', 1178901234, '2023-04-22', '조깅을 좋아합니다.', NULL, 'silver', 91, '2023-04-28 11:25:00'),
-(19, '홍서현', 'hongsh', '1989-06-25', '123123', 'hongsh@example.com', 1189012345, '2023-05-15', '요리 강습을 좋아합니다.', NULL, 'bronze', 48.7, '2023-05-25 13:30:45'),
-(20, '서수민', 'seosm', '1995-04-16', '123123', 'seosm@example.com', 1190123456, '2023-12-29', '패션을 좋아합니다.', NULL, 'vip', 64.8, '2024-01-15 13:15:20'),
-(21, '나하영', 'nahy', '1990-11-18', '123123', 'nahy@example.com', 1201234567, '2024-02-05', '운동을 좋아합니다.', NULL, 'gold', 72.5, '2024-02-20 17:45:40'),
-(22, '전현우', 'jeonhw', '1992-09-24', '123123', 'jeonhw@example.com', 1212345678, '2024-03-12', '예술을 좋아합니다.', NULL, 'silver', 80.1, '2024-03-20 15:50:00'),
-(23, '고은찬', 'goec', '1989-12-11', '123123', 'goec@example.com', 1223456789, '2024-04-01', '기술에 관심이 많습니다.', NULL, 'bronze', 68.9, '2024-04-18 11:45:25'),
-(24, '강민정', 'kangmj', '1994-05-20', '123123', 'kangmj@example.com', 1234567890, '2024-05-01', '창업을 준비 중입니다.', NULL, 'vip', 74, '2024-05-10 14:00:00'),
-(25, '윤서우', 'yoonso', '1996-01-25', '123123', 'yoonso@example.com', 1245678901, '2024-06-15', '요리를 좋아합니다.', NULL, 'gold', 82.1, '2024-06-30 16:00:00'),
-(26, '한도영', 'handy', '1993-02-14', '123123', 'handy@example.com', 1256789012, '2024-07-05', '자전거 타기를 좋아합니다.', NULL, 'silver', 77.5, '2024-07-20 15:45:10'),
-(27, '정하늘', 'junghn', '1992-09-09', '123123', 'junghn@example.com', 1267890123, '2024-08-01', '영화를 좋아합니다.', NULL, 'bronze', 55, '2024-08-15 14:20:00'),
-(28, '이수진', 'leesj', '1990-06-15', '123123', 'leesj@example.com', 1278901234, '2024-09-10', '책 읽기를 좋아합니다.', NULL, 'vip', 61.7, '2024-09-20 11:30:00'),
-(29, '김지훈', 'kimjh', '1988-07-30', '123123', 'kimjh@example.com', 1289012345, '2024-10-01', '등산을 좋아합니다.', NULL, 'gold', 88.5, '2024-10-10 12:00:00'),
-(30, '김유진', 'kimyj', '1994-12-12', '123123', 'kimyj@example.com', 1290123456, '2024-01-15', '음악 감상을 좋아합니다.', NULL, 'silver', 65.3, '2024-01-20 14:30:00'),
-(31, '박세영', 'parkse', '1993-03-20', '123123', 'parkse@example.com', 1301234567, '2024-02-10', '사진 촬영을 좋아합니다.', NULL, 'bronze', 73.5, '2024-02-15 16:45:00'),
-(32, '최지민', 'choijm', '1991-08-15', '123123', 'choijm@example.com', 1312345678, '2024-03-22', '독서를 즐깁니다.', NULL, 'vip', 84, '2024-03-30 12:15:00'),
-(33, '이하나', 'leeha', '1995-05-01', '123123', 'leeha@example.com', 1323456789, '2024-04-05', '여행을 좋아합니다.', NULL, 'gold', 76.2, '2024-04-10 18:25:00'),
-(34, '정윤아', 'jungya', '1992-02-25', '123123', 'jungya@example.com', 1334567890, '2024-05-20', '요리를 좋아합니다.', NULL, 'silver', 58.7, '2024-05-25 15:00:00'),
-(35, '한지훈', 'hanjh', '1996-06-15', '123123', 'hanjh@example.com', 1345678901, '2024-06-12', '영화를 즐깁니다.', NULL, 'bronze', 70.8, '2024-06-20 16:00:00'),
-(36, '고민정', 'gominj', '1993-09-18', '123123', 'gominj@example.com', 1356789012, '2024-07-01', '패션을 좋아합니다.', NULL, 'vip', 79, '2024-07-15 13:45:00'),
-(37, '윤성우', 'yoonso', '1991-04-07', '123123', 'yoonso@example.com', 1367890123, '2024-08-10', '등산을 즐깁니다.', NULL, 'gold', 61.5, '2024-08-18 15:15:00'),
-(38, '김재영', 'kimjy', '1990-11-09', '123123', 'kimjy@example.com', 1378901234, '2024-09-05', '책 읽기를 좋아합니다.', NULL, 'silver', 85.4, '2024-09-15 14:50:00'),
-(39, '박현서', 'parkhs', '1995-07-17', '123123', 'parkhs@example.com', 1389012345, '2024-10-20', '운동을 좋아합니다.', NULL, 'bronze', 73.8, '2024-10-30 12:40:00'),
-(40, '최은빈', 'choieb', '1992-01-12', '123123', 'choieb@example.com', 1390123456, '2024-01-05', '음악을 즐깁니다.', NULL, 'vip', 54.3, '2024-01-10 10:00:00'),
-(41, '이하준', 'leehj', '1994-06-23', '123123', 'leehj@example.com', 1401234567, '2024-02-15', '자전거를 좋아합니다.', NULL, 'gold', 72.5, '2024-02-20 11:30:00'),
-(42, '한지우', 'hanjw', '1996-12-05', '123123', 'hanjw@example.com', 1412345678, '2024-03-01', '기술을 좋아합니다.', NULL, 'silver', 66.7, '2024-03-10 14:25:00'),
-(43, '고유진', 'goyj', '1993-10-10', '123123', 'goyj@example.com', 1423456789, '2024-04-25', '창업을 준비 중입니다.', NULL, 'bronze', 77.3, '2024-05-01 13:00:00'),
-(44, '윤지현', 'yoonjh', '1992-08-30', '123123', 'yoonjh@example.com', 1434567890, '2024-05-10', '요가를 좋아합니다.', NULL, 'vip', 62.4, '2024-05-15 16:20:00'),
-(45, '서지민', 'seoji', '1995-03-03', '123123', 'seoji@example.com', 1445678901, '2024-06-18', '독서를 즐깁니다.', NULL, 'gold', 74.5, '2024-06-25 15:40:00'),
-(46, '정민우', 'jungmw', '1990-09-15', '123123', 'jungmw@example.com', 1456789012, '2024-07-22', '게임을 좋아합니다.', NULL, 'silver', 68.9, '2024-07-30 12:30:00'),
-(47, '한수현', 'hansh', '1996-02-11', '123123', 'hansh@example.com', 1467890123, '2024-08-05', '사진을 좋아합니다.', NULL, 'bronze', 80.3, '2024-08-15 13:10:00'),
-(48, '김지훈', 'kimjh', '1992-06-06', '123123', 'kimjh@example.com', 1478901234, '2024-09-12', '영화를 좋아합니다.', NULL, 'vip', 72.1, '2024-09-20 14:30:00'),
-(49, '박수현', 'parksu', '1991-03-29', '123123', 'parksu@example.com', 1489012345, '2024-10-25', '해변을 좋아합니다.', NULL, 'gold', 83.5, '2024-10-30 16:40:00'),
-(50, '최민아', 'choima', '1994-11-01', '123123', 'choima@example.com', 1490123456, '2024-11-10', '패션을 좋아합니다.', NULL, 'silver', 75.7, '2024-11-15 10:00:00');
+INSERT INTO `members` (`mid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `member_detail`, `cover_image`, `grade`, `last_login`) VALUES
+(1, '김철수', 'kimcs', '1985-05-14', '123123', 'kimcs@example.com', 1023456789, '2023-01-12', '개발을 좋아합니다.', NULL, 'silver', '2023-12-31 12:34:56'),
+(2, '박영희', 'parkye', '1992-03-23', '123123', 'parkye@example.com', 1098765432, '2023-02-15', '취미는 독서입니다.', NULL, 'gold', '2023-11-20 08:12:10'),
+(3, '이민수', 'leems', '1989-07-07', '123123', 'leems@example.com', 1012345678, '2023-03-20', '등산을 좋아합니다.', NULL, 'bronze', '2023-11-15 10:50:40'),
+(4, '최수정', 'choisj', '1995-11-11', '123123', 'choisj@example.com', 1034567890, '2023-04-05', '요리를 즐깁니다.', NULL, 'vip', '2023-11-29 14:22:30'),
+(5, '홍길동', 'honggd', '1990-02-20', '123123', 'honggd@example.com', 1045678901, '2023-05-01', '영화를 좋아합니다.', NULL, 'gold', '2023-12-01 09:14:30'),
+(6, '강수진', 'kangsj', '1993-08-17', '123123', 'kangsj@example.com', 1056789012, '2023-06-10', '테니스를 즐깁니다.', NULL, 'silver', '2023-11-05 11:30:22'),
+(7, '윤상현', 'yoonsh', '1994-12-30', '123123', 'yoonsh@example.com', 1067890123, '2023-07-08', '독서를 즐깁니다.', NULL, 'bronze', '2023-11-19 18:50:15'),
+(8, '서준영', 'seojy', '1987-01-10', '123123', 'seojy@example.com', 1078901234, '2023-08-15', '게임을 좋아합니다.', NULL, 'vip', '2023-10-10 08:40:30'),
+(9, '장민희', 'jangmh', '1991-09-25', '123123', 'jangmh@example.com', 1089012345, '2023-09-25', '사진 찍기를 좋아합니다.', NULL, 'gold', '2023-11-12 15:10:25'),
+(10, '전혜진', 'jeonhj', '1986-04-14', '123123', 'jeonhj@example.com', 1090123456, '2023-10-10', '춤을 좋아합니다.', NULL, 'bronze', '2023-11-01 12:45:15'),
+(11, '나현우', 'nahw', '1994-06-06', '123123', 'nahw@example.com', 1101234567, '2023-10-30', '음악 감상을 즐깁니다.', NULL, 'silver', '2023-12-10 11:15:35'),
+(12, '신예진', 'shinyj', '1989-03-02', '123123', 'shinyj@example.com', 1112345678, '2023-11-20', '요가를 좋아합니다.', NULL, 'vip', '2023-11-21 12:00:25'),
+(13, '고은지', 'goej', '1996-12-24', '123123', 'goej@example.com', 1123456789, '2023-12-10', '자전거를 좋아합니다.', NULL, 'gold', '2023-11-30 14:15:10'),
+(14, '하준호', 'hajh', '1988-07-17', '123123', 'hajh@example.com', 1134567890, '2023-12-15', '해변을 좋아합니다.', NULL, 'silver', '2023-12-20 17:10:40'),
+(15, '김다은', 'kimde', '1991-05-15', '123123', 'kimde@example.com', 1145678901, '2023-01-05', '책 읽기를 좋아합니다.', NULL, 'bronze', '2023-01-10 13:30:50'),
+(16, '박재민', 'parkjm', '1990-08-30', '123123', 'parkjm@example.com', 1156789012, '2023-02-12', '여행을 좋아합니다.', NULL, 'vip', '2023-02-15 12:20:30'),
+(17, '이하윤', 'leehy', '1993-11-20', '123123', 'leehy@example.com', 1167890123, '2023-03-18', '커피를 좋아합니다.', NULL, 'gold', '2023-03-22 18:45:15'),
+(18, '최은성', 'choies', '1987-02-12', '123123', 'choies@example.com', 1178901234, '2023-04-22', '조깅을 좋아합니다.', NULL, 'silver', '2023-04-28 11:25:00'),
+(19, '홍서현', 'hongsh', '1989-06-25', '123123', 'hongsh@example.com', 1189012345, '2023-05-15', '요리 강습을 좋아합니다.', NULL, 'bronze', '2023-05-25 13:30:45'),
+(20, '서수민', 'seosm', '1995-04-16', '123123', 'seosm@example.com', 1190123456, '2023-12-29', '패션을 좋아합니다.', NULL, 'vip', '2024-01-15 13:15:20'),
+(21, '나하영', 'nahy', '1990-11-18', '123123', 'nahy@example.com', 1201234567, '2024-02-05', '운동을 좋아합니다.', NULL, 'gold', '2024-02-20 17:45:40'),
+(22, '전현우', 'jeonhw', '1992-09-24', '123123', 'jeonhw@example.com', 1212345678, '2024-03-12', '예술을 좋아합니다.', NULL, 'silver', '2024-03-20 15:50:00'),
+(23, '고은찬', 'goec', '1989-12-11', '123123', 'goec@example.com', 1223456789, '2024-04-01', '기술에 관심이 많습니다.', NULL, 'bronze', '2024-04-18 11:45:25'),
+(24, '강민정', 'kangmj', '1994-05-20', '123123', 'kangmj@example.com', 1234567890, '2024-05-01', '창업을 준비 중입니다.', NULL, 'vip', '2024-05-10 14:00:00'),
+(25, '윤서우', 'yoonso', '1996-01-25', '123123', 'yoonso@example.com', 1245678901, '2024-06-15', '요리를 좋아합니다.', NULL, 'gold', '2024-06-30 16:00:00'),
+(26, '한도영', 'handy', '1993-02-14', '123123', 'handy@example.com', 1256789012, '2024-07-05', '자전거 타기를 좋아합니다.', NULL, 'silver', '2024-07-20 15:45:10'),
+(27, '정하늘', 'junghn', '1992-09-09', '123123', 'junghn@example.com', 1267890123, '2024-08-01', '영화를 좋아합니다.', NULL, 'bronze', '2024-08-15 14:20:00'),
+(28, '이수진', 'leesj', '1990-06-15', '123123', 'leesj@example.com', 1278901234, '2024-09-10', '책 읽기를 좋아합니다.', NULL, 'vip', '2024-09-20 11:30:00'),
+(29, '김지훈', 'kimjh', '1988-07-30', '123123', 'kimjh@example.com', 1289012345, '2024-10-01', '등산을 좋아합니다.', NULL, 'gold', '2024-10-10 12:00:00'),
+(30, '김유진', 'kimyj', '1994-12-12', '123123', 'kimyj@example.com', 1290123456, '2024-01-15', '음악 감상을 좋아합니다.', NULL, 'silver', '2024-01-20 14:30:00'),
+(31, '박세영', 'parkse', '1993-03-20', '123123', 'parkse@example.com', 1301234567, '2024-02-10', '사진 촬영을 좋아합니다.', NULL, 'bronze', '2024-02-15 16:45:00'),
+(32, '최지민', 'choijm', '1991-08-15', '123123', 'choijm@example.com', 1312345678, '2024-03-22', '독서를 즐깁니다.', NULL, 'vip', '2024-03-30 12:15:00'),
+(33, '이하나', 'leeha', '1995-05-01', '123123', 'leeha@example.com', 1323456789, '2024-04-05', '여행을 좋아합니다.', NULL, 'gold', '2024-04-10 18:25:00'),
+(34, '정윤아', 'jungya', '1992-02-25', '123123', 'jungya@example.com', 1334567890, '2024-05-20', '요리를 좋아합니다.', NULL, 'silver', '2024-05-25 15:00:00'),
+(35, '한지훈', 'hanjh', '1996-06-15', '123123', 'hanjh@example.com', 1345678901, '2024-06-12', '영화를 즐깁니다.', NULL, 'bronze', '2024-06-20 16:00:00'),
+(36, '고민정', 'gominj', '1993-09-18', '123123', 'gominj@example.com', 1356789012, '2024-07-01', '패션을 좋아합니다.', NULL, 'vip', '2024-07-15 13:45:00'),
+(37, '윤성우', 'yoonso', '1991-04-07', '123123', 'yoonso@example.com', 1367890123, '2024-08-10', '등산을 즐깁니다.', NULL, 'gold', '2024-08-18 15:15:00'),
+(38, '김재영', 'kimjy', '1990-11-09', '123123', 'kimjy@example.com', 1378901234, '2024-09-05', '책 읽기를 좋아합니다.', NULL, 'silver', '2024-09-15 14:50:00'),
+(39, '박현서', 'parkhs', '1995-07-17', '123123', 'parkhs@example.com', 1389012345, '2024-10-20', '운동을 좋아합니다.', NULL, 'bronze', '2024-10-30 12:40:00'),
+(40, '최은빈', 'choieb', '1992-01-12', '123123', 'choieb@example.com', 1390123456, '2024-01-05', '음악을 즐깁니다.', NULL, 'vip', '2024-01-10 10:00:00'),
+(41, '이하준', 'leehj', '1994-06-23', '123123', 'leehj@example.com', 1401234567, '2024-02-15', '자전거를 좋아합니다.', NULL, 'gold', '2024-02-20 11:30:00'),
+(42, '한지우', 'hanjw', '1996-12-05', '123123', 'hanjw@example.com', 1412345678, '2024-03-01', '기술을 좋아합니다.', NULL, 'silver', '2024-03-10 14:25:00'),
+(43, '고유진', 'goyj', '1993-10-10', '123123', 'goyj@example.com', 1423456789, '2024-04-25', '창업을 준비 중입니다.', NULL, 'bronze', '2024-05-01 13:00:00'),
+(44, '윤지현', 'yoonjh', '1992-08-30', '123123', 'yoonjh@example.com', 1434567890, '2024-05-10', '요가를 좋아합니다.', NULL, 'vip', '2024-05-15 16:20:00'),
+(45, '서지민', 'seoji', '1995-03-03', '123123', 'seoji@example.com', 1445678901, '2024-06-18', '독서를 즐깁니다.', NULL, 'gold', '2024-06-25 15:40:00'),
+(46, '정민우', 'jungmw', '1990-09-15', '123123', 'jungmw@example.com', 1456789012, '2024-07-22', '게임을 좋아합니다.', NULL, 'silver', '2024-07-30 12:30:00'),
+(47, '한수현', 'hansh', '1996-02-11', '123123', 'hansh@example.com', 1467890123, '2024-08-05', '사진을 좋아합니다.', NULL, 'bronze', '2024-08-15 13:10:00'),
+(48, '김지훈', 'kimjh', '1992-06-06', '123123', 'kimjh@example.com', 1478901234, '2024-09-12', '영화를 좋아합니다.', NULL, 'vip', '2024-09-20 14:30:00'),
+(49, '박수현', 'parksu', '1991-03-29', '123123', 'parksu@example.com', 1489012345, '2024-10-25', '해변을 좋아합니다.', NULL, 'gold', '2024-10-30 16:40:00'),
+(50, '최민아', 'choima', '1994-11-01', '123123', 'choima@example.com', 1490123456, '2024-11-10', '패션을 좋아합니다.', NULL, 'silver', '2024-11-15 10:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `memberskakao`
+--
+
+CREATE TABLE `memberskakao` (
+  `memId` int(11) NOT NULL,
+  `memName` varchar(255) NOT NULL,
+  `memPassword` varchar(255) NOT NULL,
+  `memEmail` varchar(255) NOT NULL,
+  `id` varchar(45) DEFAULT NULL,
+  `number` varchar(16) DEFAULT NULL,
+  `birth` date DEFAULT NULL,
+  `grade` varchar(45) NOT NULL DEFAULT 'bronze',
+  `token` varchar(255) DEFAULT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `is_email_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `memProfilePath` varchar(255) DEFAULT NULL,
+  `memProfileName` varchar(255) DEFAULT NULL,
+  `memAddr` text DEFAULT NULL,
+  `mem_detail` text DEFAULT NULL,
+  `memCreatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `memUpdatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `memberskakao`
+--
+
+INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`, `number`, `birth`, `grade`, `token`, `is_verified`, `is_email_verified`, `memProfilePath`, `memProfileName`, `memAddr`, `mem_detail`, `memCreatedAt`, `memUpdatedAt`) VALUES
+(3, '김철수', '123123', 'user1@example.com', 'id1', '1011112222', '1990-01-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address1', 'Detail1', '2022-12-31 15:00:00', '2024-11-29 03:09:58'),
+(4, '이영희', '123123', 'user2@example.com', 'id2', '1011112223', '1991-02-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address2', 'Detail2', '2023-01-31 15:00:00', '2024-11-29 03:09:58'),
+(5, '박민준', '123123', 'user3@example.com', 'id3', '1011112224', '1992-03-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address3', 'Detail3', '2023-02-28 15:00:00', '2024-11-29 03:09:58'),
+(6, '최지우', '123123', 'user4@example.com', 'id4', NULL, '1993-04-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address4', 'Detail4', '2023-03-31 15:00:00', '2024-11-29 03:09:58'),
+(7, '정다혜', '123123', 'user5@example.com', 'id5', NULL, '1994-05-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address5', 'Detail5', '2023-04-30 15:00:00', '2024-11-29 03:09:58'),
+(8, '강준호', '123123', 'user6@example.com', 'id6', NULL, '1995-06-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address6', 'Detail6', '2023-05-31 15:00:00', '2024-11-29 03:09:58'),
+(9, '윤지아', '123123', 'user7@example.com', 'id7', NULL, '1996-07-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address7', 'Detail7', '2023-06-30 15:00:00', '2024-11-29 03:09:58'),
+(10, '한민수', '123123', 'user8@example.com', 'id8', '1012345678', '1997-08-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address8', 'Detail8', '2023-07-31 15:00:00', '2024-11-29 03:09:58'),
+(11, '조하늘', '123123', 'user9@example.com', 'id9', '1012345679', '1998-09-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address9', 'Detail9', '2023-08-31 15:00:00', '2024-11-29 03:09:58'),
+(12, '신예린', '123123', 'user10@example.com', 'id10', NULL, '1999-10-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address10', 'Detail10', '2023-09-30 15:00:00', '2024-11-29 03:09:58'),
+(13, '서현우', '123123', 'user11@example.com', 'id11', NULL, '2000-11-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address11', 'Detail11', '2023-10-31 15:00:00', '2024-11-29 03:09:58'),
+(14, '문소희', '123123', 'user12@example.com', 'id12', '1234567801', '2001-12-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address12', 'Detail12', '2023-11-30 15:00:00', '2024-11-29 03:09:58'),
+(15, '홍길동', '123123', 'user13@example.com', 'id13', '1234567802', '1988-01-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address13', 'Detail13', '2023-01-01 15:00:00', '2024-11-29 03:09:58'),
+(16, '백수진', '123123', 'user14@example.com', 'id14', '1234567803', '1989-02-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address14', 'Detail14', '2023-02-02 15:00:00', '2024-11-29 03:09:58'),
+(17, '황지성', '123123', 'user15@example.com', 'id15', '1234567804', '1990-03-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address15', 'Detail15', '2023-03-03 15:00:00', '2024-11-29 03:09:58'),
+(18, '김하늘', '123123', 'user16@example.com', 'id16', '2147483647', '1990-01-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address16', 'Detail16', '2023-12-31 15:00:00', '2024-11-29 03:09:58'),
+(19, '이지원', '123123', 'user17@example.com', 'id17', '2147483647', '1991-02-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address17', 'Detail17', '2024-01-31 15:00:00', '2024-11-29 03:09:58'),
+(20, '박서준', '123123', 'user18@example.com', 'id18', '2147483647', '1992-03-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address18', 'Detail18', '2024-02-29 15:00:00', '2024-11-29 03:09:58'),
+(21, '최수빈', '123123', 'user19@example.com', 'id19', '2147483647', '1993-04-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address19', 'Detail19', '2024-03-31 15:00:00', '2024-11-29 03:09:58'),
+(22, '정채은', '123123', 'user20@example.com', 'id20', '2147483647', '1994-05-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address20', 'Detail20', '2024-04-30 15:00:00', '2024-11-29 03:09:58'),
+(23, '강현수', '123123', 'user21@example.com', 'id21', '2147483647', '1995-06-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address21', 'Detail21', '2024-05-31 15:00:00', '2024-11-29 03:09:58'),
+(24, '윤소연', '123123', 'user22@example.com', 'id22', '2147483647', '1996-07-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address22', 'Detail22', '2024-06-30 15:00:00', '2024-11-29 03:09:58'),
+(25, '한승주', '123123', 'user23@example.com', 'id23', '2147483647', '1997-08-01', 'silver', NULL, 0, 0, NULL, NULL, 'Address23', 'Detail23', '2024-07-31 15:00:00', '2024-11-29 03:09:58'),
+(26, '조현우', '123123', 'user24@example.com', 'id24', '2147483647', '1998-09-01', 'gold', NULL, 0, 0, NULL, NULL, 'Address24', 'Detail24', '2024-08-31 15:00:00', '2024-11-29 03:09:58'),
+(27, '신지후', '123123', 'user25@example.com', 'id25', '2147483647', '1999-10-01', 'bronze', NULL, 0, 0, NULL, NULL, 'Address25', 'Detail25', '2024-09-30 15:00:00', '2024-11-29 03:09:58'),
+(28, '김영수', '123123', 'user26@example.com', 'id26', NULL, '1990-01-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address26', 'Detail26', '2023-01-14 15:00:00', '2024-11-29 03:12:04'),
+(29, '이민정', '123123', 'user27@example.com', 'id27', '1234567890', '1991-02-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address27', 'Detail27', '2023-02-14 15:00:00', '2024-11-29 03:12:04'),
+(30, '박준형', '123123', 'user28@example.com', 'id28', NULL, '1992-03-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address28', 'Detail28', '2023-03-14 15:00:00', '2024-11-29 03:12:04'),
+(31, '최은지', '123123', 'user29@example.com', 'id29', NULL, '1993-04-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address29', 'Detail29', '2023-04-14 15:00:00', '2024-11-29 03:12:04'),
+(32, '정수현', '123123', 'user30@example.com', 'id30', NULL, '1994-05-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address30', 'Detail30', '2023-05-14 15:00:00', '2024-11-29 03:12:04'),
+(33, '강태원', '123123', 'user31@example.com', 'id31', NULL, '1995-06-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address31', 'Detail31', '2023-06-14 15:00:00', '2024-11-29 03:12:04'),
+(34, '윤예지', '123123', 'user32@example.com', 'id32', '1234567891', '1996-07-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address32', 'Detail32', '2023-07-14 15:00:00', '2024-11-29 03:12:04'),
+(35, '한수현', '123123', 'user33@example.com', 'id33', NULL, '1997-08-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address33', 'Detail33', '2023-08-14 15:00:00', '2024-11-29 03:12:04'),
+(36, '조민지', '123123', 'user34@example.com', 'id34', NULL, '1998-09-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address34', 'Detail34', '2023-09-14 15:00:00', '2024-11-29 03:12:04'),
+(37, '신하영', '123123', 'user35@example.com', 'id35', NULL, '1999-10-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address35', 'Detail35', '2023-10-14 15:00:00', '2024-11-29 03:12:04'),
+(38, '서정훈', '123123', 'user36@example.com', 'id36', NULL, '2000-11-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address36', 'Detail36', '2023-11-14 15:00:00', '2024-11-29 03:12:04'),
+(39, '문예은', '123123', 'user37@example.com', 'id37', NULL, '2001-12-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address37', 'Detail37', '2023-12-14 15:00:00', '2024-11-29 03:12:04'),
+(40, '홍세영', '123123', 'user38@example.com', 'id38', '1234567892', '1988-01-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address38', 'Detail38', '2023-01-15 15:00:00', '2024-11-29 03:12:04'),
+(41, '백수영', '123123', 'user39@example.com', 'id39', NULL, '1989-02-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address39', 'Detail39', '2023-02-15 15:00:00', '2024-11-29 03:12:04'),
+(42, '황지우', '123123', 'user40@example.com', 'id40', NULL, '1990-03-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address40', 'Detail40', '2023-03-15 15:00:00', '2024-11-29 03:12:04'),
+(43, '김하영', '123123', 'user41@example.com', 'id41', NULL, '1990-01-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address41', 'Detail41', '2024-01-14 15:00:00', '2024-11-29 03:12:04'),
+(44, '이수빈', '123123', 'user42@example.com', 'id42', NULL, '1991-02-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address42', 'Detail42', '2024-02-14 15:00:00', '2024-11-29 03:12:04'),
+(45, '박현수', '123123', 'user43@example.com', 'id43', NULL, '1992-03-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address43', 'Detail43', '2024-03-14 15:00:00', '2024-11-29 03:12:04'),
+(46, '최민재', '123123', 'user44@example.com', 'id44', NULL, '1993-04-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address44', 'Detail44', '2024-04-14 15:00:00', '2024-11-29 03:12:04'),
+(47, '정예진', '123123', 'user45@example.com', 'id45', NULL, '1994-05-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address45', 'Detail45', '2024-05-14 15:00:00', '2024-11-29 03:12:04'),
+(48, '강지훈', '123123', 'user46@example.com', 'id46', NULL, '1995-06-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address46', 'Detail46', '2024-06-14 15:00:00', '2024-11-29 03:12:04'),
+(49, '윤혜진', '123123', 'user47@example.com', 'id47', '1234567893', '1996-07-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address47', 'Detail47', '2024-07-14 15:00:00', '2024-11-29 03:12:04'),
+(50, '한도현', '123123', 'user48@example.com', 'id48', NULL, '1997-08-15', 'silver', NULL, 0, 0, NULL, NULL, 'Address48', 'Detail48', '2024-08-14 15:00:00', '2024-11-29 03:12:04'),
+(51, '조은별', '123123', 'user49@example.com', 'id49', NULL, '1998-09-15', 'gold', NULL, 0, 0, NULL, NULL, 'Address49', 'Detail49', '2024-09-14 15:00:00', '2024-11-29 03:12:04'),
+(52, '신민아', '123123', 'user50@example.com', 'id50', NULL, '1999-10-15', 'bronze', NULL, 0, 0, NULL, NULL, 'Address50', 'Detail50', '2024-10-14 15:00:00', '2024-11-29 03:12:04'),
+(53, '김정우', '123123', 'user51@example.com', 'id51', NULL, '1990-01-20', 'bronze', NULL, 0, 0, NULL, NULL, 'Address51', 'Detail51', '2023-01-19 15:00:00', '2024-11-29 03:13:57'),
+(54, '이서윤', '123123', 'user52@example.com', 'id52', NULL, '1991-02-20', 'silver', NULL, 0, 0, NULL, NULL, 'Address52', 'Detail52', '2023-02-19 15:00:00', '2024-11-29 03:13:57'),
+(55, '박도윤', '123123', 'user53@example.com', 'id53', '2147483647', '1992-03-20', 'gold', NULL, 0, 0, NULL, NULL, 'Address53', 'Detail53', '2023-03-19 15:00:00', '2024-11-29 03:13:57'),
+(56, '최유진', '123123', 'user54@example.com', 'id54', NULL, '1993-04-20', 'bronze', NULL, 0, 0, NULL, NULL, 'Address54', 'Detail54', '2023-04-19 15:00:00', '2024-11-29 03:13:57'),
+(57, '정민주', '123123', 'user55@example.com', 'id55', NULL, '1994-05-20', 'silver', NULL, 0, 0, NULL, NULL, 'Address55', 'Detail55', '2023-05-19 15:00:00', '2024-11-29 03:13:57'),
+(58, '강지훈', '123123', 'user56@example.com', 'id56', NULL, '1995-06-20', 'gold', NULL, 0, 0, NULL, NULL, 'Address56', 'Detail56', '2023-06-19 15:00:00', '2024-11-29 03:13:57'),
+(59, '윤하은', '123123', 'user57@example.com', 'id57', NULL, '1996-07-20', 'bronze', NULL, 0, 0, NULL, NULL, 'Address57', 'Detail57', '2023-07-19 15:00:00', '2024-11-29 03:13:57'),
+(60, '한상민', '123123', 'user58@example.com', 'id58', '1231231234', '1997-08-20', 'silver', NULL, 0, 0, NULL, NULL, 'Address58', 'Detail58', '2023-08-19 15:00:00', '2024-11-29 03:13:57'),
+(61, '조윤서', '123123', 'user59@example.com', 'id59', NULL, '1998-09-20', 'bronze', NULL, 0, 0, NULL, NULL, 'Address59', 'Detail59', '2023-09-19 15:00:00', '2024-11-29 03:13:57'),
+(62, '신다인', '123123', 'user60@example.com', 'id60', NULL, '1999-10-20', 'gold', NULL, 0, 0, NULL, NULL, 'Address60', 'Detail60', '2023-10-19 15:00:00', '2024-11-29 03:13:57'),
+(63, '서진호', '123123', 'user61@example.com', 'id61', NULL, '1990-01-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address61', 'Detail61', '2024-01-24 15:00:00', '2024-11-29 03:13:57'),
+(64, '문하린', '123123', 'user62@example.com', 'id62', NULL, '1991-02-25', 'silver', NULL, 0, 0, NULL, NULL, 'Address62', 'Detail62', '2024-02-24 15:00:00', '2024-11-29 03:13:57'),
+(65, '홍태훈', '123123', 'user63@example.com', 'id63', '2147483647', '1992-03-25', 'gold', NULL, 0, 0, NULL, NULL, 'Address63', 'Detail63', '2024-03-24 15:00:00', '2024-11-29 03:13:57'),
+(66, '백소미', '123123', 'user64@example.com', 'id64', NULL, '1993-04-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address64', 'Detail64', '2024-04-24 15:00:00', '2024-11-29 03:13:57'),
+(67, '황재민', '123123', 'user65@example.com', 'id65', NULL, '1994-05-25', 'silver', NULL, 0, 0, NULL, NULL, 'Address65', 'Detail65', '2024-05-24 15:00:00', '2024-11-29 03:13:57'),
+(68, '김하연', '123123', 'user66@example.com', 'id66', NULL, '1995-06-25', 'gold', NULL, 0, 0, NULL, NULL, 'Address66', 'Detail66', '2024-06-24 15:00:00', '2024-11-29 03:13:57'),
+(69, '이준희', '123123', 'user67@example.com', 'id67', NULL, '1996-07-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address67', 'Detail67', '2024-07-24 15:00:00', '2024-11-29 03:13:57'),
+(70, '박지민', '123123', 'user68@example.com', 'id68', '1234567894', '1997-08-25', 'silver', NULL, 0, 0, NULL, NULL, 'Address68', 'Detail68', '2024-08-24 15:00:00', '2024-11-29 03:13:57'),
+(71, '최가은', '123123', 'user69@example.com', 'id69', NULL, '1998-09-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address69', 'Detail69', '2024-09-24 15:00:00', '2024-11-29 03:13:57'),
+(72, '정현우', '123123', 'user70@example.com', 'id70', NULL, '1999-10-25', 'gold', NULL, 0, 0, NULL, NULL, 'Address70', 'Detail70', '2024-10-24 15:00:00', '2024-11-29 03:13:57'),
+(73, '강하진', '123123', 'user71@example.com', 'id71', NULL, '2000-11-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address71', 'Detail71', '2024-11-24 15:00:00', '2024-11-29 03:13:57'),
+(74, '윤서아', '123123', 'user72@example.com', 'id72', NULL, '2001-12-25', 'silver', NULL, 0, 0, NULL, NULL, 'Address72', 'Detail72', '2024-12-24 15:00:00', '2024-11-29 03:13:57'),
+(75, '한다솜', '123123', 'user73@example.com', 'id73', NULL, '1990-01-25', 'gold', NULL, 0, 0, NULL, NULL, 'Address73', 'Detail73', '2024-01-24 15:00:00', '2024-11-29 03:13:57'),
+(76, '조재현', '123123', 'user74@example.com', 'id74', NULL, '1991-02-25', 'bronze', NULL, 0, 0, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57'),
+(77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', NULL, 0, 0, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57'),
+(80, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', NULL, 1, 1, '', '', 'kakaoAddr', NULL, '2024-12-02 07:30:03', '2024-12-02 07:30:03'),
+(81, '성우', 'kakaoPassword', 'namsungoo@naver.com', NULL, NULL, NULL, 'bronze', NULL, 1, 1, '', '', 'kakaoAddr', NULL, '2024-12-02 07:31:08', '2024-12-02 07:31:08');
 
 -- --------------------------------------------------------
 
@@ -854,7 +962,7 @@ CREATE TABLE `teachers` (
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `student_number`, `level`, `lecture_num`) VALUES
 (1, '정승제', 'jungsungjae', '1978-12-14', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
 (2, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
-(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-25 04:53:49', NULL, '', 2100000, 68, 10, NULL),
+(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-29 16:26:56', NULL, '', 2100000, 68, 10, NULL),
 (4, '오해원', 'ohhaewon', '1998-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
 (5, '민희진', 'minheejin', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
 (6, '설민석', 'sulminsuk', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
@@ -1059,6 +1167,12 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`mid`);
 
 --
+-- 테이블의 인덱스 `memberskakao`
+--
+ALTER TABLE `memberskakao`
+  ADD PRIMARY KEY (`memId`);
+
+--
 -- 테이블의 인덱스 `sales_course`
 --
 ALTER TABLE `sales_course`
@@ -1205,6 +1319,12 @@ ALTER TABLE `lecture_video`
 --
 ALTER TABLE `members`
   MODIFY `mid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- 테이블의 AUTO_INCREMENT `memberskakao`
+--
+ALTER TABLE `memberskakao`
+  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- 테이블의 AUTO_INCREMENT `sales_course`
