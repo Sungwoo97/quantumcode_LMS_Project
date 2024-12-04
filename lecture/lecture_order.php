@@ -99,7 +99,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
       <dt>쿠폰</dt>
       <dd>
         <select class="form-select" name="coupon" id="coupon">
-          <option value="" selected>쿠폰 선택</option>
+          <option value="0" selected>쿠폰 선택</option>
           <?php
           if (!empty($couponArr)) {
             foreach ($couponArr as $coupon) {
@@ -131,13 +131,15 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
   const coupon = document.querySelector('#coupon');
   const total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
-
+  
   paymentBtn.addEventListener('click', () => {
+    const ucid = coupon.value;
     const mid = "<?= $userid ?>";
     const lid = "<?= $lid ?>";
     const total = numericValue;
     console.log(mid, lid, total);
     const data = new URLSearchParams({
+      ucid : ucid,
       lid: lid,
       mid: mid,
       total_price: total,
