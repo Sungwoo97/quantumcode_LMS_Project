@@ -73,13 +73,14 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
             <hr class="my-4">
 
             <!-- Email Login Form -->
-            <form action="process_login.php" method="POST">
+            <form action="login_ok.php" method="POST">
                 <div class="form-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="이메일" required>
                 </div>
                 <div class="form-group mb-3 position-relative">
                     <input type="password" class="form-control" name="password" placeholder="비밀번호" required>
                 </div>
+                <input type="hidden" id="lastLoginAt" name="lastLoginAt">
                 <button type="submit" class="btn btn-login w-100 mb-3">로그인</button>
             </form>
 
@@ -94,5 +95,15 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    //지금 시간을 디비에 저장하도록 설정.
+    document.addEventListener('DOMContentLoaded', function () {
+    const now = new Date();
+    const formattedTime = now.toISOString().slice(0, 19).replace('T', ' '); // MySQL DATETIME 형식으로 변환
+    document.getElementById('lastLoginAt').value = formattedTime; // 숨겨진 input에 시간 설정
+    });
+
+    </script>
 </body>
 </html>

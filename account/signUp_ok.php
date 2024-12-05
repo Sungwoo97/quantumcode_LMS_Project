@@ -5,11 +5,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 $name = $_POST['name'] ?? '';
 $email = $_POST['email'] ?? '';
 $number = $_POST['number'] ?? '';
-// $password = hash('sha512', $password);  //추후 암호화 할것.
+// $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 $password = $_POST['password'];
-$memCreateAt = $_POST['memCreateAt'] ?? '';
+$password = hash('sha512', $password);
+$memCreatedAt = $_POST['memCreatedAt'] ?? '';
 
-//암호화 하기 위한 토큰 생성
+//암호화된 토큰 생성 => 추후 이메일을 통해 인증했을때 사용하기 위해서. 
 $activation_token = bin2hex(random_bytes(16));
 $activation_token_hash = hash("sha256", $activation_token);
 
