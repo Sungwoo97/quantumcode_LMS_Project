@@ -10,7 +10,7 @@ $total = 0;
 $dataArr = [];
 $lidArr = [];
 // 현재 로그인한 userid 와 같은 것과 비교해서 목록을 출력 (임의로 홍길동)
-$sql = "SELECT lc.*, ll.cover_image, ll.t_id, ll.title 
+$sql = "SELECT lc.*, ll.cover_image, ll.t_id, ll.title, ll.lid 
 FROM lecture_cart lc
 JOIN lecture_list ll
 ON lc.lid = ll.lid
@@ -55,7 +55,6 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
       <span class=""><img src="../img/icon-img/Check_Y.svg" alt="" class="mx-3"><strong class="w-100">전체선택</strong></span> <button class="btn btn-secondary">선택 삭제</button>
     </div>
     <hr>
-
     <table class="table ">
       <thead>
         <tr class="visually-hidden">
@@ -70,15 +69,12 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
         <?php
         if (!empty($dataArr)) {
           foreach ($dataArr as $data) {
-
-
         ?>
             <tr>
-              <th><input type="checkbox" name="" id=""></th>
+              <th><input type="checkbox" name="l_check" id="l_check" data-id="<?= $data->lid ?>"></th>
               <td><img src="<?= $data->cover_image ?>" width="150" alt=""></td>
               <td><?= $data->title ?></td>
               <td><?= number_format($data->price) ?> 원</td>
-
             </tr>
         <?php
           }
@@ -131,15 +127,19 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
   const coupon = document.querySelector('#coupon');
   const total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
-  
+  const lec_check = document.querySelectorAll('input[type="checkbox"]');
+
+  let checkArr = [];
+  let lid;
+
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
     const mid = "<?= $userid ?>";
-    const lid = "<?= $lid ?>";
+    // const lid = "<?= $lid ?>";
     const total = numericValue;
     console.log(mid, lid, total);
     const data = new URLSearchParams({
-      ucid : ucid,
+      ucid: ucid,
       lid: lid,
       mid: mid,
       total_price: total,
@@ -169,7 +169,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
     let ucprice = e.target.options[e.target.selectedIndex].getAttribute('data-price');
     console.log(ucid, ucprice);
     numericValue -= Number(ucprice);
-    
+
 
     document.querySelector('.total_payment').innerText = numberFormat(numericValue) + '원';
   })
@@ -178,6 +178,21 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
     const integerPart = Math.floor(number).toString(); // 정수 부분만 처리
     return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
   }
+  lec_check.forEach(check => {
+    check.addEventListener('change', (e) => {
+      let check_id = e.target.getAttribute('data-id');
+      if (check.checked == 1) {
+        checkArr.push(check_id);
+        console.log(checkArr);
+      } else {
+        checkArr = checkArr.filter(item => item !== check_id);
+        console.log(checkArr);
+      }
+      lid = checkArr.join(',');
+      console.log(lid);
+    })
+
+  })
 </script>
 
 
