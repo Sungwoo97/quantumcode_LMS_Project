@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // 구글 SMTP 서버
+            $mail->Host = 'smtp.naver.com'; // 구글 SMTP 서버
             $mail->SMTPAuth = true;
             $mail->Username = 'haemilyjh@gmail.com'; // 구글 사용자명
             $mail->Password = 'dkskWP12!@'; // 구글 앱 비밀번호
