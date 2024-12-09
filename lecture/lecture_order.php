@@ -52,7 +52,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
 <div class="row">
   <div class="col-9">
     <div class="d-flex justify-content-between align-items-center order-head mb-3">
-      <span class=""><img src="../img/icon-img/Check_Y.svg" alt="" class="mx-3"><strong class="w-100">전체선택</strong></span> <button class="btn btn-secondary">선택 삭제</button>
+      <span class=""><img src="../img/icon-img/Check_Y.svg" alt="" class="mx-3"><strong class="w-100">전체선택</strong></span> <button class="btn btn-secondary sel_delete">선택 삭제</button>
     </div>
     <hr>
     <table class="table ">
@@ -71,10 +71,13 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
           foreach ($dataArr as $data) {
         ?>
             <tr>
-              <th><input type="checkbox" name="l_check" id="l_check" data-id="<?= $data->lid ?>"></th>
+              <th>
+                <input type="checkbox" class="cart_check" name="l_check" id="l_check<?= $data->lid ?>" data-id="<?= $data->lid ?>" data-price="<?= $data->price ?>">
+                <label for="l_check<?= $data->lid ?>" class="cart_label"></label>
+              </th>
               <td><img src="<?= $data->cover_image ?>" width="150" alt=""></td>
               <td><?= $data->title ?></td>
-              <td><?= number_format($data->price) ?> 원</td>
+              <td id="total_price"><?= number_format($data->price) ?> 원</td>
             </tr>
         <?php
           }
@@ -115,7 +118,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
       </dd>
     </dl>
     <div class="d-flex justify-content-between">
-      <span class="font">결제 금액</span><span class="normal-font total_payment"><?= number_format($total) ?>원</span>
+      <span class="font">결제 금액</span><span class="normal-font total_payment"> 0 원</span>
     </div>
     <div class="control m-3">
       <button type="button" class="payment_btn btn btn-primary w-100">결제하기</button>
@@ -125,24 +128,29 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
 <script>
   const paymentBtn = document.querySelector('.payment_btn');
   const coupon = document.querySelector('#coupon');
-  const total_payment = document.querySelector('.total_payment').innerText;
+  let total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
   const lec_check = document.querySelectorAll('input[type="checkbox"]');
+  const sel_delete = document.querySelector('.sel_delete');
 
   let checkArr = [];
+  let priceArr = [];
+  var sum_price = 0;
   let lid;
+  let uctotal;
 
+  // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
     const mid = "<?= $userid ?>";
     // const lid = "<?= $lid ?>";
-    const total = numericValue;
-    console.log(mid, lid, total);
+    // const total = numericValue;
+    console.log(mid, lid, sum_price);
     const data = new URLSearchParams({
       ucid: ucid,
       lid: lid,
       mid: mid,
-      total_price: total,
+      total_price: sum_price,
     });
     fetch('lecture_payment.php', {
         method: 'post',
@@ -164,34 +172,83 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
         console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
       });
   })
+
+  sel_delete.addEventListener('click', () => {
+    if (lid) {
+      console.log(lid);
+      const data = new URLSearchParams({
+        lid: lid
+      });
+      fetch('lecture_order_del.php', {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(result => {
+
+          if (result.status === 'success') {
+            alert('데이터가 성공적으로 삭제되었습니다!');
+            location.reload(); // 페이지 새로고침
+          } else {
+            alert('데이터 삭제에 실패했습니다: ' + result.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
+        });
+    }
+  })
+
+  // 쿠폰 목록을 선택한다면 결제금액에 반영
   coupon.addEventListener('change', (e) => {
     let ucid = e.target.value;
     let ucprice = e.target.options[e.target.selectedIndex].getAttribute('data-price');
-    console.log(ucid, ucprice);
-    numericValue -= Number(ucprice);
+    if (ucid > 0) {
+      sum_price -= Number(ucprice);
+      uctotal = ucprice;
+    } else {
+      sum_price += Number(uctotal);
+      uctotal = null;
+    }
+    document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
+    console.log(ucid, ucprice, uctotal);
 
 
-    document.querySelector('.total_payment').innerText = numberFormat(numericValue) + '원';
+
   })
-
+  // 천자리 마다 , 해주는 함수
   function numberFormat(number, thousandSeparator = ',') {
     const integerPart = Math.floor(number).toString(); // 정수 부분만 처리
     return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
   }
+  // 체크박스 클릭 시 데이터 저장
   lec_check.forEach(check => {
     check.addEventListener('change', (e) => {
       let check_id = e.target.getAttribute('data-id');
+      let check_price = Number(e.target.getAttribute('data-price'));
       if (check.checked == 1) {
+        sum_price += check_price;
         checkArr.push(check_id);
-        console.log(checkArr);
+        console.log(sum_price);
+
       } else {
         checkArr = checkArr.filter(item => item !== check_id);
-        console.log(checkArr);
+        sum_price -= check_price;
+        console.log(sum_price);
       }
       lid = checkArr.join(',');
-      console.log(lid);
-    })
 
+      document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
+      // console.log(sum);
+    })
   })
 </script>
 

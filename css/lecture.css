@@ -86,3 +86,22 @@ p{
     margin: 15px;
   }
 }
+
+ .cart_check {
+  display: none;
+}
+
+/* 체크박스 레이블 */
+.cart_label {
+  display: inline-block;
+  width: 20px; /* 이미지 크기 */
+  height: 20px; /* 이미지 크기 */
+  background-image: url('../img/icon-img/Check_N.svg');
+  background-size: cover;
+  cursor: pointer;
+}
+
+/* 체크박스 선택 시 */
+ .cart_check:checked + .cart_label {
+  background-image: url('../img/icon-img/Check_Y.svg');
+}
