@@ -1,13 +1,11 @@
-<!-- require $_SERVER['DOCUMENT_ROOT'] . "/qc/vendor/autoload.php"; -->
-
 <?php
+require '../vendor/autoload.php';
+
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-require $_SERVER['DOCUMENT_ROOT'] . "/qc/vendor/autoload.php";
-
-class Chat implements MessageComponentInterface {
-    protected $clients;
+class ChatServer implements MessageComponentInterface {
+    private $clients;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
@@ -15,13 +13,13 @@ class Chat implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
-        echo "New connection: ({$conn->resourceId})\n";
+        echo "New connection! ({$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
         foreach ($this->clients as $client) {
             if ($from !== $client) {
-                $client->send($msg); // 메시지 브로드캐스트
+                $client->send($msg);
             }
         }
     }
@@ -37,10 +35,12 @@ class Chat implements MessageComponentInterface {
     }
 }
 
-use Ratchet\Server\IoServer;
-
 $server = IoServer::factory(
-    new Chat(),
+    new HttpServer(
+        new WsServer(
+            new ChatServer()
+        )
+    ),
     8080
 );
 
