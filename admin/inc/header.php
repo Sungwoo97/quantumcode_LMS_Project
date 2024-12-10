@@ -58,6 +58,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   if (isset($lecture_css)) {
     echo $lecture_css;
   }
+  if (isset($video_css)) {
+    echo $video_css;
+  }
   if (isset($teacher_css)) {
     echo $teacher_css;
   }
