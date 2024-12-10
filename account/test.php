@@ -1,57 +1,55 @@
 <?php
+session_start(); // 세션 시작
+include_once("../admin/inc/dbcon.php"); // DB 연결
 
-if (empty($_POST["name"])) {
-    die("Name is required");
-}
 
-if ( ! filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-    die("Valid email is required");
-}
+echo print_r($_SESSION, true);
+//Array ( [nickname] => 김수경 [profile_nickname_needs_agreement] => [profile] => Array ( [nickname] => 김수경 [is_default_nickname] => ) [has_email] => 1 [email_needs_agreement] => [is_email_valid] => 1 [is_email_verified] => 1 [email] => sukyuk2@naver.com [no] => 0 [yes] => 11111111 )
+echo "<hr/>";
 
-if (strlen($_POST["password"]) < 8) {
-    die("Password must be at least 8 characters");
-}
+echo var_dump($_SESSION);
+echo "<hr/>";
 
-if ( ! preg_match("/[a-z]/i", $_POST["password"])) {
-    die("Password must contain at least one letter");
-}
+//echo "<hr/>";
+// echo print_r($_SESSION['properties']);
+//echo "<hr/>";
+// echo print_r($_SESSION['kakao_account']);
+echo "<hr/>";
 
-if ( ! preg_match("/[0-9]/", $_POST["password"])) {
-    die("Password must contain at least one number");
-}
-
-if ($_POST["password"] !== $_POST["password_confirmation"]) {
-    die("Passwords must match");
-}
-
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-$mysqli = require __DIR__ . "/database.php";
-
-$sql = "INSERT INTO user (name, email, password_hash)
-        VALUES (?, ?, ?)";
-        
-$stmt = $mysqli->stmt_init();
-
-if ( ! $stmt->prepare($sql)) {
-    die("SQL error: " . $mysqli->error);
-}
-
-$stmt->bind_param("sss",
-                  $_POST["name"],
-                  $_POST["email"],
-                  $password_hash);
-                  
-if ($stmt->execute()) {
-
-    header("Location: signup-success.html");
-    exit;
-    
+// 배열내 특정 값 뽑아내는 방법
+if (isset($_SESSION['kakao_account']) && isset($_SESSION['kakao_account']['email'])) {
+    echo $_SESSION['kakao_account']['email'];
 } else {
-    
-    if ($mysqli->errno === 1062) {
-        die("email already taken");
-    } else {
-        die($mysqli->error . " " . $mysqli->errno);
-    }
+    echo "kakao_account 또는 email 값이 존재하지 않습니다.";
 }
+
+echo "<hr/>";
+
+if (isset($_SESSION['nickname'])) {
+  echo "환영합니다." . $_SESSION['nickname'] ."회원님";
+} else {
+  echo "nickname 값이 존재하지 않습니다.";
+}
+
+$sql = "SELECT * FROM memberskakao";
+$data = $mysqli->query($sql);
+//$result = $data->fetch_object() ....은 $result -> 컬럼값 으로 개체 값 출력
+
+// 데이터를 객체로 가져오기
+while ($result = $data->fetch_object()) {
+    // 1. 전체 객체 출력
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
+
+    // 2. 객체의 특정 속성 접근
+    echo "ID: " . $result->memId . "<br>";
+    echo "Name: " . $result->memName . "<br>";
+    echo "Email: " . $result->memEmail . "<br>";
+    echo "Grade: " . $result->grade . "<br>";
+    echo "<hr>";
+}
+
+// 연결 종료
+$mysqli->close();
+?>

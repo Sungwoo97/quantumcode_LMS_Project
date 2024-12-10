@@ -1,8 +1,10 @@
 <?php
 
 $token = $_POST["token"];
-
 $token_hash = hash("sha256", $token);
+
+$userpw = $_POST['password'];
+$password = hash('sha512',$userpw);
 
 $mysqli = require __DIR__ . "/database.php";
 
@@ -43,18 +45,17 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
     die("Passwords must match");
 }
 
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 //다시 토큰 초기화
 $sql = "UPDATE membersKakao
-        SET password_hash = ?,
+        SET mempassword = ?,
             reset_token_hash = NULL,
             reset_token_expires_at = NULL
-        WHERE memid = ?";
+        WHERE memEmail = ?";
 
 $stmt = $mysqli->prepare($sql);
 
-$stmt->bind_param("ss", $password_hash, $user["memid"]);
+$stmt->bind_param("ss", $password, $user["memEmail"]);
 
 $stmt->execute();
 

@@ -50,14 +50,16 @@
     <div class="container">
         <div class="signup-container text-center">
             <!-- 로고 -->
-            <img src="https://via.placeholder.com/150x50" alt="Logo" class="mb-4">
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+             <img src="../img/main_logo1.png" alt="Logo" class="mb-4">
+            </a>
             
             <!-- 제목 -->
             <h4 class="mb-3">인생을 바꾸는 교육,</h4>
             <h5 class="mb-4">퀀텀 코드 회원가입</h5>
 
             <!-- 회원가입 양식 -->
-            <form action="signUp_ok.php" method="POST" id="member_save" enctype="multipart/form-data">
+            <form action="signUp_ok.php" method="POST" id="signUp_ok" enctype="multipart/form-data">
                 <!-- 이름 -->
                 <div class="form-group mb-3">
                     <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력해 주세요." required maxlength="10" style="border-radius: 8px;">
@@ -90,7 +92,7 @@
                 <div class="form-group mb-3">
                     <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="비밀번호 확인" required style="border-radius: 8px;">
                 </div>
-                <input type="hidden" id="memCreateAt" name="memCreateAt">
+                <input type="hidden" id="memCreatedAt" name="memCreatedAt">
                 
 
                 <!-- 약관 동의 -->
@@ -116,6 +118,7 @@
 
                 <!-- 회원가입 버튼 -->
                 <button type="submit" class="btn btn-submit w-100" style="border-radius: 8px;">회원가입하기</button>
+                <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-light w-100 mt-3" style="border-radius: 8px;">로그인 페이지로 돌아가기</a>
             </form>
         </div>
     </div>
@@ -127,7 +130,7 @@
     document.addEventListener('DOMContentLoaded', function () {
     const now = new Date();
     const formattedTime = now.toISOString().slice(0, 19).replace('T', ' '); // MySQL DATETIME 형식으로 변환
-    document.getElementById('memCreateAt').value = formattedTime; // 숨겨진 input에 시간 설정
+    document.getElementById('memCreatedAt').value = formattedTime; // 숨겨진 input에 시간 설정
     });
 
     //중복 체크
@@ -187,12 +190,12 @@
     )
   }
 
-  $('#member_save').submit(function(e){
+  $('#signUp_ok').submit(function(e){
     if (!idChecked) {
         e.preventDefault();
         alert('아이디 중복체크를 해주세요');
     } else{
-        $('#member_save').submit();
+        $('#signUp_ok').submit();
     }
   });
 
