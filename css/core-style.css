@@ -60,12 +60,13 @@ body {
 
 /* NAV */
 .navbar {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
 }
 .navbar img {
-  height: 42px; /* 이미지 높이 조정 */
+  height: 40px; /* 이미지 높이 조정 */
   width: auto; /* 비율 유지 */
-  margin: 10px 0;
+  margin: 20px 0;
 }
 .search-form .form-control {
   width: 324px; /* 검색창 너비 */
@@ -98,19 +99,36 @@ body {
   --bs-btn-disabled-border-color: none;
   --bs-gradient: none;
 }
-
+.nav-link{
+  line-height: 60px;
+}
 .nav_sign a{
   padding:3.5px 16px;
+  font-weight: 600;
+}
+.nav_sign .btn.btn-secondary{
+  background-color: var(--lineGray);
+  border: var(--lineGray);
+  color:var(--darkGray);
 }
 
+.dropdown-menu {
+  border-radius: 0 !important;
+}
 .nav-item.dropdown:hover .dropdown-menu {
   display: block; /* 호버 시 드롭다운 메뉴 표시 */
   margin-top: 0; /* 자연스러운 위치 조정 */
+  transition: none !important;
+  border: none;
+  color: var(--darkGray);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
 }
 .dropdown-toggle::after {
   display: none; /* 드롭다운 아이콘 숨김 */
 }
-
+.dropdown-menu .dropdown-item{
+  color: var(--darkGray);
+}
 /* 모달.. 카테고리 선택 관련 */
 .category-btn {
   min-width: 100px;
