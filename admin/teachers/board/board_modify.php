@@ -56,7 +56,7 @@ switch ($category) {
 ?>
 
 
-<form action="t_board_modify_ok.php" method="POST" class="row" enctype="multipart/form-data">
+<form action="board_modify_ok.php" method="POST" class="row" enctype="multipart/form-data">
   <input type="hidden" name="pid" value="<?=$data->pid?>">
   <input type="hidden" name="old_img" value="<?=$data->img?>">
   <div class="mb-3 col-4">

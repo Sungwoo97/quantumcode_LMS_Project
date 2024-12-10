@@ -29,7 +29,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <div class="insite_modal">
     <div class="modal_header d-flex flex-column justify-content-center align-items-center">
       <img src="img/core-img/Small_Logo.svg" class="mb-2" alt="포트폴리오용 모달 로고">
-      <p class="mb-4">LMS 관리자 페이지 제작 프로젝트</p>
+      <p class="mb-4">LMS 관리자 페이지 제작 프로젝트1</p>
       <h2>본 사이트는 구직용 포트폴리오 웹사이트이며, 실제로 운영되는 사이트가 아닙니다.</h2>
     </div>
     <hr>
@@ -53,9 +53,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
       <h4>업무분담</h4>
       <p class="mb-3">기획 및 디자인 : 팀원 전체</p>
       <h4>- 구현 완료 페이지 -</h4>
-      <p>나승일 : 게시판 </p>
+      <p>나승일 : 게시판 관리</p>
       <p>윤준호 : 회원, 강사, 강사개인페이지, 로그인(기능)</p>
-      <p>남성우 : 강의, 매출 관리</p>
+      <p>남성우 : 강의, 매출</p>
       <p>김유진 : 로그인(디자인), 헤더, 쿠폰(등록·수정·삭제)</p>
     </div>
     <hr>
