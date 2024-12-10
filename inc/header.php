@@ -3,6 +3,23 @@ session_start();
 //print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MUNAME] => 윤준호 [Mgrade] => bronze )
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
+//처음 회원 가입했을때(즉 login_count가 0->1로 바뀌는 순간), 모달창 튀어나오게
+$showModal = false; // 모달 표시 여부
+if (isset($_SESSION['MemEmail'])) {
+    $email = $_SESSION['MemEmail'];
+    $sql = "SELECT login_count FROM memberskakao WHERE memEmail = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($loginCount);
+    $stmt->fetch();
+    $stmt->close();
+
+    // `login_count`가 1인 경우 모달 표시
+    if ($loginCount == 1) {
+        $showModal = true;
+    }
+}
 
 ?>
 
@@ -96,3 +113,33 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </div>
         </div>
     </nav>
+    <!-- 모달 HTML -->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="welcomeModalLabel">환영합니다!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Quantum Code에 처음 오신 것을 환영합니다! 첫 방문을 기념하여 새로운 기능을 확인해보세요.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 표시 -->
+    <?php if ($showModal): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), {
+                keyboard: true,
+                backdrop: 'static'
+            });
+            welcomeModal.show();
+        });
+    </script>
+    <?php endif; ?>
