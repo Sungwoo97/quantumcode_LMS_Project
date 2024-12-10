@@ -1,8 +1,11 @@
 <?php
 
 session_start();
-
 session_destroy();
 
-header("Location: loginTest2.php");
+
+echo "<script>
+      alert('로그아웃 되었습니다.');
+      location.href='loginTest2.php';
+  </script>";
 exit;

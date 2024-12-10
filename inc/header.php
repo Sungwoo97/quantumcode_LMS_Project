@@ -1,4 +1,6 @@
 <?php
+session_start();
+//print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MUNAME] => 윤준호 [Mgrade] => bronze )
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 
@@ -59,8 +61,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item ms-3">
-                        <a class="nav-link" href="#">강의</a>  <!-- <= href 알아서 수정바람 -->
+                    <li class="nav-item dropdown ms-3">
+                        <a class="nav-link" href="#" id="lectureDropdown" role="button" aria-expanded="false">
+                            강의
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
+                            <li><a class="dropdown-item" href="#">프론트엔드</a></li>
+                            <li><a class="dropdown-item" href="#">백엔드</a></li>
+                            <li><a class="dropdown-item" href="#">게임</a></li>   <!--커뮤니티 이벤트는 추후 작성-->
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">커뮤니티</a>  <!-- <= href 알아서 수정바람 -->
@@ -74,8 +83,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
                     <button class="btn btn-outline-success" type="submit">검색</button>
                 </form>
                 <div class="ms-3">
-                    <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
-                    <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+                    <?php if (isset($_SESSION['MUNAME'])): ?>
+                        <!-- 로그인된 경우 -->
+                        <span class="text-primary me-3"><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님</span>
+                        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
+                    <?php else: ?>
+                        <!-- 로그인되지 않은 경우 -->
+                        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
+                        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
