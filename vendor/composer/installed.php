@@ -3,11 +3,7 @@
         'name' => 'administrator/qc',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-<<<<<<< HEAD
-        'reference' => '508c95d5591c1bba022d489c68b85e084e0dc957',
-=======
-        'reference' => '14f75ec8abb9e0e32105719139cf1afa8dbc398f',
->>>>>>> origin/yoonjunho
+        'reference' => 'ba8ef90f43d2f4ff73a75e89c8bc790340710390',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,18 +13,12 @@
         'administrator/qc' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-<<<<<<< HEAD
-            'reference' => '508c95d5591c1bba022d489c68b85e084e0dc957',
-=======
-            'reference' => '14f75ec8abb9e0e32105719139cf1afa8dbc398f',
->>>>>>> origin/yoonjunho
+            'reference' => 'ba8ef90f43d2f4ff73a75e89c8bc790340710390',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-=======
         'cboden/ratchet' => array(
             'pretty_version' => 'v0.4.4',
             'version' => '0.4.4.0',
@@ -38,7 +28,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
->>>>>>> origin/yoonjunho
         'evenement/evenement' => array(
             'pretty_version' => 'v3.0.2',
             'version' => '3.0.2.0',
@@ -48,8 +37,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-=======
         'guzzlehttp/psr7' => array(
             'pretty_version' => '2.7.0',
             'version' => '2.7.0.0',
@@ -59,7 +46,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
->>>>>>> origin/yoonjunho
         'php-ffmpeg/php-ffmpeg' => array(
             'pretty_version' => 'v1.3.0',
             'version' => '1.3.0.0',
@@ -102,8 +88,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-=======
         'psr/http-factory' => array(
             'pretty_version' => '1.1.0',
             'version' => '1.1.0.0',
@@ -134,7 +118,6 @@
                 0 => '1.0',
             ),
         ),
->>>>>>> origin/yoonjunho
         'psr/log' => array(
             'pretty_version' => '3.0.2',
             'version' => '3.0.2.0',
@@ -150,8 +133,6 @@
                 0 => '1.0|2.0|3.0',
             ),
         ),
-<<<<<<< HEAD
-=======
         'ralouphie/getallheaders' => array(
             'pretty_version' => '3.0.3',
             'version' => '3.0.3.0',
@@ -224,7 +205,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
->>>>>>> origin/yoonjunho
         'spatie/temporary-directory' => array(
             'pretty_version' => '2.2.1',
             'version' => '2.2.1.0',
@@ -267,8 +247,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-=======
         'symfony/http-foundation' => array(
             'pretty_version' => 'v6.4.16',
             'version' => '6.4.16.0',
@@ -296,7 +274,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
->>>>>>> origin/yoonjunho
         'symfony/process' => array(
             'pretty_version' => 'v7.2.0',
             'version' => '7.2.0.0',
@@ -306,8 +283,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-=======
         'symfony/routing' => array(
             'pretty_version' => 'v6.4.16',
             'version' => '6.4.16.0',
@@ -317,7 +292,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
->>>>>>> origin/yoonjunho
         'symfony/service-contracts' => array(
             'pretty_version' => 'v3.5.1',
             'version' => '3.5.1.0',
