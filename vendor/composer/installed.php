@@ -3,7 +3,7 @@
         'name' => 'administrator/qc',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c5ba8c1975c3c4594580696e06cfd27073d2c9d5',
+        'reference' => '407ea3494bf2eda1bd8fcef74024d4c65a1e3d8d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'administrator/qc' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c5ba8c1975c3c4594580696e06cfd27073d2c9d5',
+            'reference' => '407ea3494bf2eda1bd8fcef74024d4c65a1e3d8d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
