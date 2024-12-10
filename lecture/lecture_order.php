@@ -44,7 +44,10 @@ while ($coupon_row = $coupon_result->fetch_object()) {
 $user_sql = "SELECT * FROM members WHERE mid = $userid";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
-$callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->number, 2, 4) . "-" . substr($user_data->number, 6);
+$callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
+
+
+
 
 
 
@@ -52,7 +55,12 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
 <div class="row">
   <div class="col-9">
     <div class="d-flex justify-content-between align-items-center order-head mb-3">
-      <span class=""><img src="../img/icon-img/Check_Y.svg" alt="" class="mx-3"><strong class="w-100">전체선택</strong></span> <button class="btn btn-secondary sel_delete">선택 삭제</button>
+      <span class="">
+        <input type="checkbox" class="cart_check" name="select_all" id="select_all">
+        <label for="select_all" class="cart_label"></label>
+        <strong class="w-100">전체선택</strong>
+      </span>
+      <button class="btn btn-secondary sel_delete">선택 삭제</button>
     </div>
     <hr>
     <table class="table ">
@@ -130,7 +138,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
   const coupon = document.querySelector('#coupon');
   let total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
-  const lec_check = document.querySelectorAll('input[type="checkbox"]');
+  const lec_check = document.querySelectorAll('.table input[type="checkbox"]');
   const sel_delete = document.querySelector('.sel_delete');
 
   let checkArr = [];
@@ -167,6 +175,7 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
       })
       .then(result => {
         console.log('Success:', result);
+        location.reload();
       })
       .catch(error => {
         console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
@@ -220,9 +229,6 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
     }
     document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
     console.log(ucid, ucprice, uctotal);
-
-
-
   })
   // 천자리 마다 , 해주는 함수
   function numberFormat(number, thousandSeparator = ',') {
@@ -250,6 +256,14 @@ $callnum = "0" . substr($user_data->number, 0, 2) . "-" . substr($user_data->num
       // console.log(sum);
     })
   })
+
+  document.getElementById('select_all').addEventListener('click', function() {
+    const isChecked = this.checked;
+    document.querySelectorAll('.cart_check').forEach(checkbox => {
+      checkbox.checked = isChecked; // 체크박스 상태 변경
+      checkbox.dispatchEvent(new Event('change')); // 이벤트 트리거
+    });
+  });
 </script>
 
 
