@@ -50,7 +50,9 @@
     <div class="container">
         <div class="signup-container text-center">
             <!-- 로고 -->
-            <img src="https://via.placeholder.com/150x50" alt="Logo" class="mb-4">
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+             <img src="../img/main_logo1.png" alt="Logo" class="mb-4">
+            </a>
             
             <!-- 제목 -->
             <h4 class="mb-3">인생을 바꾸는 교육,</h4>
@@ -116,6 +118,7 @@
 
                 <!-- 회원가입 버튼 -->
                 <button type="submit" class="btn btn-submit w-100" style="border-radius: 8px;">회원가입하기</button>
+                <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-light w-100 mt-3" style="border-radius: 8px;">로그인 페이지로 돌아가기</a>
             </form>
         </div>
     </div>

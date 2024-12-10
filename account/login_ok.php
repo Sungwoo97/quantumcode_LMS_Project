@@ -16,20 +16,21 @@ $data = $result ->fetch_object();
 //원래는 verified를 0,1로 하려 그랬는데 이게 더 편한거 같아서 이거로. 카톡도 당연히 됌
 if ($data && $data->account_activation_token === null) {  
   // 마지막 로그인 시간 업데이트
-  $update_sql = "UPDATE membersKakao SET lastLoginAt = now() WHERE memEmail = ?";
+  $update_sql = "UPDATE membersKakao 
+                   SET lastLoginAt = NOW(), login_count = login_count + 1 
+                   WHERE memEmail = ?";
   $update_stmt = $mysqli->prepare($update_sql);
   $update_stmt->bind_param("s", $data->memEmail);
   $update_stmt->execute();
 
   // 세션 설정
   $_SESSION['MemEmail'] = $data->memEmail;
-  $_SESSION['MUID'] = $data->memid;
   $_SESSION['MUNAME'] = $data->memName;
   $_SESSION['Mgrade'] = $data->grade;
 
   echo "<script>
-      alert('회원님 반갑습니다.');
-      location.href='loginTest2.php';
+      alert('회원님 반갑습니다!!.');
+      location.href='/qc/index2.php';
   </script>";
 } else {
   echo "<script>

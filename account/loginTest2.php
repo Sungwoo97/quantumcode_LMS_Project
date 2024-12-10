@@ -57,7 +57,9 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
     <div class="container">
         <div class="login-container text-center">
             <!-- Logo -->
-            <img src="https://via.placeholder.com/150x50" alt="Logo" class="mb-4">
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+             <img src="../img/main_logo1.png" alt="Logo" class="mb-4">
+            </a>
 
             <!-- Title -->
             <h4 class="mb-3">학습의 경계를 허물다,</h4>
