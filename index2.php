@@ -16,6 +16,21 @@
         .navbar {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .navbar img {
+            height: 45px; /* 이미지 높이 조정 */
+            width: auto; /* 비율 유지 */
+        }
+        .search-form .form-control {
+        width: 150px; /* 검색창 너비 */
+        height: 30px; /* 검색창 높이 */
+        font-size: 14px; /* 글씨 크기 */
+        }
+        .search-form .btn {
+            height: 30px; /* 버튼 높이 */
+            font-size: 14px; /* 버튼 글씨 크기 */
+            padding: 0 10px; /* 버튼 안쪽 여백 */
+        }
+        
         .footer {
             background-color: #f8f9fa;
             padding: 30px 20px;
@@ -42,8 +57,8 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="https://via.placeholder.com/150x50" alt="Quantum Code" height="30">
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+             <img src="./img/main_logo1.png" alt="Logo" >
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -60,7 +75,7 @@
                         <a class="nav-link" href="#">이벤트</a>
                     </li>
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex search-form">
                     <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">검색</button>
                 </form>

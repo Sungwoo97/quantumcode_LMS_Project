@@ -1,16 +1,16 @@
-p{
-  margin-bottom : 0;
+p {
+  margin-bottom: 0;
   font-size: 14px;
 }
-.small-font{
+.small-font {
   font-size: 14px;
   line-height: 19px;
 }
-.normal-font{
+.normal-font {
   font-size: 24px;
   line-height: 40px;
 }
-.font{
+.font {
   font-size: 20px;
   line-height: 29px;
 }
@@ -23,36 +23,36 @@ p{
   object-fit: cover;
 }
 
-.list ul{
+.list ul {
   list-style: none;
   padding-left: 0;
   display: flex;
   flex-direction: column;
-  gap:5px;
+  gap: 5px;
 }
-.list li{
+.list li {
   font-size: 12px;
 }
-.list .like img{
+.list .like img {
   filter: invert(1);
   width: 15px;
   height: 15px;
 }
-.like{
+.like {
   display: flex;
   gap: 10px;
-  img{
+  img {
     width: 25px;
     height: 25px;
   }
-} 
-.tag{
+}
+.tag {
   display: flex;
   gap: 5px;
 }
-.tag span{
-  color:var(--white);
-  background: rgba(60,139,255,0.5);
+.tag span {
+  color: var(--white);
+  background: rgba(60, 139, 255, 0.5);
   border-radius: 6px;
   padding: 2px 15px;
 }
@@ -62,15 +62,14 @@ p{
   max-height: 2.4rem; /* 2줄 높이로 고정 (줄 수 * line-height) */
   overflow: hidden; /* 넘치는 텍스트 숨김 */
   text-overflow: ellipsis; /* 말줄임표 추가 */
-  a{
+  a {
     text-decoration: none;
     font-weight: 700;
     color: #000;
   }
 }
-.tuition{
-  .tui{
+.tuition {
+  .tui {
     color: var(--darkGray);
   }
 }
-
