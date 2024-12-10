@@ -5,42 +5,78 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
+$search = '';
 
-$sql = "SELECT * FROM lecture_list ";
+//데이터의 개수 조회
+$page_sql = "SELECT COUNT(*) AS cnt FROM lecture_list WHERE 1=1 $search";
+$page_result = $mysqli->query($page_sql);
+$page_data = $page_result->fetch_assoc();
+$row_num = $page_data['cnt'];
+
+//페이지네이션 
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+} else {
+  $page = 1;
+}
+
+$length = 12;
+$start_num = ($page - 1) * $length;
+
+$block_ct = 5;
+$block_num = ceil($page / $block_ct); //$page1/5 0.2 = 1
+$block_start = (($block_num - 1) * $block_ct) + 1;
+$block_end = $block_start + $block_ct - 1;
+
+$total_page = ceil($row_num / $length); //총75개 10개씩, 8
+$total_block = ceil($total_page / $block_ct);
+
+if ($block_end > $total_page) $block_end = $total_page;
+
+
+
+
+$sql = "SELECT l.*, t.name 
+FROM lecture_list l 
+JOIN teachers t 
+ON l.t_id = t.id 
+ORDER BY lcid LIMIT $start_num, $length";
 $result = $mysqli->query($sql);
 $dataArr = [];
 while ($data = $result->fetch_object()) {
   $dataArr[] = $data;
 }
 
+
 $plat_sql = "SELECT * FROM lecture_category WHERE pcode = '' AND ppcode = '' ";
 $plat_result = $mysqli->query($plat_sql);
 $platArr = [];
-while ($data = $plat_result->fetch_object()) {
-  $platArr[] = $data;
+while ($plat_data = $plat_result->fetch_object()) {
+  $platArr[] = $plat_data;
 }
 
 $dev_sql = "SELECT * FROM lecture_category WHERE ppcode = '' AND pcode <> '' ";
 $dev_result = $mysqli->query($dev_sql);
 $devArr = [];
-while ($data = $dev_result->fetch_object()) {
-  $devArr[] = $data;
+while ($dev_data = $dev_result->fetch_object()) {
+  $devArr[] = $dev_data;
 }
 
 $tech_sql = "SELECT * FROM lecture_category WHERE ppcode <> '' AND pcode <> '' ";
 $tech_result = $mysqli->query($tech_sql);
 $techArr = [];
-while ($data = $tech_result->fetch_object()) {
-  $techArr[] = $data;
+while ($tech_data = $tech_result->fetch_object()) {
+  $techArr[] = $tech_data;
 }
 
 
 $tag_sql = "SELECT DISTINCT lecture_tag FROM lecture_list ";
 $tag_result = $mysqli->query($tag_sql);
 $tagArr = [];
-while ($data = $tag_result->fetch_object()) {
-  $tagArr[] = $data;
+while ($tag_data = $tag_result->fetch_object()) {
+  $tagArr[] = $tag_data;
 }
+
 
 
 ?>
@@ -139,7 +175,7 @@ while ($data = $tag_result->fetch_object()) {
         </div>
         <div class="title mb-2">
           <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
-          <p class="name text-decoration-underline"><?= $item->t_id ?></p>
+          <p class="name text-decoration-underline"><?= $item->name ?></p>
         </div>
         <div class="d-flex flex-column-reverse justify-content-start tuition">
           <?= $tuition ?>
@@ -155,23 +191,66 @@ while ($data = $tag_result->fetch_object()) {
   }
   ?>
 </div>
-
+<nav aria-label="Page navigation">
+  <ul class="pagination d-flex justify-content-center">
+    <?php
+    if ($block_num > 1) {
+      $prev = $block_start - $block_ct;
+      echo "<li class=\"page-item\"><a class=\"page-link\" href=\"lecture_list.php?page={$prev}\"><img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\"></a></li>";
+    }
+    ?>
+    <?php
+    for ($i = $block_start; $i <= $block_end; $i++) {
+      // if($page == $i) {$active = 'active';} else {$active = '';}
+      $page == $i ? $active = 'active' : $active = '';
+    ?>
+      <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>"><?= $i; ?></a></li>
+    <?php
+    }
+    $next = $block_end + 1;
+    if ($total_block >  $block_num) {
+    ?>
+      <li class="page-item"><a class="page-link" href="lecture_list.php?page=<?= $next; ?>"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next"></a></li>
+    <?php
+    }
+    ?>
+  </ul>
+</nav>
 <script>
   const filterselect = document.querySelectorAll('#filterForm select');
+  const filterForm = document.querySelector("#filterForm");
   const print = document.querySelector('.print');
-  filterselect.forEach(select => {
-    select.addEventListener('change', () => {
-      const formData = new FormData(document.querySelector("#filterForm"));
-      fetch('lecture_filter.php', {
-          method: 'post',
-          body: formData
-        }).then(res => res.text())
-        .then(data => {
-          console.log(data);
-          print.innerHTML = data;
-        }).catch((error) => console.error("Error:", error));;
-    })
-  })
+  const pagination = document.querySelector(".pagination");
+
+
+  const fetchFilteredData = (page = 1) => {
+    const formData = new FormData(filterForm);
+    formData.append("page", page);
+    fetch('lecture_filter.php', {
+        method: 'post',
+        body: formData
+      }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        print.innerHTML = data.lectures; // 강의 데이터 업데이트
+        pagination.innerHTML = data.pagination; // 페이지네이션 업데이트
+        bindPaginationEvents();
+      }).catch((error) => console.error("Error:", error));;
+  }
+  const bindPaginationEvents = () => {
+    const paginationLinks = document.querySelectorAll(".pagination .page-link");
+    paginationLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const page = e.target.dataset.page;
+        fetchFilteredData(page);
+      });
+    });
+  };
+  filterselect.forEach((select) => {
+    select.addEventListener("change", () => fetchFilteredData());
+  });
+  bindPaginationEvents();
 </script>
 
 <?php
