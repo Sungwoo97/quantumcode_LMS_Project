@@ -128,5 +128,5 @@ mysqli_close($mysqli); // $connect → $mysqli 수정
 setcookie('state', '', time() - 3000);
 
 // 페이지 이동
-header("Location: ../index.php");
+header("Location: ../index2.php");
 exit;
