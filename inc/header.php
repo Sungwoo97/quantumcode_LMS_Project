@@ -86,11 +86,19 @@ if (isset($_SESSION['MemEmail'])) {
                             <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
                                 <li><a class="dropdown-item" href="#">프론트엔드</a></li>
                                 <li><a class="dropdown-item" href="#">백엔드</a></li>
-                                <li><a class="dropdown-item" href="#">게임</a></li>   <!--커뮤니티 이벤트는 추후 작성-->
+                                <li><a class="dropdown-item" href="#">게임</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">커뮤니티</a>  <!-- <= href 알아서 수정바람 -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">커뮤니티</a>
+                            <ul class="dropdown-menu" aria-labelledby="communityDropdown">
+                                <li><a class="dropdown-item" href="#">공지사항</a></li>
+                                <li><a class="dropdown-item" href="#">FAQ</a></li>
+                                <li><a class="dropdown-item" href="#">QnA</a></li>
+                                <li><a class="dropdown-item" href="#">자유게시판</a></li>
+                                <li><a class="dropdown-item" href="#">질문게시판</a></li>
+                                <li><a class="dropdown-item" href="#">스터디 모집</a></li>   <!--커뮤니티 이벤트는 추후 작성-->
+                            </ul>  <!-- <= href 알아서 수정바람 -->
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">이벤트</a>  <!-- <= href 알아서 수정바람 -->
