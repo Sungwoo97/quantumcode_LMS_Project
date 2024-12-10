@@ -63,18 +63,44 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .navbar img {
-  height: 45px; /* 이미지 높이 조정 */
+  height: 42px; /* 이미지 높이 조정 */
   width: auto; /* 비율 유지 */
+  margin: 10px 0;
 }
 .search-form .form-control {
-  width: 200px; /* 검색창 너비 */
+  width: 324px; /* 검색창 너비 */
   height: 30px; /* 검색창 높이 */
   font-size: 14px; /* 글씨 크기 */
+  border: none;
+  background-color: var(--lineGray);
+  
 }
 .search-form .btn {
   height: 30px; /* 버튼 높이 */
-  font-size: 14px; /* 버튼 글씨 크기 */
+  font-size: 16px; /* 버튼 글씨 크기 */
   padding: 0 10px; /* 버튼 안쪽 여백 */
+  border: none;
+  color : var(--darkGray)
+}
+.search-form .btn.btn-outline-success {
+  --bs-btn-color: none;
+  --bs-btn-border-color: none;
+  --bs-btn-hover-color: none;
+  --bs-btn-hover-bg: none;
+  --bs-btn-hover-border-color: none;
+  --bs-btn-focus-shadow-rgb: 25, 135, 84;
+  --bs-btn-active-color: none;
+  --bs-btn-active-bg: none;
+  --bs-btn-active-border-color: none;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: none;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: none;
+  --bs-gradient: none;
+}
+
+.nav_sign a{
+  padding:3.5px 16px;
 }
 
 .nav-item.dropdown:hover .dropdown-menu {

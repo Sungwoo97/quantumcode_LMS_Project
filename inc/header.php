@@ -76,30 +76,32 @@ if (isset($_SESSION['MemEmail'])) {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown ms-3">
-                        <a class="nav-link" href="#" id="lectureDropdown" role="button" aria-expanded="false">
-                            강의
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
-                            <li><a class="dropdown-item" href="#">프론트엔드</a></li>
-                            <li><a class="dropdown-item" href="#">백엔드</a></li>
-                            <li><a class="dropdown-item" href="#">게임</a></li>   <!--커뮤니티 이벤트는 추후 작성-->
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">커뮤니티</a>  <!-- <= href 알아서 수정바람 -->
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">이벤트</a>  <!-- <= href 알아서 수정바람 -->
-                    </li>
-                </ul>
-                <form class="d-flex search-form">
-                    <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">검색</button>
-                </form>
-                <div class="ms-3">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <div class="d-flex gap-3 align-items-center">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown ms-3">
+                            <a class="nav-link" href="#" id="lectureDropdown" role="button" aria-expanded="false">
+                                강의
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
+                                <li><a class="dropdown-item" href="#">프론트엔드</a></li>
+                                <li><a class="dropdown-item" href="#">백엔드</a></li>
+                                <li><a class="dropdown-item" href="#">게임</a></li>   <!--커뮤니티 이벤트는 추후 작성-->
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">커뮤니티</a>  <!-- <= href 알아서 수정바람 -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">이벤트</a>  <!-- <= href 알아서 수정바람 -->
+                        </li>
+                    </ul>
+                    <form class="d-flex search-form">
+                        <input class="form-control me-2" type="search" aria-label="Search" >
+                        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+                <div class="ms-3 nav_sign d-flex gap-3">
                     <?php if (isset($_SESSION['MUNAME'])): ?>
                         <!-- 로그인된 경우 -->
                         <span class="text-primary me-3"><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님</span>
