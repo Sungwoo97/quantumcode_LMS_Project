@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --white: #ffffff;
+  --primary: #0d6efd;
+  --darkBlue: #0a58ca;
+  --secondary: #dc3545;
+  --darkRed: #bb2d3b;
+  --skyBlue: #c2dbfe;
+  --darkGray: #797979;
+  --lineGray: #e2e6e9;
+  --light_gray: #ebebeb;
+  --medium_gray: #a0a0a0;
+  --blueGray: #f8f9fa;
+  --black: #000000;
+}
+
+/* Text Style */
+body {
+  font-family: "Noto Sans KR", "Roboto", "Apple SD Gothic Neo", "Pretendard",
+    "Malgun Gothic", sans-serif;
+  font-weight: 500;
+  overflow-x: hidden;
+
+  /* background-color: #757575; */
+}
+.main_tt {
+  font: 36/40px "Noto Sans KR", sans-serif;
+  font-weight: 900;
+}
+.sub_tt {
+  font: 28/40px "Noto Sans KR", sans-serif;
+  font-weight: 700;
+}
+.tt_01 {
+  font: 24/40px "Noto Sans KR", sans-serif;
+  font-weight: 700;
+}
+.tt_02 {
+  font: 20/29px "Noto Sans KR", sans-serif;
+  font-weight: 500;
+}
+.tt_03 {
+  font: 18/22px "Noto Sans KR", sans-serif;
+  font-weight: 500;
+}
+.tt_04 {
+  font: 18/20px "Noto Sans KR", sans-serif;
+  font-weight: 500;
+}
+.tt_05 {
+  font: 14/20px "Noto Sans KR", sans-serif;
+  font-weight: 500;
+}
+
+/* NAV */
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.navbar img {
+  height: 45px; /* 이미지 높이 조정 */
+  width: auto; /* 비율 유지 */
+}
+.search-form .form-control {
+  width: 150px; /* 검색창 너비 */
+  height: 30px; /* 검색창 높이 */
+  font-size: 14px; /* 글씨 크기 */
+}
+.search-form .btn {
+  height: 30px; /* 버튼 높이 */
+  font-size: 14px; /* 버튼 글씨 크기 */
+  padding: 0 10px; /* 버튼 안쪽 여백 */
+}
+
+/* page_wapper */
+.page_wapper {
+  padding: 204px 84px 84px 384px;
+}
+
+/* PAGINATION */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  list-style: none;
+  margin: 0;
+}
+.pagination .prev {
+  margin-right: 40px;
+}
+.pagination .next {
+  margin-left: 40px;
+}
+.pagination .page-item {
+  margin: 0 5px;
+}
+.pagination .page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.pagination .page-link:hover {
+  background-color: #e0e0e0;
+  text-decoration: none;
+}
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+}
+.pagination .page-item.disabled .page-link {
+  background-color: #d6d6d6;
+  color: #999;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* footer */
+.footer {
+  background-color: #f8f9fa;
+  padding: 30px 20px;
+  font-size: 14px;
+  color: #666;
+  text-align: left;
+}
+.footer a {
+  text-decoration: none;
+  color: #007bff;
+  margin: 0 10px;
+}
+.footer a:hover {
+  color: #0056b3;
+}
+.footer .social-icons a {
+  margin: 0 5px;
+  font-size: 16px;
+}
