@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 $mysqli = require __DIR__ . "/database.php";
 
@@ -28,9 +28,15 @@ if ($data && $data->account_activation_token === null) {
   $_SESSION['MUNAME'] = $data->memName;
   $_SESSION['Mgrade'] = $data->grade;
 
+  // $_SESSION['AUIDX'] = $data->idx;
+  // $_SESSION['AUID'] = $data->userid;
+  // $_SESSION['AUNAME'] = $data->username;
+  // $_SESSION['AULEVEL'] = $data->level;
+
+
   echo "<script>
-      alert('회원님 반갑습니다!!.');
-      location.href='/qc/index2.php';
+      alert('로그인 되었습니다.');
+      location.href='/qc/index.php';
   </script>";
 } else {
   echo "<script>

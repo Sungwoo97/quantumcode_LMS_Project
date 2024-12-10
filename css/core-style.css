@@ -67,7 +67,7 @@ body {
   width: auto; /* 비율 유지 */
 }
 .search-form .form-control {
-  width: 150px; /* 검색창 너비 */
+  width: 200px; /* 검색창 너비 */
   height: 30px; /* 검색창 높이 */
   font-size: 14px; /* 글씨 크기 */
 }
@@ -75,6 +75,14 @@ body {
   height: 30px; /* 버튼 높이 */
   font-size: 14px; /* 버튼 글씨 크기 */
   padding: 0 10px; /* 버튼 안쪽 여백 */
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block; /* 호버 시 드롭다운 메뉴 표시 */
+  margin-top: 0; /* 자연스러운 위치 조정 */
+}
+.dropdown-toggle::after {
+  display: none; /* 드롭다운 아이콘 숨김 */
 }
 
 /* page_wapper */
