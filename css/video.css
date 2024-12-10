@@ -1,0 +1,15 @@
+.page_wapper{
+  padding: 0;
+}
+#lecture-video{
+  width: 90%;
+  height: 50%;
+}
+.video{
+  position: relative;
+}
+.video aside{
+  position: absolute;
+  top: 0;
+  right: 0;
+}

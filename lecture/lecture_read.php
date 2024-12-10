@@ -1,6 +1,7 @@
 <?php
 $title = "학습하기";
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$video_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/video.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
@@ -23,13 +24,13 @@ $vidArrJson = json_encode($vidArr);
 ?>
 
 
-<div>
+<div class="video">
   <video id="lecture-video" controls>
     <source src="" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <div class="controls">
-    <button id="prev-btn"> 이전 수업</button>
+    <button id="prev-btn">이전 수업</button>
     <button id="next-btn">다음 수업</button>
   </div>
   <aside>
