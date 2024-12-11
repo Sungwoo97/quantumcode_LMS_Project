@@ -40,8 +40,21 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- Custom CSS -->
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+  <?php
+  if (isset($slick_css)) {
+    echo $slick_css;
+  }
+  if (isset($lecture_css)) {
+    echo $lecture_css;
+  }
+  if (isset($video_css)) {
+    echo $video_css;
+  }
+  if (isset($main_css)) {
+    echo $main_css;
+  }
 
-
+  ?>
   <!-- Favicon 기본 설정 -->
   <link rel="apple-touch-icon" sizes="57x57" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-60x60.png">
@@ -62,10 +75,20 @@ if (isset($_SESSION['MemEmail'])) {
   <meta name="theme-color" content="#ffffff">
 
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
+
   <style>
 
   </style>
 </head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<?php
+if (isset($slick_js)) {
+  echo $slick_js;
+}
+?>
 
 <body>
 
