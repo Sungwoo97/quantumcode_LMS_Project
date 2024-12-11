@@ -5,20 +5,23 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 //처음 회원 가입했을때(즉 login_count가 0->1로 바뀌는 순간), 모달창 튀어나오게
 $showModal = false; // 모달 표시 여부
-if (isset($_SESSION['MemEmail'])) {
-  $email = $_SESSION['MemEmail'];
-  $sql = "SELECT login_count FROM memberskakao WHERE memEmail = ?";
-  $stmt = $mysqli->prepare($sql);
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $stmt->bind_result($loginCount);
-  $stmt->fetch();
-  $stmt->close();
 
-  // `login_count`가 1인 경우 모달 표시
-  if ($loginCount == 1) {
-    $showModal = true;
-  }
+if (isset($_SESSION['MemEmail'])) {
+    $email = $_SESSION['MemEmail'];
+
+    // `login_count`와 `first_coupon_issued`를 가져오기
+    $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($loginCount, $firstCouponIssued);
+    $stmt->fetch();
+    $stmt->close();
+
+    // `login_count`가 1이고 `first_coupon_issued`가 0인 경우 모달 표시
+    if ($loginCount == 1 && $firstCouponIssued == 0) {
+        $showModal = true;
+    }
 }
 
 ?>
