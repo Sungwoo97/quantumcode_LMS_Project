@@ -19,37 +19,48 @@ while ($data = $result->fetch_object()) {
 
 <!-- Placeholder for Main Content -->
 <main>
-  <section class="main_slides">
-    <div class="slide">
-      <img src="img/core-img/001.png" alt="배너 이미지">
+  <section class="banner">
+    <div class="main_slides">
+      <div class="slide">
+        <img src="img/core-img/001.png" alt="배너 이미지">
+      </div>
+      <div class="slide">
+        <img src="img/core-img/002.png" alt="배너 이미지">
+      </div>
+      <div class="slide">
+        <img src="img/core-img/003.png" alt="배너 이미지">
+      </div>
+      <div class="slide">
+        <img src="img/core-img/004.png" alt="배너 이미지">
+      </div>
     </div>
-    <div class="slide">
-      <img src="img/core-img/002.png" alt="배너 이미지">
+
+    <div class="controls">
+      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <span>1/4</span>
+      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
+
     </div>
-    <div class="slide">
-      <img src="img/core-img/003.png" alt="배너 이미지">
-    </div>
-    <div class="slide">
-      <img src="img/core-img/004.png" alt="배너 이미지">
-    </div>
+    <div class="custom-pagination container"></div>
   </section>
+
 
   <section class="main_notice container d-flex">
     <h2 class="w-100"><i class="fa-solid fa-triangle-exclamation"></i> 공지</h2>
-    <div class="notice_slides d-flex justify-content-between">
-      <div class="notice_text">
+    <div class="notice_slides ">
+      <div class="notice_text d-flex justify-content-between">
         <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
         <span>2024.12.02</span>
       </div>
-      <div>
+      <div class="notice_text d-flex justify-content-between">
         <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
         <span>2024.12.02</span>
       </div>
-      <div>
+      <div class="notice_text d-flex justify-content-between">
         <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
         <span>2024.12.02</span>
       </div>
-      <div>
+      <div class="notice_text d-flex justify-content-between">
         <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
         <span>2024.12.02</span>
       </div>
@@ -188,17 +199,37 @@ while ($data = $result->fetch_object()) {
 
 
 <script>
+  const $pagination = $(".custom-pagination");
+
+  $(".main_slides").on("init reInit afterChange", function(event, slick, currentSlide) {
+    const totalSlides = slick.slideCount;
+    const current = (currentSlide || 0) + 1;
+
+    // 페이지네이션 텍스트 갱신
+    $(".controls span").text(`${current}/${totalSlides}`);
+
+    // 페이지네이션 상태 갱신
+    $pagination.find(".custom-dot").removeClass("active");
+    $pagination.find(`.custom-dot:nth-child(${current})`).addClass("active");
+  });
+
   $('.main_slides').slick({
     speed: 300,
-    prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>',
-    nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>',
+    prevArrow: $('.banner .slick-prev'),
+    nextArrow: $('.banner .slick-next'),
+    dots: false, // 기본 dots 비활성화
+    arrows: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   });
+
   $('.notice_slides').slick({
     speed: 300,
     vertical: true,
-    prevArrow: '',
-    nextArrow: '',
+    prevArrow: $('.main_notice .slick-prev'),
+    nextArrow: $('.main_notice .slick-next'),
   });
+
   $('.popular').slick({
 
     infinite: false,
@@ -235,6 +266,15 @@ while ($data = $result->fetch_object()) {
       // instead of a settings object
     ]
   });
+
+  // 커스텀 페이지네이션 생성
+  const slideCount = $(".main_slides").slick("getSlick").slideCount;
+  for (let i = 0; i < slideCount; i++) {
+    $pagination.append(`<div class="custom-dot"></div>`);
+  }
+
+  // 첫 번째 dot 활성화
+  $pagination.find(".custom-dot:first-child").addClass("active");
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
