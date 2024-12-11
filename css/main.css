@@ -1,4 +1,4 @@
-.main_slides {
+.banner {
 width: 100%;
 height: 400px;
   img{
@@ -7,7 +7,23 @@ height: 400px;
   }
 }
 
-.main_slides .slick-prev, .main_slides .slick-next,
+.banner .slick-prev, .banner .slick-next{
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+  color: #ffffff;
+  font-size: 1.5rem;
+  border-style: none;
+  background: transparent;
+  width: 15px;
+  height: 15px;
+  z-index: 100;
+  i{
+    font-size: 15px;
+    line-height: 15px;
+  }
+}
+
 .main_popular .slick-prev , .main_popular .slick-next{
   position: absolute;
   top: 50%;
@@ -22,19 +38,54 @@ height: 400px;
 }
 
 .main_notice .slick-prev , .main_notice .slick-next{
-  position: absolute;
-  right: 0;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 1);
   border-style: none;
   background: transparent;
-  width: 20px;
-  height: 20px;
+  border: 1px solid #ebebeb;
+  box-sizing: border-box;
+  width: 26px;
+  height: 27px;
   z-index: 100;
+  i{
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+  }
 } 
+.banner{
+  position: relative;
+}
+
+.banner .controls{
+  position: relative;
+  left: 80%;
+  bottom: 40px;
+  width: 80px;
+  height: 30px;
+  background: #1E4DAC;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* 버튼과 텍스트 사이의 간격 */
+  span{
+    color: #ffffff;
+  }
+}
 
 .main_notice{
-  position: relative;
+  border-bottom: 1px solid #ebebeb;
+  .notice_text {
+    padding: 0 10px;
+    width: 80%;
+  }
+  span{
+    font-size: 16px;
+  }
+  .controls{
+    position: relative;
+    
+  }
 }
 
 .main_notice .slick-prev{
@@ -45,13 +96,15 @@ height: 400px;
   bottom: 0;
 }
 
-.main_slides .slick-prev{
-  left: 100px;
+
+.banner .slick-prev{
+  left: 1px;
 }
 
-.main_slides .slick-next{
-  right: 100px;
+.banner .slick-next{
+  right: 1px;
 }
+
 
 .main_popular .slick-prev{
   left: -25px;
@@ -123,4 +176,29 @@ height: 400px;
   background: rgba(60,139,255,0.5);
   border-radius: 6px;
   padding: 2px 15px;
+}
+
+.custom-pagination {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* 균등 배치 */
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  padding: 0 20px; /* 좌우 여백 */
+  box-sizing: border-box;
+}
+
+.custom-pagination .custom-dot {
+  flex: 1; /* 너비를 균등하게 분배 */
+  height: 5px;
+  background: #ccc;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-pagination .custom-dot.active {
+  background: #1E4DAC;
 }
