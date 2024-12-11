@@ -35,13 +35,15 @@ while ($data = $result->fetch_object()) {
       </div>
     </div>
 
-    <div class="controls">
-      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
-      <span>1/4</span>
-      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
-
+    <div class="custom container">
+      <div class="controls">
+        <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <span>1/4</span>
+        <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
+  
+      </div>
+      <div class="custom-pagination "></div>
     </div>
-    <div class="custom-pagination container"></div>
   </section>
 
 
