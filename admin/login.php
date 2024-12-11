@@ -35,7 +35,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     <hr>
     <div class="modal_info">
       <p>팀명 : <span>CODE TITANIC</span> 나*일(팀장), 윤*호, 남*우, 김*진</p>
-      <p>제작기간 : 2024.10.10 ~ 2024.11.21</p>
+      <p>제작기간 : 2024.10.10 ~ 2024.11.24</p>
       <div>
         <p class="info_link d-flex align-items-center gap-2">
           기획서 :
