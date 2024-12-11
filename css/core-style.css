@@ -74,14 +74,13 @@ body {
   font-size: 14px; /* 글씨 크기 */
   border: none;
   background-color: var(--lineGray);
-  
 }
 .search-form .btn {
   height: 30px; /* 버튼 높이 */
   font-size: 16px; /* 버튼 글씨 크기 */
   padding: 0 10px; /* 버튼 안쪽 여백 */
   border: none;
-  color : var(--darkGray)
+  color: var(--darkGray);
 }
 .search-form .btn.btn-outline-success {
   --bs-btn-color: none;
@@ -99,17 +98,17 @@ body {
   --bs-btn-disabled-border-color: none;
   --bs-gradient: none;
 }
-.nav-link{
+.nav-link {
   line-height: 60px;
 }
-.nav_sign a{
-  padding:3.5px 16px;
+.nav_sign a {
+  padding: 3.5px 16px;
   font-weight: 600;
 }
-.nav_sign .btn.btn-secondary{
+.nav_sign .btn.btn-secondary {
   background-color: var(--lineGray);
   border: var(--lineGray);
-  color:var(--darkGray);
+  color: var(--darkGray);
 }
 
 .dropdown-menu {
@@ -126,7 +125,7 @@ body {
 .dropdown-toggle::after {
   display: none; /* 드롭다운 아이콘 숨김 */
 }
-.dropdown-menu .dropdown-item{
+.dropdown-menu .dropdown-item {
   color: var(--darkGray);
 }
 /* 모달.. 카테고리 선택 관련 */
@@ -239,7 +238,8 @@ body {
 .footer a {
   text-decoration: none;
   color: #007bff;
-  margin: 0 10px;
+  margin-right: 20px;
+  /* margin: 0 10px; */
 }
 .footer a:hover {
   color: #0056b3;
