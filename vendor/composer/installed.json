@@ -1,8 +1,6 @@
 {
     "packages": [
         {
-<<<<<<< HEAD
-=======
             "name": "cboden/ratchet",
             "version": "v0.4.4",
             "version_normalized": "0.4.4.0",
@@ -69,7 +67,6 @@
             "install-path": "../cboden/ratchet"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "evenement/evenement",
             "version": "v3.0.2",
             "version_normalized": "3.0.2.0",
@@ -92,11 +89,7 @@
             },
             "time": "2023-08-08T05:53:35+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Evenement\\": "src/"
@@ -124,8 +117,6 @@
             "install-path": "../evenement/evenement"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "guzzlehttp/psr7",
             "version": "2.7.0",
             "version_normalized": "2.7.0.0",
@@ -245,7 +236,6 @@
             "install-path": "../guzzlehttp/psr7"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "php-ffmpeg/php-ffmpeg",
             "version": "v1.3.0",
             "version_normalized": "1.3.0.0",
@@ -277,11 +267,7 @@
             },
             "time": "2024-11-12T15:39:52+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "FFMpeg\\": "src/FFMpeg",
@@ -385,7 +371,7 @@
             },
             "time": "2024-11-24T18:04:13+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "PHPMailer\\PHPMailer\\": "src/"
@@ -450,11 +436,7 @@
                     "dev-master": "1.0.x-dev"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Psr\\Cache\\": "src/"
@@ -506,11 +488,7 @@
                     "dev-master": "2.0.x-dev"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -542,8 +520,6 @@
             "install-path": "../psr/container"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "psr/http-factory",
             "version": "1.1.0",
             "version_normalized": "1.1.0.0",
@@ -658,7 +634,6 @@
             "install-path": "../psr/http-message"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "psr/log",
             "version": "3.0.2",
             "version_normalized": "3.0.2.0",
@@ -683,11 +658,7 @@
                     "dev-master": "3.x-dev"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Psr\\Log\\": "src"
@@ -716,8 +687,6 @@
             "install-path": "../psr/log"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "version_normalized": "3.0.3.0",
@@ -1294,7 +1263,6 @@
             "install-path": "../react/stream"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "spatie/temporary-directory",
             "version": "2.2.1",
             "version_normalized": "2.2.1.0",
@@ -1317,11 +1285,7 @@
             },
             "time": "2023-12-25T11:46:58+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Spatie\\TemporaryDirectory\\": "src"
@@ -1412,11 +1376,7 @@
             },
             "time": "2024-11-25T15:21:05+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Cache\\": ""
@@ -1497,11 +1457,7 @@
                     "url": "https://github.com/symfony/contracts"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Cache\\": ""
@@ -1579,11 +1535,7 @@
                     "url": "https://github.com/symfony/contracts"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "files": [
                     "function.php"
@@ -1625,8 +1577,6 @@
             "install-path": "../symfony/deprecation-contracts"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "symfony/http-foundation",
             "version": "v6.4.16",
             "version_normalized": "6.4.16.0",
@@ -1811,8 +1761,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "installation-source": "source",
@@ -1869,7 +1819,6 @@
             "install-path": "../symfony/polyfill-php83"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "symfony/process",
             "version": "v7.2.0",
             "version_normalized": "7.2.0.0",
@@ -1889,11 +1838,7 @@
             },
             "time": "2024-11-06T14:24:19+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Process\\": ""
@@ -1938,8 +1883,6 @@
             "install-path": "../symfony/process"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "symfony/routing",
             "version": "v6.4.16",
             "version_normalized": "6.4.16.0",
@@ -2026,7 +1969,6 @@
             "install-path": "../symfony/routing"
         },
         {
->>>>>>> origin/yoonjunho
             "name": "symfony/service-contracts",
             "version": "v3.5.1",
             "version_normalized": "3.5.1.0",
@@ -2060,11 +2002,7 @@
                     "url": "https://github.com/symfony/contracts"
                 }
             },
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Service\\": ""
@@ -2141,11 +2079,7 @@
             },
             "time": "2024-10-18T07:58:17+00:00",
             "type": "library",
-<<<<<<< HEAD
             "installation-source": "source",
-=======
-            "installation-source": "dist",
->>>>>>> origin/yoonjunho
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\VarExporter\\": ""
