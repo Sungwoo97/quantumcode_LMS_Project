@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-11 06:57
+-- 생성 시간: 24-12-11 07:53
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -748,18 +748,7 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (75, '한다솜', '123123', 'user73@example.com', 'id73', '', '1990-01-25', 'gold', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address73', 'Detail73', '2024-01-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0),
 (76, '조재현', '123123', 'user74@example.com', 'id74', '', '1991-02-25', 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0),
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0),
-(126, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, '', '', 'kakaoAddr', NULL, '2024-12-09 08:20:50', '2024-12-09 08:20:50', '2024-12-09 17:20:50', 0),
-(138, '윤', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-09 23:28:59', '2024-12-10 08:48:14', '2024-12-10 17:48:14', 1),
-(139, '윤준호', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:47:56', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(140, '윤준호', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:49:34', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(141, '윤준호', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:50:16', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(142, '윤준호', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:51:06', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(143, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:54:12', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(144, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:56:21', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(145, '윤준호', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:56:56', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(146, '윤', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 00:59:03', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(147, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 01:01:06', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2),
-(148, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 01:08:37', '2024-12-10 09:14:31', '2024-12-10 18:14:31', 2);
+(126, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, '', '', 'kakaoAddr', NULL, '2024-12-09 08:20:50', '2024-12-09 08:20:50', '2024-12-09 17:20:50', 0);
 
 -- --------------------------------------------------------
 

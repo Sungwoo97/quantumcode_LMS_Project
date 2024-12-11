@@ -1,9 +1,13 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                
                 <div class="col-md-6 text-md-start mb-3 mb-md-0">
-                    <!-- <img src="./img/main_logo1.png" alt="Logo"> -->
+                    <img src="./img/main_logo1.png" alt="Logo">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
                     <a href="#">공지사항</a>
                     <a href="#">이용약관</a>
                     <a href="#">FAQ</a>
