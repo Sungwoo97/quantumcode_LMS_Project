@@ -175,79 +175,96 @@ if (isset($slick_js)) {
   <div class="modal fade" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="secondModalLabel">카테고리 선택</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>관심 있는 학습 카테고리를 선택하세요:</p>
-          <div id="categoryButtons" class="d-flex flex-wrap gap-2">
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="JavaScript">JavaScript</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="TypeScript">TypeScript</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="Python">Python</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="Docker">Docker</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="React">React</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="Java">Java</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="MySQL">MySQL</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="PHP">PHP</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="C">C</button>
-            <button type="button" class="btn btn-outline-primary category-btn" data-value="NodeJs">NodeJs</button>
+        <form id="categoryForm" method="POST" action="../qc/lecture/save_categories.php">
+          <div class="modal-header">
+            <h5 class="modal-title" id="secondModalLabel">카테고리 선택</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary" id="saveCategories">저장</button>
-        </div>
+          <div class="modal-body">
+            <p>관심 있는 학습 카테고리를 선택하세요:</p>
+            <div id="categoryButtons" class="d-flex flex-wrap gap-2">
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="JavaScript">JavaScript</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="TypeScript">TypeScript</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Python">Python</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Docker">Docker</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="React">React</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Java">Java</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="MySQL">MySQL</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="PHP">PHP</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="C">C</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="NodeJs">NodeJs</button>
+            </div>
+            <!-- 숨겨진 필드로 선택한 카테고리 저장 -->
+            <input type="hidden" name="selectedCategories" id="selectedCategories" value="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="submit" class="btn btn-primary">저장</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
 
+
   <!-- JavaScript -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      <?php if ($showModal): ?>
-        // 첫 번째 모달 표시
-        var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), {
-          keyboard: true,
-          backdrop: 'static'
-        });
-        welcomeModal.show();
-
-        // "다음" 버튼 클릭 시 두 번째 모달 표시
-        document.getElementById('nextButton').addEventListener('click', function() {
-          welcomeModal.hide(); // 첫 번째 모달 닫기
-          var secondModal = new bootstrap.Modal(document.getElementById('secondModal'));
-          secondModal.show(); // 두 번째 모달 열기
-        });
-      <?php endif; ?>
-
-      const categoryButtons = document.querySelectorAll('.category-btn');
-      const saveButton = document.getElementById('saveCategories');
-      let selectedCategories = []; // 선택된 카테고리 저장
-
-      // 버튼 클릭 이벤트
-      categoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const value = this.getAttribute('data-value');
-          if (this.classList.contains('selected')) {
-            // 선택 해제
-            this.classList.remove('selected');
-            selectedCategories = selectedCategories.filter(item => item !== value);
-          } else {
-            // 선택
-            this.classList.add('selected');
-            selectedCategories.push(value);
-          }
-          console.log('Selected Categories:', selectedCategories); // 선택된 항목 확인용
-        });
-      });
-
-      // 저장 버튼 클릭 이벤트
-      saveButton.addEventListener('click', function() {
-        alert('선택된 카테고리: ' + selectedCategories.join(', '));
-        const secondModal = bootstrap.Modal.getInstance(document.getElementById('secondModal'));
-        secondModal.hide(); // 모달 닫기
-      });
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  <?php if ($showModal): ?>
+    // 첫 번째 모달 표시
+    const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
+      keyboard: true,
+      backdrop: "static",
     });
+    welcomeModal.show();
+
+    // "다음" 버튼 클릭 시 두 번째 모달 표시
+    document.getElementById("nextButton").addEventListener("click", function () {
+      welcomeModal.hide(); // 첫 번째 모달 닫기
+      const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
+      secondModal.show(); // 두 번째 모달 열기
+    });
+  <?php endif; ?>
+
+  const categoryButtons = document.querySelectorAll(".category-btn");
+  const selectedCategoriesInput = document.getElementById("selectedCategories");
+  const form = document.getElementById("categoryForm");
+  let selectedCategories = []; // 선택된 카테고리 저장
+
+  // 버튼 클릭 이벤트
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const value = this.getAttribute("data-value");
+      if (this.classList.contains("selected")) {
+        // 선택 해제
+        this.classList.remove("selected");
+        selectedCategories = selectedCategories.filter((item) => item !== value);
+      } else {
+        // 선택
+        this.classList.add("selected");
+        selectedCategories.push(value);
+      }
+      console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
+    });
+  });
+
+  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장
+  form.addEventListener("submit", function (event) {
+    if (selectedCategories.length === 0) {
+      event.preventDefault(); // 선택이 없으면 제출 막기
+      alert("적어도 하나의 카테고리를 선택해주세요.");
+    } else {
+      selectedCategoriesInput.value = JSON.stringify(selectedCategories); // JSON 형식으로 저장
+      console.log("폼 제출 데이터:", selectedCategoriesInput.value);
+    }
+  });
+});
+
+
+
+
+
+
+    
   </script>
