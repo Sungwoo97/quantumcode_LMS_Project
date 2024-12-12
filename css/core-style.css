@@ -57,7 +57,9 @@ body {
   font: 14/20px "Noto Sans KR", sans-serif;
   font-weight: 500;
 }
-
+.btn{
+  border-radius:3px !important;
+}
 /* NAV */
 .navbar {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
