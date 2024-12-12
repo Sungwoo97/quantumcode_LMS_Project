@@ -244,7 +244,7 @@ if (isset($slick_js)) {
             </div>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-custom">구매하기</button>
+              <button type="button" class="btn btn-custom">보러가기</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           </div>
         </div>
@@ -283,9 +283,6 @@ if (isset($slick_js)) {
         <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
     <?php endif; ?>
   </nav>
-
-
-  
 
   <!-- 모달 HTML 위치는 자유롭게 변경 가능합니다. -->
   <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
@@ -342,8 +339,6 @@ if (isset($slick_js)) {
       </div>
     </div>
   </div>
-
-
 
   <!-- JavaScript -->
 <script>
