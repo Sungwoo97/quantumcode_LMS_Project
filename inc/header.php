@@ -167,7 +167,7 @@ if (isset($slick_js)) {
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
       <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
-        <img src="./img/main_logo1.png" alt="Logo">
+        <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -188,12 +188,12 @@ if (isset($slick_js)) {
             <li class="nav-item dropdown">
               <a class="nav-link" href="#">커뮤니티</a>
               <ul class="dropdown-menu" aria-labelledby="communityDropdown">
-                <li><a class="dropdown-item" href="#">공지사항</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php">공지사항</a></li>
                 <li><a class="dropdown-item" href="#">FAQ</a></li>
                 <li><a class="dropdown-item" href="#">QnA</a></li>
                 <li><a class="dropdown-item" href="#">자유게시판</a></li>
                 <li><a class="dropdown-item" href="#">질문게시판</a></li>
-                <li><a class="dropdown-item" href="#">스터디 모집</a></li> <!--커뮤니티 이벤트는 추후 작성-->
+                <li><a class="dropdown-item" href="#">스터디 모집</a></li> 
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">

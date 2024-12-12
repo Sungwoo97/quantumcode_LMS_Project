@@ -4,7 +4,7 @@
 
       <div class="col-md-6 text-md-start mb-3 mb-md-0">
         <!-- <img src="./img/main_logo1.png" alt="Logo"> -->
-        <img src="./img/main_logo1.png" alt="Logo">
+        <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
       </div>
     </div>
 
