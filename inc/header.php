@@ -59,6 +59,9 @@ if (isset($_SESSION['MemEmail'])) {
   if (isset($main_css)) {
     echo $main_css;
   }
+  if (isset($community_css)) {
+    echo $community_css;
+  }
 
   ?>
   <!-- Favicon 기본 설정 -->
@@ -188,12 +191,12 @@ if (isset($slick_js)) {
             <li class="nav-item dropdown">
               <a class="nav-link" href="#">커뮤니티</a>
               <ul class="dropdown-menu" aria-labelledby="communityDropdown">
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php">공지사항</a></li>
-                <li><a class="dropdown-item" href="#">FAQ</a></li>
-                <li><a class="dropdown-item" href="#">QnA</a></li>
-                <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                <li><a class="dropdown-item" href="#">질문게시판</a></li>
-                <li><a class="dropdown-item" href="#">스터디 모집</a></li> 
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">공지사항</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php">QnA</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php">자유게시판</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/questions.php">질문게시판</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li> 
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">
