@@ -170,44 +170,7 @@ while ($data2 = $result2->fetch_object()) {
       <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
-  <!-- <section class="container main_premium">
-    <div class="premium_slider">
-      <?php
-      foreach ($dataArr2 as $item) {
-        $tuition = '';
-        if ($item->dis_tuition > 0) {
-          $tui_val = number_format($item->tuition);
-          $distui_val = number_format($item->dis_tuition);
-          $tuition .= "<p class=\"text-decoration-line-through \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
-        } else {
-          $tui_val = number_format($item->tuition);
-          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
-        }
-      ?>
-        <section class="slide ">
-          <div>
-            <div class="cover mb-2">
-              <img src="<?= $item->cover_image ?>" alt="">
-            </div>
-            <div class="title mb-2">
-              <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
-              <p class="name text-decoration-underline"><?= $item->t_id ?></p>
-            </div>
-            <div class="">
-              <?= $tuition ?>
-            </div>
-          </div>
-          <ul>
-            <li class="tag"><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '' ?> </li>
-          </ul>
-        </section>
-      <?php
-      }
-      ?>
-    </div>
 
-    
-  </section> -->
   <section class="main_premium container">
     <p>Premium</p>
     <h3>프리미엄 강의</h3>
@@ -225,18 +188,27 @@ while ($data2 = $result2->fetch_object()) {
           $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
         }
       ?>
-        <div>
+        <div class="slide mx-2">
           <img src="<?= $item->cover_image ?>" alt="">
-          <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
-          <p><?= $tuition ?></p>
-          <ul>
-            <li><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '<span>프리미엄</span>' ?></li>
-          </ul>
+          <div class="info d-flex flex-column gap-3 justify-content-between">
+            <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+            <div class="tuition">
+              <?= $tuition ?>
+            </div>
+            <ul>
+              <li><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '<span>프리미엄</span>' ?></li>
+            </ul>
+          </div>
         </div>
 
       <?php
       }
       ?>
+    </div>
+    <div class="premium_controls">
+      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
   </section>
 
   <section class="main_info text-center">
@@ -352,7 +324,8 @@ while ($data2 = $result2->fetch_object()) {
     slidesPerRow: 3, // 각 행에 표시할 슬라이드 개수
     infinite: true, // 무한 반복
     arrows: true, // 화살표 표시
-    dots: true // 페이지 네비게이션
+    prevArrow: $('.main_premium .slick-prev'),
+    nextArrow: $('.main_premium .slick-next'),
   });
 
   // 커스텀 페이지네이션 생성
