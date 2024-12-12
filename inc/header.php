@@ -200,7 +200,7 @@ if (isset($slick_js)) {
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">이벤트</a> <!-- <= href 알아서 수정바람 -->
+              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/event.php">이벤트</a>
             </li>
           </ul>
           <form class="d-flex search-form">
