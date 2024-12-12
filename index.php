@@ -139,23 +139,23 @@ while ($data2 = $result2->fetch_object()) {
           $tuition .= "<p class=\"text-decoration-line-through \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
         } else {
           $tui_val = number_format($item->tuition);
-          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
+          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p><p> &nbsp; </p>";
         }
       ?>
-        <section class="slide">
+        <section class="slide d-flex flex-column justify-content-between">
           <div>
             <div class="cover mb-2">
               <img src="<?= $item->cover_image ?>" alt="">
             </div>
-            <div class="title mb-2">
+            <div class="title m-2">
               <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
               <p class="name text-decoration-underline"><?= $item->t_id ?></p>
             </div>
-            <div>
+            <div class="tuition m-2">
               <?= $tuition ?>
             </div>
           </div>
-          <ul>
+          <ul class="m-2">
             <!-- <li class="d-flex align-items-center gap-2"> <img src="../img/icon-img/review.svg" alt=""> 5점 </li>
             <li class="like d-flex align-items-center"><img src="../img/icon-img/Heart.svg" width="10" height="10" alt="">500+</li> -->
             <li class="tag"><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '' ?> </li>
@@ -170,7 +170,7 @@ while ($data2 = $result2->fetch_object()) {
       <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
-  <section class="container main_premium">
+  <!-- <section class="container main_premium">
     <div class="premium_slider">
       <?php
       foreach ($dataArr2 as $item) {
@@ -184,7 +184,7 @@ while ($data2 = $result2->fetch_object()) {
           $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
         }
       ?>
-        <section class="slide">
+        <section class="slide ">
           <div>
             <div class="cover mb-2">
               <img src="<?= $item->cover_image ?>" alt="">
@@ -193,7 +193,7 @@ while ($data2 = $result2->fetch_object()) {
               <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
               <p class="name text-decoration-underline"><?= $item->t_id ?></p>
             </div>
-            <div>
+            <div class="">
               <?= $tuition ?>
             </div>
           </div>
@@ -206,7 +206,39 @@ while ($data2 = $result2->fetch_object()) {
       ?>
     </div>
 
+    
+  </section> -->
+  <section class="main_premium container">
+    <p>Premium</p>
+    <h3>프리미엄 강의</h3>
+    <p>최고를 꿈꾸는 당신을 위한 차별화된 교육, 프리미엄 강의로 도약하세요! </p>
+    <div class="premium">
+      <?php
+      foreach ($dataArr2 as $item) {
+        $tuition = '';
+        if ($item->dis_tuition > 0) {
+          $tui_val = number_format($item->tuition);
+          $distui_val = number_format($item->dis_tuition);
+          $tuition .= "<p class=\"text-decoration-line-through \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
+        } else {
+          $tui_val = number_format($item->tuition);
+          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
+        }
+      ?>
+        <div>
+          <img src="<?= $item->cover_image ?>" alt="">
+          <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+          <p><?= $tuition ?></p>
+          <ul>
+            <li><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '<span>프리미엄</span>' ?></li>
+          </ul>
+        </div>
+
+      <?php
+      }
+      ?>
   </section>
+
   <section class="main_info text-center">
     <h3>퀀텀코드: 코드로 미래를 뛰어넘다</h3>
     <h4>최신 기술을 실무 중심으로 배우며, 스스로의 가능성을 퀀텀 점프 시킬 수 있는 최고의 코드 강의 플랫폼
@@ -315,7 +347,7 @@ while ($data2 = $result2->fetch_object()) {
       // instead of a settings object
     ]
   });
-  $('.premium_slider').slick({
+  $('.premium').slick({
     rows: 2, // 슬라이드의 행 수
     slidesPerRow: 3, // 각 행에 표시할 슬라이드 개수
     infinite: true, // 무한 반복
