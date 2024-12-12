@@ -7,21 +7,21 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 $showModal = false; // 모달 표시 여부
 
 if (isset($_SESSION['MemEmail'])) {
-    $email = $_SESSION['MemEmail'];
+  $email = $_SESSION['MemEmail'];
 
-    // `login_count`와 `first_coupon_issued`를 가져오기
-    $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($loginCount, $firstCouponIssued);
-    $stmt->fetch();
-    $stmt->close();
+  // `login_count`와 `first_coupon_issued`를 가져오기
+  $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $stmt->bind_result($loginCount, $firstCouponIssued);
+  $stmt->fetch();
+  $stmt->close();
 
-    // `login_count`가 1이고 `first_coupon_issued`가 0인 경우 모달 표시
-    if ($loginCount == 1 && $firstCouponIssued == 0) {
-        $showModal = true;
-    }
+  // `login_count`가 1이고 `first_coupon_issued`가 0인 경우 모달 표시
+  if ($loginCount == 1 && $firstCouponIssued == 0) {
+    $showModal = true;
+  }
 }
 
 ?>
@@ -212,62 +212,55 @@ if (isset($slick_js)) {
 
 
   <!-- JavaScript -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  <?php if ($showModal): ?>
-    // 첫 번째 모달 표시
-    const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
-      keyboard: true,
-      backdrop: "static",
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      <?php if ($showModal): ?>
+        // 첫 번째 모달 표시
+        const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
+          keyboard: true,
+          backdrop: "static",
+        });
+        welcomeModal.show();
+
+        // "다음" 버튼 클릭 시 두 번째 모달 표시
+        document.getElementById("nextButton").addEventListener("click", function() {
+          welcomeModal.hide(); // 첫 번째 모달 닫기
+          const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
+          secondModal.show(); // 두 번째 모달 열기
+        });
+      <?php endif; ?>
+
+      const categoryButtons = document.querySelectorAll(".category-btn");
+      const selectedCategoriesInput = document.getElementById("selectedCategories");
+      const form = document.getElementById("categoryForm");
+      let selectedCategories = []; // 선택된 카테고리 저장
+
+      // 버튼 클릭 이벤트
+      categoryButtons.forEach((button) => {
+        button.addEventListener("click", function() {
+          const value = this.getAttribute("data-value");
+          if (this.classList.contains("selected")) {
+            // 선택 해제
+            this.classList.remove("selected");
+            selectedCategories = selectedCategories.filter((item) => item !== value);
+          } else {
+            // 선택
+            this.classList.add("selected");
+            selectedCategories.push(value);
+          }
+          console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
+        });
+      });
+
+      // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장
+      form.addEventListener("submit", function(event) {
+        if (selectedCategories.length === 0) {
+          event.preventDefault(); // 선택이 없으면 제출 막기
+          alert("적어도 하나의 카테고리를 선택해주세요.");
+        } else {
+          selectedCategoriesInput.value = JSON.stringify(selectedCategories); // JSON 형식으로 저장
+          console.log("폼 제출 데이터:", selectedCategoriesInput.value);
+        }
+      });
     });
-    welcomeModal.show();
-
-    // "다음" 버튼 클릭 시 두 번째 모달 표시
-    document.getElementById("nextButton").addEventListener("click", function () {
-      welcomeModal.hide(); // 첫 번째 모달 닫기
-      const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
-      secondModal.show(); // 두 번째 모달 열기
-    });
-  <?php endif; ?>
-
-  const categoryButtons = document.querySelectorAll(".category-btn");
-  const selectedCategoriesInput = document.getElementById("selectedCategories");
-  const form = document.getElementById("categoryForm");
-  let selectedCategories = []; // 선택된 카테고리 저장
-
-  // 버튼 클릭 이벤트
-  categoryButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const value = this.getAttribute("data-value");
-      if (this.classList.contains("selected")) {
-        // 선택 해제
-        this.classList.remove("selected");
-        selectedCategories = selectedCategories.filter((item) => item !== value);
-      } else {
-        // 선택
-        this.classList.add("selected");
-        selectedCategories.push(value);
-      }
-      console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
-    });
-  });
-
-  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장
-  form.addEventListener("submit", function (event) {
-    if (selectedCategories.length === 0) {
-      event.preventDefault(); // 선택이 없으면 제출 막기
-      alert("적어도 하나의 카테고리를 선택해주세요.");
-    } else {
-      selectedCategoriesInput.value = JSON.stringify(selectedCategories); // JSON 형식으로 저장
-      console.log("폼 제출 데이터:", selectedCategoriesInput.value);
-    }
-  });
-});
-
-
-
-
-
-
-    
   </script>
