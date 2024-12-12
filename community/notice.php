@@ -108,16 +108,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
         </tr>
       </tbody>
       </table>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#"><img src="../img/icon-img/CaretLeft.svg" alt=""></a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#"><img src="../img/icon-img/CaretRight.svg" alt=""></a></li>
+        </ul>
+      </nav>
+
     </div>
   </div>
 
-  <nav aria-label="Page navigation">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#"><img src="../img/icon-img/CaretLeft.svg" alt=""></a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#"><img src="../img/icon-img/CaretRight.svg" alt=""></a></li>
-    </ul>
-  </nav>
 </div>
 
 

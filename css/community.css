@@ -64,6 +64,14 @@ h6{
   height: 1px;
   background-color: var(--lineGray);
 }
+.post span{
+  padding: 4px;
+  color: var(--darkGray);
+  background-color: var(--lineGray);
+  font-weight: 400;
+  border-radius:5px;
+  margin-right: 20px;
+}
 
 /* 어사이드 */
 aside{
@@ -112,8 +120,11 @@ th,td{
 tbody{
   font-weight: 400;
 }
-.num{
-  width: 64px;
+.num,
+.view,
+.recommend,
+.answer{
+  width: 70px;
 }
 .post{
   text-align: start;
