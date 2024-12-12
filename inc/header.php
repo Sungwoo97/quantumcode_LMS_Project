@@ -43,6 +43,9 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- Custom CSS -->
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+
+  <!-- favicon -->
+   
   <?php
   if (isset($slick_css)) {
     echo $slick_css;
@@ -80,7 +83,7 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
 
   <style>
-
+    
   </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -138,20 +141,73 @@ if (isset($slick_js)) {
           </form>
         </div>
         <div class="ms-3 nav_sign d-flex gap-3">
-          <?php if (isset($_SESSION['MUNAME'])): ?>
-            <!-- 로그인된 경우 -->
-            <span class="text-primary me-3"><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님</span>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
-          <?php else: ?>
-            <!-- 로그인되지 않은 경우 -->
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
-          <?php endif; ?>
+          <!-- 로그인된 경우 ==> 장바구니, 쪽지, 닉네임, 로그아웃 다 보여주기 -->
+        <?php if (isset($_SESSION['MUNAME'])): ?>
+          <div class="d-flex align-items-center">
+              <!-- 장바구니 아이콘 -->
+              <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
+                  <i class="fas fa-shopping-cart"></i>
+              </a>
+              
+              <!-- 쪽지 아이콘 -->
+              <a href="#" class="me-3 text-decoration-none" title="쪽지" data-bs-toggle="modal" data-bs-target="#messageModal">
+                  <i class="fas fa-envelope"></i>
+              </a>
+              
+              <!-- 사용자 이름 표시 -->
+              <span class="text-primary me-3">
+                  <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
+              </span>
+              <!-- 로그아웃 버튼 -->
+              <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
+          </div>
+    
+
+    <!-- 장바구니 모달 -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
+        <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">장바구니</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    장바구니에 담긴 상품이 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+
+    <!-- 쪽지 모달 -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="false">
+        <div class="modal-dialog" id="messageModalDialog" style="position: absolute;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">쪽지</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    새로운 쪽지가 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 로그인되지 않은 경우 -->
+    <?php else: ?>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+    <?php endif; ?>
   </nav>
 
+
+  
 
   <!-- 모달 HTML 위치는 자유롭게 변경 가능합니다. -->
   <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
@@ -263,6 +319,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+        const setModalPosition = (icon, modalDialog) => {
+            const iconRect = icon.getBoundingClientRect();
+            modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
+            modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
+        };
+
+        const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
+        const cartModalDialog = document.getElementById('cartModalDialog');
+
+        const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
+        const messageModalDialog = document.getElementById('messageModalDialog');
+
+        // 장바구니 아이콘 클릭 시 위치 설정
+        cartIcon.parentElement.addEventListener('click', function () {
+            setModalPosition(cartIcon, cartModalDialog);
+        });
+
+        // 쪽지 아이콘 클릭 시 위치 설정
+        messageIcon.parentElement.addEventListener('click', function () {
+            setModalPosition(messageIcon, messageModalDialog);
+        });
+
 
 
 
