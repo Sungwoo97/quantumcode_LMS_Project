@@ -83,8 +83,73 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
 
   <style>
-    
+        /* 모달 전체 스타일 */
+        .modal-content {
+        border-radius: 10px; /* 모서리를 둥글게 */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+        overflow: hidden; /* 내부 요소가 영역을 넘지 않도록 */
+        font-family: 'Arial', sans-serif; /* 폰트 설정 */
+    }
+
+    /* 모달 헤더 */
+    .modal-header {
+        background-color: #007bff; /* 파란색 배경 */
+        color: white; /* 흰색 텍스트 */
+        padding: 5px 8px; /* 패딩 추가 */
+        font-size : 10px;
+    }
+
+    .modal-title {
+        font-weight: normal; /* 글씨 굵게 */
+        font-size : 15px;
+    }
+
+    /* 모달 본문 */
+    .modal-body {
+        padding: 100px; /* 여백 추가 */
+        background-color: #f8f9fa; /* 연한 회색 배경 */
+    }
+
+    /* 모달 푸터 */
+    .modal-footer {
+        background-color: #f1f1f1; /* 밝은 회색 배경 */
+        border-top: 2px solid #ddd; /* 위쪽 테두리 */
+        padding: 5px 8px; /* 패딩 추가 */
+    }
+
+    /* 버튼 커스터마이징 */
+    .btn-custom {
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px; /* 둥근 버튼 */
+        padding: 5px 10px;
+        transition: background-color 0.3s ease; /* 부드러운 색상 전환 */
+        font-size : 15px;
+    }
+
+    .btn-custom:hover {
+        background-color: #0056b3; /* 호버 시 색상 변경 */
+        color: white; /* 흰색 텍스트 */
+
+    }
+
+    .btn-secondary {
+        border-radius: 10px; /* 둥근 버튼 */
+    }
+
+    /* 버튼 호버 효과 (모두보기와 닫기 공통) */
+    .btn-secondary:hover {
+        background-color: #6c757d; /* 기본 회색보다 더 진한 색상 */
+        color: white; /* 흰색 텍스트 */
+    }
+
+    /* 모두보기 버튼 왼쪽 정렬 */
+    .modal-footer .btn-view-all {
+        margin-right: auto; /* 왼쪽 정렬 */
+    }
+
   </style>
+
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
@@ -165,38 +230,51 @@ if (isset($slick_js)) {
 
     <!-- 장바구니 모달 -->
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
-        <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">장바구니</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    장바구니에 담긴 상품이 없습니다.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                </div>
+      <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel"><i class="fas fa-shopping-cart me-2"></i>장바구니</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>장바구니에 담긴 상품이 없습니다.</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="fw-bold">합계:</span>
+                <span class="text-primary fw-bold">0 원</span>
             </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-custom">구매하기</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
         </div>
+      </div>
     </div>
+
+
 
     <!-- 쪽지 모달 -->
     <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="false">
-        <div class="modal-dialog" id="messageModalDialog" style="position: absolute;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">쪽지</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    새로운 쪽지가 없습니다.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                </div>
-            </div>
+      <div class="modal-dialog" id="messageModalDialog" style="position: absolute;">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="messageModalLabel"><i class="fas fa-envelope me-2"></i>쪽지</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      새로운 쪽지가 없습니다.
+                      <span class="badge bg-primary rounded-pill">0</span>
+                  </li>
+              </ul>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-custom">모든 쪽지 보기</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- 로그인되지 않은 경우 -->
@@ -318,36 +396,29 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("폼 제출 데이터:", selectedCategoriesInput.value);
     }
   });
+
+  const setModalPosition = (icon, modalDialog) => {
+      const iconRect = icon.getBoundingClientRect();
+      modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
+      modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
+  };
+
+  const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
+  const cartModalDialog = document.getElementById('cartModalDialog');
+
+  const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
+  const messageModalDialog = document.getElementById('messageModalDialog');
+
+  // 장바구니 아이콘 클릭 시 위치 설정
+  cartIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(cartIcon, cartModalDialog);
+  });
+
+  // 쪽지 아이콘 클릭 시 위치 설정
+  messageIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(messageIcon, messageModalDialog);
+  });
+
 });
 
-
-        const setModalPosition = (icon, modalDialog) => {
-            const iconRect = icon.getBoundingClientRect();
-            modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
-            modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
-        };
-
-        const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
-        const cartModalDialog = document.getElementById('cartModalDialog');
-
-        const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
-        const messageModalDialog = document.getElementById('messageModalDialog');
-
-        // 장바구니 아이콘 클릭 시 위치 설정
-        cartIcon.parentElement.addEventListener('click', function () {
-            setModalPosition(cartIcon, cartModalDialog);
-        });
-
-        // 쪽지 아이콘 클릭 시 위치 설정
-        messageIcon.parentElement.addEventListener('click', function () {
-            setModalPosition(messageIcon, messageModalDialog);
-        });
-
-
-
-
-
-
-
-    
-  </script>
+</script>
