@@ -14,6 +14,15 @@ while ($data = $result->fetch_object()) {
   $dataArr[] = $data;
 }
 
+//프리미엄 강의
+$sql2 = "SELECT * FROM lecture_list WHERE ispremium = 1";
+$result2 = $mysqli->query($sql2);
+$dataArr2 = [];
+while ($data2 = $result2->fetch_object()) {
+  $dataArr2[] = $data2;
+}
+
+
 
 ?>
 
@@ -36,84 +45,84 @@ while ($data = $result->fetch_object()) {
     </div>
 
     <div class="custom container">
-      <div class="controls">
+      <div class="banner_controls">
         <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
         <span>1/4</span>
         <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
-  
       </div>
       <div class="custom-pagination "></div>
     </div>
-  </section>
 
 
-  <section class="main_notice container d-flex">
-    <h2 class="w-100"><i class="fa-solid fa-triangle-exclamation"></i> 공지</h2>
-    <div class="notice_slides ">
-      <div class="notice_text d-flex justify-content-between">
-        <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-        <span>2024.12.02</span>
+
+    <div class="main_notice container d-flex">
+      <h2 class="w-100"><i class="fa-solid fa-triangle-exclamation"></i> 공지</h2>
+      <div class="notice_slides ">
+        <div class="notice_text d-flex justify-content-between">
+          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
+          <span>2024.12.02</span>
+        </div>
+        <div class="notice_text d-flex justify-content-between">
+          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
+          <span>2024.12.02</span>
+        </div>
+        <div class="notice_text d-flex justify-content-between">
+          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
+          <span>2024.12.02</span>
+        </div>
+        <div class="notice_text d-flex justify-content-between">
+          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
+          <span>2024.12.02</span>
+        </div>
       </div>
-      <div class="notice_text d-flex justify-content-between">
-        <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-        <span>2024.12.02</span>
-      </div>
-      <div class="notice_text d-flex justify-content-between">
-        <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-        <span>2024.12.02</span>
-      </div>
-      <div class="notice_text d-flex justify-content-between">
-        <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-        <span>2024.12.02</span>
+      <div class="notice_controls">
+        <button class="slick-prev"><i class="fa-solid fa-angle-up"></i></button>
+        <button class="slick-next"><i class="fa-solid fa-angle-down"></i></button>
       </div>
     </div>
-    <div class="controls">
-      <button class="slick-prev"><i class="fa-solid fa-angle-up"></i></button>
-      <button class="slick-next"><i class="fa-solid fa-angle-down"></i></button>
-    </div>
-
   </section>
-  <section class="skill_tag container d-flex">
+  <section class="skill_tag container d-flex my-5">
     <figure>
-      <img src="" alt="">
+      <div><img src="./img/icon-img/html_icon.svg" alt=""></div>
       <figcaption>Html</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/css_icon.svg" alt=""></div>
+      <figcaption>Css</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/javascript_icon.svg" alt=""></div>
+      <figcaption>JavaScript</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/react_icon.svg" alt=""></div>
+      <figcaption>React</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/java_icon.svg" alt=""></div>
+      <figcaption>Java</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/jquery_icon.svg" alt=""></div>
+      <figcaption>Jqeury</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/python_icon.svg" alt=""></div>
+      <figcaption>Python</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/php_icon.svg" alt=""></div>
+      <figcaption>PHP</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/node_js_icon.svg" alt=""></div>
+      <figcaption>Node.js</figcaption>
     </figure>
     <figure>
-      <img src="" alt="">
-      <figcaption>Html</figcaption>
+      <div><img src="./img/icon-img/vue_icon.svg" alt=""></div>
+      <figcaption>Vue.js</figcaption>
     </figure>
+
   </section>
 
   <div class="main_popular container mb-3"> <!-- Flex 컨테이너 -->
@@ -156,8 +165,46 @@ while ($data = $result->fetch_object()) {
       }
       ?>
     </div>
+    <div class="porpular_controls">
+      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
   </div>
   <section class="container main_premium">
+    <div class="premium_slider">
+      <?php
+      foreach ($dataArr2 as $item) {
+        $tuition = '';
+        if ($item->dis_tuition > 0) {
+          $tui_val = number_format($item->tuition);
+          $distui_val = number_format($item->dis_tuition);
+          $tuition .= "<p class=\"text-decoration-line-through \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
+        } else {
+          $tui_val = number_format($item->tuition);
+          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
+        }
+      ?>
+        <section class="slide">
+          <div>
+            <div class="cover mb-2">
+              <img src="<?= $item->cover_image ?>" alt="">
+            </div>
+            <div class="title mb-2">
+              <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+              <p class="name text-decoration-underline"><?= $item->t_id ?></p>
+            </div>
+            <div>
+              <?= $tuition ?>
+            </div>
+          </div>
+          <ul>
+            <li class="tag"><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '' ?> </li>
+          </ul>
+        </section>
+      <?php
+      }
+      ?>
+    </div>
 
   </section>
   <section class="main_info text-center">
@@ -238,8 +285,8 @@ while ($data = $result->fetch_object()) {
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 4,
-    prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>',
-    nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>',
+    prevArrow: $('.main_popular .slick-prev'),
+    nextArrow: $('.main_popular .slick-next'),
     responsive: [{
         breakpoint: 1024,
         settings: {
@@ -267,6 +314,13 @@ while ($data = $result->fetch_object()) {
       // settings: "unslick"
       // instead of a settings object
     ]
+  });
+  $('.premium_slider').slick({
+    rows: 2, // 슬라이드의 행 수
+    slidesPerRow: 3, // 각 행에 표시할 슬라이드 개수
+    infinite: true, // 무한 반복
+    arrows: true, // 화살표 표시
+    dots: true // 페이지 네비게이션
   });
 
   // 커스텀 페이지네이션 생성
