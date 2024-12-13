@@ -11,9 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
     //echo json_encode($_POST);  //만약, 된다면 입력한 데이터가 잘 출력이 되야함. 잘된다
 
-
-
-
     // // POST 데이터 받기
     $sender_idx = $_POST['sender_idx']; // 클라이언트에서 보낸 sender_idx
     $receiver_mid = $_POST['receiver_mid']; // 클라이언트에서 보낸 receiver_mid

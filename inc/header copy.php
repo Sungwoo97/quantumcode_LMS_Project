@@ -20,11 +20,6 @@ if (isset($_SESSION['MemEmail'])) {
   $stmt->fetch();
   $stmt->close();
 
-  // `login_count`가 1이고 `first_coupon_issued`가 0인 경우 모달 표시
-  if ($loginCount == 1 && $firstCouponIssued == 0) {
-    $showModal = true;
-  }
-
 
   //쪽지 갯수 확인하는 sql
   $sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
@@ -45,14 +40,15 @@ if (isset($_SESSION['MemEmail'])) {
   // 쪽지 데이터를 배열로 저장
   $messages = [];
   while ($row = $result->fetch_assoc()) {
-    $messages[] = $row;
+      $messages[] = $row;
   }
   $stmt->close();
 
   // 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
   if ($loginCount == 1 && $firstCouponIssued == 0) {
-    $showModal = true;
+      $showModal = true;
   }
+
 }
 
 ?>
@@ -74,13 +70,11 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom CSS -->
-
-
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
 
   <!-- favicon -->
-
+   
   <?php
   if (isset($slick_css)) {
     echo $slick_css;
@@ -121,7 +115,7 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
 
   <style>
-
+        
 
   </style>
 
@@ -168,7 +162,7 @@ if (isset($slick_js)) {
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php">QnA</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php">자유게시판</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/questions.php">질문게시판</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li> 
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">
@@ -182,13 +176,13 @@ if (isset($slick_js)) {
         </div>
         <div class="ms-3 nav_sign d-flex gap-3">
           <!-- 로그인된 경우 ==> 장바구니, 쪽지, 닉네임, 로그아웃 다 보여주기 -->
-          <?php if (isset($_SESSION['MUNAME'])): ?>
-            <div class="d-flex align-items-center">
+        <?php if (isset($_SESSION['MUNAME'])): ?>
+          <div class="d-flex align-items-center">
               <!-- 장바구니 아이콘 -->
               <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
-                <i class="fas fa-shopping-cart fa-lg"></i>
+                  <i class="fas fa-shopping-cart fa-lg"></i>
               </a>
-
+              
               <!-- 쪽지 아이콘 => 새 쪽지가 있거나 없을때 분기 -->
               <a href="#" class="me-3 text-decoration-none position-relative" title="쪽지" data-bs-toggle="modal" data-bs-target="#messageModal">
                 <i class="fas fa-envelope fa-lg"></i>
@@ -200,81 +194,81 @@ if (isset($slick_js)) {
                   </span>
                 <?php endif; ?>
               </a>
-
+                            
               <!-- 사용자 이름 표시 -->
               <span class="text-primary me-3">
-                <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
+                  <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
               </span>
               <!-- 로그아웃 버튼 -->
               <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
+          </div>
+    
+
+    <!-- 장바구니 모달 -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel"><i class="fas fa-shopping-cart me-2"></i>장바구니</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>장바구니에 담긴 상품이 없습니다.</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="fw-bold">합계:</span>
+                <span class="text-primary fw-bold">0 원</span>
             </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-custom">보러가기</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-            <!-- 장바구니 모달 -->
-            <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
-              <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel"><i class="fas fa-shopping-cart me-2"></i>장바구니</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>장바구니에 담긴 상품이 없습니다.</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <span class="fw-bold">합계:</span>
-                      <span class="text-primary fw-bold">0 원</span>
+    <!-- 쪽지 모달 -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog" id="messageModalDialog" style="position: absolute;" >
+        <div class="modal-content" id="message-modal-content" style="width:200%; height:450px">
+          <div class="modal-header">
+            <h5 class="modal-title" id="messageModalLabel"><i class="fas fa-envelope me-2"></i>쪽지</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="position: relative;">
+            <!-- 쪽지 리스트 -->
+            <ul class="list-group" id="messageList" style="position: absolute; top: 10px; left: 10px; width: 95%; max-height: calc(100% - 20px); overflow-y: auto;">
+              <?php if (count($messages) > 0): ?>
+                <?php foreach ($messages as $message): ?>
+                  <li class="list-group-item d-flex flex-column mt-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <strong class="text-primary"><?= htmlspecialchars($message['sender_name']); ?></strong>
+                      <small class="text-muted"><?= date("Y-m-d H:i", strtotime($message['sent_at'])); ?></small>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-custom">보러가기</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    <p class="mb-1 text-dark"><?= htmlspecialchars($message['message_content']); ?></p>
+                  </li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="list-group-item text-center">
+                  <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
+                  <span class="text-muted">새로운 쪽지가 없습니다.</span>
+                </li>
+              <?php endif; ?>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">모든 쪽지 보기</button> <!--쪽지전체보기로 이동하는 a태그 만들것!!-->
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!-- 쪽지 모달 -->
-            <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="false">
-              <div class="modal-dialog" id="messageModalDialog" style="position: absolute;">
-                <div class="modal-content" id="message-modal-content" style="width:200%; height:450px">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel"><i class="fas fa-envelope me-2"></i>쪽지</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style="position: relative;">
-                    <!-- 쪽지 리스트 -->
-                    <ul class="list-group" id="messageList" style="position: absolute; top: 10px; left: 10px; width: 95%; max-height: calc(100% - 20px); overflow-y: auto;">
-                      <?php if (count($messages) > 0): ?>
-                        <?php foreach ($messages as $message): ?>
-                          <li class="list-group-item d-flex flex-column mt-1">
-                            <div class="d-flex justify-content-between align-items-center">
-                              <strong class="text-primary"><?= htmlspecialchars($message['sender_name']); ?></strong>
-                              <small class="text-muted"><?= date("Y-m-d H:i", strtotime($message['sent_at'])); ?></small>
-                            </div>
-                            <p class="mb-1 text-dark"><?= htmlspecialchars($message['message_content']); ?></p>
-                          </li>
-                        <?php endforeach; ?>
-                      <?php else: ?>
-                        <li class="list-group-item text-center">
-                          <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
-                          <span class="text-muted">새로운 쪽지가 없습니다.</span>
-                        </li>
-                      <?php endif; ?>
-                    </ul>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">모든 쪽지 보기</button> <!--쪽지전체보기로 이동하는 a태그 만들것!!-->
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 로그인되지 않은 경우 -->
-          <?php else: ?>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
-          <?php endif; ?>
+    <!-- 로그인되지 않은 경우 -->
+    <?php else: ?>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+    <?php endif; ?>
   </nav>
 
   <!-- 모달 HTML 위치는 자유롭게 변경 가능합니다. -->
@@ -331,180 +325,144 @@ if (isset($slick_js)) {
     </div>
   </div>
 
-  <!-- 쿠폰 발급 완료 모달 -->
-  <div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="couponModalLabel">쿠폰 발급 완료</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          축하합니다! 쿠폰이 발급되었습니다.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!------- JavaScript -------->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      <?php if ($showModal): ?>
+<!------- JavaScript -------->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  <?php if ($showModal): ?>
         // 첫 번째 모달 표시
         const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
-          keyboard: true,
-          backdrop: "static",
+            keyboard: true,
+            backdrop: "static",
         });
         welcomeModal.show();
 
         // "다음" 버튼 클릭 시 두 번째 모달 표시
-        document.getElementById("nextButton").addEventListener("click", function() {
-          welcomeModal.hide(); // 첫 번째 모달 닫기
-          const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
-          secondModal.show(); // 두 번째 모달 열기
+        document.getElementById("nextButton").addEventListener("click", function () {
+            welcomeModal.hide(); // 첫 번째 모달 닫기
+            const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
+            secondModal.show(); // 두 번째 모달 열기
         });
-      <?php endif; ?>
+    <?php endif; ?>
 
-      //선택한 것 지정해서 저장하는 코드
-      const categoryButtons = document.querySelectorAll(".category-btn");
-      const selectedCategoriesInput = document.getElementById("selectedCategories");
-      const form = document.getElementById("categoryForm");
-      let selectedCategories = []; // 선택된 카테고리 저장
+  //선택한 것 지정해서 저장하는 코드
+  const categoryButtons = document.querySelectorAll(".category-btn");
+  const selectedCategoriesInput = document.getElementById("selectedCategories");
+  const form = document.getElementById("categoryForm");
+  let selectedCategories = []; // 선택된 카테고리 저장
 
-      // 버튼 클릭 이벤트
-      categoryButtons.forEach((button) => {
-        button.addEventListener("click", function() {
-          const value = this.getAttribute("data-value");
-          if (this.classList.contains("selected")) {
-            // 선택 해제
-            this.classList.remove("selected");
-            selectedCategories = selectedCategories.filter((item) => item !== value);
-          } else {
-            // 선택
-            this.classList.add("selected");
-            selectedCategories.push(value);
-          }
-          console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
-        });
-      });
+  // 버튼 클릭 이벤트
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const value = this.getAttribute("data-value");
+      if (this.classList.contains("selected")) {
+        // 선택 해제
+        this.classList.remove("selected");
+        selectedCategories = selectedCategories.filter((item) => item !== value);
+      } else {
+        // 선택
+        this.classList.add("selected");
+        selectedCategories.push(value);
+      }
+      console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
+    });
+  });
 
-      // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장 및 쿠폰 발급
-      form.addEventListener("submit", function(event) {
-        event.preventDefault(); // 기본 폼 제출 동작 막기
+  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장 및 쿠폰 발급
+form.addEventListener("submit", function (event) {
+    event.preventDefault(); // 기본 폼 제출 동작 막기
 
-        if (selectedCategories.length === 0) {
-          alert("적어도 하나의 카테고리를 선택해주세요.");
-        } else {
-          // AJAX 요청으로 save_categories.php에 데이터 전달
-          fetch("../qc/lecture/save_categories.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                categories: selectedCategories
-              }),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                console.log("카테고리 저장 성공:", data.message);
+    if (selectedCategories.length === 0) {
+        alert("적어도 하나의 카테고리를 선택해주세요.");
+    } else {
+        // 선택된 카테고리를 숨겨진 필드에 저장
+        selectedCategoriesInput.value = JSON.stringify(selectedCategories);
 
-                // 기존 모달 모두 닫기
-                document.querySelectorAll('.modal').forEach(modal => {
-                  const instance = bootstrap.Modal.getInstance(modal);
-                  if (instance) instance.hide();
-                });
-
-                // 쿠폰 발급 AJAX 요청
-                fetch("/qc/coupon/give_coupon.php", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({}), // 빈 객체를 넘겨준다.
-                  })
-                  .then(response => response.json())
-                  .then(couponData => {
-                    if (couponData.success) {
-                      console.log(couponData.message); // 성공 메시지 출력
-
-                      // 쿠폰 발급 완료 모달 표시
-                      const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
-                      couponModal.show();
-
-                    } else {
-                      alert("쿠폰 발급 실패: " + couponData.error);
-                    }
-                  })
-                  .catch(error => {
-                    console.error("쿠폰 발급 AJAX 요청 오류:", error);
-                    alert("서버와 통신 중 문제가 발생했습니다.");
-                  });
-              } else {
-                alert("카테고리 저장 실패: " + data.error);
-              }
-            })
-            .catch(error => {
-              console.error("카테고리 저장 AJAX 요청 오류:", error);
-              alert("서버와 통신 중 문제가 발생했습니다.");
-            });
-        }
-      });
-
-      const setModalPosition = (icon, modalDialog) => {
-        const iconRect = icon.getBoundingClientRect();
-        modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
-        modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
-      };
-
-      //이하 코드는 장바구니와 쪽지 모달에 관련된 코드.
-      const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
-      const cartModalDialog = document.getElementById('cartModalDialog');
-
-      const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
-      const messageModalDialog = document.getElementById('messageModalDialog');
-
-      // 장바구니 아이콘 클릭 시 위치 설정
-      cartIcon.parentElement.addEventListener('click', function() {
-        setModalPosition(cartIcon, cartModalDialog);
-      });
-
-      // 쪽지 아이콘 클릭 시 위치 설정
-      messageIcon.parentElement.addEventListener('click', function() {
-        setModalPosition(messageIcon, messageModalDialog);
-      });
-
-
-      //안읽은(새) 쪽지가 있을때, 쪽지 모달을 클릭했을때, tomembermessages 테이블의 is_read 컬럼값을 1로 바꿔서 읽음 처리!
-      const messageModal = document.getElementById("messageModal");
-      // 모달이 열릴 때 실행되는 이벤트
-      messageModal.addEventListener("show.bs.modal", function() {
-        // AJAX 요청으로 읽음 처리
-        fetch("/qc/chat&message/update_read_status.php", {
+        // 쿠폰 발급 AJAX 요청
+        try{
+        fetch("/qc/coupon/give_coupon.php", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              receiver_id: <?= json_encode($memId); ?>
-            }), //받는사람이 결국 memId과 같기떄문...
-          })
-          .then((response) => response.json())
-          .then((data) => {
+            body: JSON.stringify({}),  //빈 객체를 넘겨준다. 
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
             if (data.success) {
-              console.log("쪽지 읽음 처리 완료");
+                console.log(data.message); // 성공 메시지 출력
+
+                // 쿠폰 발급 완료 모달 표시
+                // const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
+                // couponModal.show();
+
+                
             } else {
-              console.error("쪽지 읽음 처리 실패", data.error);
+                alert("쿠폰 발급 실패: " + data.error);
             }
           })
-          .catch((error) => {
+        }
+        catch(error){
             console.error("AJAX 요청 오류:", error);
-          });
-      });
+            alert("서버와 통신 중 문제가 발생했습니다.");
+        };
+    }
+  });
 
-    });
-  </script>
+
+
+
+
+
+  const setModalPosition = (icon, modalDialog) => {
+      const iconRect = icon.getBoundingClientRect();
+      modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
+      modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
+  };
+
+  //이하 코드는 장바구니와 쪽지 모달에 관련된 코드.
+  const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
+  const cartModalDialog = document.getElementById('cartModalDialog');
+
+  const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
+  const messageModalDialog = document.getElementById('messageModalDialog');
+
+  // 장바구니 아이콘 클릭 시 위치 설정
+  cartIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(cartIcon, cartModalDialog);
+  });
+
+  // 쪽지 아이콘 클릭 시 위치 설정
+  messageIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(messageIcon, messageModalDialog);
+  });
+
+
+  //안읽은(새) 쪽지가 있을때, 쪽지 모달을 클릭했을때, tomembermessages 테이블의 is_read 컬럼값을 1로 바꿔서 읽음 처리!
+  const messageModal = document.getElementById("messageModal");
+  // 모달이 열릴 때 실행되는 이벤트
+  messageModal.addEventListener("show.bs.modal", function () {
+      // AJAX 요청으로 읽음 처리
+      fetch("/qc/chat&message/update_read_status.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ receiver_id: <?= json_encode($memId); ?> }), //받는사람이 결국 memId과 같기떄문...
+      })
+          .then((response) => response.json())
+          .then((data) => {
+              if (data.success) {
+                  console.log("쪽지 읽음 처리 완료");
+              } else {
+                  console.error("쪽지 읽음 처리 실패", data.error);
+              }
+          })
+          .catch((error) => {
+              console.error("AJAX 요청 오류:", error);
+          });
+  });
+
+});
+
+</script>
