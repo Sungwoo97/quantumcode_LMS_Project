@@ -25,7 +25,7 @@ if($search_keyword){
 
 
 //데이터의 개수 조회
-$page_sql = "SELECT COUNT(*) AS cnt FROM members WHERE 1=1 $search_where";
+$page_sql = "SELECT COUNT(*) AS cnt FROM memberskakao WHERE 1=1 $search_where";
 $page_result = $mysqli->query($page_sql);
 $page_data = $page_result->fetch_assoc();
 $row_num = $page_data['cnt'];
@@ -52,7 +52,7 @@ $total_block = ceil($total_page/$block_ct);
 if($block_end > $total_page ) $block_end = $total_page;
 
 //목적에 맞게 목록 가져오기
-$sql = "SELECT * FROM members WHERE 1=1 $search_where ORDER BY mid ASC LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
+$sql = "SELECT * FROM memberskakao WHERE 1=1 $search_where ORDER BY memid ASC LIMIT $start_num, $list"; //teachers 테이블에서 모든 데이터를 조회
 
 $result = $mysqli->query($sql); //쿼리 실행 결과
 while($data = $result->fetch_object()){
@@ -78,8 +78,7 @@ while($data = $result->fetch_object()){
         <tr>
           <th scope="col">No. </th>
           <th scope="col">이름</th>
-          <th scope="col">아이디</th>
-          <th scope="col">이메일</th>
+          <th scope="col">아이디(이메일)</th>
           <th scope="col">가입날짜</th>
           <th scope="col">회원 등급</th>
           <th scope="col">상세보기</th>
@@ -94,16 +93,14 @@ while($data = $result->fetch_object()){
               foreach($dataArr as $item){
           ?> 
           <tr>
-            <th scope="row"><?= $item->mid; ?></th>
-              <td><?= $item->name; ?></td>
-              <td><?= $item->id; ?></td>
-              <td><?= $item->email; ?></td>
-              <td><?= $item->reg_date; ?></td>
+            <th scope="row"><?= $item->memId; ?></th>
+              <td><?= $item->memName; ?></td>
+              <td><?= $item->memEmail; ?></td>
+              <td><?= $item->memCreatedAt; ?></td>
               <td><?= $item->grade; ?></td>
-              <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
-              <!-- <td><a href="member_view.php?mid=<?= $item->mid;?>" class="btn btn-secondary btn-sm">수정하기</a></td> -->
+              <td><a href="member_view.php?memid=<?= $item->memid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
               <td>
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->mid; ?>" >쪽지보내기</button>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->memId; ?>" >쪽지보내기</button>
               </td>
           </tr>
           <?php

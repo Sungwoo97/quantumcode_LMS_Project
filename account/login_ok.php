@@ -25,6 +25,7 @@ if ($data && $data->account_activation_token === null) {
 
   // 세션 설정
   $_SESSION['MemEmail'] = $data->memEmail;
+  $_SESSION['MemId'] = $data->memId;
   $_SESSION['MUNAME'] = $data->memName;
   $_SESSION['Mgrade'] = $data->grade;
 
