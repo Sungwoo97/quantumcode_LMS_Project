@@ -30,6 +30,15 @@ while ($data3 = $result3->fetch_object()) {
   $dataArr3[] = $data3;
 }
 
+//무료강의
+$sql4 = "SELECT * FROM lecture_list WHERE isfree = 1";
+$result4 = $mysqli->query($sql4);
+$dataArr4 = [];
+while ($data4 = $result4->fetch_object()) {
+  $dataArr4[] = $data4;
+}
+
+
 ?>
 
 <!-- Placeholder for Main Content -->
@@ -155,7 +164,7 @@ while ($data3 = $result3->fetch_object()) {
             </div>
             <div class="info">
               <div class="title ">
-                <h5 class="small-font mb-0"><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+                <h5 class="small-font mb-0"><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
               </div>
               <div class="tuition ">
                 <?= $tuition ?>
@@ -200,7 +209,7 @@ while ($data3 = $result3->fetch_object()) {
         <div class="slide mx-3">
           <img src="<?= $item->cover_image ?>" alt="">
           <div class="info d-flex flex-column gap-3 justify-content-between">
-            <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
             <div class="tuition">
               <?= $tuition ?>
             </div>
@@ -212,7 +221,7 @@ while ($data3 = $result3->fetch_object()) {
         <div class="slide mx-3">
           <img src="<?= $item->cover_image ?>" alt="">
           <div class="info d-flex flex-column gap-3 justify-content-between">
-            <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
             <div class="tuition">
               <?= $tuition ?>
             </div>
@@ -267,7 +276,7 @@ while ($data3 = $result3->fetch_object()) {
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div>
+          <div class="d-flex gap-3">
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
@@ -277,7 +286,7 @@ while ($data3 = $result3->fetch_object()) {
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div>
+          <div class="d-flex gap-3">
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
@@ -287,7 +296,7 @@ while ($data3 = $result3->fetch_object()) {
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div>
+          <div class="d-flex gap-3">
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
@@ -322,7 +331,7 @@ while ($data3 = $result3->fetch_object()) {
         <div class="slide mx-3">
           <img src="<?= $item->cover_image ?>" alt="">
           <div class="info d-flex flex-column gap-3 justify-content-between">
-            <h5><a href="lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
             <div class="tuition">
               <?= $tuition ?>
             </div>
@@ -342,7 +351,26 @@ while ($data3 = $result3->fetch_object()) {
   </section>
 
   <section class="main_free container">
-
+    <h6>free</h6>
+    <h3 class="mb-3">무료 강의</h3>
+    <p>무료로 시작하는 배움의 여정, 지금 바로 도전하세요!</p>
+    <div class="free">
+      <?php
+      foreach ($dataArr4 as $item) {
+      ?>
+        <div class="image_container">
+          <img src="<?= $item->cover_image ?>" alt="">
+          <div class="info">
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+            <ul>
+              <li><span>무료</span></li>
+            </ul>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
+    </div>
   </section>
 
   <section class="main_category">
@@ -368,6 +396,8 @@ while ($data3 = $result3->fetch_object()) {
 
   $('.main_slides').slick({
     speed: 300,
+    autoplay: true,
+    autoplaySpeed: 3000,
     prevArrow: $('.banner .slick-prev'),
     nextArrow: $('.banner .slick-next'),
     dots: false, // 기본 dots 비활성화
@@ -388,7 +418,7 @@ while ($data3 = $result3->fetch_object()) {
     infinite: false,
     speed: 300,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     prevArrow: $('.main_popular .slick-prev'),
     nextArrow: $('.main_popular .slick-next'),
     responsive: [{
@@ -444,6 +474,12 @@ while ($data3 = $result3->fetch_object()) {
     arrows: true, // 화살표 표시
     prevArrow: $('.main_recom .slick-prev'),
     nextArrow: $('.main_recom .slick-next'),
+  });
+  $('.free').slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    infinite: true, // 무한 반복
+
   });
 
 
