@@ -325,24 +325,6 @@ if (isset($slick_js)) {
     </div>
   </div>
 
-<!-- 쿠폰 발급 완료 모달 -->
-<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="couponModalLabel">쿠폰 발급 완료</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        축하합니다! 쿠폰이 발급되었습니다.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!------- JavaScript -------->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -385,23 +367,58 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장
-  form.addEventListener("submit", function (event) {
+  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장 및 쿠폰 발급
+form.addEventListener("submit", function (event) {
+    event.preventDefault(); // 기본 폼 제출 동작 막기
+
     if (selectedCategories.length === 0) {
-      event.preventDefault(); // 선택이 없으면 제출 막기
-      alert("적어도 하나의 카테고리를 선택해주세요.");
+        alert("적어도 하나의 카테고리를 선택해주세요.");
     } else {
-      selectedCategoriesInput.value = JSON.stringify(selectedCategories); // JSON 형식으로 저장
-      console.log("폼 제출 데이터:", selectedCategoriesInput.value);
+        // 선택된 카테고리를 숨겨진 필드에 저장
+        selectedCategoriesInput.value = JSON.stringify(selectedCategories);
+
+        // 쿠폰 발급 AJAX 요청
+        try{
+        fetch("/qc/coupon/give_coupon.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),  //빈 객체를 넘겨준다. 
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+            if (data.success) {
+                console.log(data.message); // 성공 메시지 출력
+
+                // 쿠폰 발급 완료 모달 표시
+                // const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
+                // couponModal.show();
+
+                
+            } else {
+                alert("쿠폰 발급 실패: " + data.error);
+            }
+          })
+        }
+        catch(error){
+            console.error("AJAX 요청 오류:", error);
+            alert("서버와 통신 중 문제가 발생했습니다.");
+        };
     }
   });
+
+
+
+
+
 
   const setModalPosition = (icon, modalDialog) => {
       const iconRect = icon.getBoundingClientRect();
       modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
       modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
   };
-
 
   //이하 코드는 장바구니와 쪽지 모달에 관련된 코드.
   const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
