@@ -392,9 +392,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (selectedCategories.length === 0) {
         alert("적어도 하나의 카테고리를 선택해주세요.");
     } else {
-        // 선택된 카테고리를 숨겨진 필드에 저장
-        selectedCategoriesInput.value = JSON.stringify(selectedCategories);
-
         // AJAX 요청으로 save_categories.php에 데이터 전달
         fetch("../qc/lecture/save_categories.php", {
             method: "POST",
@@ -407,6 +404,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.success) {
                 console.log("카테고리 저장 성공:", data.message);
+
+                // 기존 모달 모두 닫기
+                document.querySelectorAll('.modal').forEach(modal => {
+                    const instance = bootstrap.Modal.getInstance(modal);
+                    if (instance) instance.hide();
+                });
+
                 // 쿠폰 발급 AJAX 요청
                 fetch("/qc/coupon/give_coupon.php", {
                     method: "POST",
@@ -423,6 +427,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         // 쿠폰 발급 완료 모달 표시
                         const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
                         couponModal.show();
+
                     } else {
                         alert("쿠폰 발급 실패: " + couponData.error);
                     }
@@ -440,12 +445,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("서버와 통신 중 문제가 발생했습니다.");
         });
     }
-});
-
-
-
-
-
+  });
 
   const setModalPosition = (icon, modalDialog) => {
       const iconRect = icon.getBoundingClientRect();

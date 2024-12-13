@@ -5,16 +5,20 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 로그인된 사용자의 이메일 가져오기
     if (!isset($_SESSION['MemEmail'])) {
-        die("로그인이 필요합니다.");
+        echo json_encode(["success" => false, "error" => "로그인이 필요합니다."]);
+        exit;
     }
     $userEmail = $_SESSION['MemEmail'];
 
-    // 선택된 카테고리 데이터 가져오기
-    if (isset($_POST['selectedCategories'])) {
-        $categories = json_decode($_POST['selectedCategories'], true); // 이전에 json.stringify했으므로 decode써서 JSON -> 배열 변환
+    // JSON 요청 데이터 가져오기
+    $requestData = json_decode(file_get_contents('php://input'), true);  //
+
+    //사실 하나만 있어도 상관없지만 혹시나 해서..
+    if (isset($requestData['categories']) && is_array($requestData['categories'])) {
+        $categories = $requestData['categories'];  // 요청값을 변수에 저장. 일반배열
 
         if (!empty($categories)) {
-            // 카테고리를 다시 JSON 형식으로 변환하여 저장
+            // 카테고리를 JSON 형식으로 변환하여 저장 (이거 전에는 일반배열이므로)
             $categoriesJson = json_encode($categories, JSON_UNESCAPED_UNICODE);
 
             // 기존 레코드가 있는지 확인
@@ -49,14 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $couponStmt->execute();
             $couponStmt->close();
 
+            echo json_encode(["success" => true, "message" => "카테고리가 저장되었습니다."]);
         } else {
-            echo "선택된 카테고리가 없습니다.";
+            echo json_encode(["success" => false, "error" => "선택된 카테고리가 없습니다."]);
         }
     } else {
-        echo "데이터가 유효하지 않습니다.";
+        echo json_encode(["success" => false, "error" => "데이터가 유효하지 않습니다."]);
     }
 } else {
-    echo "잘못된 요청입니다.";
+    echo json_encode(["success" => false, "error" => "잘못된 요청입니다."]);
 }
-
 ?>
