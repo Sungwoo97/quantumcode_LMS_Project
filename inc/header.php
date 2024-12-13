@@ -325,7 +325,7 @@ if (isset($slick_js)) {
     </div>
   </div>
 
-<!-- 쿠폰 발급 완료 모달 -->
+  <!-- 쿠폰 발급 완료 모달 -->
 <div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -346,7 +346,7 @@ if (isset($slick_js)) {
 <!------- JavaScript -------->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    <?php if ($showModal): ?>
+  <?php if ($showModal): ?>
         // 첫 번째 모달 표시
         const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
             keyboard: true,
@@ -362,43 +362,41 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     <?php endif; ?>
 
-    // 카테고리 선택 로직
-    const categoryButtons = document.querySelectorAll(".category-btn");
-    const selectedCategoriesInput = document.getElementById("selectedCategories");
-    let selectedCategories = []; // 선택된 카테고리 저장
+  //선택한 것 지정해서 저장하는 코드
+  const categoryButtons = document.querySelectorAll(".category-btn");
+  const selectedCategoriesInput = document.getElementById("selectedCategories");
+  const form = document.getElementById("categoryForm");
+  let selectedCategories = []; // 선택된 카테고리 저장
 
-    // 버튼 클릭 이벤트
-    categoryButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-            const value = this.getAttribute("data-value");
-            if (this.classList.contains("selected")) {
-                // 선택 해제
-                this.classList.remove("selected");
-                selectedCategories = selectedCategories.filter((item) => item !== value);
-            } else {
-                // 선택
-                this.classList.add("selected");
-                selectedCategories.push(value);
-            }
-            console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
-        });
+  // 버튼 클릭 이벤트
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const value = this.getAttribute("data-value");
+      if (this.classList.contains("selected")) {
+        // 선택 해제
+        this.classList.remove("selected");
+        selectedCategories = selectedCategories.filter((item) => item !== value);
+      } else {
+        // 선택
+        this.classList.add("selected");
+        selectedCategories.push(value);
+      }
+      console.log("Selected Categories:", selectedCategories); // 선택된 항목 확인용
     });
+  });
 
-    // 폼 제출 이벤트
-    const form = document.getElementById("categoryForm");
-    form.addEventListener("submit", function (event) {
-        event.preventDefault(); // 기본 폼 제출 동작 막기
+  // 폼 제출 전에 숨겨진 필드에 선택된 카테고리 저장 및 쿠폰 발급
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // 기본 폼 제출 동작 막기
 
-        if (selectedCategories.length === 0) {
-            alert("적어도 하나의 카테고리를 선택해주세요.");
-            return;
-        }
+    if (selectedCategories.length === 0) {
+        alert("적어도 하나의 카테고리를 선택해주세요.");
+    } else {
+        // 선택된 카테고리를 숨겨진 필드에 저장
+        selectedCategoriesInput.value = JSON.stringify(selectedCategories);
 
-        selectedCategoriesInput.value = JSON.stringify(selectedCategories); // JSON 형식으로 저장
-        console.log("폼 제출 데이터:", selectedCategoriesInput.value);
-
-        // 쿠폰 발급 AJAX 요청
-        fetch("/qc/coupon/give_coupon.php", {
+        // AJAX 요청으로 save_categories.php에 데이터 전달
+        fetch("../qc/lecture/save_categories.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -408,72 +406,96 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log(data.message); // 성공 메시지 출력
+                console.log("카테고리 저장 성공:", data.message);
+                // 쿠폰 발급 AJAX 요청
+                fetch("/qc/coupon/give_coupon.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({}), // 빈 객체를 넘겨준다.
+                })
+                .then(response => response.json())
+                .then(couponData => {
+                    if (couponData.success) {
+                        console.log(couponData.message); // 성공 메시지 출력
 
-                // 두 번째 모달 닫기
-                const secondModal = bootstrap.Modal.getInstance(document.getElementById("secondModal"));
-                if (secondModal) secondModal.hide();
-
-                // 쿠폰 발급 완료 모달 표시
-                const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
-                couponModal.show();
+                        // 쿠폰 발급 완료 모달 표시
+                        const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
+                        couponModal.show();
+                    } else {
+                        alert("쿠폰 발급 실패: " + couponData.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("쿠폰 발급 AJAX 요청 오류:", error);
+                    alert("서버와 통신 중 문제가 발생했습니다.");
+                });
             } else {
-                alert("쿠폰 발급 실패: " + data.error);
+                alert("카테고리 저장 실패: " + data.error);
             }
         })
         .catch(error => {
-            console.error("AJAX 요청 오류:", error);
+            console.error("카테고리 저장 AJAX 요청 오류:", error);
             alert("서버와 통신 중 문제가 발생했습니다.");
         });
-    });
+    }
+});
 
-    // 모달 위치 설정 (장바구니와 쪽지)
-    const setModalPosition = (icon, modalDialog) => {
-        const iconRect = icon.getBoundingClientRect();
-        modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
-        modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
-    };
 
-    const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
-    const cartModalDialog = document.getElementById('cartModalDialog');
 
-    const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
-    const messageModalDialog = document.getElementById('messageModalDialog');
 
-    // 장바구니 아이콘 클릭 시 위치 설정
-    cartIcon.parentElement.addEventListener('click', function () {
-        setModalPosition(cartIcon, cartModalDialog);
-    });
 
-    // 쪽지 아이콘 클릭 시 위치 설정
-    messageIcon.parentElement.addEventListener('click', function () {
-        setModalPosition(messageIcon, messageModalDialog);
-    });
 
-    // 쪽지 읽음 처리
-    const messageModal = document.getElementById("messageModal");
-    // 모달이 열릴 때 실행되는 이벤트
-    messageModal.addEventListener("show.bs.modal", function () {
-        // AJAX 요청으로 읽음 처리
-        fetch("/qc/chat&message/update_read_status.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ receiver_id: <?= json_encode($memId); ?> }), //받는사람이 결국 memId와 같기 때문
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                console.log("쪽지 읽음 처리 완료");
-            } else {
-                console.error("쪽지 읽음 처리 실패", data.error);
-            }
-        })
-        .catch((error) => {
-            console.error("AJAX 요청 오류:", error);
-        });
-    });
+  const setModalPosition = (icon, modalDialog) => {
+      const iconRect = icon.getBoundingClientRect();
+      modalDialog.style.top = `${iconRect.bottom + window.scrollY}px`; // 아이콘 아래
+      modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
+  };
+
+  //이하 코드는 장바구니와 쪽지 모달에 관련된 코드.
+  const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
+  const cartModalDialog = document.getElementById('cartModalDialog');
+
+  const messageIcon = document.querySelector('.fa-envelope'); // 쪽지 아이콘
+  const messageModalDialog = document.getElementById('messageModalDialog');
+
+  // 장바구니 아이콘 클릭 시 위치 설정
+  cartIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(cartIcon, cartModalDialog);
+  });
+
+  // 쪽지 아이콘 클릭 시 위치 설정
+  messageIcon.parentElement.addEventListener('click', function () {
+      setModalPosition(messageIcon, messageModalDialog);
+  });
+
+
+  //안읽은(새) 쪽지가 있을때, 쪽지 모달을 클릭했을때, tomembermessages 테이블의 is_read 컬럼값을 1로 바꿔서 읽음 처리!
+  const messageModal = document.getElementById("messageModal");
+  // 모달이 열릴 때 실행되는 이벤트
+  messageModal.addEventListener("show.bs.modal", function () {
+      // AJAX 요청으로 읽음 처리
+      fetch("/qc/chat&message/update_read_status.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ receiver_id: <?= json_encode($memId); ?> }), //받는사람이 결국 memId과 같기떄문...
+      })
+          .then((response) => response.json())
+          .then((data) => {
+              if (data.success) {
+                  console.log("쪽지 읽음 처리 완료");
+              } else {
+                  console.error("쪽지 읽음 처리 실패", data.error);
+              }
+          })
+          .catch((error) => {
+              console.error("AJAX 요청 오류:", error);
+          });
+  });
+
 });
 
 </script>
