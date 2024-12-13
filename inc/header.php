@@ -1,27 +1,54 @@
 <?php
 session_start();
-//print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MUNAME] => 윤준호 [Mgrade] => bronze )
+//print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MemId] => 149 [MUNAME] => 윤네이버 [Mgrade] => bronze )
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 //처음 회원 가입했을때(즉 login_count가 0->1로 바뀌는 순간), 모달창 튀어나오게
 $showModal = false; // 모달 표시 여부
 
+
 if (isset($_SESSION['MemEmail'])) {
-    $email = $_SESSION['MemEmail'];
+  $email = $_SESSION['MemEmail'];
+  $memId = $_SESSION['MemId'];     //쪽지관련해서 쓸거.
 
-    // `login_count`와 `first_coupon_issued`를 가져오기
-    $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($loginCount, $firstCouponIssued);
-    $stmt->fetch();
-    $stmt->close();
+  //처음 관심강의 선택하기 관련. `login_count`와 `first_coupon_issued`를 가져오기
+  $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $stmt->bind_result($loginCount, $firstCouponIssued);
+  $stmt->fetch();
+  $stmt->close();
 
-    // `login_count`가 1이고 `first_coupon_issued`가 0인 경우 모달 표시
-    if ($loginCount == 1 && $firstCouponIssued == 0) {
-        $showModal = true;
-    }
+
+  //쪽지 갯수 확인하는 sql
+  $sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
+  $stmt = $mysqli->prepare($sql_msg);
+  $stmt->bind_param("s", $memId);
+  $stmt->execute();
+  $stmt->bind_result($unreadCount);
+  $stmt->fetch();
+  $stmt->close();
+
+  // 모든 쪽지 가져오기
+  $sql_all_msgs = "SELECT sender_name, message_content, sent_at, is_read FROM tomembermessages WHERE receiver_id = ?";
+  $stmt = $mysqli->prepare($sql_all_msgs);
+  $stmt->bind_param("s", $memId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  // 쪽지 데이터를 배열로 저장
+  $messages = [];
+  while ($row = $result->fetch_assoc()) {
+      $messages[] = $row;
+  }
+  $stmt->close();
+
+  // 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
+  if ($loginCount == 1 && $firstCouponIssued == 0) {
+      $showModal = true;
+  }
+
 }
 
 ?>
@@ -33,6 +60,8 @@ if (isset($_SESSION['MemEmail'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quantum Code</title>
+  <!-- 캐싱문제 방지 -->
+  <link rel="stylesheet" href="/qc/css/core-style.css?v=<?= time(); ?>">
   <!-- 제이쿼리랑 폰트어썸 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
@@ -83,70 +112,7 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
 
   <style>
-        /* 모달 전체 스타일 */
-        .modal-content {
-        border-radius: 10px; /* 모서리를 둥글게 */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
-        overflow: hidden; /* 내부 요소가 영역을 넘지 않도록 */
-        font-family: 'Arial', sans-serif; /* 폰트 설정 */
-    }
-
-    /* 모달 헤더 */
-    .modal-header {
-        background-color: #007bff; /* 파란색 배경 */
-        color: white; /* 흰색 텍스트 */
-        padding: 5px 8px; /* 패딩 추가 */
-        font-size : 10px;
-    }
-
-    .modal-title {
-        font-weight: normal; /* 글씨 굵게 */
-        font-size : 15px;
-    }
-
-    /* 모달 본문 */
-    .modal-body {
-        padding: 100px; /* 여백 추가 */
-        background-color: #f8f9fa; /* 연한 회색 배경 */
-    }
-
-    /* 모달 푸터 */
-    .modal-footer {
-        background-color: #f1f1f1; /* 밝은 회색 배경 */
-        border-top: 2px solid #ddd; /* 위쪽 테두리 */
-        padding: 5px 8px; /* 패딩 추가 */
-    }
-
-    /* 버튼 커스터마이징 */
-    .btn-custom {
-        background-color: #007bff;
-        color: white;
-        border-radius: 10px; /* 둥근 버튼 */
-        padding: 5px 10px;
-        transition: background-color 0.3s ease; /* 부드러운 색상 전환 */
-        font-size : 15px;
-    }
-
-    .btn-custom:hover {
-        background-color: #0056b3; /* 호버 시 색상 변경 */
-        color: white; /* 흰색 텍스트 */
-
-    }
-
-    .btn-secondary {
-        border-radius: 10px; /* 둥근 버튼 */
-    }
-
-    /* 버튼 호버 효과 (모두보기와 닫기 공통) */
-    .btn-secondary:hover {
-        background-color: #6c757d; /* 기본 회색보다 더 진한 색상 */
-        color: white; /* 흰색 텍스트 */
-    }
-
-    /* 모두보기 버튼 왼쪽 정렬 */
-    .modal-footer .btn-view-all {
-        margin-right: auto; /* 왼쪽 정렬 */
-    }
+        
 
   </style>
 
@@ -214,11 +180,18 @@ if (isset($slick_js)) {
                   <i class="fas fa-shopping-cart"></i>
               </a>
               
-              <!-- 쪽지 아이콘 -->
-              <a href="#" class="me-3 text-decoration-none" title="쪽지" data-bs-toggle="modal" data-bs-target="#messageModal">
-                  <i class="fas fa-envelope"></i>
+              <!-- 쪽지 아이콘 => 새 쪽지가 있거나 없을때 분기 -->
+              <a href="#" class="me-3 text-decoration-none position-relative" title="쪽지" data-bs-toggle="modal" data-bs-target="#messageModal">
+                <i class="fas fa-envelope"></i>
+                <?php if ($unreadCount > 0): ?>
+                  <!-- 읽지 않은 쪽지 개수 표시 -->
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <?= $unreadCount ?>
+                    <span class="visually-hidden">unread messages</span>
+                  </span>
+                <?php endif; ?>
               </a>
-              
+                            
               <!-- 사용자 이름 표시 -->
               <span class="text-primary me-3">
                   <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
@@ -251,27 +224,38 @@ if (isset($slick_js)) {
       </div>
     </div>
 
-
-
     <!-- 쪽지 모달 -->
     <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="false">
-      <div class="modal-dialog" id="messageModalDialog" style="position: absolute;">
-        <div class="modal-content">
+      <div class="modal-dialog" id="messageModalDialog" style="position: absolute;" >
+        <div class="modal-content" id="message-modal-content" style="width:200%; height:450px">
           <div class="modal-header">
-              <h5 class="modal-title" id="messageModalLabel"><i class="fas fa-envelope me-2"></i>쪽지</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="messageModalLabel"><i class="fas fa-envelope me-2"></i>쪽지</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-              <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                      새로운 쪽지가 없습니다.
-                      <span class="badge bg-primary rounded-pill">0</span>
+          <div class="modal-body" style="position: relative;">
+            <!-- 쪽지 리스트 -->
+            <ul class="list-group" id="messageList" style="position: absolute; top: 10px; left: 10px; width: 95%; max-height: calc(100% - 20px); overflow-y: auto;">
+              <?php if (count($messages) > 0): ?>
+                <?php foreach ($messages as $message): ?>
+                  <li class="list-group-item d-flex flex-column mt-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <strong class="text-primary"><?= htmlspecialchars($message['sender_name']); ?></strong>
+                      <small class="text-muted"><?= date("Y-m-d H:i", strtotime($message['sent_at'])); ?></small>
+                    </div>
+                    <p class="mb-1 text-dark"><?= htmlspecialchars($message['message_content']); ?></p>
                   </li>
-              </ul>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="list-group-item text-center">
+                  <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
+                  <span class="text-muted">새로운 쪽지가 없습니다.</span>
+                </li>
+              <?php endif; ?>
+            </ul>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-custom">모든 쪽지 보기</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">모든 쪽지 보기</button> <!--쪽지전체보기로 이동하는 a태그 만들것!!-->
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           </div>
         </div>
       </div>
@@ -296,9 +280,7 @@ if (isset($slick_js)) {
           Quantum Code에 처음 오신 것을 환영합니다! 첫 방문을 기념하여 관심있는 분야를 선택하고 쿠폰을 발급받아 보세요!
         </div>
         <div class="modal-footer">
-          <!-- 다음 버튼 -->
           <button type="button" class="btn btn-primary" id="nextButton">다음</button>
-          <!-- 닫기 버튼 -->
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
@@ -333,7 +315,7 @@ if (isset($slick_js)) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="submit" class="btn btn-primary">저장</button>
+            <button type="submit" class="btn btn-primary">저장하고 쿠폰 받기</button>
           </div>
         </form>
       </div>

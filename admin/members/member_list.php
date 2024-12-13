@@ -100,7 +100,7 @@ while($data = $result->fetch_object()){
               <td><?= $item->grade; ?></td>
               <td><a href="member_view.php?memid=<?= $item->memid;?>" class="btn btn-primary btn-sm">상세보기</a></td>
               <td>
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->memid; ?>" >쪽지보내기</button>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal" data-mid="<?= $item->memId; ?>" >쪽지보내기</button>
               </td>
           </tr>
           <?php
