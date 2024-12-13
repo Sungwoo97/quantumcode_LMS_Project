@@ -31,7 +31,7 @@ if (isset($_SESSION['MemEmail'])) {
   $stmt->close();
 
   // 모든 쪽지 가져오기
-  $sql_all_msgs = "SELECT sender_name, message_content, sent_at, is_read FROM tomembermessages WHERE receiver_id = ?";
+  $sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
   $stmt = $mysqli->prepare($sql_all_msgs);
   $stmt->bind_param("s", $memId);
   $stmt->execute();
@@ -180,12 +180,12 @@ if (isset($slick_js)) {
           <div class="d-flex align-items-center">
               <!-- 장바구니 아이콘 -->
               <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
-                  <i class="fas fa-shopping-cart"></i>
+                  <i class="fas fa-shopping-cart fa-lg"></i>
               </a>
               
               <!-- 쪽지 아이콘 => 새 쪽지가 있거나 없을때 분기 -->
               <a href="#" class="me-3 text-decoration-none position-relative" title="쪽지" data-bs-toggle="modal" data-bs-target="#messageModal">
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-envelope fa-lg"></i>
                 <?php if ($unreadCount > 0): ?>
                   <!-- 읽지 않은 쪽지 개수 표시 -->
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -398,6 +398,43 @@ document.addEventListener("DOMContentLoaded", function () {
   messageIcon.parentElement.addEventListener('click', function () {
       setModalPosition(messageIcon, messageModalDialog);
   });
+
+
+  //안읽은(새) 쪽지가 있을때, 쪽지 모달을 클릭했을때, tomembermessages 테이블의 is_read 컬럼값을 1로 바꿔서 읽음 처리!
+  const messageModal = document.getElementById("messageModal");
+  // 모달이 열릴 때 실행되는 이벤트
+  messageModal.addEventListener("show.bs.modal", function () {
+      // AJAX 요청으로 읽음 처리
+      fetch("/qc/chat&message/update_read_status.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ receiver_id: <?= json_encode($memId); ?> }), //받는사람이 결국 memId과 같기떄문...
+      })
+          .then((response) => response.json())
+          .then((data) => {
+              if (data.success) {
+                  console.log("쪽지 읽음 처리 완료");
+              } else {
+                  console.error("쪽지 읽음 처리 실패", data.error);
+              }
+          })
+          .catch((error) => {
+              console.error("AJAX 요청 오류:", error);
+          });
+  });
+
+
+
+
+
+
+
+
+
+
+
 
 });
 
