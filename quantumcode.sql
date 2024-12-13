@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-13 01:40
+-- 생성 시간: 24-12-13 04:06
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-13 04:56:11', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-13 11:37:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -279,29 +279,7 @@ CREATE TABLE `coupons_usercp` (
 INSERT INTO `coupons_usercp` (`ucid`, `couponid`, `userid`, `status`, `use_max_date`, `regdate`, `usedate`, `reason`) VALUES
 (1, 1, 'user1', 1, '2025-12-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Python 기초 강의'),
 (2, 2, 'user2', 0, '2024-11-30 23:59:59', '2024-11-18 15:31:50', '2024-11-15', 'JavaScript 심화 과정'),
-(3, 3, 'user3', 1, '2025-06-30 23:59:59', '2024-11-18 15:31:50', NULL, 'HTML/CSS 기초'),
-(4, 4, 'user4', 1, '2024-12-25 23:59:59', '2024-11-18 15:31:50', NULL, 'React 기본 강의'),
-(5, 5, 'user5', 0, '2025-01-15 23:59:59', '2024-11-18 15:31:50', '2025-01-10', 'Node.js 프로그래밍'),
-(6, 6, 'user6', 1, '2025-03-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Spring Boot 실습'),
-(7, 7, 'user7', 0, '2024-12-31 23:59:59', '2024-11-18 15:31:50', '2024-12-20', 'Vue.js 입문'),
-(8, 8, 'user8', 1, '2025-02-14 23:59:59', '2024-11-18 15:31:50', NULL, 'SQL 데이터베이스 기초'),
-(9, 9, 'user9', 0, '2025-07-31 23:59:59', '2024-11-18 15:31:50', '2025-07-15', 'Docker 활용'),
-(10, 10, 'user10', 1, '2025-05-01 23:59:59', '2024-11-18 15:31:50', NULL, 'Java 고급 프로그래밍'),
-(11, 11, 'user11', 1, '2025-08-31 23:59:59', '2024-11-18 15:31:50', NULL, 'C++ 알고리즘'),
-(12, 12, 'user12', 0, '2024-12-01 23:59:59', '2024-11-18 15:31:50', '2024-11-28', 'Git/GitHub 실습'),
-(13, 13, 'user13', 1, '2025-02-28 23:59:59', '2024-11-18 15:31:50', NULL, 'Python 데이터 분석'),
-(14, 14, 'user14', 1, '2024-11-27 23:59:59', '2024-11-18 15:31:50', NULL, 'Kotlin 개발'),
-(15, 15, 'user15', 0, '2025-10-31 23:59:59', '2024-11-18 15:31:50', '2025-10-15', 'Android 앱 개발'),
-(16, 16, 'user16', 1, '2024-12-31 23:59:59', '2024-11-18 15:31:50', NULL, 'AWS 클라우드 기초'),
-(17, 17, 'user17', 0, '2025-03-15 23:59:59', '2024-11-18 15:31:50', '2025-03-05', 'TypeScript 입문'),
-(18, 18, 'user18', 1, '2024-12-20 23:59:59', '2024-11-18 15:31:50', NULL, 'Data Science 강의'),
-(19, 19, 'user19', 1, '2025-09-30 23:59:59', '2024-11-18 15:31:50', NULL, 'Machine Learning 기본'),
-(20, 20, 'user20', 0, '2025-04-30 23:59:59', '2024-11-18 15:31:50', '2025-04-20', 'GraphQL 실습'),
-(21, 21, 'user21', 1, '2025-05-31 23:59:59', '2024-11-18 15:31:50', NULL, 'React Native 개발'),
-(22, 22, 'user22', 1, '2025-07-15 23:59:59', '2024-11-18 15:31:50', NULL, 'Go 언어 기초'),
-(23, 23, 'user23', 1, '2025-11-30 23:59:59', '2024-11-18 15:31:50', NULL, 'Swift 프로그래밍'),
-(24, 24, 'user24', 0, '2025-12-31 23:59:59', '2024-11-18 15:31:50', '2025-12-20', 'Flutter 앱 개발'),
-(25, 25, 'user25', 1, '2024-10-31 23:59:59', '2024-11-18 15:31:50', NULL, 'Unity 게임 개발');
+(3, 3, 'user3', 1, '2025-06-30 23:59:59', '2024-11-18 15:31:50', NULL, 'HTML/CSS 기초');
 
 -- --------------------------------------------------------
 
@@ -750,9 +728,8 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (76, '조재현', '123123', 'user74@example.com', 'id74', '', '1991-02-25', 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (126, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, '', '', 'kakaoAddr', NULL, '2024-12-09 08:20:50', '2024-12-09 08:20:50', '2024-12-09 17:20:50', 0, 0),
-(149, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 23:03:25', '2024-12-12 19:30:46', '2024-12-13 04:30:46', 4, 0),
-(150, '김수경', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sukyuk2@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, 'c860d3666877680980a51f101e820d5a01cc832f3f5ab9f97afcd4078a89dcf6', NULL, NULL, NULL, NULL, '2024-12-12 07:23:38', '2024-12-12 15:23:38', '2024-12-13 00:23:38', 0, 0),
-(151, '김수경', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sukyuk2@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, 'f78bed442f7971a8aab8c97f3efebf51fc682d3fe29ce2b87ac2e13f505a226d', NULL, NULL, NULL, NULL, '2024-12-12 08:25:31', '2024-12-12 16:25:31', '2024-12-13 01:25:31', 0, 0);
+(149, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-10 23:03:25', '2024-12-13 01:21:45', '2024-12-13 10:21:45', 2, 0),
+(164, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 17:20:50', '2024-12-13 02:37:24', '2024-12-13 11:37:24', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -906,7 +883,7 @@ CREATE TABLE `teachers` (
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `student_number`, `level`, `lecture_num`) VALUES
 (1, '정승제', 'jungsungjae', '1978-12-14', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
 (2, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
-(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-11-29 16:26:56', NULL, '', 2100000, 68, 10, NULL),
+(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-12-13 11:10:29', NULL, '', 2100000, 68, 10, NULL),
 (4, '오해원', 'ohhaewon', '1998-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
 (5, '민희진', 'minheejin', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
 (6, '설민석', 'sulminsuk', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
@@ -963,25 +940,21 @@ CREATE TABLE `tomembermessages` (
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `message_content` text NOT NULL,
+  `sender_name` varchar(15) NOT NULL DEFAULT '관리자',
   `sent_at` datetime DEFAULT current_timestamp(),
-  `is_read` tinyint(1) DEFAULT 0,
-  `sender_name` varchar(15) NOT NULL DEFAULT '관리자'
+  `is_read` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 테이블의 덤프 데이터 `tomembermessages`
 --
 
-INSERT INTO `tomembermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sent_at`, `is_read`, `sender_name`) VALUES
-(1, 4, 1, 'test', '2024-11-22 15:09:05', 0, '관리자'),
-(2, 4, 0, '메세지 테스트', '2024-12-13 02:50:20', 0, '관리자'),
-(3, 4, 0, '철수에게', '2024-12-13 03:31:28', 0, '관리자'),
-(4, 4, 149, '쪽지 테스트', '2024-12-13 03:33:15', 0, '관리자'),
-(5, 4, 149, '쪽지테스트 ~~', '2024-12-13 04:56:24', 0, '관리자'),
-(6, 4, 149, '쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~', '2024-12-13 04:56:29', 0, '관리자'),
-(7, 4, 149, '쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~쪽지테스트 ~~', '2024-12-13 05:00:03', 0, '관리자'),
-(8, 4, 149, '안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?', '2024-12-13 05:00:19', 0, '관리자'),
-(9, 4, 149, '안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?안녕하세요?', '2024-12-13 05:00:23', 0, '관리자');
+INSERT INTO `tomembermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sender_name`, `sent_at`, `is_read`) VALUES
+(1, 4, 1, 'test', '', '2024-11-22 15:09:05', 0),
+(5, 4, 164, '관리자 추가', '관리자', '2024-12-13 10:40:09', 1),
+(6, 4, 164, '쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트', '관리자', '2024-12-13 10:40:37', 1),
+(7, 4, 164, 's12312sd', '관리자', '2024-12-13 11:37:52', 1),
+(8, 4, 164, 'qqqq', '관리자', '2024-12-13 11:38:23', 1);
 
 -- --------------------------------------------------------
 
@@ -1007,7 +980,8 @@ INSERT INTO `toteachermessages` (`id`, `sender_id`, `receiver_id`, `message_cont
 (9, 4, 3, '관리자가 곽튜브에게 ', '관리자', '2024-11-24 22:10:43', 1),
 (10, 4, 3, '읽음 안읽음 되나 안되나 테스트', '관리자', '2024-11-24 23:08:31', 1),
 (11, 4, 3, '읽음 안읽음 되나 안되나 테스트22', '관리자', '2024-11-24 23:08:38', 1),
-(12, 4, 3, '읽음 안읽음 되나 안되나 테스트22333', '관리자', '2024-11-24 23:08:41', 1);
+(12, 4, 3, '읽음 안읽음 되나 안되나 테스트22333', '관리자', '2024-11-24 23:08:41', 1),
+(13, 4, 3, '쪽지 테스트 12-13', '관리자', '2024-12-13 11:10:20', 1);
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1007,8 @@ INSERT INTO `user_categories` (`id`, `user_email`, `category`, `created_at`) VAL
 (4, 'haemilyjh@naver.com', 'PHP', '2024-12-11 07:59:41'),
 (5, 'haemilyjh@naver.com', 'NodeJs', '2024-12-11 07:59:41'),
 (6, 'haemilyjh@naver.com', 'C', '2024-12-11 07:59:41'),
-(7, 'haemilyjh@naver.com', 'Java', '2024-12-11 07:59:41');
+(7, 'haemilyjh@naver.com', 'Java', '2024-12-11 07:59:41'),
+(8, 'haemilyjh@gmail.com', '[\"NodeJs\",\"PHP\"]', '2024-12-13 00:49:06');
 
 --
 -- 덤프된 테이블의 인덱스
@@ -1284,7 +1259,7 @@ ALTER TABLE `members`
 -- 테이블의 AUTO_INCREMENT `memberskakao`
 --
 ALTER TABLE `memberskakao`
-  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- 테이블의 AUTO_INCREMENT `sales_course`
@@ -1320,19 +1295,19 @@ ALTER TABLE `toadminmessages`
 -- 테이블의 AUTO_INCREMENT `tomembermessages`
 --
 ALTER TABLE `tomembermessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 테이블의 AUTO_INCREMENT `toteachermessages`
 --
 ALTER TABLE `toteachermessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 테이블의 AUTO_INCREMENT `user_categories`
 --
 ALTER TABLE `user_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
