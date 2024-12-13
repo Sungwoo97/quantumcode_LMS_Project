@@ -325,7 +325,25 @@ if (isset($slick_js)) {
     </div>
   </div>
 
-  <!-- JavaScript -->
+<!-- 쿠폰 발급 완료 모달 -->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="couponModalLabel">쿠폰 발급 완료</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        축하합니다! 쿠폰이 발급되었습니다.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------- JavaScript -------->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   <?php if ($showModal): ?>
@@ -341,9 +359,19 @@ document.addEventListener("DOMContentLoaded", function () {
       welcomeModal.hide(); // 첫 번째 모달 닫기
       const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
       secondModal.show(); // 두 번째 모달 열기
+
+      // 두 번째 모달(즉, 저장하고 발급받기) 눌렀을때 축하합니다 이거 나오게
+      const form = document.getElementById("categoryForm");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // 기본 폼 제출 동작 막기
+        secondModal.hide(); // 두 번째 모달 닫기
+        const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
+        couponModal.show(); // 쿠폰 발급 완료 모달 열기
+      });
     });
   <?php endif; ?>
 
+  //선택한 것 지정해서 저장하는 코드
   const categoryButtons = document.querySelectorAll(".category-btn");
   const selectedCategoriesInput = document.getElementById("selectedCategories");
   const form = document.getElementById("categoryForm");
@@ -383,6 +411,40 @@ document.addEventListener("DOMContentLoaded", function () {
       modalDialog.style.left = `${iconRect.left}px`; // 아이콘의 왼쪽 정렬
   };
 
+  
+
+  //저장하고 쿠폰 받기 했을때 실제로 쿠폰이 발급받게 해보자
+  const form = document.getElementById("categoryForm");
+  form.addEventListener("submit", function (event) {
+      event.preventDefault(); // 기본 폼 제출 동작 막기
+
+      fetch("/qc/coupon/give_coupon.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              console.log(data.message); // 성공 메시지 출력
+              const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
+              couponModal.show(); // 쿠폰 발급 완료 모달 열기
+          } else {
+              alert("쿠폰 발급 실패: " + data.error);
+          }
+      })
+      .catch(error => {
+          console.error("AJAX 요청 오류:", error);
+          alert("서버와 통신 중 문제가 발생했습니다.");
+      });
+  });
+
+  
+
+
+  //이하 코드는 장바구니와 쪽지 모달에 관련된 코드.
   const cartIcon = document.querySelector('.fa-shopping-cart'); // 장바구니 아이콘
   const cartModalDialog = document.getElementById('cartModalDialog');
 
@@ -424,17 +486,6 @@ document.addEventListener("DOMContentLoaded", function () {
               console.error("AJAX 요청 오류:", error);
           });
   });
-
-
-
-
-
-
-
-
-
-
-
 
 });
 
