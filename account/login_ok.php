@@ -27,8 +27,8 @@ if ($data && $data->account_activation_token === null) {
   $_SESSION['MemEmail'] = $data->memEmail;
   $_SESSION['MemId'] = $data->memId;
   $_SESSION['MUNAME'] = $data->memName;
-  // $_SESSION['Mgrade'] = $data->grade;
-  
+  $_SESSION['Mgrade'] = $data->grade;
+
   // $_SESSION['AUIDX'] = $data->idx;
   // $_SESSION['AUID'] = $data->userid;
   // $_SESSION['AUNAME'] = $data->username;
