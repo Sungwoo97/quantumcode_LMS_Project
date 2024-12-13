@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-13 08:42
+-- 생성 시간: 24-12-13 10:16
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-13 11:37:38', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-13 17:26:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -271,6 +271,13 @@ CREATE TABLE `coupons_usercp` (
   `usedate` date DEFAULT NULL COMMENT '사용일',
   `reason` varchar(100) NOT NULL COMMENT '쿠폰사용강의'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `coupons_usercp`
+--
+
+INSERT INTO `coupons_usercp` (`ucid`, `couponid`, `userid`, `status`, `use_max_date`, `regdate`, `usedate`, `reason`) VALUES
+(42, 1, 'haemilyjh@gmail.com', 1, NULL, '2024-12-13 17:24:08', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -719,7 +726,7 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (76, '조재현', '123123', 'user74@example.com', 'id74', '', '1991-02-25', 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (126, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, '', '', 'kakaoAddr', NULL, '2024-12-09 08:20:50', '2024-12-09 08:20:50', '2024-12-09 17:20:50', 0, 0),
-(167, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-13 06:39:43', '2024-12-13 15:11:59', 1, 0);
+(167, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-13 08:24:08', '2024-12-13 17:04:33', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -940,12 +947,9 @@ CREATE TABLE `tomembermessages` (
 --
 
 INSERT INTO `tomembermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sender_name`, `sent_at`, `is_read`) VALUES
-(1, 4, 1, 'test', '', '2024-11-22 15:09:05', 0),
-(5, 4, 164, '관리자 추가', '관리자', '2024-12-13 10:40:09', 1),
-(6, 4, 164, '쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트쪽지 테스트', '관리자', '2024-12-13 10:40:37', 1),
-(7, 4, 164, 's12312sd', '관리자', '2024-12-13 11:37:52', 1),
-(8, 4, 164, 'qqqq', '관리자', '2024-12-13 11:38:23', 1),
-(9, 4, 164, '쪽지 마지막 테스트', '관리자', '2024-12-13 12:23:13', 1);
+(21, 4, 167, 'test', '관리자', '2024-12-13 18:01:49', 1),
+(22, 4, 167, 'test', '관리자', '2024-12-13 18:09:56', 1),
+(23, 4, 167, 'test', '관리자', '2024-12-13 18:13:43', 1);
 
 -- --------------------------------------------------------
 
@@ -986,6 +990,13 @@ CREATE TABLE `user_categories` (
   `category` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `user_categories`
+--
+
+INSERT INTO `user_categories` (`id`, `user_email`, `category`, `created_at`) VALUES
+(17, 'haemilyjh@gmail.com', '[\"Java\",\"PHP\",\"NodeJs\"]', '2024-12-13 08:24:08');
 
 --
 -- 덤프된 테이블의 인덱스
@@ -1188,7 +1199,7 @@ ALTER TABLE `coupons`
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_category`
@@ -1272,7 +1283,7 @@ ALTER TABLE `toadminmessages`
 -- 테이블의 AUTO_INCREMENT `tomembermessages`
 --
 ALTER TABLE `tomembermessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- 테이블의 AUTO_INCREMENT `toteachermessages`
@@ -1284,7 +1295,7 @@ ALTER TABLE `toteachermessages`
 -- 테이블의 AUTO_INCREMENT `user_categories`
 --
 ALTER TABLE `user_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
