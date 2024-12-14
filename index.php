@@ -354,13 +354,13 @@ while ($data4 = $result4->fetch_object()) {
     <h6>free</h6>
     <h3 class="mb-3">무료 강의</h3>
     <p>무료로 시작하는 배움의 여정, 지금 바로 도전하세요!</p>
-    <div class="free">
+    <div class="free ">
       <?php
       foreach ($dataArr4 as $item) {
       ?>
-        <div class="image_container">
+        <div class="image_container mx-2">
           <img src="<?= $item->cover_image ?>" alt="">
-          <div class="info">
+          <div class="info d-flex flex-column justify-content-between">
             <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
             <ul>
               <li><span>무료</span></li>
@@ -373,8 +373,33 @@ while ($data4 = $result4->fetch_object()) {
     </div>
   </section>
 
-  <section class="main_category">
-
+  <section class="main_category container">
+    <h3 >그래도 관심가는 강의를 찾지 못했다면</h3>
+    <p>아래 키워드를 검색해보세요 </p>
+    <div class="keywords">
+      <div class="tech">
+        <span>Javascript</span>
+        <span>Python</span>
+        <span>React</span>
+        <span>Vue</span>
+        <span>Angular</span>
+        <span>Node.js</span>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>Swift</span>
+        <span>Ruby on Rails</span>
+      </div>
+      <div class="tech">
+        <span>Kotlin</span>
+        <span>TypeScript</span>
+        <span>Django</span>
+        <span>Flask</span>
+        <span>Firebase</span>
+        <span>AWS</span>
+        <span>Blockchain</span>
+        <span>Docker</span>
+      </div>
+    </div>
   </section>
 </main>
 
