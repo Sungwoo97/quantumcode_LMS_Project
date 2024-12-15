@@ -50,7 +50,6 @@ $notice_result = $mysqli->query($notice_sql);
 $noticeArr = [];
 while($notice_row = $notice_result->fetch_object()){
   $noticeArr[] = $notice_row;
-
 }
 
 ?>
@@ -60,16 +59,16 @@ while($notice_row = $notice_result->fetch_object()){
   <section class="banner">
     <div class="main_slides">
       <div class="slide">
-        <img src="img/core-img/001.png" alt="배너 이미지">
+        <img src="img/core-img/001.png" height="400" alt="배너 이미지">
       </div>
       <div class="slide">
-        <img src="img/core-img/002.png" alt="배너 이미지">
+        <img src="img/core-img/002.png" height="400" alt="배너 이미지">
       </div>
       <div class="slide">
-        <img src="img/core-img/003.png" alt="배너 이미지">
+        <img src="img/core-img/003.png" height="400" alt="배너 이미지">
       </div>
       <div class="slide">
-        <img src="img/core-img/004.png" alt="배너 이미지">
+        <img src="img/core-img/004.png" height="400" alt="배너 이미지">
       </div>
     </div>
 
@@ -90,7 +89,7 @@ while($notice_row = $notice_result->fetch_object()){
         <?php
         if(!empty($noticeArr)){
           $today = date("Y.m.d", time());
-          if(count($reviewArr) < 0 ){
+          if(count($reviewArr) > 0 ){
           foreach($noticeArr as $notice){
             $date = date_create($notice->date);
         ?>
@@ -116,19 +115,6 @@ while($notice_row = $notice_result->fetch_object()){
           }
         }
         ?>
-
-        <!-- <div class="notice_text d-flex justify-content-between">
-          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-          <span>2024.12.02</span>
-        </div>
-        <div class="notice_text d-flex justify-content-between">
-          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-          <span>2024.12.02</span>
-        </div>
-        <div class="notice_text d-flex justify-content-between">
-          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-          <span>2024.12.02</span>
-        </div> -->
       </div>
       <div class="notice_controls">
         <button class="slick-prev"><i class="fa-solid fa-angle-up"></i></button>
@@ -136,48 +122,50 @@ while($notice_row = $notice_result->fetch_object()){
       </div>
     </div>
   </section>
-  <section class="skill_tag container d-flex ">
-    <figure>
-      <div><img src="./img/icon-img/html_icon.svg" alt=""></div>
-      <figcaption>Html</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/css_icon.svg" alt=""></div>
-      <figcaption>Css</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/javascript_icon.svg" alt=""></div>
-      <figcaption>JavaScript</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/react_icon.svg" alt=""></div>
-      <figcaption>React</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/java_icon.svg" alt=""></div>
-      <figcaption>Java</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/jquery_icon.svg" alt=""></div>
-      <figcaption>Jqeury</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/python_icon.svg" alt=""></div>
-      <figcaption>Python</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/php_icon.svg" alt=""></div>
-      <figcaption>PHP</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/node_js_icon.svg" alt=""></div>
-      <figcaption>Node.js</figcaption>
-    </figure>
-    <figure>
-      <div><img src="./img/icon-img/vue_icon.svg" alt=""></div>
-      <figcaption>Vue.js</figcaption>
-    </figure>
-
+  <section class="skill_tag container ">
+   <div >
+      <figure>
+        <div><img src="./img/icon-img/html_icon.svg" alt=""></div>
+        <figcaption>HTML</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/css_icon.svg" alt=""></div>
+        <figcaption>CSS</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/javascript_icon.svg" alt=""></div>
+        <figcaption>JavaScript</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/react_icon.svg" alt=""></div>
+        <figcaption>React</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/java_icon.svg" alt=""></div>
+        <figcaption>Java</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/jquery_icon.svg" alt=""></div>
+        <figcaption>Jqeury</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/python_icon.svg" alt=""></div>
+        <figcaption>Python</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/php_icon.svg" alt=""></div>
+        <figcaption>PHP</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/node_js_icon.svg" alt=""></div>
+        <figcaption>Node.js</figcaption>
+      </figure>
+      <figure>
+        <div><img src="./img/icon-img/vue_icon.svg" alt=""></div>
+        <figcaption>Vue.js</figcaption>
+      </figure>
+   </div>
+    <p id="skill_filter" class="d-flex"></p>
   </section>
 
   <div class="main_popular container"> <!-- Flex 컨테이너 -->
@@ -244,12 +232,17 @@ while($notice_row = $notice_result->fetch_object()){
           $tui_val = number_format($item->tuition);
           $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p><p class=\"small-font\"> &nbsp; </p>";
         }
+        $title = $item->title;
+        if(iconv_strlen($title) > 35){
+          $title = iconv_substr($title, 0, 35) . '...';
+        }
       ?>
 
         <div class="slide mx-3">
           <img src="<?= $item->cover_image ?>" alt="">
-          <div class="info d-flex flex-column gap-3 justify-content-between">
-            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+          <div class="info d-flex flex-column  justify-content-evenly">
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $title ?></a></h5>
+            <p><?= $item->learning_obj ?></p>
             <div class="tuition">
               <?= $tuition ?>
             </div>
@@ -260,8 +253,9 @@ while($notice_row = $notice_result->fetch_object()){
         </div>
         <div class="slide mx-3">
           <img src="<?= $item->cover_image ?>" alt="">
-          <div class="info d-flex flex-column gap-3 justify-content-between">
-            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
+          <div class="info d-flex flex-column  justify-content-evenly">
+            <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $title ?></a></h5>
+            <p><?= $item->learning_obj ?></p>
             <div class="tuition">
               <?= $tuition ?>
             </div>
@@ -309,13 +303,13 @@ while($notice_row = $notice_result->fetch_object()){
       <button>퀀텀코드 자세히 알기</button>
     </div>
   </section>
-
+<!-- 수강평 3개 이하면 임시 더미 텍스트 -->
   <section class="container main_review">
-    <h3 class="d-flex justify-content-between"><b>수강생 후기</b><a href>더보기</a> </h3>
+    <h3 class="d-flex justify-content-between"><b>수강생 후기</b><a href="#">더보기</a> </h3>
     <div class="review_content d-flex gap-3">
       <?php
       if(!empty($reviewArr)){
-        if(count($reviewArr) > 3){
+        if(count($reviewArr) > 2){
         foreach($reviewArr as $review){
       ?>
       <figure class="d-flex align-items-center">
@@ -323,8 +317,9 @@ while($notice_row = $notice_result->fetch_object()){
         <figcaption>
           <div class="d-flex gap-3">
             <b><?= $review-> username ?></b>
+            <!-- 테이블 컬럼 추가해야함 -->
             <span>만들면서 배우는 리액트</span>
-          </div>
+           </div>
           <p><?= $review-> comment ?> </p>
         </figcaption>
       </figure>
@@ -422,6 +417,7 @@ while($notice_row = $notice_result->fetch_object()){
       ?>
         <div class="image_container mx-2">
           <img src="<?= $item->cover_image ?>" alt="">
+          <div class="box"></div>
           <div class="info d-flex flex-column justify-content-between">
             <h5><a href="lecture/lecture_view.php?lid=<?= $item->lid ?>"><?= $item->title ?></a></h5>
             <ul>
@@ -434,7 +430,7 @@ while($notice_row = $notice_result->fetch_object()){
       ?>
     </div>
   </section>
-
+<!-- 검색 메뉴 ? 출력 ? -->
   <section class="main_category container">
     <h3 >그래도 관심가는 강의를 찾지 못했다면</h3>
     <p>아래 키워드를 검색해보세요 </p>
@@ -496,10 +492,20 @@ while($notice_row = $notice_result->fetch_object()){
   $('.notice_slides').slick({
     speed: 300,
     vertical: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
     prevArrow: $('.main_notice .slick-prev'),
     nextArrow: $('.main_notice .slick-next'),
   });
 
+  $('#skill_filter').slick({
+
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+  })
+ 
   $('.popular').slick({
 
     infinite: false,
@@ -570,6 +576,29 @@ while($notice_row = $notice_result->fetch_object()){
     infinite: true, // 무한 반복
 
   });
+
+  // Skill 필터 기능
+  const skillTags = document.querySelectorAll('.skill_tag figure');
+  const skillFilter = document.getElementById('skill_filter');
+  skillTags.forEach(skillTag =>{
+    skillTag.addEventListener('click', (e)=>{
+      const skill = e.currentTarget.querySelector('figcaption').textContent;
+      console.log(skill);
+      const data = new URLSearchParams({
+      skill: skill,
+    });
+      fetch('./main/skill_filter.php', {
+        method:'POST',
+        body:data,
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        skillFilter.innerHTML = data.skill;
+      }
+      ).catch( error => console.error("Error:", error));
+    })
+  })
 
 
   // 커스텀 페이지네이션 생성
