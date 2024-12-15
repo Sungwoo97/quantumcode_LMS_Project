@@ -38,6 +38,20 @@ while ($data4 = $result4->fetch_object()) {
   $dataArr4[] = $data4;
 }
 
+$review_sql = "SELECT * FROM lecture_review";
+$review_result = $mysqli->query($review_sql);
+$reviewArr = [];
+while($review_row = $review_result->fetch_object()){
+  $reviewArr[] = $review_row;
+}
+
+$notice_sql = "SELECT * FROM board WHERE category = 'notice'";
+$notice_result = $mysqli->query($notice_sql);
+$noticeArr = [];
+while($notice_row = $notice_result->fetch_object()){
+  $noticeArr[] = $notice_row;
+
+}
 
 ?>
 
@@ -71,9 +85,39 @@ while ($data4 = $result4->fetch_object()) {
 
 
     <div class="main_notice container d-flex">
-      <h2 class="w-100"><i class="fa-solid fa-triangle-exclamation"></i> 공지</h2>
+      <h2 class=" "><i class="fa-solid fa-triangle-exclamation"></i> 공지</h2>
       <div class="notice_slides ">
+        <?php
+        if(!empty($noticeArr)){
+          $today = date("Y.m.d", time());
+          if(count($reviewArr) < 0 ){
+          foreach($noticeArr as $notice){
+            $date = date_create($notice->date);
+        ?>
         <div class="notice_text d-flex justify-content-between">
+          <span><?= $notice->title ?></span>
+          <span><?= date_format($date, 'Y.m.d')?></span>
+        </div>
+        <?php
+          }
+          }else{
+            
+            ?>
+        <div class="notice_text d-flex justify-content-between"> 
+          <span>[공지사항] 신규 업데이트가 없습니다</span>
+          <span><?= $today ?></span>
+        </div>
+        <div class="notice_text d-flex justify-content-between"> 
+          <span>[공지사항] 신규 업데이트가 없습니다</span>
+          <span><?= $today ?></span>
+        </div>
+            <?php
+            
+          }
+        }
+        ?>
+
+        <!-- <div class="notice_text d-flex justify-content-between">
           <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
           <span>2024.12.02</span>
         </div>
@@ -84,11 +128,7 @@ while ($data4 = $result4->fetch_object()) {
         <div class="notice_text d-flex justify-content-between">
           <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
           <span>2024.12.02</span>
-        </div>
-        <div class="notice_text d-flex justify-content-between">
-          <span>[업데이트] 12월 1주차 - 서비스 기능 업데이트</span>
-          <span>2024.12.02</span>
-        </div>
+        </div> -->
       </div>
       <div class="notice_controls">
         <button class="slick-prev"><i class="fa-solid fa-angle-up"></i></button>
@@ -273,10 +313,29 @@ while ($data4 = $result4->fetch_object()) {
   <section class="container main_review">
     <h3 class="d-flex justify-content-between"><b>수강생 후기</b><a href>더보기</a> </h3>
     <div class="review_content d-flex gap-3">
+      <?php
+      if(!empty($reviewArr)){
+        if(count($reviewArr) > 3){
+        foreach($reviewArr as $review){
+      ?>
+      <figure class="d-flex align-items-center">
+        <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc<?= $review-> profile_image ?>" alt="회원 프로필 이미지">
+        <figcaption>
+          <div class="d-flex gap-3">
+            <b><?= $review-> username ?></b>
+            <span>만들면서 배우는 리액트</span>
+          </div>
+          <p><?= $review-> comment ?> </p>
+        </figcaption>
+      </figure>
+      <?php
+            }
+          }else{
+            ?>
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div class="d-flex gap-3">
+          <div>
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
@@ -286,7 +345,7 @@ while ($data4 = $result4->fetch_object()) {
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div class="d-flex gap-3">
+          <div>
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
@@ -296,14 +355,17 @@ while ($data4 = $result4->fetch_object()) {
       <figure class="d-flex align-items-center">
         <img src="./img/core-img/어드민_이미지.png" alt="">
         <figcaption>
-          <div class="d-flex gap-3">
+          <div>
             <b>김민준</b>
             <span>만들면서 배우는 리액트</span>
           </div>
           <p>리액트를 처음 접했는데, 퀀텀코드 강의 덕분에 프로젝트를 직접 만들며 빠르게 배울 수 있었습니다. 강의가 체계적이고 실습 위주라서 이해가 정말 잘 돼요. </p>
         </figcaption>
       </figure>
-
+<?php
+          }
+        }
+      ?>
     </div>
     <div class="review_controls">
       <button type="button" class="slick-prev"><img src="./img/icon-img/left_arrow.svg" alt="" width="20"></button>
@@ -486,7 +548,8 @@ while ($data4 = $result4->fetch_object()) {
     infinite: false,
     speed: 300,
     slidesToShow: 2,
-    slidesToScroll: 1, // 각 행에 표시할 슬라이드 개수
+    slidesToScroll: 1, 
+
     infinite: true, // 무한 반복
     arrows: true, // 화살표 표시
     prevArrow: $('.main_review .slick-prev'),
@@ -497,6 +560,7 @@ while ($data4 = $result4->fetch_object()) {
     slidesPerRow: 4, // 각 행에 표시할 슬라이드 개수
     infinite: true, // 무한 반복
     arrows: true, // 화살표 표시
+   
     prevArrow: $('.main_recom .slick-prev'),
     nextArrow: $('.main_recom .slick-next'),
   });
