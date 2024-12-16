@@ -18,11 +18,11 @@ $data = $result->fetch_object();
 
 ?>
 
-<div class="container mt-3">
+<div class="container mt-5">
   <div class="row">
     <div class="col-3 mb-5">
       <div class="member_coverImg2 mb-3">
-        <img src=" <?= $data->memProfilePath ?? '../img/icon-img/no-image.png'; ?>" id="coverImg" alt="" width="80" height="80" style="object-fit: cover; border-radius: 25%;">
+        <img src=" <?= $data->memProfilePath ?? '../img/icon-img/no-image.png'; ?>" id="coverImg" alt="" width="80" height="80" style="object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
       </div>
       <div>
         <h5>이름 : <?= $data->memName; ?></h5>

@@ -527,11 +527,14 @@ messageModal.addEventListener("show.bs.modal", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const currentMemId = urlParams.get("MemId");
 
-  // 현재 페이지와 링크의 MemId가 동일하면 링크를 비활성화
-  if (window.location.pathname.endsWith("users_view.php") && currentMemId === "<?php echo htmlspecialchars($_SESSION['MemId']); ?>") {
-      link.removeAttribute("href"); // href 제거
-      link.style.pointerEvents = "none"; // 클릭 방지
-      link.style.color = "gray"; // 비활성화 스타일 적용
+  // PHP에서 세션의 MemId 값 가져오기
+  const sessionMemId = "<?php echo htmlspecialchars($_SESSION['MemId']); ?>";
+
+  // MemId 값과 페이지 경로를 기반으로 비활성화 로직 실행
+  if (currentMemId === sessionMemId) {
+    link.removeAttribute("href"); // href 제거
+    link.style.pointerEvents = "none"; // 클릭 방지
+    link.style.color = "gray"; // 비활성화 스타일 적용
   }
 
 });

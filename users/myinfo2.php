@@ -1,5 +1,6 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
+session_start();
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 // 세션에서 사용자 이메일 가져오기
 if (!isset($_SESSION['MemEmail'])) {
@@ -28,7 +29,7 @@ $stmt->close();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내 정보 수정하기</title>
+  <title>내 정보</title>
   <!-- 캐싱문제 방지 -->
   <link rel="stylesheet" href="/qc/css/core-style.css?v=<?= time(); ?>">
   <!-- 제이쿼리랑 폰트어썸 -->
@@ -42,29 +43,26 @@ $stmt->close();
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
   <style>
-    /* .profile-img {
+    .profile-img {
       width: 100px;
       height: 100px;
       object-fit: cover;
       border-radius: 50%;
       border: 2px solid #ccc;
-    } */
+    }
   </style>
 </head>
 <body>
-  <div class="container mt-3">
-    <h3 class="ms-5">나의 정보 수정하기</h3>
+  <div class="container mt-2">
+    <h3>나의 정보 보기</h3>
     <div class="row mt-4">
       <!-- 프로필 섹션 -->
       <div class="col-md-4 text-center">
       <?php 
-        $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
-      ?>
-      <img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 200px; height: 200px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
-      <div class="input-group" style="width: 300px; margin: 0 auto;">
-          <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" >
-        </div>
-        <p class="mt-3">등급 : <?= htmlspecialchars($data['grade']); ?></p>
+  $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
+?>
+<img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
+        <p>등급 : <?= htmlspecialchars($data['grade']); ?></p>
         <p style="font-size: 12px;" class="mt-1">등급은 적립금과 매월 발행되는 쿠폰에 영향을 미칩니다.</p>
       </div>
 
@@ -114,11 +112,7 @@ $stmt->close();
           <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">수정하기</a>
         </div>
       </div>
-    </div>
-  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
-?>

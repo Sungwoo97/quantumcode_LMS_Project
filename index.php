@@ -50,7 +50,7 @@ while ($row = $result->fetch_assoc()) {
             category = ?
         ORDER BY 
             student_count DESC 
-        LIMIT 5
+        LIMIT 10
     ";
 
     $lectureStmt = $mysqli->prepare($lectureQuery);

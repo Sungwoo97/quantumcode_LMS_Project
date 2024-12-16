@@ -59,9 +59,9 @@ $stmt->close();
       <!-- 프로필 섹션 -->
       <div class="col-md-4 text-center">
       <?php 
-  $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
-?>
-<img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
+        $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
+      ?>
+      <img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
         <p>등급 : <?= htmlspecialchars($data['grade']); ?></p>
         <p style="font-size: 12px;" class="mt-1">등급은 적립금과 매월 발행되는 쿠폰에 영향을 미칩니다.</p>
       </div>
