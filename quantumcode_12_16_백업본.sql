@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-16 15:43
+-- 생성 시간: 24-12-14 16:08
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -507,7 +507,6 @@ INSERT INTO `lecture_list` (`lid`, `category`, `lcid`, `title`, `cover_image`, `
 CREATE TABLE `lecture_order` (
   `odid` int(11) NOT NULL COMMENT '주문번호',
   `mid` int(11) NOT NULL COMMENT '회원 고유번호',
-  `lid` int(20) NOT NULL COMMENT '강의 고유번호',
   `cid` int(11) DEFAULT NULL COMMENT '쿠폰 고유 번호',
   `total_price` decimal(10,0) NOT NULL COMMENT '최종 결제 가격',
   `status` tinyint(4) NOT NULL COMMENT '주문 상태',
@@ -546,7 +545,6 @@ INSERT INTO `lecture_reply` (`lpid`, `lrid`, `profile_image`, `t_id`, `regist_da
 
 CREATE TABLE `lecture_review` (
   `lrid` int(11) NOT NULL COMMENT '수강평 고유번호',
-  `lid` int(20) NOT NULL COMMENT '강의 고유번호',
   `profile_image` varchar(100) NOT NULL COMMENT '회원 프로필 이미지',
   `username` varchar(20) NOT NULL COMMENT '회원이름',
   `regist_day` date NOT NULL DEFAULT current_timestamp() COMMENT '작성일',
@@ -558,10 +556,8 @@ CREATE TABLE `lecture_review` (
 -- 테이블의 덤프 데이터 `lecture_review`
 --
 
-INSERT INTO `lecture_review` (`lrid`, `lid`, `profile_image`, `username`, `regist_day`, `review`, `comment`) VALUES
-(1, 124, '../img/icon-img/no-image.png', '김코더', '2024-11-21', 5, '이런 설명력과 이런 내용들을 담고 있는데 이 가격은 말이 안 됩니다 두배로 받으셨어도 될 것 같은데 정말 사장님이 미쳤어요 같은 강의.. \r\n아직 다 소화를 했다고 하긴 어렵지만 반복 학습하면서 마스터해보겠습니다 \r\n좋은 강의 만들어주셔서 감사합니다 !!'),
-(2, 124, '../img/icon-img/no-image.png', '김민준', '2024-12-16', 5, '리액트를 처음 접했는데, 퀀텀코드 강의 덕분에 프로젝트를 직접 만들며 빠르게 배울 수 있었습니다. 강의가 체계적이고 실습 위주라서 이해가 정말 잘 돼요.'),
-(3, 124, '../img/icon-img/no-image.png', '이서윤', '2024-12-16', 5, '반응형 웹을 배우고 싶어서 수강했는데, 실무에서 바로 사용할 수 있는 팁들을 많이 배웠습니다. 강사님의 설명이 친절하고 실습 자료도 꼼꼼히 제공돼서 따라가기 쉬웠어요. ');
+INSERT INTO `lecture_review` (`lrid`, `profile_image`, `username`, `regist_day`, `review`, `comment`) VALUES
+(1, '../img/icon-img/no-image.png', '김코더', '2024-11-21', 5, '이런 설명력과 이런 내용들을 담고 있는데 이 가격은 말이 안 됩니다 두배로 받으셨어도 될 것 같은데 정말 사장님이 미쳤어요 같은 강의.. \r\n아직 다 소화를 했다고 하긴 어렵지만 반복 학습하면서 마스터해보겠습니다 \r\n좋은 강의 만들어주셔서 감사합니다 !!');
 
 -- --------------------------------------------------------
 
@@ -955,6 +951,7 @@ INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `numb
 (18, '이동진', 'dongjin', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'dongjin@naver.com', 1022221244, '2023-07-31', '/qc/admin/upload/20241120044447527474.jpg', '영화평론가 겸 코딩강사', 'Silver', '2024-11-20 13:13:55', NULL, '', 15430000, 66, 10, NULL),
 (19, '이지영', 'easyyoung', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'easyyoung@naver.com', 1022221288, '2023-08-10', '/qc/admin/upload/20241120044519121958.jpg', '윤리강사 겸 코딩강사', 'Silver', '2024-11-20 13:14:42', NULL, '', 15600000, 76, 10, NULL),
 (20, '장윤정', 'yoonjunng', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'yoonjunng@gmail.com', 1022221209, '2024-12-07', '/qc/admin/upload/20241120044610663632.jpg', '트로트 가수 겸 코딩강사', 'Gold', '2024-11-20 13:15:44', NULL, '', 16780000, 65, 10, NULL),
+(21, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, 27, 10, NULL),
 (22, '황재성', 'king', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemil123123@gmail.com', 1044421234, '2024-11-22', '/qc/admin/upload/20241120084425169587.jpg', '개그맨에서 코딩 강사로 전향한 만큼 재밌고\r\n위트넘치게 가르치겠습니다. ', 'Blonze', '2024-11-20 16:44:25', NULL, '', NULL, NULL, 10, NULL);
 
 -- --------------------------------------------------------
@@ -1323,7 +1320,7 @@ ALTER TABLE `lecture_reply`
 -- 테이블의 AUTO_INCREMENT `lecture_review`
 --
 ALTER TABLE `lecture_review`
-  MODIFY `lrid` int(11) NOT NULL AUTO_INCREMENT COMMENT '수강평 고유번호', AUTO_INCREMENT=4;
+  MODIFY `lrid` int(11) NOT NULL AUTO_INCREMENT COMMENT '수강평 고유번호', AUTO_INCREMENT=2;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_video`
