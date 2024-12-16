@@ -3,7 +3,7 @@ $title = "강의 목록";
 
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $userid = 5;
 $total = 0;
@@ -52,84 +52,87 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
 
 
 ?>
-<div class="row">
-  <div class="col-9">
-    <div class="d-flex justify-content-between align-items-center order-head mb-3">
-      <span class="">
-        <input type="checkbox" class="cart_check" name="select_all" id="select_all">
-        <label for="select_all" class="cart_label"></label>
-        <strong class="w-100">전체선택</strong>
-      </span>
-      <button class="btn btn-secondary sel_delete">선택 삭제</button>
-    </div>
-    <hr>
-    <table class="table ">
-      <thead>
-        <tr class="visually-hidden">
-          <th scope="col"><input type="checkbox" name="" id=""></th>
-          <th scope="col">커버이미지</th>
-          <th scope="col">강의 정보</th>
-          <th scope="col">강의 가격</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <?php
-        if (!empty($dataArr)) {
-          foreach ($dataArr as $data) {
-        ?>
-            <tr>
-              <th>
-                <input type="checkbox" class="cart_check" name="l_check" id="l_check<?= $data->lid ?>" data-id="<?= $data->lid ?>" data-price="<?= $data->price ?>">
-                <label for="l_check<?= $data->lid ?>" class="cart_label"></label>
-              </th>
-              <td><img src="<?= $data->cover_image ?>" width="150" alt=""></td>
-              <td><?= $data->title ?></td>
-              <td id="total_price"><?= number_format($data->price) ?> 원</td>
-            </tr>
-        <?php
-          }
-        }
-        ?>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-3 payment">
-    <dl>
-      <dt>신청자</dt>
-      <dd><?= $user_data->name ?></dd>
-      <dt>이메일</dt>
-      <dd><?= $user_data->email ?></dd>
-      <dt>전화번호</dt>
-      <dd><?= $callnum ?></dd>
-
-      <dt>쿠폰</dt>
-      <dd>
-        <select class="form-select" name="coupon" id="coupon">
-          <option value="0" selected>쿠폰 선택</option>
+<div class="container">
+  <h2>수강바구니</h2>
+  <div class="row">
+    <div class="col-9">
+      <div class="d-flex justify-content-between align-items-center order-head mb-3">
+        <span class="">
+          <input type="checkbox" class="cart_check" name="select_all" id="select_all">
+          <label for="select_all" class="cart_label"></label>
+          <strong class="w-100">전체선택</strong>
+        </span>
+        <button class="btn btn-secondary sel_delete">선택 삭제</button>
+      </div>
+      <hr>
+      <table class="table ">
+        <thead>
+          <tr class="visually-hidden">
+            <th scope="col"><input type="checkbox" name="" id=""></th>
+            <th scope="col">커버이미지</th>
+            <th scope="col">강의 정보</th>
+            <th scope="col">강의 가격</th>
+          </tr>
+        </thead>
+  
+        <tbody>
           <?php
-          if (!empty($couponArr)) {
-            foreach ($couponArr as $coupon) {
-              $price = 0;
-              if ($coupon->coupon_type === 'fixed') {
-                $price = $coupon->coupon_price;
-              } else {
-                $price = $coupon->coupon_ratio;
-              }
+          if (!empty($dataArr)) {
+            foreach ($dataArr as $data) {
           ?>
-              <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
+              <tr>
+                <th>
+                  <input type="checkbox" class="cart_check" name="l_check" id="l_check<?= $data->lid ?>" data-id="<?= $data->lid ?>" data-price="<?= $data->price ?>">
+                  <label for="l_check<?= $data->lid ?>" class="cart_label"></label>
+                </th>
+                <td><img src="<?= $data->cover_image ?>" width="150" alt=""></td>
+                <td><?= $data->title ?></td>
+                <td id="total_price"><?= number_format($data->price) ?> 원</td>
+              </tr>
           <?php
             }
           }
           ?>
-        </select>
-      </dd>
-    </dl>
-    <div class="d-flex justify-content-between">
-      <span class="font">결제 금액</span><span class="normal-font total_payment"> 0 원</span>
+        </tbody>
+      </table>
     </div>
-    <div class="control m-3">
-      <button type="button" class="payment_btn btn btn-primary w-100">결제하기</button>
+    <div class="col-3 payment">
+      <dl>
+        <dt>신청자</dt>
+        <dd><?= $user_data->name ?></dd>
+        <dt>이메일</dt>
+        <dd><?= $user_data->email ?></dd>
+        <dt>전화번호</dt>
+        <dd><?= $callnum ?></dd>
+  
+        <dt>쿠폰</dt>
+        <dd>
+          <select class="form-select" name="coupon" id="coupon">
+            <option value="0" selected>쿠폰 선택</option>
+            <?php
+            if (!empty($couponArr)) {
+              foreach ($couponArr as $coupon) {
+                $price = 0;
+                if ($coupon->coupon_type === 'fixed') {
+                  $price = $coupon->coupon_price;
+                } else {
+                  $price = $coupon->coupon_ratio;
+                }
+            ?>
+                <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
+            <?php
+              }
+            }
+            ?>
+          </select>
+        </dd>
+      </dl>
+      <div class="d-flex justify-content-between">
+        <span class="font">결제 금액</span><span class="normal-font total_payment"> 0 원</span>
+      </div>
+      <div class="control m-3">
+        <button type="button" class="payment_btn btn btn-primary w-100">결제하기</button>
+      </div>
     </div>
   </div>
 </div>
@@ -269,5 +272,5 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
 
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/footer.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
 ?>
