@@ -235,7 +235,9 @@ while ($tag_data = $tag_result->fetch_object()) {
       ?>
     </ul>
   </nav>
+  <hr>
 </div>
+
 <script>
   const filterselect = document.querySelectorAll('#filterForm select');
   const filterForm = document.querySelector("#filterForm");
@@ -280,6 +282,10 @@ while ($tag_data = $tag_result->fetch_object()) {
       select.value= "";
     })
     fetchFilteredData();
+    const paginationLinks = document.querySelectorAll(".pagination .page-link");
+    paginationLinks.forEach((link) => {
+    const newLink = link.cloneNode(true);
+    link.replaceWith(newLink);
   })
 
   bindPaginationEvents();
