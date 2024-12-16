@@ -94,139 +94,215 @@ $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
 $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
 
+$reply = '';
+
+$review = '';
+$review_sql = "SELECT * FROM lecture_review WHERE lid = $lid";
+$review_result = $mysqli->query($review_sql);
+while ($review_data = $review_result->fetch_object()) {
+  $lrid = $review_data->lrid;
+  $reply_sql = "SELECT * FROM lecture_reply WHERE lrid = $lrid";
+  $reply_result = $mysqli->query($reply_sql);
+  while ($reply_data = $reply_result->fetch_object()) {
+    $reply .=
+      "<div class=\"rereply d-flex gap-3 align-items-center mb-3 ml-3\">
+        <div>
+          <img src=\"../img/core-img/어드민_이미지.png\" alt=\"\">
+        </div>
+        <div>
+          <h3>{$reply_data->t_id}</h3>
+        </div>
+        <form class=\"d-flex w-100\">
+          <div class=\"w-100\">
+            <p>{$reply_data->comment}</p>
+            <textarea class=\" hidden form-control\">{$reply_data->comment}</textarea>
+          </div>
+
+          </form>
+        </div>";
+  }
+  $review .= "<div class=\"review d-flex gap-3 align-items-center mb-3\">
+    <div>
+      <img src=\"{$review_data->profile_image}\" width=\"50\" alt=\"\">
+    </div>
+    <div>
+      <h5>{$review_data->username}</h5>
+      <h6>{$review_data->regist_day}</h6>
+      <img src=\"../img/icon-img/review.svg\" alt=\"\">
+    </div>
+    <div class=\"w-100\">
+      <p class=\"w-100\">{$review_data->comment}</p>
+    </div>
+  </div>
+  $reply 
+  <div class=\"reply hidden d-flex gap-3 align-items-center mb-3 ml-3\" data-id=\"{$lrid}\">
+  </div>
+  ";
+  $reply = '';
+}
 
 ?>
 
-<div class="container wrapper">
-  <section class="info">
-    <div>
-      <div class="catogory mb-1 ">
-        <p class="small-font"><?= $ppcode_name . ' / ' . $pcode_name . ' / ' . $cate_data->name ?></p>
-      </div>
-      <div class="title mb-2">
-        <h4 class="normal-font"><?= $data->title ?></h4>
-        <p class="name text-decoration-underline"><?= $data->name ?></p>
-      </div>
-      <div class="learnObj">
-        <h6>학습 목표</h6>
-        <p class="small-font"><?= $data->learning_obj ?></p>
-      </div>
-    </div>
-    <ul>
-      <li class=""> <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
-      <li class="like"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" alt="">500+</li>
-      <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
-    </ul>
-  </section>
-  <section class="desc row mt-5">
-    <div class="col-8">
-      <h3 class="subtitle mb-5"><?= $data->sub_title ?></h3>
-      <hr>
-      <p class="description mb-5"><?= $data->description ?></p>
-    </div>
-  </section>
-  
-  <aside>
-    <div class="lecture_coverImg">
-      <img src="<?= $data->cover_image ?>" alt="">
-    </div>
-    <div class="tuition">
-      <div class="tuitionInfo">
-        <h4>수강료</h4>
-        <div>
-          <?= $tuition ?>
+
+  <div class="wrapper">
+    <section class="info">
+      <div class="container">
+        <div class="catogory mb-1 ">
+          <p class="small-font"><?= $ppcode_name . ' / ' . $pcode_name . ' / ' . $cate_data->name ?></p>
         </div>
-      </div>
-      <div class="asideDesc">
-        <dl class="tuitionDesc">
-          <dt>강의시간</dt>
-          <dd>2시간 40분</dd>
-        </dl>
-        <dl class="tuitionDesc">
-          <dt>난이도</dt>
-          <dd><?= $diff ?></dd>
-        </dl>
-        <dl class="tuitionDesc">
-          <dt>등록일</dt>
-          <dd><?= $data->regist_day ?></dd>
-        </dl>
-        <dl class="tuitionDesc">
-          <dt>마감일</dt>
-          <dd><?= $data->expiration_day ?></dd>
-        </dl>
-      </div>
-      <div class="control m-3 d-flex flex-column gap-3">
-        <?php
-        if (!$buy_data) {
-        ?>
-          <button type="button" class=" btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paybtn">결제하기</button>
-          <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">담기</a>
-        <?php
-        } else {
-        ?>
-          <a href="lecture_read.php?lid=<?= $lid ?>" class="btn btn-primary w-100">학습하기</a>
-  
-        <?php
-        }
-        ?>
-      </div>
-    </div>
-  </aside>
-  <div class="modal fade" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="directPay">바로 결제하기</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="title mb-2">
+          <h4 class="normal-font"><?= $data->title ?></h4>
+          <p class="name text-decoration-underline"><?= $data->name ?></p>
         </div>
-        <div class="modal-body">
-          <dl>
-            <dt>신청자</dt>
-            <dd><?= $user_data->name ?></dd>
-            <dt>이메일</dt>
-            <dd><?= $user_data->email ?></dd>
-            <dt>전화번호</dt>
-            <dd><?= $callnum ?></dd>
+        <div class="learnObj mb-5">
+          <h6>학습 목표</h6>
+          <p class="small-font"><?= $data->learning_obj ?></p>
+        </div>
+        <ul>
+          <li class=""> <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
+          <li class="like"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" alt="">500+</li>
+          <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
+        </ul>
+      </div>
+    </section>
   
-            <dt>쿠폰</dt>
-            <dd>
-              <select class="form-select" name="coupon" id="coupon">
-                <option value="0" selected>쿠폰 선택</option>
-                <?php
-                if (!empty($couponArr)) {
-                  foreach ($couponArr as $coupon) {
-                    $price = 0;
-                    if ($coupon->coupon_type === 'fixed') {
-                      $price = $coupon->coupon_price;
-                    } else {
-                      $price = $coupon->coupon_ratio;
-                    }
-                ?>
-                    <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
-                <?php
-                  }
-                }
-                ?>
-              </select>
-            </dd>
-          </dl>
-          <div class="d-flex justify-content-between">
-            <span class="font">결제 금액</span><span data-price="<?= $tui_val ?>" class="normal-font total_payment"> <?= $tui_val ?> 원</span>
+    <aside>
+      <div class="lecture_coverImg">
+        <img src="<?= $data->cover_image ?>" alt="">
+      </div>
+      <div class="tuition">
+        <div class="tuitionInfo">
+          <h4>수강료</h4>
+          <div>
+            <?= $tuition ?>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary payment_btn">결제하기</button>
+        <div class="asideDesc">
+          <dl class="tuitionDesc">
+            <dt>강의시간</dt>
+            <dd>2시간 40분</dd>
+          </dl>
+          <dl class="tuitionDesc">
+            <dt>난이도</dt>
+            <dd><?= $diff ?></dd>
+          </dl>
+          <dl class="tuitionDesc">
+            <dt>등록일</dt>
+            <dd><?= $data->regist_day ?></dd>
+          </dl>
+          <dl class="tuitionDesc">
+            <dt>마감일</dt>
+            <dd><?= $data->expiration_day ?></dd>
+          </dl>
+        </div>
+        <div class="control m-3 d-flex flex-column gap-3">
+          <?php
+          if (!$buy_data) {
+          ?>
+            <button type="button" class=" btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paybtn">결제하기</button>
+            <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">담기</a>
+          <?php
+          } else {
+          ?>
+            <a href="lecture_read.php?lid=<?= $lid ?>" class="btn btn-primary w-100">학습하기</a>
+    
+          <?php
+          }
+          ?>
+        </div>
+      </div>
+    </aside>
+    
+  </div>
+  <div class="container">
+    <section class="desc row mt-5">
+      <div class="col-8">
+        <h3 class="subtitle mb-5"><?= $data->sub_title ?></h3>
+        <hr>
+        <p class="description mb-5"><?= $data->description ?></p>
+      </div>
+    </section>
+    <div class="modal fade" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="directPay">바로 결제하기</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <dl>
+              <dt>신청자</dt>
+              <dd><?= $user_data->name ?></dd>
+              <dt>이메일</dt>
+              <dd><?= $user_data->email ?></dd>
+              <dt>전화번호</dt>
+              <dd><?= $callnum ?></dd>
+    
+              <dt>쿠폰</dt>
+              <dd>
+                <select class="form-select" name="coupon" id="coupon">
+                  <option value="0" selected>쿠폰 선택</option>
+                  <?php
+                  if (!empty($couponArr)) {
+                    foreach ($couponArr as $coupon) {
+                      $price = 0;
+                      if ($coupon->coupon_type === 'fixed') {
+                        $price = $coupon->coupon_price;
+                      } else {
+                        $price = $coupon->coupon_ratio;
+                      }
+                  ?>
+                      <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </dd>
+            </dl>
+            <div class="d-flex justify-content-between">
+              <span class="font">결제 금액</span><span data-price="<?= $tui_val ?>" class="normal-font total_payment"> <?= $tui_val ?> 원</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary payment_btn">결제하기</button>
+          </div>
         </div>
       </div>
     </div>
+    <hr>
+    <div class="preview_video">
+      <h5>미리보기</h5>
+      <video src="<?= $data->pr_video ?>" controls muted></video>
+    </div>
+    <hr>
+    <div class="lecture_review">
+      <?= $review ?>
+      <div class="review d-flex gap-3 align-items-center mb-3 ml-3">
+        <div>
+          <img src="../img/icon-img/UsersFour.svg" alt="">
+        </div>
+        <div>
+          <h3>userid</h3>
+        </div>
+        <form class="d-flex w-100">
+          <div class="w-100">
+            <textarea type="text" class="form-control " name="reply" id="reply"></textarea>
+          </div>
+          <div class=" mx-3">
+            <button class=" btn btn-primary">작성</button>
+          </div>
+        </form>
+    </div>
+
+    <hr>
+     <div class="d-flex gap-3 justify-content-end lecture_button">
+       <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
+     </div>
   </div>
-  
-  
-  <div class="d-flex gap-3 justify-content-end lecture_button">
-    <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
-  </div>
-</div>
+
+
 <script>
   const paymentBtn = document.querySelector('.payment_btn');
   const coupon = document.querySelector('#coupon');

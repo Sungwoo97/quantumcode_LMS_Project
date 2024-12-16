@@ -235,7 +235,9 @@ while ($tag_data = $tag_result->fetch_object()) {
       ?>
     </ul>
   </nav>
+  <hr>
 </div>
+
 <script>
   const filterselect = document.querySelectorAll('#filterForm select');
   const filterForm = document.querySelector("#filterForm");
