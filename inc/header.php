@@ -311,7 +311,11 @@ if (isset($slick_js)) {
               <button type="button" class="btn btn-outline-primary category-btn" data-value="MySQL">MySQL</button>
               <button type="button" class="btn btn-outline-primary category-btn" data-value="PHP">PHP</button>
               <button type="button" class="btn btn-outline-primary category-btn" data-value="C">C</button>
-              <button type="button" class="btn btn-outline-primary category-btn" data-value="NodeJs">NodeJs</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Node.Js">Node.js</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Unity">Unity</button>
+              <button type="button" class="btn btn-outline-primary category-btn" data-value="Kubernetes">Kubernetes</button>
+
+        
             </div>
             <!-- 숨겨진 필드로 선택한 카테고리 저장 -->
             <input type="hidden" name="selectedCategories" id="selectedCategories" value="">

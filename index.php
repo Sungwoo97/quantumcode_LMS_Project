@@ -5,6 +5,69 @@ $slick_css = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/
 $slick_js = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js\" integrity=\"sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
+//$email = $_SESSION['MemEmail']; $memId = $_SESSION['MemId']; 로 되어있다.
+
+//추천강의
+// 사용자 카테고리 기반 맞춤 추천 강의 데이터 가져오기
+$query = "
+    SELECT 
+        lc.code, 
+        IFNULL(lc.pcode, NULL) AS pcode, 
+        IFNULL(lc.ppcode, NULL) AS ppcode
+    FROM 
+        user_categories AS uc
+    INNER JOIN 
+        lecture_category AS lc
+    ON 
+        JSON_CONTAINS(uc.category, JSON_QUOTE(lc.name))
+    WHERE 
+        uc.user_email = ?
+";
+
+$stmt = $mysqli->prepare($query);
+if (!$stmt) {
+    die('카테고리 쿼리 준비 실패: ' . $mysqli->error);
+}
+
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$customRecommendedLectures = []; // 맞춤 추천 강의 배열
+
+while ($row = $result->fetch_assoc()) {
+    $combinedCustomOrder = ($row['ppcode'] !== null ? $row['ppcode'] : 'NULL') 
+        . ($row['pcode'] !== null ? $row['pcode'] : 'NULL') 
+        . $row['code'];
+
+    $lectureQuery = "
+        SELECT 
+            lid, category, title, cover_image, t_id, isfree, ispremium, ispopular, isrecom, 
+            tuition, dis_tuition, regist_day, expiration_day, sub_title, difficult 
+        FROM 
+            lecture_list 
+        WHERE 
+            category = ?
+        ORDER BY 
+            student_count DESC 
+        LIMIT 5
+    ";
+
+    $lectureStmt = $mysqli->prepare($lectureQuery);
+    if (!$lectureStmt) {
+        die('강의 쿼리 준비 실패: ' . $mysqli->error);
+    }
+
+    $lectureStmt->bind_param("s", $combinedCustomOrder);
+    $lectureStmt->execute();
+    $lectureResult = $lectureStmt->get_result();
+
+    while ($lectureRow = $lectureResult->fetch_assoc()) {
+        $customRecommendedLectures[] = $lectureRow;
+    }
+
+    $lectureStmt->close();
+}
 
 //인기 강의
 $sql = "SELECT * FROM lecture_list WHERE ispopular = 1";
@@ -167,6 +230,72 @@ while($notice_row = $notice_result->fetch_object()){
    </div>
     <p id="skill_filter" class="d-flex"></p>
   </section>
+
+
+
+   <!-- $_SESSION['MUNAME']이 설정되어 있는 경우에만 출력
+   추천 알고리즘은 아직 만드는중 ㅜㅜ  -->
+   <?php 
+if (isset($_SESSION['MUNAME'])): 
+?>
+  <div class="main_popular container"> <!-- Flex 컨테이너 -->
+    <h6><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님을 위한 맞춤별 추천 강의</h6>
+    <h3 class="mb-3">맞춤별 추천 강의</h3>
+    <p>관심있는 강의를 추천알고리즘을 통해 만나보세요!</p>
+    <div class="popular">
+      <?php
+      foreach ($customRecommendedLectures as $item) {
+        $tuition = '';
+        if ($item['dis_tuition'] > 0) {
+          $tui_val = number_format($item['tuition']);
+          $distui_val = number_format($item['dis_tuition']);
+          $tuition .= "<p class=\"active-font\"> $distui_val 원 </p><p class=\"text-decoration-line-through small-font\"> $tui_val 원 </p>";
+        } else {
+          $tui_val = number_format($item['tuition']);
+          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p><p class=\"small-font\"> &nbsp; </p>";
+        }
+      ?>
+        <section class="slide d-flex flex-column justify-content-between">
+          <div>
+            <div class="cover mb-2">
+              <img src="<?= htmlspecialchars($item['cover_image']) ?>" alt="강의 이미지">
+            </div>
+            <div class="info">
+              <div class="title">
+                <h5 class="small-font mb-0"><a href="lecture/lecture_view.php?lid=<?= htmlspecialchars($item['lid']) ?>"><?= htmlspecialchars($item['title']) ?></a></h5>
+              </div>
+              <div class="tuition">
+                <?= $tuition ?>
+              </div>
+              <ul class="tags">
+                <?php if ($item['ispopular']): ?>
+                  <li class="tag"><span> 인기 </span></li>
+                <?php endif; ?>
+                <?php if ($item['isrecom']): ?>
+                  <li class="tag"><span> 추천 </span></li>
+                <?php endif; ?>
+                <?php if ($item['ispremium']): ?>
+                  <li class="tag"><span> 프리미엄 </span></li>
+                <?php endif; ?>
+                <?php if ($item['isfree']): ?>
+                  <li class="tag"><span> 무료 </span></li>
+                <?php endif; ?>
+              </ul>
+            </div>
+          </div>
+        </section>
+      <?php
+      }
+      ?>
+    </div>
+    <div class="popular_controls">
+      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+<?php 
+endif; // 조건문 종료
+?>
 
   <div class="main_popular container"> <!-- Flex 컨테이너 -->
     <h6>BEST</h6>
