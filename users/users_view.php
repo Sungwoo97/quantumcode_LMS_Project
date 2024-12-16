@@ -18,15 +18,18 @@ $data = $result->fetch_object();
 
 ?>
 
-<div class="container mt-3">
+<div class="container mt-5">
   <div class="row">
     <div class="col-3 mb-5">
       <div class="member_coverImg2 mb-3">
-        <img src="" id="coverImg" alt="" width="80" height="80" style="object-fit: cover; border-radius: 25%;">
+        <?php 
+          $profileImage = $data->memProfilePath ?? '../img/icon-img/no-image.png'; 
+        ?>
+        <img src="<?= htmlspecialchars($profileImage); ?>" id="coverImg" alt="프로필 이미지" width="80" height="80" style="object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
       </div>
       <div>
-        <h5>이름 : <?= $data->memName; ?></h5>
-        <h6>아이디  : <?= $data->memEmail; ?></h6>
+        <h5>이름 : <?= htmlspecialchars($data->memName); ?></h5>
+        <h6>아이디  : <?= htmlspecialchars($data->memEmail); ?></h6>
       </div>
       <hr>
       <div class="d-flex justify-content-center align-items-center gap-5">
@@ -83,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetch(page)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("Network response was not ok");
+                            throw new Error("네트워크 접속 안됌");
                         }
                         return response.text(); // 응답 텍스트 변환
                     })
@@ -91,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         mainContent.innerHTML = html; // 로드한 콘텐츠 삽입
                     })
                     .catch(error => {
-                        console.error("Error loading page:", error);
+                        console.error("에러 로딩 :", error);
                         mainContent.innerHTML = "<p>콘텐츠를 로드할 수 없습니다. 나중에 다시 시도해주세요.</p>";
                     });
             }
