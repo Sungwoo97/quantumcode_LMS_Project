@@ -11,14 +11,15 @@ if (isset($_SESSION['MemEmail'])) {
   $email = $_SESSION['MemEmail'];
   $memId = $_SESSION['MemId'];     //쪽지관련해서 쓸거.
 
-  //처음 관심강의 선택하기 관련. `login_count`와 `first_coupon_issued`를 가져오기
-  $sql = "SELECT login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
-  $stmt = $mysqli->prepare($sql);
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $stmt->bind_result($loginCount, $firstCouponIssued);
-  $stmt->fetch();
-  $stmt->close();
+
+  // 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
+$sql = "SELECT memId, login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($memId, $loginCount, $firstCouponIssued);
+$stmt->fetch();
+$stmt->close();
 
 
   //쪽지 갯수 확인하는 sql
@@ -50,6 +51,7 @@ if (isset($_SESSION['MemEmail'])) {
   }
 
 }
+
 
 ?>
 
@@ -175,8 +177,8 @@ if (isset($slick_js)) {
           </form>
         </div>
         <div class="ms-3 nav_sign d-flex gap-3">
-          <!-- 로그인된 경우 ==> 장바구니, 쪽지, 닉네임, 로그아웃 다 보여주기 -->
-        <?php if (isset($_SESSION['MUNAME'])): ?>
+        <!-- 로그인된 경우 ==> 장바구니, 쪽지, 닉네임, 로그아웃 다 보여주기 -->
+        <?php if (isset($_SESSION['MemEmail'])): ?>
           <div class="d-flex align-items-center">
               <!-- 장바구니 아이콘 -->
               <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
@@ -196,9 +198,9 @@ if (isset($slick_js)) {
               </a>
                             
               <!-- 사용자 이름 표시 -->
-              <span class="text-primary me-3">
-                  <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
-              </span>
+              <a id="userLink" href="users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" class="text-primary me-3">
+    <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
+</a>
               <!-- 로그아웃 버튼 -->
               <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
           </div>
@@ -515,7 +517,22 @@ messageModal.addEventListener("show.bs.modal", function () {
     .catch(error => {
         console.error("AJAX 요청 오류:", error);
     });
-});
+  });
+
+  //url 이동했을때 이름 클릭시 url 이동 못하게 만들기
+  const currentURL = window.location.href; // 현재 URL 가져오기
+  const link = document.getElementById("userLink"); // 사용자 링크 요소
+
+  // URL의 파라미터에서 MemId 값 확인
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentMemId = urlParams.get("MemId");
+
+  // 현재 페이지와 링크의 MemId가 동일하면 링크를 비활성화
+  if (window.location.pathname.endsWith("users_view.php") && currentMemId === "<?php echo htmlspecialchars($_SESSION['MemId']); ?>") {
+      link.removeAttribute("href"); // href 제거
+      link.style.pointerEvents = "none"; // 클릭 방지
+      link.style.color = "gray"; // 비활성화 스타일 적용
+  }
 
 });
 
