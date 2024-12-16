@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-16 15:40
+-- 생성 시간: 24-12-16 15:43
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -955,7 +955,6 @@ INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `numb
 (18, '이동진', 'dongjin', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'dongjin@naver.com', 1022221244, '2023-07-31', '/qc/admin/upload/20241120044447527474.jpg', '영화평론가 겸 코딩강사', 'Silver', '2024-11-20 13:13:55', NULL, '', 15430000, 66, 10, NULL),
 (19, '이지영', 'easyyoung', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'easyyoung@naver.com', 1022221288, '2023-08-10', '/qc/admin/upload/20241120044519121958.jpg', '윤리강사 겸 코딩강사', 'Silver', '2024-11-20 13:14:42', NULL, '', 15600000, 76, 10, NULL),
 (20, '장윤정', 'yoonjunng', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'yoonjunng@gmail.com', 1022221209, '2024-12-07', '/qc/admin/upload/20241120044610663632.jpg', '트로트 가수 겸 코딩강사', 'Gold', '2024-11-20 13:15:44', NULL, '', 16780000, 65, 10, NULL),
-(21, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, 27, 10, NULL),
 (22, '황재성', 'king', '1982-01-02', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemil123123@gmail.com', 1044421234, '2024-11-22', '/qc/admin/upload/20241120084425169587.jpg', '개그맨에서 코딩 강사로 전향한 만큼 재밌고\r\n위트넘치게 가르치겠습니다. ', 'Blonze', '2024-11-20 16:44:25', NULL, '', NULL, NULL, 10, NULL);
 
 -- --------------------------------------------------------
