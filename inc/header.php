@@ -12,7 +12,7 @@ if (isset($_SESSION['MemEmail'])) {
   $memId = $_SESSION['MemId'];     //쪽지관련해서 쓸거.
 
 
-  // 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
+// 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
 $sql = "SELECT memId, login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("s", $email);
@@ -22,33 +22,33 @@ $stmt->fetch();
 $stmt->close();
 
 
-  //쪽지 갯수 확인하는 sql
-  $sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
-  $stmt = $mysqli->prepare($sql_msg);
-  $stmt->bind_param("s", $memId);
-  $stmt->execute();
-  $stmt->bind_result($unreadCount);
-  $stmt->fetch();
-  $stmt->close();
+//쪽지 갯수 확인하는 sql
+$sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
+$stmt = $mysqli->prepare($sql_msg);
+$stmt->bind_param("s", $memId);
+$stmt->execute();
+$stmt->bind_result($unreadCount);
+$stmt->fetch();
+$stmt->close();
 
-  // 모든 쪽지 가져오기
-  $sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
-  $stmt = $mysqli->prepare($sql_all_msgs);
-  $stmt->bind_param("s", $memId);
-  $stmt->execute();
-  $result = $stmt->get_result();
+// 모든 쪽지 가져오기
+$sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
+$stmt = $mysqli->prepare($sql_all_msgs);
+$stmt->bind_param("s", $memId);
+$stmt->execute();
+$result = $stmt->get_result();
 
-  // 쪽지 데이터를 배열로 저장
-  $messages = [];
-  while ($row = $result->fetch_assoc()) {
-      $messages[] = $row;
-  }
-  $stmt->close();
+// 쪽지 데이터를 배열로 저장
+$messages = [];
+while ($row = $result->fetch_assoc()) {
+    $messages[] = $row;
+}
+$stmt->close();
 
-  // 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
-  if ($loginCount == 1 && $firstCouponIssued == 0) {
-      $showModal = true;
-  }
+// 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
+if ($loginCount == 1 && $firstCouponIssued == 0) {
+    $showModal = true;
+}
 
 }
 
