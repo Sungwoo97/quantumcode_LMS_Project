@@ -10,7 +10,7 @@ $showModal = false; // 모달 표시 여부
 if (isset($_SESSION['MemEmail'])) {
   $email = $_SESSION['MemEmail'];
   $memId = $_SESSION['MemId'];     //쪽지관련해서 쓸거.
-
+  
 
 // 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
 $sql = "SELECT memId, login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
