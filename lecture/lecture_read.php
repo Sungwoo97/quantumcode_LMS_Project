@@ -3,7 +3,7 @@ $title = "학습하기";
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 $video_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/video.css\" rel=\"stylesheet\">";
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $lid = $_GET['lid'];
 $vidArr = [];

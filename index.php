@@ -587,13 +587,15 @@ endif; // 조건문 종료
         <span>Docker</span>
       </div>
     </div>
+    <div id="tech_filter"></div>
   </section>
 </main>
 
 
 <script>
   const $pagination = $(".custom-pagination");
-
+  
+  //slick 슬라이드
   $(".main_slides").on("init reInit afterChange", function(event, slick, currentSlide) {
     const totalSlides = slick.slideCount;
     const current = (currentSlide || 0) + 1;
@@ -605,7 +607,6 @@ endif; // 조건문 종료
     $pagination.find(".custom-dot").removeClass("active");
     $pagination.find(`.custom-dot:nth-child(${current})`).addClass("active");
   });
-
   $('.main_slides').slick({
     speed: 300,
     autoplay: true,
@@ -617,7 +618,6 @@ endif; // 조건문 종료
     slidesToShow: 1,
     slidesToScroll: 1,
   });
-
   $('.notice_slides').slick({
     speed: 300,
     vertical: true,
@@ -626,7 +626,6 @@ endif; // 조건문 종료
     prevArrow: $('.main_notice .slick-prev'),
     nextArrow: $('.main_notice .slick-next'),
   });
-
   $('#skill_filter').slick({
 
     infinite: false,
@@ -634,7 +633,6 @@ endif; // 조건문 종료
     slidesToShow: 4,
     slidesToScroll: 1,
   })
- 
   $('.popular').slick({
 
     infinite: false,
@@ -729,12 +727,20 @@ endif; // 조건문 종료
     })
   })
 
-
   // 커스텀 페이지네이션 생성
   const slideCount = $(".main_slides").slick("getSlick").slideCount;
   for (let i = 0; i < slideCount; i++) {
     $pagination.append(`<div class="custom-dot"></div>`);
   }
+
+  //카테고리 검색
+  const cateKeywords = document.querySelectorAll('.keywords .tech');
+  cateKeywords.forEach(keyword=>{
+    keyword.addEventListener('click', (e)=>{
+      const keywordText = e.target.innerText;
+      location.href = `lecture/lecture_list.php?search_keyword=${keywordText}`;
+    })
+  })
 
   // 첫 번째 dot 활성화
   $pagination.find(".custom-dot:first-child").addClass("active");
