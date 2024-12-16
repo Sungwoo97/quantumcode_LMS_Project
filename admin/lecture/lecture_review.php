@@ -17,8 +17,6 @@ if (!isset($id)) {
 
 $reply = '';
 
-
-
 $review = '';
 $review_sql = "SELECT * FROM lecture_review";
 $review_result = $mysqli->query($review_sql);
