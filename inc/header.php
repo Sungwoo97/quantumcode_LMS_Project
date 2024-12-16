@@ -199,8 +199,8 @@ if (isset($slick_js)) {
                             
               <!-- 사용자 이름 표시 -->
               <a id="userLink" href="users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" class="text-primary me-3">
-    <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
-</a>
+                <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
+              </a>
               <!-- 로그아웃 버튼 -->
               <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
           </div>
