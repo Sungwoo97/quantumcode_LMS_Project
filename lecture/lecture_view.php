@@ -5,8 +5,9 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
-
+// 유저 변수 임의로 할당 -> session 변수로 변경해야 함
 $userid = 5;
+$username = '홍길동';
 
 $tuition = '';
 
@@ -121,7 +122,8 @@ while ($review_data = $review_result->fetch_object()) {
           </form>
         </div>";
   }
-  $review .= "<div class=\"review d-flex gap-3 align-items-center mb-3\">
+  $review .= "
+  <div class=\"review d-flex gap-3 align-items-center mb-3\">
     <div>
       <img src=\"{$review_data->profile_image}\" width=\"50\" alt=\"\">
     </div>
@@ -145,7 +147,7 @@ while ($review_data = $review_result->fetch_object()) {
 
 
   <div class="wrapper">
-    <section class="info">
+    <section class="info ">
       <div class="container">
         <div class="catogory mb-1 ">
           <p class="small-font"><?= $ppcode_name . ' / ' . $pcode_name . ' / ' . $cate_data->name ?></p>
@@ -166,7 +168,7 @@ while ($review_data = $review_result->fetch_object()) {
       </div>
     </section>
   
-    <aside>
+    <aside class="">
       <div class="lecture_coverImg">
         <img src="<?= $data->cover_image ?>" alt="">
       </div>
@@ -205,7 +207,6 @@ while ($review_data = $review_result->fetch_object()) {
           } else {
           ?>
             <a href="lecture_read.php?lid=<?= $lid ?>" class="btn btn-primary w-100">학습하기</a>
-    
           <?php
           }
           ?>
@@ -220,9 +221,48 @@ while ($review_data = $review_result->fetch_object()) {
         <h3 class="subtitle mb-5"><?= $data->sub_title ?></h3>
         <hr>
         <p class="description mb-5"><?= $data->description ?></p>
+        <hr>
       </div>
     </section>
-    <div class="modal fade" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
+    
+
+    <?php
+    if(!empty($data->pr_video) && $data->pr_video !== "Array"){
+    ?>
+    <div class="preview_video">
+      <h5>미리보기</h5>
+      <video src="<?= $data->pr_video ?>" controls muted></video>
+      <hr>
+    </div>
+
+    <?php
+    }
+    ?>
+    <div class="lecture_review row">
+      <?= $review ?>
+      <form class="review d-flex gap-3 align-items-center mb-3 ml-3 col-8">
+        <div>
+          <img src="../img/icon-img/UsersFour.svg" width="50" alt="">
+        </div>
+        <div class="name">
+          <h5><?= $username ?></h5>
+        </div>
+        <div class="d-flex w-100">
+          <div class="w-100">
+            <textarea type="text" class="form-control " name="review" id="review"></textarea>
+          </div>
+          <div class=" mx-3">
+            <button class=" btn btn-primary">작성</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+     <div class="list_control d-flex gap-3 justify-content-end lecture_button">
+       <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
+     </div>
+  </div>
+  <div class="modal fade" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -271,41 +311,12 @@ while ($review_data = $review_result->fetch_object()) {
         </div>
       </div>
     </div>
-    <hr>
-    <div class="preview_video">
-      <h5>미리보기</h5>
-      <video src="<?= $data->pr_video ?>" controls muted></video>
-    </div>
-    <hr>
-    <div class="lecture_review">
-      <?= $review ?>
-      <div class="review d-flex gap-3 align-items-center mb-3 ml-3">
-        <div>
-          <img src="../img/icon-img/UsersFour.svg" alt="">
-        </div>
-        <div>
-          <h3>userid</h3>
-        </div>
-        <form class="d-flex w-100">
-          <div class="w-100">
-            <textarea type="text" class="form-control " name="reply" id="reply"></textarea>
-          </div>
-          <div class=" mx-3">
-            <button class=" btn btn-primary">작성</button>
-          </div>
-        </form>
-    </div>
-
-    <hr>
-     <div class="d-flex gap-3 justify-content-end lecture_button">
-       <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
-     </div>
-  </div>
-
 
 <script>
   const paymentBtn = document.querySelector('.payment_btn');
   const coupon = document.querySelector('#coupon');
+  let tuition = document.querySelector('.tuition');
+  let tuitionOst = tuition.offsetTop;
   let total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
   var sum_price = numericValue;
@@ -366,6 +377,53 @@ while ($review_data = $review_result->fetch_object()) {
     const integerPart = Math.floor(number).toString(); // 정수 부분만 처리
     return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
   }
+
+  //스크롤 이벤트 ( aside )
+  window.addEventListener('scroll', ()=>{
+  if(tuitionOst < window.scrollY - 50){
+    tuition.classList.add('sticky');
+  }
+  else{
+    tuition.classList.remove('sticky');
+  }
+});
+  //수강평 작성
+  $('.lecture_review form').on('submit', function(e) {
+    e.preventDefault();
+    let lid = <?= $lid ?>;
+    let username = '<?= $username ?>';
+    let comment = $(this).find('textarea').val();
+    let img = $(this).find('img').attr('src');
+   
+    let data = {
+      lid : lid,
+      username:username,
+      img:img,
+      comment: comment
+    }
+    console.log(data);
+
+    $.ajax({
+      url: 'lecture_review.php',
+      method: 'POST',
+      data: data,
+      dataType: 'json',
+      success: function(response) {
+        if (response.result === 1) {
+          alert('수강평이 작성되었습니다.');
+          location.reload(); // 페이지 새로고침
+        } else {
+          alert('작성 실패: ' + response.error);
+        }
+      },
+      error: function(error) {
+        console.error(error);
+        alert('작성 중 오류가 발생했습니다.');
+      }
+    })
+
+  });
+
 </script>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
