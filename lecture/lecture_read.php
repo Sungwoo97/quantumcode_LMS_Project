@@ -14,6 +14,7 @@ if (isset($result)) {
   while ($data = $result->fetch_object()) {
     $vidArr[] = $data->video_lecture;
   }
+  $vidArrJson = json_encode($vidArr);
 } else {
   echo
   "<script>
@@ -21,7 +22,7 @@ if (isset($result)) {
   location.href = './lecture_view.php?lid=<?= $lid ?>';
   </script> ";
 }
-$vidArrJson = json_encode($vidArr);
+
 ?>
 
 <div class="hidden_hover"></div>
@@ -37,7 +38,7 @@ $vidArrJson = json_encode($vidArr);
       <button id="next-btn"><span>다음 수업</span> <i class="fa-solid fa-forward"></i></button>
     </div>
   </div>
-  <aside>
+  <!-- <aside>
     <div class="index">
       <img src="../img/icon-img/st_book.svg" width="40" alt="">
       <h5>강의 목차</h5>
@@ -49,7 +50,16 @@ $vidArrJson = json_encode($vidArr);
     <div>
 
     </div>
-  </aside>
+  </aside> -->
+  <div class="menu">
+    <div class="menu-item" data-target="menu1">Menu 1</div>
+    <div class="menu-item" data-target="menu2">Menu 2</div>
+  </div>
+
+  <div class="aside" id="aside-bar">
+    <h2 id="aside-title"></h2>
+    <p id="aside-content"></p>
+  </div>
 </div>
 
 
@@ -115,5 +125,7 @@ $vidArrJson = json_encode($vidArr);
     autoplay: false,
     preload: 'auto',
     muted: true,
+    playbackRates: [0.5, 1, 1.5, 2],
+    language: 'ko',
   });
 </script>
