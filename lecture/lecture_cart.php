@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 
@@ -7,10 +7,6 @@ if (isset($_SESSION['MemEmail'])) {
   $memEmail = $_SESSION['MemEmail'];
   $memId = $_SESSION['MemId'];
   $memName = $_SESSION['MUNAME'];
-} else {
-  $email = '';
-  $memId = '';
-  $memName = '';
 }
 
 $lid = $_GET['lid'];
