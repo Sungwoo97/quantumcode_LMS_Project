@@ -11,9 +11,10 @@ width: 100%;
 height: 400px;
   img{
     width: 100%;
-
+    object-fit: cover;
   }
 }
+
 
 .banner_controls .slick-prev, .banner_controls .slick-next{
   position: absolute;
@@ -195,11 +196,14 @@ height: 400px;
   width: 100%;
   height: auto;
 }
+.skill_tag{
+  margin-bottom: 120px;
+}
 .skill_tag > div{
   display: flex;
   justify-content: center;
   gap: 55px;
-  margin-bottom: 120px;
+  
 }
 .skill_tag figure{
   display: flex;
@@ -230,6 +234,7 @@ height: 400px;
 }
 .skill_tag #skill_filter {
   flex: 1;
+  position: relative;
   margin-bottom: 120px;
   h5 {
     overflow: hidden;

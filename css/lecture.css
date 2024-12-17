@@ -255,8 +255,10 @@ textarea#tag {
   position: relative;
 }
 section.info{
-  background: linear-gradient(to right, #242424, #6D6D6D 100%);
+  background: #001E4A;
   color: var(--white);
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -267,6 +269,17 @@ section.info{
   }
 }
 
+section.info::after {
+  content: '';
+  display: block;
+  width: 584px;
+  height: 435px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  background: url(../img/core-img/bg-logo-view.svg) no-repeat center top / 100%;
+}
 
 p{
   margin-bottom : 0;
@@ -489,6 +502,8 @@ section.desc{
   background: url(../img/core-img/bg-logo.svg) no-repeat center top / 100%;
 }
 .search_banner h2{
+  font-size: 45px;
+  font-weight: 600;
   color:white;
   margin: 48px 0;
 }

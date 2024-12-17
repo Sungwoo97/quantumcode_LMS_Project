@@ -7,9 +7,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $search = '';
 $search_keyword = $_GET['search_keyword'] ?? '';
+$cate = $_GET['cate'] ?? '';
+
+if ($cate) {
+  $search .= " AND category LIKE '%$cate%' ";
+}
 
 if ($search_keyword) {
-  $search .= " and (title LIKE '%$search_keyword%' OR description LIKE '%$search_keyword%')";
+  $search .= " AND (title LIKE '%$search_keyword%' OR description LIKE '%$search_keyword%')";
 }
 //데이터의 개수 조회
 $page_sql = "SELECT COUNT(*) AS cnt FROM lecture_list WHERE 1=1 $search";
@@ -89,15 +94,15 @@ while ($tag_data = $tag_result->fetch_object()) {
 <div class="search_banner">
   <div class="container">
     <h2>검색</h2>
-      <div class="d-flex gap-5">
-        <form action="" class="search_1 mb-3">
-          <input type="text" name="search_keyword" size="60" class="search_keyword" placeholder="검색어를 입력해주세요">
-          <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
-        <button class="search_all">전체보기</button>
-      </div>
+    <div class="d-flex gap-5">
+      <form action="" class="search_1 mb-3">
+        <input type="text" name="search_keyword" size="60" class="search_keyword" placeholder="검색어를 입력해주세요">
+        <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+      <button class="search_all">전체보기</button>
     </div>
   </div>
+</div>
 <div class="lecture_list container wrapper">
   <form id="filterForm" class="row">
     <div class="col-4 col-lg-2">
@@ -235,7 +240,6 @@ while ($tag_data = $tag_result->fetch_object()) {
       ?>
     </ul>
   </nav>
-  <hr>
 </div>
 
 <script>
@@ -259,13 +263,13 @@ while ($tag_data = $tag_result->fetch_object()) {
         pagination.innerHTML = data.pagination; // 페이지네이션 업데이트
         bindPaginationEvents();
       }).catch((error) => console.error("Error:", error));;
-  } 
+  }
   const bindPaginationEvents = () => {
     const paginationLinks = document.querySelectorAll(".pagination .page-link");
     paginationLinks.forEach((link) => {
-    const newLink = link.cloneNode(true);
-    link.replaceWith(newLink);
-  });
+      const newLink = link.cloneNode(true);
+      link.replaceWith(newLink);
+    });
     paginationLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -277,17 +281,17 @@ while ($tag_data = $tag_result->fetch_object()) {
   filterselect.forEach((select) => {
     select.addEventListener("change", () => fetchFilteredData());
   });
-  searchAll.addEventListener('click', ()=>{
+  searchAll.addEventListener('click', () => {
     filterselect.forEach((select) => {
-      select.value= "";
+      select.value = "";
     })
     fetchFilteredData();
     const paginationLinks = document.querySelectorAll(".pagination .page-link");
     paginationLinks.forEach((link) => {
-    const newLink = link.cloneNode(true);
-    link.replaceWith(newLink);
+      const newLink = link.cloneNode(true);
+      link.replaceWith(newLink);
+    })
   })
-
   bindPaginationEvents();
 </script>
 
