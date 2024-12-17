@@ -187,12 +187,11 @@ if (isset($libVideo_js)) {
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php">QnA</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php">자유게시판</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/questions.php">질문게시판</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li>
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/event.php">이벤트</a>
+              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/event/event.php">이벤트</a>
             </li>
           </ul>
           <form class="d-flex search-form">
@@ -223,7 +222,9 @@ if (isset($libVideo_js)) {
               </a>
 
               <!-- 사용자 이름 표시 -->
-              <a id="userLink" href="users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" class="text-primary me-3">
+              <a id="userLink" 
+                href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" 
+                class="text-primary me-3">
                 <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
               </a>
               <!-- 로그아웃 버튼 -->
