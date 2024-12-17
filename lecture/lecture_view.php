@@ -93,7 +93,11 @@ while ($coupon_row = $coupon_result->fetch_object()) {
 $user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
-$callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
+if(isset($user_data->number)){
+  $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
+}else{
+  $callnum = 0;
+}
 
 $reply = '';
 
@@ -249,6 +253,9 @@ while ($review_data = $review_result->fetch_object()) {
   ?>
   <div class="lecture_review row">
     <?= $review ?>
+    <?php
+    if(isset($email) && $email !== ''){
+    ?>
     <form class="review d-flex gap-3 align-items-center mb-3 ml-3 col-8">
       <div>
         <img src="../img/icon-img/UsersFour.svg" width="50" alt="">
@@ -265,6 +272,9 @@ while ($review_data = $review_result->fetch_object()) {
         </div>
       </div>
     </form>
+    <?php
+      }
+    ?>
   </div>
 
   <div class="list_control d-flex gap-3 justify-content-end lecture_button">
