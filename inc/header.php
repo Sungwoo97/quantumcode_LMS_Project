@@ -10,7 +10,7 @@ $showModal = false; // 모달 표시 여부
 if (isset($_SESSION['MemEmail'])) {
   $email = $_SESSION['MemEmail'];
   $memId = $_SESSION['MemId'];     //쪽지관련해서 쓸거.
-
+  $memName = $_SESSION['MUNAME'];
 
   //장바구니 sql
 
@@ -205,6 +205,7 @@ if (isset($libVideo_js)) {
           <?php if (isset($_SESSION['MemEmail'])): ?>
             <div class="d-flex align-items-center">
               <!-- 장바구니 아이콘 -->
+               <!-- http://localhost/qc/lecture/lecture_order.php -->
               <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
                 <i class="fas fa-shopping-cart fa-lg"></i>
               </a>
@@ -264,7 +265,9 @@ if (isset($libVideo_js)) {
                     ?>
                   </ul>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-custom">보러가기</button>
+                    <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-custom" role="button">
+                      보러가기
+                    </a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                   </div>
                 </div>
