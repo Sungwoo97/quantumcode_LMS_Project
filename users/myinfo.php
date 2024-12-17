@@ -109,8 +109,10 @@ $stmt->close();
           </tbody>
         </table>
         <div class="text-end">
-          <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">수정하기</a>
+          <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">수정 및 탈퇴하기</a>
+          <p style="font-size:14px; margin-top: 1rem;">내 이미지,이름, 주소, 전화번호만 수정할 수 있습니다.</p>
         </div>
+        
       </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

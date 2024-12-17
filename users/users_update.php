@@ -51,6 +51,8 @@ $stmt->close();
     } */
   </style>
 </head>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <body>
   <div class="container mt-3">
     <h3 class="ms-5">나의 정보 수정하기</h3>
@@ -71,54 +73,102 @@ $stmt->close();
       <!-- 정보 섹션 -->
       <div class="col-md-8">
         <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <th>이름</th>
-              <td><?= htmlspecialchars($data['memName']); ?></td>
-            </tr>
-            <tr>
-              <th>이메일</th>
-              <td><?= htmlspecialchars($data['memEmail']); ?></td>
-            </tr>
-            <tr>
-              <th>생년월일</th>
-              <td><?= $data['birth'] ? htmlspecialchars($data['birth']) : '정보 없음'; ?></td>
-            </tr>
-            <tr>
-              <th>주소</th>
-              <td><?= $data['memAddr'] ? htmlspecialchars($data['memAddr']) : '정보 없음'; ?></td>
-            </tr>
-            <tr>
-              <th>가입일</th>
-              <td><?= htmlspecialchars($data['memCreatedAt']); ?></td>
-            </tr>
-            <tr>
-              <th>마지막 로그인</th>
-              <td><?= htmlspecialchars($data['lastLoginAt']); ?></td>
-            </tr>
-            <tr>
-              <th>로그인 횟수</th>
-              <td><?= htmlspecialchars($data['login_count']); ?>회</td>
-            </tr>
-            <tr>
-              <th>전화번호</th>
-              <td><?= htmlspecialchars($data['number']); ?></td>
-            </tr>
-            <tr>
-              <th>등급</th>
-              <td><?= htmlspecialchars($data['grade']); ?></td>
-            </tr>
-          </tbody>
+        <tbody>
+          <tr>
+            <th scope="row">이름</th>
+            <td>
+              <input type="text" class="form-control" name="memName" id="memName" placeholder="<?= htmlspecialchars($data['memName']); ?>" required maxlength="10">
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">이메일</th>
+            <td>
+              <input type="text" class="form-control" name="memEmail" id="memEmail" placeholder="<?= htmlspecialchars($data['memEmail']); ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">생년월일</th>
+            <td>
+              <input type="text" class="form-control" name="birth" id="birth" placeholder="<?= $data['birth'] ? htmlspecialchars($data['birth']) : '정보 없음'; ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">주소</th>
+            <td>
+              <div class="input-group">
+                <input type="text" class="form-control" name="memAddr" id="memAddr" placeholder="<?= $data['memAddr'] ? htmlspecialchars($data['memAddr']) : '정보 없음'; ?>" required maxlength="40">
+                <button type="button" class="btn btn-outline-secondary" id="findAddressBtn">주소 찾기</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">가입일</th>
+            <td>
+              <input type="text" class="form-control" name="memCreatedAt" id="memCreatedAt" placeholder="<?= htmlspecialchars($data['memCreatedAt']); ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">마지막 로그인</th>
+            <td>
+              <input type="text" class="form-control" name="lastLoginAt" id="lastLoginAt" placeholder="<?= htmlspecialchars($data['lastLoginAt']); ?>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">로그인 횟수</th>
+            <td>
+              <input type="text" class="form-control" name="login_count" id="login_count" placeholder="<?= htmlspecialchars($data['login_count']); ?>회" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">전화번호</th>
+            <td>
+              <input type="text" class="form-control" name="number" id="number" placeholder="<?= htmlspecialchars($data['number']); ?>" required maxlength="11">
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">등급</th>
+            <td>
+              <input type="text" class="form-control" name="grade" id="grade" placeholder="<?= htmlspecialchars($data['grade']); ?>" disabled>
+            </td>
+          </tr>
+        </tbody>
         </table>
         <div class="text-end">
-          <a href="users_delete.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">삭제하기</a>
-          <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">수정하기</a>
+          <a href="users_delete.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-danger btn-md">탈퇴하기</a>
+          <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">저장하기</a>
         </div>
       </div>
     </div>
   </div>
 </body>
 </html>
+
+<script>
+  // 카카오 주소 API 활용
+  document.getElementById("findAddressBtn").addEventListener("click", function() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // 주소 검색 결과 반환
+        let fullAddress = data.roadAddress; // 도로명 주소
+        let extraAddress = ''; // 추가 주소 (동, 건물명 등)
+
+        // 상세주소 추가
+        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+          extraAddress += data.bname;
+        }
+        if (data.buildingName !== '' && data.apartment === 'Y') {
+          extraAddress += (extraAddress !== '' ? ', ' + data.buildingName : data.buildingName);
+        }
+
+        fullAddress += (extraAddress !== '' ? ' (' + extraAddress + ')' : '');
+        
+        // 주소 입력 필드에 값 채우기
+        document.getElementById("memAddr").value = fullAddress;
+      }
+    }).open();
+  });
+</script>
+
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
