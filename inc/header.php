@@ -13,7 +13,6 @@ if (isset($_SESSION['MemEmail'])) {
   $memName = $_SESSION['MUNAME'];
 
   //장바구니 sql
-
   // $userid = 5; //임시 번호
   $total = 0;
   $dataArr = [];
@@ -68,6 +67,11 @@ if (isset($_SESSION['MemEmail'])) {
   if ($loginCount == 1 && $firstCouponIssued == 0) {
     $showModal = true;
   }
+}else{
+  //로그인 상태가 아니라면 
+  $email = '';
+  $memId = '';     
+  $memName = '';
 }
 
 
