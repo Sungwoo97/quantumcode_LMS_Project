@@ -120,7 +120,7 @@ while ($review_data = $review_result->fetch_object()) {
         </div>
       </div>";
   }
-  if ($review_data->username == $username) {
+  if ($review_data->username == $memName) {
 
     $edit = "<div class=\"d-flex align-items-center gap-3 mx-3\">
         <button type=\"button\" class=\"btn btn-primary review_edit\" data-id=\"{$review_data->lrid}\">수정</button>
