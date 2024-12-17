@@ -130,7 +130,6 @@ while ($review_data = $review_result->fetch_object()) {
         alert('작성 중 오류가 발생했습니다.');
       }
     })
-
   });
   $('.content').on('click', '.reply_edit', function(e) {
     e.preventDefault();
