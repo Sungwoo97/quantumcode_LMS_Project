@@ -5,7 +5,18 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
-$userid = 5;
+
+if (isset($_SESSION['MemEmail'])) {
+  $memEmail = $_SESSION['MemEmail'];
+  $memId = $_SESSION['MemId'];
+  $memName = $_SESSION['MUNAME'];
+} else {
+  $email = '';
+  $memId = '';
+  $memName = '';
+}
+
+// $userid = 5;
 $total = 0;
 $dataArr = [];
 $lidArr = [];
@@ -14,7 +25,7 @@ $sql = "SELECT lc.*, ll.cover_image, ll.t_id, ll.title, ll.lid
 FROM lecture_cart lc
 JOIN lecture_list ll
 ON lc.lid = ll.lid
-WHERE mid = $userid";
+WHERE mid = '$memEmail'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_object()) {
   $dataArr[] = $row;
@@ -33,7 +44,7 @@ JOIN coupons c
 ON c.cid = cu.couponid
 WHERE cu.status = 1
 AND c.status = 1
-AND cu.userid = $userid
+AND cu.userid = '$memEmail'
 AND cu.use_max_date >=now() ";
 $coupon_result = $mysqli->query($coupon_sql);
 while ($coupon_row = $coupon_result->fetch_object()) {
@@ -41,7 +52,7 @@ while ($coupon_row = $coupon_result->fetch_object()) {
 }
 
 
-$user_sql = "SELECT * FROM members WHERE mid = $userid";
+$user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$memEmail'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
 $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
@@ -52,7 +63,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
 
 
 ?>
-<div class="container">
+<div class="container cart">
   <h2>수강바구니</h2>
   <div class="row">
     <div class="col-9">
@@ -74,7 +85,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
             <th scope="col">강의 가격</th>
           </tr>
         </thead>
-  
+
         <tbody>
           <?php
           if (!empty($dataArr)) {
@@ -104,7 +115,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
         <dd><?= $user_data->email ?></dd>
         <dt>전화번호</dt>
         <dd><?= $callnum ?></dd>
-  
+
         <dt>쿠폰</dt>
         <dd>
           <select class="form-select" name="coupon" id="coupon">
@@ -153,7 +164,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
   // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
-    const mid = "<?= $userid ?>";
+    const mid = "<?= $memEmail ?>";
     // const lid = "<?= $lid ?>";
     // const total = numericValue;
     console.log(mid, lid, sum_price);
@@ -163,6 +174,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
       mid: mid,
       total_price: sum_price,
     });
+    console.log(data);
     fetch('lecture_payment.php', {
         method: 'post',
         body: data,
@@ -246,7 +258,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
       if (check.checked == 1) {
         sum_price += check_price;
         checkArr.push(check_id);
-        console.log(sum_price);
+        console.log(sum_price, check_id);
 
       } else {
         checkArr = checkArr.filter(item => item !== check_id);
@@ -254,7 +266,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
         console.log(sum_price);
       }
       lid = checkArr.join(',');
-
+      console.log(lid);
       document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
       // console.log(sum);
     })

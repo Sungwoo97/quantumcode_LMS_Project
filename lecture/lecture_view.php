@@ -6,8 +6,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
 // 유저 변수 임의로 할당 -> session 변수로 변경해야 함
-$userid = 5;
-$username = '홍길동';
+if (isset($_SESSION['MemEmail'])) {
+  $memEmail = $_SESSION['MemEmail'];
+  $memId = $_SESSION['MemId'];
+  $memName = $_SESSION['MUNAME'];
+} else {
+  $email = '';
+  $memId = '';
+  $memName = '';
+}
+
+// $userid = 5;
+// $username = '홍길동';
 
 $tuition = '';
 
@@ -62,7 +72,7 @@ switch ($data->difficult) {
     break;
 }
 
-$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = $userid";
+$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = '$memEmail'";
 
 $buy_result = $mysqli->query($buy_sql);
 if ($buy_result && $buy_result->num_rows > 0) {
@@ -82,7 +92,7 @@ JOIN coupons c
 ON c.cid = cu.couponid
 WHERE cu.status = 1
 AND c.status = 1
-AND cu.userid = $userid
+AND cu.userid = '$memEmail'
 AND cu.use_max_date >=now() ";
 $coupon_result = $mysqli->query($coupon_sql);
 while ($coupon_row = $coupon_result->fetch_object()) {
@@ -90,7 +100,7 @@ while ($coupon_row = $coupon_result->fetch_object()) {
 }
 
 
-$user_sql = "SELECT * FROM members WHERE mid = $userid";
+$user_sql = "SELECT * FROM memberskakao WHERE mid = '$memEmail'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
 $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
@@ -224,7 +234,7 @@ while ($review_data = $review_result->fetch_object()) {
   </aside>
 
 </div>
-<div class="container">
+<div class="container view">
   <section class="desc row mt-5">
     <div class="col-8">
       <h3 class="subtitle mb-5"><?= $data->sub_title ?></h3>
@@ -334,7 +344,7 @@ while ($review_data = $review_result->fetch_object()) {
   // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
-    const mid = "<?= $userid ?>";
+    const mid = "<?= $memEmail ?>";
     const lid = "<?= $lid ?>";
     const total = numericValue;
     console.log(mid, lid, sum_price);

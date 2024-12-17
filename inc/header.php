@@ -14,7 +14,7 @@ if (isset($_SESSION['MemEmail'])) {
 
   //장바구니 sql
 
-  $userid = 5; //임시 번호
+  // $userid = 5; //임시 번호
   $total = 0;
   $dataArr = [];
   $lidArr = [];
@@ -23,7 +23,7 @@ if (isset($_SESSION['MemEmail'])) {
   FROM lecture_cart lc
   JOIN lecture_list ll
   ON lc.lid = ll.lid
-  WHERE mid = $userid";
+  WHERE mid = '$email'";
   $result = $mysqli->query($sql);
   while ($row = $result->fetch_object()) {
     $dataArr[] = $row;
@@ -205,7 +205,7 @@ if (isset($libVideo_js)) {
           <?php if (isset($_SESSION['MemEmail'])): ?>
             <div class="d-flex align-items-center">
               <!-- 장바구니 아이콘 -->
-               <!-- http://localhost/qc/lecture/lecture_order.php -->
+              <!-- http://localhost/qc/lecture/lecture_order.php -->
               <a href="#" class="me-3 text-decoration-none" title="장바구니" data-bs-toggle="modal" data-bs-target="#cartModal">
                 <i class="fas fa-shopping-cart fa-lg"></i>
               </a>
