@@ -111,6 +111,7 @@ $stmt->close();
           </tbody>
         </table>
         <div class="text-end">
+          <a href="users_delete.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">삭제하기</a>
           <a href="users_update.php?MemId=<?= htmlspecialchars($data['memId']); ?>" class="btn btn-primary btn-md">수정하기</a>
         </div>
       </div>

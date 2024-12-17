@@ -223,7 +223,9 @@ if (isset($libVideo_js)) {
               </a>
 
               <!-- 사용자 이름 표시 -->
-              <a id="userLink" href="users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" class="text-primary me-3">
+              <a id="userLink" 
+                href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" 
+                class="text-primary me-3">
                 <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
               </a>
               <!-- 로그아웃 버튼 -->
