@@ -99,6 +99,9 @@ if (isset($_SESSION['MemEmail'])) {
   if (isset($slick_css)) {
     echo $slick_css;
   }
+  if (isset($libVideo_css)) {
+    echo $libVideo_css;
+  }
   if (isset($lecture_css)) {
     echo $lecture_css;
   }
@@ -147,6 +150,9 @@ if (isset($_SESSION['MemEmail'])) {
 <?php
 if (isset($slick_js)) {
   echo $slick_js;
+}
+if (isset($libVideo_js)) {
+  echo $libVideo_js;
 }
 ?>
 

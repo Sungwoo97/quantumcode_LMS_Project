@@ -1,15 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  body{
+    margin: 0;
+    padding: 0;
+  }
+}
+body{
+  position: relative;
+}
+.navbar{
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  transform: translateY(-100%);
+  transition: transform .3s ease;
+}
+.navbar.active{
+  transform: none;
+}
 .page_wapper{
   padding: 0;
 }
-#lecture-video{
-  width: 90%;
-  height: 50%;
+.hidden_hover{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 10;
 }
 .video{
   position: relative;
+  height: 90%;
+  display: flex;
+}
+.video_wrapper{
+  position: relative;
+  width: 95%;
+  height: 850px;
+}
+.video .controls{
+  height: 65px;
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 200px;
+  
 }
 .video aside{
-  position: absolute;
-  top: 0;
-  right: 0;
+  width: 5%;
+  
+}
+.video aside > div{
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.video-js{
+  width: 100%;
+  height: 100%;
+}
+
+.controls > button {
+  height: 100%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
