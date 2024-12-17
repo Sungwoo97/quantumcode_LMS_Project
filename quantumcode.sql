@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-16 15:43
+-- 생성 시간: 24-12-17 07:42
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -277,7 +277,8 @@ CREATE TABLE `coupons_usercp` (
 --
 
 INSERT INTO `coupons_usercp` (`ucid`, `couponid`, `userid`, `status`, `use_max_date`, `regdate`, `usedate`, `reason`) VALUES
-(42, 1, 'haemilyjh@gmail.com', 1, NULL, '2024-12-13 17:24:08', NULL, '');
+(42, 1, 'haemilyjh@gmail.com', 1, NULL, '2024-12-13 17:24:08', NULL, ''),
+(43, 1, 'haemilyjh@naver.com', 1, NULL, '2024-12-17 14:31:50', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -513,6 +514,14 @@ CREATE TABLE `lecture_order` (
   `status` tinyint(4) NOT NULL COMMENT '주문 상태',
   `createdate` datetime NOT NULL DEFAULT current_timestamp() COMMENT '주문 시각'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `lecture_order`
+--
+
+INSERT INTO `lecture_order` (`odid`, `mid`, `lid`, `cid`, `total_price`, `status`, `createdate`) VALUES
+(1, 5, 118, NULL, 44000, 1, '2024-12-17 14:49:31'),
+(2, 5, 121, NULL, 176000, 1, '2024-12-17 14:50:29');
 
 -- --------------------------------------------------------
 
@@ -783,7 +792,8 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (76, '조재현', '123123', 'user74@example.com', 'id74', '', '1991-02-25', 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0),
 (126, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, '', '', 'kakaoAddr', NULL, '2024-12-09 08:20:50', '2024-12-09 08:20:50', '2024-12-09 17:20:50', 0, 0),
-(167, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-13 08:24:08', '2024-12-13 17:04:33', 1, 1);
+(167, '윤비밀', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-13 08:24:08', '2024-12-13 17:04:33', 1, 1),
+(168, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-16 21:31:13', '2024-12-17 05:31:50', '2024-12-17 14:31:43', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1052,7 +1062,8 @@ CREATE TABLE `user_categories` (
 --
 
 INSERT INTO `user_categories` (`id`, `user_email`, `category`, `created_at`) VALUES
-(17, 'haemilyjh@gmail.com', '[\"Java\",\"PHP\",\"NodeJs\"]', '2024-12-13 08:24:08');
+(17, 'haemilyjh@gmail.com', '[\"Java\",\"PHP\",\"NodeJs\"]', '2024-12-13 08:24:08'),
+(18, 'haemilyjh@naver.com', '[\"Python\",\"JavaScript\",\"TypeScript\",\"Docker\",\"PHP\"]', '2024-12-17 05:31:50');
 
 --
 -- 덤프된 테이블의 인덱스
@@ -1275,7 +1286,7 @@ ALTER TABLE `coupons`
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- 테이블의 AUTO_INCREMENT `courses_management`
@@ -1287,7 +1298,7 @@ ALTER TABLE `courses_management`
 -- 테이블의 AUTO_INCREMENT `lecture_cart`
 --
 ALTER TABLE `lecture_cart`
-  MODIFY `cartid` int(11) NOT NULL AUTO_INCREMENT COMMENT '장바구니 고유번호';
+  MODIFY `cartid` int(11) NOT NULL AUTO_INCREMENT COMMENT '장바구니 고유번호', AUTO_INCREMENT=7;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_category`
@@ -1311,7 +1322,7 @@ ALTER TABLE `lecture_list`
 -- 테이블의 AUTO_INCREMENT `lecture_order`
 --
 ALTER TABLE `lecture_order`
-  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호';
+  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호', AUTO_INCREMENT=3;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_reply`
@@ -1341,7 +1352,7 @@ ALTER TABLE `members`
 -- 테이블의 AUTO_INCREMENT `memberskakao`
 --
 ALTER TABLE `memberskakao`
-  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- 테이블의 AUTO_INCREMENT `sales_course`
@@ -1389,7 +1400,7 @@ ALTER TABLE `toteachermessages`
 -- 테이블의 AUTO_INCREMENT `user_categories`
 --
 ALTER TABLE `user_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- 덤프된 테이블의 제약사항
