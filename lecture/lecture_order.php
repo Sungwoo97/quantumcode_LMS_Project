@@ -6,15 +6,6 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
-if (isset($_SESSION['MemEmail'])) {
-  $memEmail = $_SESSION['MemEmail'];
-  $memId = $_SESSION['MemId'];
-  $memName = $_SESSION['MUNAME'];
-} else {
-  $email = '';
-  $memId = '';
-  $memName = '';
-}
 
 // $userid = 5;
 $total = 0;
@@ -25,7 +16,7 @@ $sql = "SELECT lc.*, ll.cover_image, ll.t_id, ll.title, ll.lid
 FROM lecture_cart lc
 JOIN lecture_list ll
 ON lc.lid = ll.lid
-WHERE mid = '$memEmail'";
+WHERE mid = '$email'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_object()) {
   $dataArr[] = $row;
@@ -44,15 +35,16 @@ JOIN coupons c
 ON c.cid = cu.couponid
 WHERE cu.status = 1
 AND c.status = 1
-AND cu.userid = '$memEmail'
-AND cu.use_max_date >=now() ";
+AND cu.userid = '$email'
+ ";
+// AND cu.use_max_date >=now() 만료일이 있다면 now 함수를 이용하여 조건
 $coupon_result = $mysqli->query($coupon_sql);
 while ($coupon_row = $coupon_result->fetch_object()) {
   $couponArr[] = $coupon_row;
 }
 
 
-$user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$memEmail'";
+$user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
 $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
@@ -110,9 +102,9 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
     <div class="col-3 payment">
       <dl>
         <dt>신청자</dt>
-        <dd><?= $user_data->name ?></dd>
+        <dd><?= $user_data->memName ?></dd>
         <dt>이메일</dt>
-        <dd><?= $user_data->email ?></dd>
+        <dd><?= $user_data->memEmail ?></dd>
         <dt>전화번호</dt>
         <dd><?= $callnum ?></dd>
 
@@ -164,7 +156,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
   // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
-    const mid = "<?= $memEmail ?>";
+    const mid = '<?= $email ?>';
     // const lid = "<?= $lid ?>";
     // const total = numericValue;
     console.log(mid, lid, sum_price);

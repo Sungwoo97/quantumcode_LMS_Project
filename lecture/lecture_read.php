@@ -2,8 +2,8 @@
 $title = "학습하기";
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 $video_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/video.css\" rel=\"stylesheet\">";
-$libVideo_css = "<link href=\"https://vjs.zencdn.net/8.16.1/video-js.css\" rel=\"stylesheet\" >";
-$libVideo_js = "<script src=\"https://vjs.zencdn.net/8.16.1/video.min.js\"></script>";
+$libVideo_css = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/video.js/8.21.1/video-js.min.css\" integrity=\"sha512-eAxdlYVdHHB5//MPUJMimVOM0OoKa3I1RWCnrqvzwri3u5+RBdB6d0fdBsEOj78PyomrHR3+E3vy0ovoVU9hMQ==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />";
+$libVideo_js = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/video.js/8.21.1/video.min.js\" integrity=\"sha512-4ojVomDWDnx2FZyOK/eVZCTut+02zggocT1Cj8S7Y/E31ozUWlU0vZ5+rzVyy+hKZCG6Gt9RJ9elOMS70LBRtQ==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $lid = $_GET['lid'];
@@ -18,7 +18,7 @@ if (isset($result)) {
   echo
   "<script>
   alert('영상이 제공되지 않는 강의 입니다');
-  history.back();
+  location.href = './lecture_view.php?lid=<?= $lid ?>';
   </script> ";
 }
 $vidArrJson = json_encode($vidArr);
@@ -27,8 +27,9 @@ $vidArrJson = json_encode($vidArr);
 <div class="hidden_hover"></div>
 <div class="video">
   <div class="video_wrapper">
-    <video id="lecture-video" class="video-js" width="100%" height="100%" muted controls>
-      <source src="" type="video/mp4">
+    <video id="lecture-video" class="video-js" width="100%" height="100%" controls>
+      <source src="<?= $vidArr[0] ?>" type="video/mp4">
+
       Your browser does not support the video tag.
     </video>
     <div class="controls">
@@ -37,13 +38,16 @@ $vidArrJson = json_encode($vidArr);
     </div>
   </div>
   <aside>
-    <div>
+    <div class="index">
       <img src="../img/icon-img/st_book.svg" width="40" alt="">
       <h5>강의 목차</h5>
     </div>
-    <div>
+    <div class="desc">
       <img src="../img/icon-img/ChatText.svg" width="40" alt="">
       <h5>강의 설명</h5>
+    </div>
+    <div>
+
     </div>
   </aside>
 </div>
@@ -60,13 +64,18 @@ $vidArrJson = json_encode($vidArr);
   const nextBtn = document.getElementById('next-btn');
   const navBar = document.querySelector('.navbar');
   const hoverBar = document.querySelector('.hidden_hover');
-
+  const asideBtn = document.querySelectorAll('aside > div')
+  let excuted = false;
   //헤더 호버 이벤트
   hoverBar.addEventListener('mouseenter', () => {
-    navBar.classList.add('active');
+    setTimeout(() => {
+      navBar.classList.add('active')
+    }, 2000);
   })
   hoverBar.addEventListener('mouseleave', () => {
-    navBar.classList.remove('active');
+    setTimeout(() => {
+      navBar.classList.remove('active')
+    }, 2000);
   })
 
   // 영상 재생 함수
@@ -95,10 +104,16 @@ $vidArrJson = json_encode($vidArr);
   } else {
     alert('영상이 제공되지 않는 강의입니다.');
   }
+  asideBtn.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      btn.closest('aside').classList.toggle('active');
+    })
+  })
 
   videojs(video, {
     controls: true,
     autoplay: false,
-
+    preload: 'auto',
+    muted: true,
   });
 </script>
