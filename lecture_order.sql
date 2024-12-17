@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-17 10:20
+-- 생성 시간: 24-12-17 08:42
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -55,7 +55,7 @@ ALTER TABLE `lecture_order`
 -- 테이블의 AUTO_INCREMENT `lecture_order`
 --
 ALTER TABLE `lecture_order`
-  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호', AUTO_INCREMENT=13;
+  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호', AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

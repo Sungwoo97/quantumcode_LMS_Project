@@ -5,9 +5,10 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
-// 유저 변수 임의로 할당 -> session 변수로 변경해야 함
-$userid = 5;
-$username = '홍길동';
+
+
+// $userid = 5;
+// $username = '홍길동';
 
 $tuition = '';
 
@@ -18,10 +19,12 @@ $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
 if ($data->dis_tuition > 0) {
+  $value = number_format($data->dis_tuition);
   $tui_val = number_format($data->tuition);
   $distui_val = number_format($data->dis_tuition);
   $tuition .= "<p class=\"text-decoration-line-through text-end \"> $tui_val 원 </p><p class=\"active-font\"> $distui_val 원 </p>";
 } else {
+  $value = number_format($data->tuition);
   $tui_val = number_format($data->tuition);
   $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p>";
 }
@@ -62,7 +65,7 @@ switch ($data->difficult) {
     break;
 }
 
-$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = $userid";
+$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = '$email'";
 
 $buy_result = $mysqli->query($buy_sql);
 if ($buy_result && $buy_result->num_rows > 0) {
@@ -73,8 +76,6 @@ if ($buy_result && $buy_result->num_rows > 0) {
   // 데이터가 없는 경우 추가 작업 수행 (필요하면 이곳에 처리 로직 추가)
 }
 
-
-
 $couponArr = [];
 $coupon_sql = "SELECT cu.*, c.*  
 FROM coupons_usercp cu
@@ -82,18 +83,21 @@ JOIN coupons c
 ON c.cid = cu.couponid
 WHERE cu.status = 1
 AND c.status = 1
-AND cu.userid = $userid
+AND cu.userid = '$email'
 AND cu.use_max_date >=now() ";
 $coupon_result = $mysqli->query($coupon_sql);
 while ($coupon_row = $coupon_result->fetch_object()) {
   $couponArr[] = $coupon_row;
 }
 
-
-$user_sql = "SELECT * FROM members WHERE mid = $userid";
+$user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
-$callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
+if(isset($user_data->number)){
+  $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
+}else{
+  $callnum = 0;
+}
 
 $reply = '';
 
@@ -120,7 +124,7 @@ while ($review_data = $review_result->fetch_object()) {
         </div>
       </div>";
   }
-  if ($review_data->username == $username) {
+  if ($review_data->username == $memName) {
 
     $edit = "<div class=\"d-flex align-items-center gap-3 mx-3\">
         <button type=\"button\" class=\"btn btn-primary review_edit\" data-id=\"{$review_data->lrid}\">수정</button>
@@ -224,7 +228,7 @@ while ($review_data = $review_result->fetch_object()) {
   </aside>
 
 </div>
-<div class="container">
+<div class="container view">
   <section class="desc row mt-5">
     <div class="col-8">
       <h3 class="subtitle mb-5"><?= $data->sub_title ?></h3>
@@ -249,12 +253,15 @@ while ($review_data = $review_result->fetch_object()) {
   ?>
   <div class="lecture_review row">
     <?= $review ?>
+    <?php
+    if(isset($email) && $email !== ''){
+    ?>
     <form class="review d-flex gap-3 align-items-center mb-3 ml-3 col-8">
       <div>
         <img src="../img/icon-img/UsersFour.svg" width="50" alt="">
       </div>
       <div class="name">
-        <h5><?= $username ?></h5>
+        <h5><?= $memName ?></h5>
       </div>
       <div class="d-flex w-100">
         <div class="w-100">
@@ -265,6 +272,9 @@ while ($review_data = $review_result->fetch_object()) {
         </div>
       </div>
     </form>
+    <?php
+      }
+    ?>
   </div>
 
   <div class="list_control d-flex gap-3 justify-content-end lecture_button">
@@ -281,9 +291,9 @@ while ($review_data = $review_result->fetch_object()) {
       <div class="modal-body">
         <dl>
           <dt>신청자</dt>
-          <dd><?= $user_data->name ?></dd>
+          <dd><?= $user_data->memName ?></dd>
           <dt>이메일</dt>
-          <dd><?= $user_data->email ?></dd>
+          <dd><?= $user_data->memEmail ?></dd>
           <dt>전화번호</dt>
           <dd><?= $callnum ?></dd>
 
@@ -310,7 +320,7 @@ while ($review_data = $review_result->fetch_object()) {
           </dd>
         </dl>
         <div class="d-flex justify-content-between">
-          <span class="font">결제 금액</span><span data-price="<?= $tui_val ?>" class="normal-font total_payment"> <?= $tui_val ?> 원</span>
+          <span class="font">결제 금액</span><span data-price="<?= $value ?>" class="normal-font total_payment"> <?= $value ?> 원</span>
         </div>
       </div>
       <div class="modal-footer">
@@ -334,7 +344,7 @@ while ($review_data = $review_result->fetch_object()) {
   // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
   paymentBtn.addEventListener('click', () => {
     const ucid = coupon.value;
-    const mid = "<?= $userid ?>";
+    const mid = "<?= $email ?>";
     const lid = "<?= $lid ?>";
     const total = numericValue;
     console.log(mid, lid, sum_price);
@@ -399,7 +409,7 @@ while ($review_data = $review_result->fetch_object()) {
   $('.lecture_review form').on('submit', function(e) {
     e.preventDefault();
     let lid = <?= $lid ?>;
-    let username = '<?= $username ?>';
+    let username = '<?= $memName ?>';
     let comment = $(this).find('textarea').val();
     let img = $(this).find('img').attr('src');
 

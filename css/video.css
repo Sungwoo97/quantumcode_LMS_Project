@@ -12,7 +12,7 @@ body{
 .navbar{
   position: absolute;
   top: 0;
-  z-index: 10;
+  z-index: 11;
   width: 100%;
   transform: translateY(-100%);
   transition: transform .3s ease;
@@ -53,15 +53,31 @@ body{
   
 }
 .video aside{
-  width: 5%;
-  
+  position: absolute;
+  width: 400px;
+  height: 850px;
+  right: 0;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  transform: translateX(300px);
+  transition: transform .3s ease;
+  background: #fff;
+  z-index: 10;
 }
-.video aside > div{
+.video aside.active{
+  transform: none;
+}
+
+.video aside > div {
+  margin:25px 10px 0;
   margin-top: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 .video-js{
   width: 100%;
@@ -75,4 +91,58 @@ body{
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+/* 기본 레이아웃 */
+.menu {
+  width: 200px;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #eaeaea;
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+  background-color: #d4d4d4;
+}
+
+/* Aside 바 */
+.aside {
+  position: fixed;
+  top: 0;
+  right: -300px; /* 기본적으로 숨김 */
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  border-left: 1px solid #ddd;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.aside.open {
+  transform: translateX(-300px); /* 열림 상태 */
+}
+
+.aside h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.aside p {
+  font-size: 14px;
+  color: #555;
 }
