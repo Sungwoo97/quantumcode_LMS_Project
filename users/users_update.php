@@ -30,6 +30,7 @@ $stmt->close();
   <title>내 정보 수정하기</title>
   <link rel="stylesheet" href="/qc/css/core-style.css?v=<?= time(); ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -58,13 +59,16 @@ $stmt->close();
             </tr>
             <tr>
               <th>생년월일</th>
-              <td><input type="text" class="form-control" name="birth" value="<?= htmlspecialchars($data['birth']); ?>" required></td>
+              <td>
+                <input type="date" class="form-control" name="birth" id="birth" 
+                      value="<?= htmlspecialchars($data['birth']); ?>" >
+              </td>
             </tr>
             <tr>
               <th>주소</th>
               <td>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="memAddr" id="memAddr" value="<?= htmlspecialchars($data['memAddr']); ?>" required>
+                  <input type="text" class="form-control" name="memAddr" id="memAddr" value="<?= htmlspecialchars($data['memAddr']); ?>" >
                   <button type="button" class="btn btn-secondary" id="findAddressBtn">주소 찾기</button>
                 </div>
               </td>
@@ -83,7 +87,7 @@ $stmt->close();
             </tr>
             <tr>
               <th>전화번호</th>
-              <td><input type="text" class="form-control" name="number" value="<?= htmlspecialchars($data['number']); ?>" required></td>
+              <td><input type="text" class="form-control" name="number" value="<?= htmlspecialchars($data['number']); ?>" ></td>
             </tr>
             <tr>
               <th>등급</th>
@@ -100,6 +104,7 @@ $stmt->close();
   </div>
 
 <script>
+  
 //이미지 구현창
 function addCover(file, cover) {
     let coverImage = file;
@@ -147,8 +152,13 @@ $('#user_update .btn-primary').click(function(e) {
     e.preventDefault(); // 폼의 기본 submit 동작을 중단합니다.
 
     // FormData 객체를 사용하여 폼 데이터 수집
-    //파일 업로드와 함께 폼 데이터를 전송해야 할 때 꼭 필요한 기능
     const formData = new FormData($('#user_update')[0]);
+
+    // FormData 내용 확인
+    console.log("FormData 내용 확인:");
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+    }
 
     $.ajax({
         url: 'user_update_ok.php', // 데이터 전송 대상 URL
