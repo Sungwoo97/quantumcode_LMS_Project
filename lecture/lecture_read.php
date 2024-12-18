@@ -29,17 +29,15 @@ $vidArrJson = json_encode($vidArr);
   <div class="video_wrapper d-flex">
     <video id="lecture-video" class="video-js" width="100%" height="100%" controls>
       <source src="<?= $vidArr[0] ?>" type="video/mp4">
-
-      Your browser does not support the video tag.
     </video>
-    <div class="controls">
-      <button id="prev-btn"><i class="fa-solid fa-backward"></i><span>이전 수업</span></button>
-      <button id="next-btn"><span>다음 수업</span> <i class="fa-solid fa-forward"></i></button>
-    </div>
     <div class="video_info">
       <h3>목차입니다</h3>
       <p>설명입니다</p>
     </div>
+  </div>
+  <div class="controls">
+    <button id="prev-btn"><i class="fa-solid fa-backward"></i><span>이전 수업</span></button>
+    <button id="next-btn"><span>다음 수업</span> <i class="fa-solid fa-forward"></i></button>
   </div>
   <aside>
     <div class="index" data-target="index">
@@ -50,10 +48,6 @@ $vidArrJson = json_encode($vidArr);
       <img src="../img/icon-img/ChatText.svg" width="40" alt="">
       <h5>강의 설명</h5>
     </div>
-
-
-
-
   </aside>
 
 </div>
@@ -117,23 +111,25 @@ $vidArrJson = json_encode($vidArr);
   let currentTarget = null;
   asideBtn.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      asideBtn.forEach(btn => {
-        btn.classList.remove('active');
-      })
 
+      e.currentTarget.classList.add('active');
       const target = btn.getAttribute("data-target");
       if (currentTarget === target) {
         // 같은 메뉴를 클릭했을 때 닫기
+        e.currentTarget.classList.remove('active');
 
         btn.closest('.video').firstElementChild.classList.remove('open');
         currentTarget = null;
       } else {
         // 다른 메뉴를 클릭했을 때
         currentTarget = target;
-
+        asideBtn.forEach(btn => {
+          btn.classList.remove('active');
+        })
+        e.currentTarget.classList.add('active');
         btn.closest('.video').firstElementChild.classList.add('open')
-      };
-      e.target.classList.add('active');
+      }
+
     })
   })
 
