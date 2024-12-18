@@ -224,6 +224,15 @@ height: 400px;
   background-color: #ebebeb;
   border-radius: 5px;
 }
+.skill_tag > div div.active{
+  background-color: #c2c2c2;
+}
+
+.skill_cnt {
+  margin: 20px;
+}
+
+
 .skill_tag figure img{
   width: 27px;
   height: 35px;

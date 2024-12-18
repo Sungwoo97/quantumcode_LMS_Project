@@ -232,7 +232,10 @@ while ($notice_row = $notice_result->fetch_object()) {
         <figcaption>Vue.js</figcaption>
       </figure>
     </div>
-    <p id="skill_filter" class="d-flex"></p>
+    <p class="skill_cnt"></p>
+    <p id="skill_filter" class="d-flex">
+
+    </p>
   </section>
 
 
@@ -718,8 +721,18 @@ while ($notice_row = $notice_result->fetch_object()) {
   // Skill 필터 기능
   const skillTags = document.querySelectorAll('.skill_tag figure');
   const skillFilter = document.getElementById('skill_filter');
+  const skillCnt = document.querySelector('.skill_cnt');
+
+  skillFilter.innerHTML = '<p>카테고리를 선택하면 강의를 바로 확인할 수 있습니다.</p>'
   skillTags.forEach(skillTag => {
     skillTag.addEventListener('click', (e) => {
+      skillTags.forEach(tag => {
+        const activeDiv = tag.querySelector('div.active');
+        if (activeDiv) {
+          activeDiv.classList.remove('active');
+        }
+      });
+
       const skill = e.currentTarget.querySelector('figcaption').textContent;
       console.log(skill);
       const data = new URLSearchParams({
@@ -733,7 +746,12 @@ while ($notice_row = $notice_result->fetch_object()) {
         .then(data => {
           console.log(data);
           skillFilter.innerHTML = data.skill;
+          skillCnt.innerHTML = data.cnt;
         }).catch(error => console.error("Error:", error));
+      const clickedDiv = e.currentTarget.querySelector('div');
+      if (clickedDiv) {
+        clickedDiv.classList.add('active');
+      }
     })
   })
 
