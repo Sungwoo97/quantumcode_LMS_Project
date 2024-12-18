@@ -229,7 +229,7 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="inquiryForm" method="POST">
+        <form id="inquiryForm" method="post">
           <div class="mb-3">
             <label for="inquiryTitle" class="form-label">문의 제목</label>
             <input type="text" class="form-control" id="inquiryTitle" name="title" placeholder="제목을 입력하세요" required>
@@ -246,55 +246,18 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     </div>
   </div>
 </div>
+
 <script>
+  // 모달 표시
   document.getElementById("inquiryButton").addEventListener("click", function () {
     const inquiryModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
     inquiryModal.show();
-  });
-
-  document.getElementById("inquiryForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const title = document.getElementById("inquiryTitle").value;
-    const content = document.getElementById("inquiryContent").value;
-
-    alert("문의가 제출되었습니다.\n\n제목: " + title + "\n내용: " + content);
-    const inquiryModal = bootstrap.Modal.getInstance(document.getElementById("inquiryModal"));
-    inquiryModal.hide();
   });
 
   
 </script>
 
 <?php
-
-// 서버 처리
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php'); // DB 연결
-
-  // 데이터 가져오기
-  $title = $_POST['title'] ?? '';
-  $content = $_POST['content'] ?? '';
-  $user_id = $_SESSION['MemEmail'] ?? 'guest'; // 세션 없을 경우 기본값 설정
-  $category = 'qna';
-
-  if ($title && $content) {
-      $sql = "INSERT INTO board (title, content, user_id, category, date) VALUES (?, ?, ?, ?, NOW())";
-      $stmt = $mysqli->prepare($sql);
-      $stmt->bind_param("ssss", $title, $content, $user_id, $category);
-
-      if ($stmt->execute()) {
-          echo "문의가 성공적으로 제출되었습니다.";
-      } else {
-          echo "문의 제출 중 오류가 발생했습니다.";
-      }
-      $stmt->close();
-  } else {
-      echo "모든 필드를 입력해주세요.";
-  }
-
-  $mysqli->close();
-  exit; // 응답 종료
-}
-
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
+
 ?>
