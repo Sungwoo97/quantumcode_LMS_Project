@@ -1,49 +1,51 @@
-<?php 
+<?php
 $title = "공지사항";
 $community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
-
-// 공지사항 데이터 배열 (23개)
-$notices = [
-    ["시스템 점검 안내 (12월 15일)", "관리자", "2024.12.01"],
-    ["[이벤트] 퀴즈 풀고 경품 받으세요!", "이벤트팀", "2024.11.29"],
-    ["연말 결산 보고 및 업데이트 소식", "관리자", "2024.11.25"],
-    ["보안 강화 및 비밀번호 변경 권장", "보안팀", "2024.11.20"],
-    ["공지사항 게시판 이용 안내", "관리자", "2024.11.18"],
-    ["신규 기능 업데이트 예정", "개발팀", "2024.11.10"],
-    ["서비스 약관 개정 안내", "법무팀", "2024.10.30"],
-    ["고객센터 운영 시간 변경", "고객지원팀", "2024.10.20"],
-    ["추석 연휴 배송 지연 안내", "물류팀", "2024.09.15"],
-    ["1:1 문의 게시판 개설 안내", "관리자", "2024.08.01"],
-    ["서비스 점검 완료 안내", "관리자", "2024.07.25"],
-    ["신규 강의 오픈 안내", "개발팀", "2024.07.10"],
-    ["사이트 리뉴얼 예정 안내", "관리자", "2024.06.25"],
-    ["보안 시스템 강화 공지", "보안팀", "2024.06.15"],
-    ["결제 시스템 업데이트 안내", "관리자", "2024.06.01"],
-    ["여름 휴가 기간 배송 안내", "물류팀", "2024.05.25"],
-    ["신규 이벤트 참여 방법 안내", "이벤트팀", "2024.05.10"],
-    ["데이터 백업 및 점검 안내", "시스템팀", "2024.04.30"],
-    ["고객센터 확장 운영 공지", "고객지원팀", "2024.04.20"],
-    ["회원 가입 이벤트 소식", "이벤트팀", "2024.04.10"],
-    ["이용약관 변경 안내", "법무팀", "2024.04.05"],
-    ["긴급 서버 점검 안내", "시스템팀", "2024.03.25"],
-    ["자주 묻는 질문 업데이트", "관리자", "2024.03.15"]
-];
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php'); // DB 연결
 
 // 페이지네이션 설정
-$items_per_page = 10;
-$total_items = count($notices);
-$total_pages = ceil($total_items / $items_per_page);
-$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$items_per_page = 10; // 한 페이지에 표시할 항목 수
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // 현재 페이지
 
-// 페이지 범위 설정
-if ($current_page < 1) $current_page = 1;
+if ($current_page < 1) $current_page = 1; // 페이지 범위 제한
+
+// 총 게시물 수 계산
+$total_items_sql = "SELECT COUNT(*) AS total FROM board WHERE category = 'notice'";
+$total_items_result = $mysqli->query($total_items_sql);
+$total_items_row = $total_items_result->fetch_assoc();
+$total_items = $total_items_row['total'];
+
+// 총 페이지 수 계산
+$total_pages = ceil($total_items / $items_per_page);
 if ($current_page > $total_pages) $current_page = $total_pages;
 
+// 데이터 가져오기
 $start_index = ($current_page - 1) * $items_per_page;
-$paginated_notices = array_slice($notices, $start_index, $items_per_page);
+$sql = "SELECT pid, title, content, user_id, date FROM board WHERE category = 'notice' ORDER BY date DESC LIMIT ?, ?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("ii", $start_index, $items_per_page);
+$stmt->execute();
+$result = $stmt->get_result();
+$notices = $result->fetch_all(MYSQLI_ASSOC);
 ?>
+
+<!-- 스타일 -->
+<style>
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+
+</style>
 
 <div class="title_box">
   <div class="container">
@@ -66,24 +68,26 @@ $paginated_notices = array_slice($notices, $start_index, $items_per_page);
     </aside>
   
     <div class="notice content col-10">
-      <h6>퀀텀코드의 공지사항입니다.</h6>
+      <div class="d-flex justify-content-between align-items-center">
+        <h6>퀀텀코드 공지사항</h6>
+      </div>
       <hr>
       <table class="table table-hover text-center">
         <thead>
           <tr>
-            <th scope="col" class="num">No</th>
-            <th scope="col">제목</th>
-            <th scope="col" class="writer">글쓴이</th>
-            <th scope="col" class="date">게시일</th>
+            <th scope="col" class="num" style="width: 5%;">No</th>
+            <th scope="col" style="width: 50%;">제목</th>
+            <th scope="col" style="width: 15%;">작성자</th>
+            <th scope="col" style="width: 30%;">게시일</th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($paginated_notices as $index => $notice): ?>
+          <?php foreach ($notices as $index => $notice): ?>
             <tr>
               <th scope="row"><?= $total_items - $start_index - $index ?></th>
-              <td class="post"><a href="#"><?= $notice[0] ?></a></td>
-              <td><?= $notice[1] ?></td>
-              <td><?= $notice[2] ?></td>
+              <td class="post"><a href="#" class="view-content" data-title="<?= htmlspecialchars($notice['title']) ?>" data-content="<?= htmlspecialchars($notice['content']) ?>"><?= htmlspecialchars($notice['title']) ?></a></td>
+              <td><?= htmlspecialchars($notice['user_id']) ?></td>
+              <td><?= htmlspecialchars($notice['date']) ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -111,6 +115,47 @@ $paginated_notices = array_slice($notices, $start_index, $items_per_page);
     </div>
   </div>
 </div>
+
+<!-- 모달 -->
+<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- 넓이를 크게 하기 위해 modal-lg 클래스 추가 -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contentModalLabel">게시물 내용</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 id="modalTitle"></h5>
+        <p id="modalContent"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // 제목 클릭 시 모달 표시
+    const links = document.querySelectorAll(".view-content");
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const title = this.getAttribute("data-title");
+        const content = this.getAttribute("data-content");
+
+        // 모달에 데이터 삽입
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalContent").textContent = content;
+
+        // 모달 표시
+        const contentModal = new bootstrap.Modal(document.getElementById("contentModal"));
+        contentModal.show();
+      });
+    });
+  });
+</script>
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
