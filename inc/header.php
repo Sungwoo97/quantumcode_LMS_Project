@@ -486,6 +486,11 @@ if (isset($libVideo_js)) {
                       const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
                       couponModal.show();
 
+                       // 새로고침 강제 실행
+                      couponModal._element.addEventListener("hidden.bs.modal", function() {
+                        location.reload();
+                      });
+
                     } else {
                       alert("쿠폰 발급 실패: " + couponData.error);
                     }
