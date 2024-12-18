@@ -236,8 +236,8 @@ while($notice_row = $notice_result->fetch_object()){
    <!-- $_SESSION['MUNAME']이 설정되어 있는 경우에만 출력
    추천 알고리즘은 아직 만드는중 ㅜㅜ  -->
    <?php 
-if (isset($_SESSION['MUNAME'])): 
-?>
+  if (isset($_SESSION['MUNAME'])): 
+  ?>
   <div class="main_popular container"> <!-- Flex 컨테이너 -->
     <h6><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님을 위한 맞춤별 추천 강의</h6>
     <h3 class="mb-3">맞춤별 추천 강의</h3>
