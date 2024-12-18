@@ -420,9 +420,26 @@ section.desc{
 .view .modal-body{
   padding: 20px;
 }
-.view .modal-body span{
+.view .modal-body b{
   font-weight: 500;
   font-size: 24px;
+}
+.view .modal-body ul{
+  list-style: none;
+  padding: 0;
+}
+.view .modal-body li{
+  display: flex;
+  justify-content: start;
+}
+.view .modal-body span{
+  width: 30%;
+  color: #797979;
+  font-weight: 400;
+}
+.view .modal-body strong{
+  font-weight: 500;
+  color: #495057;
 }
 .view .modal-footer{
   padding: 10px 20px;

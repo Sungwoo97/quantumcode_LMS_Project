@@ -291,16 +291,24 @@ while ($review_data = $review_result->fetch_object()) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <dl>
-          <dt>신청자</dt>
-          <dd><?= $user_data->memName ?></dd>
-          <dt>이메일</dt>
-          <dd><?= $user_data->memEmail ?></dd>
-          <dt>전화번호</dt>
-          <dd><?= $callnum ?></dd>
+        <ul>
+          <li>
+            <span>신청자</span>
+            <strong><?= $user_data->memName ?></strong>
+          </li>
+          <li>
+            <span>이메일</span>
+            <strong><?= $user_data->memEmail ?></strong>
+          </li>
+          <li>
+            <span>전화번호</span>
+            <strong><?= $callnum ?></strong>
+          </li>
+        </ul>
+        <div>
 
-          <dt>쿠폰</dt>
-          <dd>
+          <div>쿠폰</div>
+          <div class="mb-3">
             <select class="form-select" name="coupon" id="coupon">
               <option value="0" selected>쿠폰 선택</option>
               <?php
@@ -319,10 +327,11 @@ while ($review_data = $review_result->fetch_object()) {
               }
               ?>
             </select>
-          </dd>
-        </dl>
+          </div>
+        </div>
+
         <div class="d-flex justify-content-between">
-          <span class="font">결제 금액</span><span data-price="<?= $value ?>" class="normal-font total_payment"> <?= $value ?> 원</span>
+          <b class="font">결제 금액</b><b data-price="<?= $value ?>" class="normal-font total_payment"> <?= $value ?> 원</b>
         </div>
       </div>
       <div class="modal-footer">

@@ -54,6 +54,10 @@ if (isset($_SESSION['MemEmail'])) {
 } else {
   // 로그인 상태가 아니면 모달 표시 안 함
   $showModal = false;
+  //로그인 상태가 아니라면 
+  $email = '';
+  $memId = '';
+  $memName = '';
 }
 
 //쪽지 갯수 확인하는 sql
@@ -79,10 +83,6 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-//로그인 상태가 아니라면 
-$email = '';
-$memId = '';
-$memName = '';
 
 
 
@@ -191,9 +191,9 @@ if (isset($libVideo_js)) {
                 강의
               </a>
               <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0001">프론트엔드</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0002">백엔드</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0003">게임</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0001">Frontend</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0002">Backend</a></li>
+                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0003">Database</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
