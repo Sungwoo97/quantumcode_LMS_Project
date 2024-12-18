@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-18 09:41
+-- 생성 시간: 24-12-18 10:17
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -76,54 +76,25 @@ CREATE TABLE `board` (
 --
 
 INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `status`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`, `img`, `is_img`, `start_date`, `end_date`) VALUES
-(1, NULL, '123123', '123123123', 0, NULL, NULL, '2024-11-11 08:18:06', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(2, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:07', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(3, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:08', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(5, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:09', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(6, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:27', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(7, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:27', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(9, NULL, '', '', 0, NULL, NULL, '2024-11-11 08:18:28', NULL, NULL, NULL, '', '', NULL, NULL, NULL),
-(10, NULL, '1111', '1111', 0, NULL, NULL, '2024-11-11 08:18:42', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(11, NULL, '12312412', '1241231231', 0, NULL, NULL, '2024-11-11 08:19:40', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(12, NULL, 'free', 'free', 0, NULL, NULL, '2024-11-11 08:22:02', NULL, NULL, NULL, 'free', '', NULL, NULL, NULL),
-(25, '', '하하', '아룡함니꺼', 0, NULL, NULL, '2024-11-12 07:26:09', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(31, '', '공지1', '공지1', 0, NULL, NULL, '2024-11-13 07:56:25', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(32, '', '자유1', '자유1', 0, NULL, NULL, '2024-11-13 07:56:36', NULL, NULL, NULL, 'free', '', NULL, NULL, NULL),
-(35, '', '조회1', '조회1', 0, NULL, NULL, '2024-11-13 08:18:18', NULL, NULL, NULL, 'notice', '', NULL, NULL, NULL),
-(39, '', '공지 추천1', '공지 추천1', 0, NULL, NULL, '2024-11-13 08:53:47', NULL, 1, 5, 'notice', '', NULL, NULL, NULL),
-(41, '', '추천2', '추천2', 0, NULL, NULL, '2024-11-13 08:58:07', NULL, 2, 3, 'notice', '', NULL, NULL, NULL),
-(43, '', '자유 추천', '자유 추천', 0, NULL, NULL, '2024-11-13 09:00:12', NULL, 2, 3, 'free', '', NULL, NULL, NULL),
-(44, '', '88', '88', 0, NULL, NULL, '2024-11-13 09:02:03', NULL, 1, 5, 'free', '', NULL, NULL, NULL),
-(45, '', '77', '77', 0, NULL, NULL, '2024-11-13 09:03:06', NULL, 3, 5, 'notice', '', NULL, NULL, NULL),
-(46, '', '66', '66', 0, NULL, NULL, '2024-11-13 09:05:18', NULL, 2, 5, 'notice', '', NULL, NULL, NULL),
-(47, '', '55', '55', 0, NULL, NULL, '2024-11-13 09:07:32', NULL, 2, 3, 'notice', '', NULL, NULL, NULL),
-(48, '', '11', '11', 0, NULL, NULL, '2024-11-13 09:09:02', NULL, 3, 20, 'notice', '', NULL, NULL, NULL),
-(50, '', '11', '11', 0, NULL, NULL, '2024-11-14 07:34:15', NULL, 0, 0, 'notice', '', NULL, NULL, NULL),
-(51, '', '99', '99', 0, NULL, NULL, '2024-11-14 07:34:44', NULL, 2, 0, 'notice', '', NULL, NULL, NULL),
-(52, '', '11', '11', 0, NULL, NULL, '2024-11-14 08:05:49', NULL, 1, 0, 'notice', '', NULL, NULL, NULL),
-(53, '', '11', '11', 0, NULL, NULL, '2024-11-14 08:15:00', NULL, 2, 0, 'free', '', NULL, NULL, NULL),
-(55, '', '222', '222', 0, NULL, NULL, '2024-11-14 08:35:37', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
-(56, '', '666', '666', 0, NULL, NULL, '2024-11-14 08:38:29', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
-(60, '', '1251515', '31461436143', 0, NULL, NULL, '2024-11-14 09:08:33', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
-(61, NULL, '24', '15', 0, NULL, NULL, '2024-11-17 12:42:14', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
-(62, NULL, '24', '15', 0, NULL, NULL, '2024-11-17 12:44:06', NULL, 1, 0, 'free', '', NULL, NULL, NULL),
-(90, NULL, '이미지', '이미지', 0, NULL, NULL, '2024-11-18 04:19:54', NULL, 1, 0, 'free', './upload/logo2.png', 1, NULL, NULL),
-(91, NULL, '1123', '23232', 0, NULL, NULL, '2024-11-18 05:52:09', NULL, 1, 0, 'notice', './upload/', 0, NULL, NULL),
-(92, NULL, '1', '1', 0, NULL, NULL, '2024-11-18 05:59:29', NULL, 1, 0, 'notice', './upload/qqq.jpg', 1, NULL, NULL),
-(93, NULL, '22', '22', 0, NULL, NULL, '2024-11-18 06:05:18', NULL, 2, 0, 'free', './upload/', 0, NULL, NULL),
-(95, NULL, '123456789123456789', 'ㅁㄹㄴㅁㄻㄹㄴㅁ', 0, NULL, NULL, '2024-11-18 07:21:18', NULL, 1, 0, 'free', './upload/', 0, NULL, NULL),
-(96, NULL, '123456789ㅂㅈㄷㅂ', 'ㅂㅈㅈㅂ', 0, NULL, NULL, '2024-11-18 07:22:23', NULL, 3, 0, 'notice', './upload/', 0, NULL, NULL),
-(101, NULL, '11', '11', 0, NULL, NULL, '2024-11-19 01:08:32', NULL, 2, 1, 'notice', './upload/qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(103, 'admin', '관리자 뚱마루', '관리자 뚱마루', 0, NULL, NULL, '2024-11-20 04:02:28', NULL, 7, 2, 'notice', '/qc/admin/board/upload/1732075348_qqq4.jpg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(106, 'admin', '이벤트3', '이벤트3', 0, NULL, NULL, '2024-11-20 04:06:44', NULL, 6, 0, 'event', '/qc/admin/board/upload/1732075604_qqq3.png', 1, '2024-11-20 00:00:00', '2024-11-30 00:00:00'),
-(107, 'admin', '123123', '123123', 0, NULL, NULL, '2024-11-24 19:39:21', NULL, 1, 0, 'free', ' ', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(108, 'admin', 'test', 'test', 0, NULL, NULL, '2024-11-24 19:40:01', NULL, 0, 0, 'free', ' ', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(109, 'kwak', '1111', '1111', 0, NULL, NULL, '2024-11-24 19:43:58', NULL, 3, 0, 'notice', ' ', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(110, 'kwak', '1111', '1111', 0, NULL, NULL, '2024-11-24 19:44:26', NULL, 1, 0, 'notice', ' ', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(111, 'kwak', '1111test', '1111etste', 0, NULL, NULL, '2024-11-24 19:45:01', NULL, 3, 0, 'notice', ' ', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(112, 'admin', '이게 뭔가요', '그러게요', 1, NULL, NULL, '2024-11-25 02:39:41', NULL, 5, 0, 'qna', '/qc/admin/board/upload/1732504358_qqq3.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(113, 'kwak', '이거 모르겠어요', '모르겠어요', 0, NULL, NULL, '2024-11-25 02:40:56', NULL, 6, 1, 'qna', '/qc/admin/board/upload/1732780521_qqq4.jpg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(114, 'admin', 'gdgsgsd1', 'sgassg1', 0, NULL, NULL, '2024-11-25 07:45:55', NULL, 3, 1, 'notice', '/qc/admin/board/upload/1732780305_qqq2.png', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(116, 'admin', '자주 묻는 질문 게시판 개설.', '게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.', 0, NULL, NULL, '2024-12-18 05:23:42', NULL, 3, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(117, '', 'test', 'etste', 0, NULL, NULL, '2024-12-18 05:28:47', NULL, 1, 0, 'free', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(118, 'admin', '시스템 점검 안내', '시스템 점검이 예정되어 있습니다. 불편을 드려 죄송합니다.', 0, NULL, NULL, '2024-12-17 21:00:00', NULL, 10, 0, 'notice', '', 0, NULL, NULL),
+(119, 'admin', '신규 강의 업데이트', '신규 강의가 추가되었습니다. 자세한 내용은 공지를 참고하세요.', 0, NULL, NULL, '2024-12-17 21:30:00', NULL, 8, 0, 'notice', '', 0, NULL, NULL),
+(120, 'admin', '연말 이벤트 안내', '연말 이벤트가 시작됩니다. 많은 참여 바랍니다.', 0, NULL, NULL, '2024-12-17 22:00:00', NULL, 15, 0, 'notice', '', 0, NULL, NULL),
+(121, 'admin', '서비스 약관 변경', '서비스 약관이 일부 변경되었습니다. 확인 부탁드립니다.', 0, NULL, NULL, '2024-12-17 22:30:00', NULL, 5, 0, 'notice', '', 0, NULL, NULL),
+(122, 'admin', '데이터 백업 안내', '데이터 백업 작업이 진행될 예정입니다.', 0, NULL, NULL, '2024-12-17 23:00:00', NULL, 6, 0, 'notice', '', 0, NULL, NULL),
+(123, 'admin', '1:1 문의 게시판 개설', '1:1 문의 게시판이 새롭게 개설되었습니다.', 0, NULL, NULL, '2024-12-17 23:30:00', NULL, 9, 0, 'notice', '', 0, NULL, NULL),
+(124, 'admin', '추석 연휴 배송 지연', '추석 연휴 기간 동안 배송이 지연될 수 있습니다.', 0, NULL, NULL, '2024-12-18 00:00:00', NULL, 13, 0, 'notice', '', 0, NULL, NULL),
+(125, 'admin', '고객센터 운영 시간 변경', '고객센터 운영 시간이 변경되었습니다.', 0, NULL, NULL, '2024-12-18 00:30:00', NULL, 4, 0, 'notice', '', 0, NULL, NULL),
+(126, 'admin', '서비스 점검 완료', '서비스 점검이 완료되었습니다.', 0, NULL, NULL, '2024-12-18 01:00:00', NULL, 3, 0, 'notice', '', 0, NULL, NULL),
+(127, 'admin', '보안 강화 안내', '보안 시스템이 강화되었습니다.', 0, NULL, NULL, '2024-12-18 01:30:00', NULL, 7, 0, 'notice', '', 0, NULL, NULL),
+(128, 'admin', '신규 이벤트 참여 방법', '신규 이벤트 참여 방법을 안내드립니다.', 0, NULL, NULL, '2024-12-18 02:00:00', NULL, 11, 0, 'notice', '', 0, NULL, NULL),
+(129, 'admin', '회원 가입 이벤트', '회원 가입 이벤트가 시작됩니다.', 0, NULL, NULL, '2024-12-18 02:30:00', NULL, 13, 0, 'notice', '', 0, NULL, NULL),
+(130, 'admin', '긴급 서버 점검', '긴급 서버 점검이 진행 중입니다.', 0, NULL, NULL, '2024-12-18 03:00:00', NULL, 14, 0, 'notice', '', 0, NULL, NULL),
+(131, 'admin', 'FAQ 업데이트', 'FAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.', 0, NULL, NULL, '2024-12-18 03:30:00', NULL, 11, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(132, 'admin', '이용 약관 변경', '이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.', 0, NULL, NULL, '2024-12-18 04:00:00', NULL, 9, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(133, 'admin', '코딩이 너무 어려운데 어쩌죠?코딩이 너무 어려운데 어쩌죠?', '123123123123123123123123', 0, NULL, NULL, '2024-12-18 07:37:01', NULL, 1, 0, 'qna', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(134, 'admin', '새로운 강의 빨리 만들어주세요', '새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요', 0, NULL, NULL, '2024-12-18 08:16:55', NULL, 0, 0, 'qna', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1260,7 +1231,7 @@ ALTER TABLE `admins`
 -- 테이블의 AUTO_INCREMENT `board`
 --
 ALTER TABLE `board`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_like`
