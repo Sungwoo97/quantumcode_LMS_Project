@@ -5,11 +5,6 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
-
-
-// $userid = 5;
-// $username = '홍길동';
-
 $tuition = '';
 
 $lid = $_GET['lid'];
@@ -93,9 +88,9 @@ while ($coupon_row = $coupon_result->fetch_object()) {
 $user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
-if(isset($user_data->number)){
+if (isset($user_data->number)) {
   $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
-}else{
+} else {
   $callnum = 0;
 }
 
@@ -181,7 +176,7 @@ while ($review_data = $review_result->fetch_object()) {
     </div>
   </section>
 
-  <aside class="">
+  <aside>
     <div class="lecture_coverImg">
       <img src="<?= $data->cover_image ?>" alt="">
     </div>
@@ -210,16 +205,22 @@ while ($review_data = $review_result->fetch_object()) {
           <dd><?= $data->expiration_day ?></dd>
         </dl>
       </div>
-      <div class="control m-3 d-flex flex-column gap-3">
+      <div class="control m-3 d-flex flex-column justify-content-center gap-3">
         <?php
-        if (!$buy_data) {
+        if (isset($user_data)) {
+          if (!$buy_data) {
         ?>
-          <button type="button" class=" btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paybtn">결제하기</button>
-          <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">담기</a>
-        <?php
+            <button type="button" class=" btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paybtn">결제하기</button>
+            <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">담기</a>
+          <?php
+          } else {
+          ?>
+            <a href="lecture_read.php?lid=<?= $lid ?>" class="btn btn-primary w-100">학습하기</a>
+          <?php
+          }
         } else {
-        ?>
-          <a href="lecture_read.php?lid=<?= $lid ?>" class="btn btn-primary w-100">학습하기</a>
+          ?>
+          <p class="loginMessage">로그인 후 이용해주세요</p>
         <?php
         }
         ?>
@@ -254,26 +255,26 @@ while ($review_data = $review_result->fetch_object()) {
   <div class="lecture_review row">
     <?= $review ?>
     <?php
-    if(isset($email) && $email !== ''){
+    if (isset($email) && $email !== '') {
     ?>
-    <form class="review d-flex gap-3 align-items-center mb-3 ml-3 col-8">
-      <div>
-        <img src="../img/icon-img/UsersFour.svg" width="50" alt="">
-      </div>
-      <div class="name">
-        <h5><?= $memName ?></h5>
-      </div>
-      <div class="d-flex w-100">
-        <div class="w-100">
-          <textarea type="text" class="form-control " name="review" id="review"></textarea>
+      <form class="review d-flex gap-3 align-items-center mb-3 ml-3 col-8">
+        <div>
+          <img src="../img/icon-img/UsersFour.svg" width="50" alt="">
         </div>
-        <div class=" mx-3">
-          <button class=" btn btn-primary">작성</button>
+        <div class="name">
+          <h5><?= $memName ?></h5>
         </div>
-      </div>
-    </form>
+        <div class="d-flex w-100">
+          <div class="w-100">
+            <textarea type="text" class="form-control " name="review" id="review"></textarea>
+          </div>
+          <div class=" mx-3">
+            <button class=" btn btn-primary">작성</button>
+          </div>
+        </div>
+      </form>
     <?php
-      }
+    }
     ?>
   </div>
 
@@ -281,7 +282,7 @@ while ($review_data = $review_result->fetch_object()) {
     <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
   </div>
 </div>
-<div class="modal fade" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
+<div class="modal fade view" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

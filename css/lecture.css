@@ -107,6 +107,7 @@ p {
   cursor: pointer;
 }
 
+
 /* 체크박스 선택 시 */
  .cart_check:checked + .cart_label {
   background-image: url('../img/icon-img/Check_Y.svg');
@@ -406,8 +407,27 @@ section.desc{
   p{
     font-size: 24px;
   }
-  
 }
+.view.modal{
+  --bs-modal-width : 400px
+}
+.view.modal .btn{
+  width: auto;
+}
+.view .modal-header{
+  padding: 10px 20px;
+}
+.view .modal-body{
+  padding: 20px;
+}
+.view .modal-body span{
+  font-weight: 500;
+  font-size: 24px;
+}
+.view .modal-footer{
+  padding: 10px 20px;
+}
+
 .lecture_review{
   margin-bottom: 60px;
 }

@@ -67,10 +67,10 @@ if (isset($_SESSION['MemEmail'])) {
   if ($loginCount == 1 && $firstCouponIssued == 0) {
     $showModal = true;
   }
-}else{
+} else {
   //로그인 상태가 아니라면 
   $email = '';
-  $memId = '';     
+  $memId = '';
   $memName = '';
 }
 
@@ -96,6 +96,7 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- Custom CSS -->
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
   <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/header.css">
 
   <!-- favicon -->
 
@@ -226,8 +227,8 @@ if (isset($libVideo_js)) {
               </a>
 
               <!-- 사용자 이름 표시 -->
-              <a id="userLink" 
-                href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" 
+              <a id="userLink"
+                href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>"
                 class="text-primary me-3">
                 <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
               </a>
@@ -238,7 +239,7 @@ if (isset($libVideo_js)) {
 
             <!-- 장바구니 모달 -->
             <!-- 임시 출력 코드 삽입 -->
-            <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
+            <div class="modal fade cart" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="false">
               <div class="modal-dialog" id="cartModalDialog" style="position: absolute;">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -249,17 +250,20 @@ if (isset($libVideo_js)) {
                     <?php
                     if (!empty($dataArr)) {
                       foreach ($dataArr as $item) {
+                        $price = number_format($item->price);
                     ?>
                         <li>
                           <img src="<?= $item->cover_image ?>" alt="" width="100" height="50">
-                          <a href=""><?= $item->title ?></a><span><?= $item->price ?></span>
+                          <a href=""><?= $item->title ?></a>
+                          <span><?= $price ?>원</span>
                         </li>
+                        <hr>
                       <?php
                       }
                       ?>
                       <div class="d-flex justify-content-between align-items-center mt-3">
                         <span class="fw-bold">합계:</span>
-                        <span class="text-primary fw-bold"><?= $total ?> 원</span>
+                        <span class="text-primary fw-bold"><?= number_format($total) ?> 원</span>
                       </div>
                     <?php
                     } else {
