@@ -79,7 +79,7 @@
                 <!-- 휴대폰 번호 입력과 중복체크 버튼 -->
                 <div class="form-group mb-3">
                     <div class="input-group">
-                        <input type="tel" class="form-control" name="number" id="number" placeholder="휴대폰 번호를 입력해주세요" required maxlength="13" style="border-radius: 8px;">
+                        <input type="text" class="form-control" name="number" id="number" placeholder="휴대폰 번호를 입력해주세요" required maxlength="13" style="border-radius: 8px;">
                         <button class="btn btn-outline-secondary ms-2" type="button" style="border-radius: 8px;" id="numberCheck">중복체크</button>
                     </div>
                 </div>
@@ -146,6 +146,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+
     <script>
     //지금 시간을 디비에 저장하도록 설정.
     document.addEventListener('DOMContentLoaded', function () {
@@ -293,10 +298,11 @@
     $('#emailCheck').click(function(){
         let value = $('#email').val();
         if(value == ''){
-        alert('email을 입력해주세요.');
+        alert('이메일을 입력해주세요.');
         $('#email').focus();
         } else{
         Check_func('email', value);
+        console.log('이메일 보내지는 것도됌')
         }
      });
 
@@ -304,10 +310,11 @@
         let value = $('#number').val();
         console.log(value);
         if(value == ''){
-        alert('전화번호를 입력해주세요 111');
+        alert('전화번호를 입력해주세요');
         $('#number').focus();
         } else{
         Check_func('number', value);
+        console.log('번호 보내지는 것도됌')
         }
     });
 
@@ -336,22 +343,30 @@
           alert('중복됩니다, 다시 시도해주세요.');
         }else{
           alert('사용할 수 있습니다.');
-          idChecked = true
+          emailChecked = true;
+          numberChecked = true;
         }
         }
       }
     )
   }
 
-  $('#signUp_ok').submit(function(e){
-    if (!idChecked) {
-        e.preventDefault();
-        alert('아이디 중복체크를 해주세요');
-    } else{
-        $('#signUp_ok').submit();
-    }
-  });
+  $('#signUp_ok').submit(function(e) {
+    // 필수 체크박스 상태 확인
+    const agreeTermsChecked = $('#agree_terms').is(':checked');
+    const agreePrivacyChecked = $('#agree_privacy').is(':checked');
 
+    if (!emailChecked || !numberChecked) {
+        e.preventDefault(); // 제출 막기
+        alert('이메일과 전화번호 중복 체크에 문제가 있습니다. 다시 확인해주세요.');
+    } else if (!agreeTermsChecked || !agreePrivacyChecked) {
+        e.preventDefault(); // 제출 막기
+        alert('필수 약관에 동의해주세요.');
+    } else {
+        // 모든 조건이 만족되었을 때만 폼 제출
+        $(this).unbind('submit').submit(); // 기본 제출 이벤트를 다시 연결하여 실행
+    }
+});
     </script>
 </body>
 </html>
