@@ -1,5 +1,6 @@
 <?php
 session_start();
+// print_r($_SESSION);
 //print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MemId] => 149 [MUNAME] => 윤네이버 [Mgrade] => bronze )
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
@@ -185,7 +186,7 @@ if (isset($libVideo_js)) {
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#">커뮤니티</a>
+              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">커뮤니티</a>
               <ul class="dropdown-menu" aria-labelledby="communityDropdown">
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">공지사항</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
