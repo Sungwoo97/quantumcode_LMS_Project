@@ -32,14 +32,29 @@ if (isset($_SESSION['MemEmail'])) {
   }
 
   // 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
-  $sql = "SELECT memId, login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+  $sql = "SELECT memId, login_count, first_coupon_issued, modal_shown FROM memberskakao WHERE memEmail = ?";
   $stmt = $mysqli->prepare($sql);
   $stmt->bind_param("s", $email);
   $stmt->execute();
-  $stmt->bind_result($memId, $loginCount, $firstCouponIssued);
+  $stmt->bind_result($memId, $loginCount, $firstCouponIssued, $modalShown);
   $stmt->fetch();
   $stmt->close();
 
+  // 로그인 처음 + 쿠폰 발급 안된 경우 + 모달이 아직 표시되지 않은 경우에만 표시
+  if ($loginCount == 1 && $firstCouponIssued == 0 && $modalShown == 0) {
+    $showModal = true;
+
+    // 모달 표시 후 상태 업데이트
+    $updateSql = "UPDATE memberskakao SET modal_shown = 1 WHERE memEmail = ?";
+    $updateStmt = $mysqli->prepare($updateSql);
+    $updateStmt->bind_param("s", $email);
+    $updateStmt->execute();
+    $updateStmt->close();
+   }
+  } else {
+  // 로그인 상태가 아니면 모달 표시 안 함
+  $showModal = false;
+  }
 
   //쪽지 갯수 확인하는 sql
   $sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
@@ -64,16 +79,11 @@ if (isset($_SESSION['MemEmail'])) {
   }
   $stmt->close();
 
-  // 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
-  if ($loginCount == 1 && $firstCouponIssued == 0) {
-    $showModal = true;
-  }
-}else{
   //로그인 상태가 아니라면 
   $email = '';
   $memId = '';     
   $memName = '';
-}
+
 
 
 ?>
@@ -323,7 +333,7 @@ if (isset($libVideo_js)) {
             <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
           <?php endif; ?>
   </nav>
-
+  
   <!-- 모달 HTML 위치는 자유롭게 변경 가능합니다. -->
   <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -406,18 +416,18 @@ if (isset($libVideo_js)) {
       <?php if ($showModal): ?>
         // 첫 번째 모달 표시
         const welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"), {
-          keyboard: true,
-          backdrop: "static",
+            keyboard: true,
+            backdrop: "static",
         });
         welcomeModal.show();
 
         // "다음" 버튼 클릭 시 두 번째 모달 표시
-        document.getElementById("nextButton").addEventListener("click", function() {
-          welcomeModal.hide(); // 첫 번째 모달 닫기
-          const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
-          secondModal.show(); // 두 번째 모달 열기
+        document.getElementById("nextButton").addEventListener("click", function () {
+            welcomeModal.hide(); // 첫 번째 모달 닫기
+            const secondModal = new bootstrap.Modal(document.getElementById("secondModal"));
+            secondModal.show(); // 두 번째 모달 열기
         });
-      <?php endif; ?>
+        <?php endif; ?>
 
       //선택한 것 지정해서 저장하는 코드
       const categoryButtons = document.querySelectorAll(".category-btn");
