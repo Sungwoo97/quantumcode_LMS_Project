@@ -41,7 +41,7 @@ if (!empty($duplicates)) {
 }
 
 if (!empty($ucid)) {
-  $up_sql = "UPDATE coupons_usercp SET status = 2, usedate = now() WHERE ucid = $ucid";
+  $up_sql = "UPDATE coupons_usercp SET status = 0, usedate = now() WHERE ucid = $ucid";
   $up_result = $mysqli->query($up_sql);
 }
 
