@@ -233,68 +233,87 @@ while($notice_row = $notice_result->fetch_object()){
 
 
 
-   <!-- $_SESSION['MUNAME']이 설정되어 있는 경우에만 출력
-   추천 알고리즘은 아직 만드는중 ㅜㅜ  -->
-   <?php 
-  if (isset($_SESSION['MUNAME'])): 
-  ?>
-  <div class="main_popular container"> <!-- Flex 컨테이너 -->
-    <h6><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님을 위한 맞춤별 추천 강의</h6>
-    <h3 class="mb-3">맞춤별 추천 강의</h3>
-    <p>관심있는 강의를 추천알고리즘을 통해 만나보세요!</p>
-    <div class="popular">
-      <?php
-      foreach ($customRecommendedLectures as $item) {
-        $tuition = '';
-        if ($item['dis_tuition'] > 0) {
-          $tui_val = number_format($item['tuition']);
-          $distui_val = number_format($item['dis_tuition']);
-          $tuition .= "<p class=\"active-font\"> $distui_val 원 </p><p class=\"text-decoration-line-through small-font\"> $tui_val 원 </p>";
-        } else {
-          $tui_val = number_format($item['tuition']);
-          $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p><p class=\"small-font\"> &nbsp; </p>";
-        }
-      ?>
-        <section class="slide d-flex flex-column justify-content-between">
-          <div>
-            <div class="cover mb-2">
-              <img src="<?= htmlspecialchars($item['cover_image']) ?>" alt="강의 이미지">
+   <!-- user_categories 테이블에서 user_email이 $_SESSION['MemEmail']과 같은 경우에만 조건문을 보여주도록  -->
+   <?php
+if (isset($_SESSION['MemEmail'])) {
+    $email = $_SESSION['MemEmail'];
+
+    // Check if the user_email exists in the user_categories table
+    $checkUserQuery = "SELECT 1 FROM user_categories WHERE user_email = ?";
+    $checkUserStmt = $mysqli->prepare($checkUserQuery);
+    if (!$checkUserStmt) {
+        die('사용자 확인 쿼리 준비 실패: ' . $mysqli->error);
+    }
+
+    $checkUserStmt->bind_param("s", $email);
+    $checkUserStmt->execute();
+    $userExists = $checkUserStmt->get_result()->fetch_row();
+
+    $checkUserStmt->close();
+
+    // Display the content only if the user_email exists in the user_categories table
+    if ($userExists) {
+        ?>
+        <div class="main_popular container"> <!-- Flex 컨테이너 -->
+            <h6><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님을 위한 맞춤별 추천 강의</h6>
+            <h3 class="mb-3">맞춤별 추천 강의</h3>
+            <p>관심있는 강의를 추천알고리즘을 통해 만나보세요!</p>
+            <div class="popular">
+                <?php
+                foreach ($customRecommendedLectures as $item) {
+                    $tuition = '';
+                    if ($item['dis_tuition'] > 0) {
+                        $tui_val = number_format($item['tuition']);
+                        $distui_val = number_format($item['dis_tuition']);
+                        $tuition .= "<p class=\"active-font\"> $distui_val 원 </p><p class=\"text-decoration-line-through small-font\"> $tui_val 원 </p>";
+                    } else {
+                        $tui_val = number_format($item['tuition']);
+                        $tuition .=  "<p class=\"active-font\"> $tui_val 원 </p><p class=\"small-font\"> &nbsp; </p>";
+                    }
+                    ?>
+                    <section class="slide d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="cover mb-2">
+                                <img src="<?= htmlspecialchars($item['cover_image']) ?>" alt="강의 이미지">
+                            </div>
+                            <div class="info">
+                                <div class="title">
+                                    <h5 class="small-font mb-0"><a href="lecture/lecture_view.php?lid=<?= htmlspecialchars($item['lid']) ?>"><?= htmlspecialchars($item['title']) ?></a></h5>
+                                </div>
+                                <div class="tuition">
+                                    <?= $tuition ?>
+                                </div>
+                                <ul class="tags">
+                                    <?php if ($item['ispopular']): ?>
+                                        <li class="tag"><span> 인기 </span></li>
+                                    <?php endif; ?>
+                                    <?php if ($item['isrecom']): ?>
+                                        <li class="tag"><span> 추천 </span></li>
+                                    <?php endif; ?>
+                                    <?php if ($item['ispremium']): ?>
+                                        <li class="tag"><span> 프리미엄 </span></li>
+                                    <?php endif; ?>
+                                    <?php if ($item['isfree']): ?>
+                                        <li class="tag"><span> 무료 </span></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <?php
+                }
+                ?>
             </div>
-            <div class="info">
-              <div class="title">
-                <h5 class="small-font mb-0"><a href="lecture/lecture_view.php?lid=<?= htmlspecialchars($item['lid']) ?>"><?= htmlspecialchars($item['title']) ?></a></h5>
-              </div>
-              <div class="tuition">
-                <?= $tuition ?>
-              </div>
-              <ul class="tags">
-                <?php if ($item['ispopular']): ?>
-                  <li class="tag"><span> 인기 </span></li>
-                <?php endif; ?>
-                <?php if ($item['isrecom']): ?>
-                  <li class="tag"><span> 추천 </span></li>
-                <?php endif; ?>
-                <?php if ($item['ispremium']): ?>
-                  <li class="tag"><span> 프리미엄 </span></li>
-                <?php endif; ?>
-                <?php if ($item['isfree']): ?>
-                  <li class="tag"><span> 무료 </span></li>
-                <?php endif; ?>
-              </ul>
+            <div class="popular_controls">
+                <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
-          </div>
-        </section>
-      <?php
-      }
-      ?>
-    </div>
-    <div class="popular_controls">
-      <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
-      <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
-    </div>
-  </div>
-<?php 
-endif; // 조건문 종료
+        </div>
+        <?php
+    } else {
+        // echo "<p>추천 강의가 없습니다. 관심 카테고리를 설정해주세요!</p>";
+    }
+}
 ?>
 
   <div class="main_popular container"> <!-- Flex 컨테이너 -->
