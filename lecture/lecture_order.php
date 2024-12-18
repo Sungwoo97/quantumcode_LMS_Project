@@ -5,7 +5,12 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
-
+if ($email === '') {
+  echo "<script>
+  alert('로그인 이후 이용 가능한 기능입니다');
+  history.back();
+  </script>";
+}
 
 // $userid = 5;
 $total = 0;
@@ -24,8 +29,6 @@ while ($row = $result->fetch_object()) {
   $lidArr[] = $row->lid;
 }
 $lid = implode(',', $lidArr);
-
-
 
 
 $couponArr = [];
@@ -50,10 +53,6 @@ $user_data = $user_result->fetch_object();
 $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
 
 
-
-
-
-
 ?>
 <div class="container cart">
   <h2>수강바구니</h2>
@@ -63,7 +62,7 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
         <span class="">
           <input type="checkbox" class="cart_check" name="select_all" id="select_all">
           <label for="select_all" class="cart_label"></label>
-          <strong class="w-100">전체선택</strong>
+          <strong class="w-100 cart_tr">전체선택</strong>
         </span>
         <button class="btn btn-secondary sel_delete">선택 삭제</button>
       </div>
@@ -146,6 +145,8 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
   let numericValue = total_payment.replace(/[^0-9]/g, '');
   const lec_check = document.querySelectorAll('.table input[type="checkbox"]');
   const sel_delete = document.querySelector('.sel_delete');
+  const cart_tr = document.querySelector('.cart_tr');
+  const sel_all = document.getElementById('select_all');
 
   let checkArr = [];
   let priceArr = [];
@@ -264,7 +265,11 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
     })
   })
 
-  document.getElementById('select_all').addEventListener('click', function() {
+  cart_tr.addEventListener('click', function() {
+    sel_all.addEventListener('trig')
+  })
+
+  sel_all.addEventListener('click', function() {
     const isChecked = this.checked;
     document.querySelectorAll('.cart_check').forEach(checkbox => {
       checkbox.checked = isChecked; // 체크박스 상태 변경
