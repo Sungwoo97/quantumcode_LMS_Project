@@ -79,26 +79,23 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
         <thead>
           <tr>
             <th scope="col" class="num" style="width: 5%;">No</th>
-            <th scope="col" style="width: 50%;">제목</th>
-            <th scope="col" style="width: 10%;">조회</th>
-            <th scope="col" style="width: 10%;">답변</th>
-            <th scope="col" style="width: 25%;">게시일</th>
+            <th scope="col" style="width: 15%;">제목</th>
+            <th scope="col" style="width: 35%;">내용</th>
+            <th scope="col" style="width: 10%;">글쓴이</th>
+            <th scope="col" style="width: 7.5%;">조회</th>
+            <th scope="col" style="width: 7.5%;">답변</th>
+            <th scope="col" style="width: 20%;">게시일</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td class="post"><a href="#">문의 제목 예시</a></td>
-            <td>123</td>
-            <td>1</td>
-            <td>2024-12-18</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td class="post"><a href="#">문의 제목 예시 2</a></td>
-            <td>234</td>
-            <td>0</td>
-            <td>2024-12-17</td>
+            <th scope="row"></th>
+            <td class="post"><a href="#"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>

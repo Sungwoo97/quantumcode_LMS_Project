@@ -33,32 +33,20 @@ $notices = $result->fetch_all(MYSQLI_ASSOC);
 
 <!-- 스타일 -->
 <style>
-  /* 모달 전체 높이 조정 */
-  .modal-content-custom {
-    height: 190vh; /* 모달 창의 높이를 화면의 90%로 설정 */
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
   }
 
-  /* 모달 본문 높이 조정 */
-  .modal-body-custom {
-    text-align: left;
-    padding: 20px;
-    overflow-y: auto; /* 내용이 많을 경우 스크롤 추가 */
-    height: auto; /* 헤더와 푸터를 제외한 공간 차지 */
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
   }
 
-  #modalTitle {
-    margin-bottom: 20px; /* 제목과 내용 간격 */
-    font-size: 1.5rem; /* 제목 폰트 크기 */
-    font-weight: bold;
-  }
 
-  #modalContent {
-    margin: 0;
-    font-size: 1.1rem; /* 내용의 폰트 크기 */
-    line-height: 1.8; /* 줄 간격 */
-    white-space: pre-wrap; /* 줄바꿈 유지 */
-  }
 </style>
+
 <div class="title_box">
   <div class="container">
     <h2><?= $title ?></h2>  
@@ -80,15 +68,17 @@ $notices = $result->fetch_all(MYSQLI_ASSOC);
     </aside>
   
     <div class="notice content col-10">
-      <h6>퀀텀코드의 공지사항입니다.</h6>
+      <div class="d-flex justify-content-between align-items-center">
+        <h6>퀀텀코드 공지사항</h6>
+      </div>
       <hr>
       <table class="table table-hover text-center">
         <thead>
           <tr>
-            <th scope="col" class="num">No</th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col" class="date">게시일</th>
+            <th scope="col" class="num" style="width: 5%;">No</th>
+            <th scope="col" style="width: 50%;">제목</th>
+            <th scope="col" style="width: 15%;">작성자</th>
+            <th scope="col" style="width: 30%;">게시일</th>
           </tr>
         </thead>
         <tbody>
@@ -134,7 +124,7 @@ $notices = $result->fetch_all(MYSQLI_ASSOC);
         <h5 class="modal-title" id="contentModalLabel">게시물 내용</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body modal-body-custom">
+      <div class="modal-body">
         <h5 id="modalTitle"></h5>
         <p id="modalContent"></p>
       </div>
