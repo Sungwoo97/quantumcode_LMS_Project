@@ -254,10 +254,63 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     inquiryModal.show();
   });
 
-  
+  // 폼 제출 이벤트
+  document.getElementById("inquiryForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 기본 동작 방지
+    const formData = new FormData(this); // FormData로 폼 데이터 생성
+
+    fetch("", {
+      method: "POST",
+      body: formData
+    })
+      .then(response => response.text())
+      .then(result => {
+        if (result.trim() === "success") {
+          alert("문의가 성공적으로 제출되었습니다.");
+          const inquiryModal = bootstrap.Modal.getInstance(document.getElementById("inquiryModal"));
+          inquiryModal.hide(); // 모달 닫기
+          location.reload(); // 페이지 새로고침
+        } else {
+          console.error(result); // 오류 메시지 확인
+          alert("문의 제출 중 오류가 발생했습니다.1");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("문의 제출 중 문제가 발생했습니다.2");
+      });
+  });
 </script>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
+// 서버 처리
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php'); // DB 연결
 
-?>
+  // 데이터 가져오기
+  $title = $_POST['title'] ?? '';
+  $content = $_POST['content'] ?? '';
+  $user_id = $_SESSION['MemEmail'] ?? 'guest'; // 세션 없을 경우 기본값 설정
+  $category = 'qna';
+
+  if (!empty($title) && !empty($content)) {
+      // SQL 쿼리 작성
+      $sql = "INSERT INTO board (title, content, user_id, category, date) VALUES (?, ?, ?, ?, NOW())";
+      $stmt = $mysqli->prepare($sql);
+      $stmt->bind_param("ssss", $title, $content, $user_id, $category);
+
+      if ($stmt->execute()) {
+          echo "success";
+      } else {
+          echo "DB error: " . $mysqli->error;
+      }
+      $stmt->close();
+  } else {
+      echo "Validation error: Fields cannot be empty.";
+  }
+
+  $mysqli->close();
+  exit; // 응답 종료
+}
+
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php');
