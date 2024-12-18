@@ -68,14 +68,13 @@ try {
         $_SESSION['Mgrade'] = $memInfo['memGrade']; // 예: 회원 등급
     } else {
         // 신규 회원 처리
-        $sql_query = "INSERT INTO membersKAKAO (memName, memPassword, memEmail, memId, memProfilePath, memProfileName, memAddr, is_verified, is_email_verified)
+        $sql_query = "INSERT INTO membersKAKAO (memName, memPassword, memEmail, memId, grade, memAddr, is_verified, is_email_verified)
                       VALUES (
                           '" . $json_profile_data_array["nickname"] . "',
                           'kakaoPassword',
                           '" . $json_profile_data_array["email"] . "',
                           'kakaoId',
-                          '',
-                          '" . $json_profile_data_array["profile_image"] . "',
+                          'bronze',
                           'kakaoAddr',
                           1,
                           '" . $json_profile_data_array["is_email_verified"] . "'
@@ -96,7 +95,7 @@ try {
             $_SESSION['MemEmail'] = $new_user_data['memEmail'];
             $_SESSION['MemId'] = $new_user_data['memId'];
             $_SESSION['MUNAME'] = $new_user_data['memName'];
-            $_SESSION['Mgrade'] = 'bronze'; // 신규 회원은 기본 등급 설정
+            
         } else {
             throw new Exception("회원 정보 조회 실패: " . $mysqli->error);
         }
@@ -127,5 +126,5 @@ mysqli_close($mysqli);
 setcookie('state', '', time() - 3000);
 
 // 페이지 이동
-header("Location: ../index.php");
+header("Location: ../account/kakao_login_ok.php");
 exit;
