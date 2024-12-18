@@ -26,7 +26,7 @@ $vidArrJson = json_encode($vidArr);
 
 <div class="hidden_hover"></div>
 <div class="video">
-  <div class="video_wrapper">
+  <div class="video_wrapper d-flex">
     <video id="lecture-video" class="video-js" width="100%" height="100%" controls>
       <source src="<?= $vidArr[0] ?>" type="video/mp4">
 
@@ -36,20 +36,26 @@ $vidArrJson = json_encode($vidArr);
       <button id="prev-btn"><i class="fa-solid fa-backward"></i><span>이전 수업</span></button>
       <button id="next-btn"><span>다음 수업</span> <i class="fa-solid fa-forward"></i></button>
     </div>
+    <div class="video_info">
+      <h3>목차입니다</h3>
+      <p>설명입니다</p>
+    </div>
   </div>
   <aside>
-    <div class="index">
+    <div class="index" data-target="index">
       <img src="../img/icon-img/st_book.svg" width="40" alt="">
       <h5>강의 목차</h5>
     </div>
-    <div class="desc">
+    <div class="desc" data-target="desc">
       <img src="../img/icon-img/ChatText.svg" width="40" alt="">
       <h5>강의 설명</h5>
     </div>
-    <div>
 
-    </div>
+
+
+
   </aside>
+
 </div>
 
 
@@ -64,7 +70,9 @@ $vidArrJson = json_encode($vidArr);
   const nextBtn = document.getElementById('next-btn');
   const navBar = document.querySelector('.navbar');
   const hoverBar = document.querySelector('.hidden_hover');
-  const asideBtn = document.querySelectorAll('aside > div')
+  const asideBtn = document.querySelectorAll('aside > div');
+  const menuItems = document.querySelectorAll(".menu-item");
+
   let excuted = false;
   //헤더 호버 이벤트
   hoverBar.addEventListener('mouseenter', () => {
@@ -104,9 +112,28 @@ $vidArrJson = json_encode($vidArr);
   } else {
     alert('영상이 제공되지 않는 강의입니다.');
   }
+
+  //aside 메뉴를 열기
+  let currentTarget = null;
   asideBtn.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      btn.closest('aside').classList.toggle('active');
+      asideBtn.forEach(btn => {
+        btn.classList.remove('active');
+      })
+
+      const target = btn.getAttribute("data-target");
+      if (currentTarget === target) {
+        // 같은 메뉴를 클릭했을 때 닫기
+
+        btn.closest('.video').firstElementChild.classList.remove('open');
+        currentTarget = null;
+      } else {
+        // 다른 메뉴를 클릭했을 때
+        currentTarget = target;
+
+        btn.closest('.video').firstElementChild.classList.add('open')
+      };
+      e.target.classList.add('active');
     })
   })
 

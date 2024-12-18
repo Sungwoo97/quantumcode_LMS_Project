@@ -8,13 +8,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 $search = '';
 $search_keyword = $_GET['search_keyword'] ?? '';
 $cate = $_GET['cate'] ?? '';
+$keyword = '';
 
 if ($cate) {
   $search .= " AND category LIKE '%$cate%' ";
+  $cate_sql = "SELECT * FROM lecture_category WHERE code = '$cate'";
+  $cate_result = $mysqli->query($cate_sql);
+  $keyword = $cate_result->fetch_object()->name;
 }
 
 if ($search_keyword) {
   $search .= " AND (title LIKE '%$search_keyword%' OR description LIKE '%$search_keyword%')";
+  $keyword = $search_keyword;
 }
 //데이터의 개수 조회
 $page_sql = "SELECT COUNT(*) AS cnt FROM lecture_list WHERE 1=1 $search";
@@ -104,6 +109,14 @@ while ($tag_data = $tag_result->fetch_object()) {
   </div>
 </div>
 <div class="lecture_list container wrapper">
+  <?php
+  if ($keyword !== '') {
+  ?>
+    <p class="my-3"><?= $keyword ?>의 검색 결과는 총 <?= $row_num ?> 개 입니다</p>
+  <?php
+  }
+  ?>
+
   <form id="filterForm" class="row">
     <div class="col-4 col-lg-2">
       <select class="form-select" name="status" id="status">
