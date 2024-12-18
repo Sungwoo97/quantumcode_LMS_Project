@@ -24,7 +24,7 @@ composer를 통한 기능을 사용하기 때문에 composer update를 해야만
 
 ## 기술 스택
 
-- **Skill** : PHP, MySQL, JavaScript, HTML, CSS, Composer
+- **Skill** : PHP, MySQL, JavaScript, HTML, CSS, Composer, KAKAO API
 - **아이디어 회의** : Slack, FigJam
 
 ## 주요 기능
@@ -33,10 +33,14 @@ composer를 통한 기능을 사용하기 때문에 composer update를 해야만
   - 관리자 게시판 기능 (자유, Q&A, 이벤트, 공지사항)
   - 강사 관리 기능
   - 강의 관리 기능
-  - 로그인 및 회원 관리 기능
+  - 매출 관리 기능
+  - 로그인 기능
+  - 회원 관리 기능
   - 쿠폰 기능
 - 프론트 페이지 기능
   - 회원 로그인 기능 (카카오 연동)
+  - 회원 관리 기능 (쪽지, 강의 추천, 댓글달기)
   - 알고리즘 추천 기능
-  - 강의 결제 / 학습 기능
+  - 강의 결제 기능
+  - 강의 학습 기능
   - 회원 게시판 기능

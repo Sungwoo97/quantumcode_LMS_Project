@@ -242,11 +242,11 @@ while ($notice_row = $notice_result->fetch_object()) {
   <?php
   if (isset($_SESSION['MUNAME'])):
   ?>
-    <div class="main_popular container"> <!-- Flex 컨테이너 -->
+    <div class="recom_algorithm container"> <!-- Flex 컨테이너 -->
       <h6><?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님을 위한 맞춤별 추천 강의</h6>
       <h3 class="mb-3">맞춤별 추천 강의</h3>
       <p>관심있는 강의를 추천알고리즘을 통해 만나보세요!</p>
-      <div class="popular">
+      <div class="algorithm">
         <?php
         foreach ($customRecommendedLectures as $item) {
           $tuition = '';
@@ -292,7 +292,7 @@ while ($notice_row = $notice_result->fetch_object()) {
         }
         ?>
       </div>
-      <div class="popular_controls">
+      <div class="algorithm_controls">
         <button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>
         <button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>
       </div>
@@ -636,6 +636,14 @@ while ($notice_row = $notice_result->fetch_object()) {
     slidesToShow: 4,
     slidesToScroll: 1,
   })
+  $('.algorithm').slick({
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    prevArrow: $('.recom_algorithm .slick-prev'),
+    nextArrow: $('.recom_algorithm .slick-next'),
+  });
   $('.popular').slick({
 
     infinite: false,

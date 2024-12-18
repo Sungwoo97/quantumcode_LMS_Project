@@ -79,7 +79,8 @@ ON c.cid = cu.couponid
 WHERE cu.status = 1
 AND c.status = 1
 AND cu.userid = '$email'
-AND cu.use_max_date >=now() ";
+ ";
+//  AND cu.use_max_date >=now()
 $coupon_result = $mysqli->query($coupon_sql);
 while ($coupon_row = $coupon_result->fetch_object()) {
   $couponArr[] = $coupon_row;
