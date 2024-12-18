@@ -1,5 +1,6 @@
 <?php
 session_start();
+// print_r($_SESSION['MemEmail']);
 //print_r($_SESSION); //Array ( [MemEmail] => haemilyjh@naver.com [MemId] => 149 [MUNAME] => 윤네이버 [Mgrade] => bronze )
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
@@ -31,48 +32,58 @@ if (isset($_SESSION['MemEmail'])) {
   }
 
   // 처음 관심강의 선택하기 관련. `login_count`, `first_coupon_issued`, 그리고 `memId`를 가져오기
-  $sql = "SELECT memId, login_count, first_coupon_issued FROM memberskakao WHERE memEmail = ?";
+  $sql = "SELECT memId, login_count, first_coupon_issued, modal_shown FROM memberskakao WHERE memEmail = ?";
   $stmt = $mysqli->prepare($sql);
   $stmt->bind_param("s", $email);
   $stmt->execute();
-  $stmt->bind_result($memId, $loginCount, $firstCouponIssued);
+  $stmt->bind_result($memId, $loginCount, $firstCouponIssued, $modalShown);
   $stmt->fetch();
   $stmt->close();
 
-
-  //쪽지 갯수 확인하는 sql
-  $sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
-  $stmt = $mysqli->prepare($sql_msg);
-  $stmt->bind_param("s", $memId);
-  $stmt->execute();
-  $stmt->bind_result($unreadCount);
-  $stmt->fetch();
-  $stmt->close();
-
-  // 모든 쪽지 가져오기
-  $sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
-  $stmt = $mysqli->prepare($sql_all_msgs);
-  $stmt->bind_param("s", $memId);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  // 쪽지 데이터를 배열로 저장
-  $messages = [];
-  while ($row = $result->fetch_assoc()) {
-    $messages[] = $row;
-  }
-  $stmt->close();
-
-  // 로그인처음에만 + 쿠폰발급안된경우에만 모달창 보이게
-  if ($loginCount == 1 && $firstCouponIssued == 0) {
+  // 로그인 처음 + 쿠폰 발급 안된 경우 + 모달이 아직 표시되지 않은 경우에만 표시
+  if ($loginCount == 1 && $firstCouponIssued == 0 && $modalShown == 0) {
     $showModal = true;
+
+    // 모달 표시 후 상태 업데이트
+    $updateSql = "UPDATE memberskakao SET modal_shown = 1 WHERE memEmail = ?";
+    $updateStmt = $mysqli->prepare($updateSql);
+    $updateStmt->bind_param("s", $email);
+    $updateStmt->execute();
+    $updateStmt->close();
   }
 } else {
-  //로그인 상태가 아니라면 
-  $email = '';
-  $memId = '';
-  $memName = '';
+  // 로그인 상태가 아니면 모달 표시 안 함
+  $showModal = false;
 }
+
+//쪽지 갯수 확인하는 sql
+$sql_msg = "SELECT COUNT(*) AS unread_count FROM tomembermessages WHERE receiver_id = ? AND is_read = 0";
+$stmt = $mysqli->prepare($sql_msg);
+$stmt->bind_param("s", $memId);
+$stmt->execute();
+$stmt->bind_result($unreadCount);
+$stmt->fetch();
+$stmt->close();
+
+// 모든 쪽지 가져오기
+$sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
+$stmt = $mysqli->prepare($sql_all_msgs);
+$stmt->bind_param("s", $memId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// 쪽지 데이터를 배열로 저장
+$messages = [];
+while ($row = $result->fetch_assoc()) {
+  $messages[] = $row;
+}
+$stmt->close();
+
+//로그인 상태가 아니라면 
+$email = '';
+$memId = '';
+$memName = '';
+
 
 
 ?>
@@ -186,7 +197,7 @@ if (isset($libVideo_js)) {
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#">커뮤니티</a>
+              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">커뮤니티</a>
               <ul class="dropdown-menu" aria-labelledby="communityDropdown">
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">공지사항</a></li>
                 <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
@@ -489,6 +500,11 @@ if (isset($libVideo_js)) {
                       // 쿠폰 발급 완료 모달 표시
                       const couponModal = new bootstrap.Modal(document.getElementById("couponModal"));
                       couponModal.show();
+
+                      // 새로고침 강제 실행
+                      couponModal._element.addEventListener("hidden.bs.modal", function() {
+                        location.reload();
+                      });
 
                     } else {
                       alert("쿠폰 발급 실패: " + couponData.error);
