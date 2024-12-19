@@ -13,7 +13,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
   </div>  
 </div>
 <style>
-  .community.container{
+  .event_box .container{
   padding-top:60px;
   padding-bottom: 60px;
 }
@@ -41,30 +41,27 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
       <div class="tab-content p-3 border rounded bg-light shadow-sm" id="eventTabsContent">
         <!-- 전체 -->
         <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-          <h5 class="fw-bold mb-3">전체 이벤트</h5>
           <ul class="list-unstyled">
-            <li>🎉 신규 가입 시 웰컴 쿠폰 증정</li>
-            <li>🔥 구매 금액별 할인 이벤트</li>
-            <li>🏆 주간 베스트 리뷰어 혜택</li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/001.png" alt=""></li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/002.png" alt=""></li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/003.png" alt=""></li>
           </ul>
         </div>
 
         <!-- 추천 이벤트 -->
         <div class="tab-pane fade" id="recommended" role="tabpanel" aria-labelledby="recommended-tab">
-          <h5 class="fw-bold mb-3">추천 이벤트</h5>
           <ul class="list-unstyled">
-            <li>✨ 인기 강의 최대 50% 할인</li>
-            <li>💎 추천 강좌 수강 시 추가 혜택</li>
-            <li>🔥 퀴즈 이벤트 풀이 시 쿠폰 증정 혜택</li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/004.png" alt=""></li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/005.png" alt=""></li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/006.png" alt=""></li>
           </ul>
         </div>
 
         <!-- 종료 임박 -->
         <div class="tab-pane fade" id="imminent" role="tabpanel" aria-labelledby="imminent-tab">
-          <h5 class="fw-bold mb-3">종료 임박 이벤트</h5>
           <ul class="list-unstyled">
-            <li>⏳ 한정판 할인 이벤트 종료 D-2</li>
-            <li>🚨 리뷰 이벤트 참여 마감</li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/007.png" alt=""></li>
+            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/008.png" alt=""></li>
           </ul>
         </div>
 
