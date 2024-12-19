@@ -241,7 +241,7 @@ while ($tag_data = $tag_result->fetch_object()) {
         // if($page == $i) {$active = 'active';} else {$active = '';}
         $page == $i ? $active = 'active' : $active = '';
       ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>"><?= $i; ?></a></li>
+        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&cate=<?= $cate ?>"><?= $i; ?></a></li>
       <?php
       }
       $next = $block_end + 1;
