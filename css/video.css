@@ -44,7 +44,7 @@ body{
   transition: width .3s ease;
 }
 .video_wrapper.open{
-  width: 70%;
+  width: 94%;
 }
 .video .controls{
   height: 100px;
@@ -68,8 +68,68 @@ body{
   background: #f1f3f5;
   z-index: 10;
 }
-.video_info{
+
+.video_index{
+  padding: 80px 0;
   width: 100px;
+  display: none;
+
+}
+.video_index li{
+  padding: 0 20px;
+  display: flex;
+  align-items: start;
+  gap: 5px;
+}
+.video_index li:hover{
+  background: #ebebeb;
+}
+.video_index li h5 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.video_index li p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.video_index li a{
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.open .video_index{
+  width: 250px;
+}
+.video_desc{
+  padding-top: 80px;
+  width: 100px;
+  display: none;
+}
+.video_desc li{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.video_desc li h5 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.video_desc li p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.open .video_desc{
+  width: 250px;
+}
+.video_index.active{
+  display: block;
+}
+.video_desc.active{
+  display: block;
 }
 .video aside .active{
   color: var(--primary);
@@ -85,6 +145,7 @@ body{
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  z-index: 10;
 }
 .video-js{
   width: 100%;

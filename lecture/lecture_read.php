@@ -21,7 +21,16 @@ if (isset($result)) {
   location.href = './lecture_view.php?lid=<?= $lid ?>';
   </script> ";
 }
+
+$lecture_sql = "SELECT sub_title, learning_obj  FROM lecture_list WHERE lid=$lid";
+$lecture_result = $mysqli->query($lecture_sql);
+if($lecture_result){
+  $lecture_data = $lecture_result->fetch_object();
+}
+
+
 $vidArrJson = json_encode($vidArr);
+
 ?>
 
 <div class="hidden_hover"></div>
@@ -30,10 +39,27 @@ $vidArrJson = json_encode($vidArr);
     <video id="lecture-video" class="video-js" width="100%" height="100%" controls>
       <source src="<?= $vidArr[0] ?>" type="video/mp4">
     </video>
-    <div class="video_info">
-      <h3>목차입니다</h3>
-      <p>설명입니다</p>
-    </div>
+    <ul class="video_index">
+      <?php 
+      if(!empty($vidArr)){
+        $i = 1;
+        foreach($vidArr as $vid){
+      ?> 
+      <li data-id = <?= $i -1 ?> >
+        <h5><a href="#"> <?= $i ?>강 </a></h5>
+      </li>
+       <?php
+      $i++;
+        }
+      }
+      ?>
+    </ul>
+    <ul class="video_desc">
+      <li >
+        <p><?= $lecture_data->sub_title ?></p>
+        <p><?= $lecture_data->learning_obj ?></p>
+      </li>
+    </ul>
   </div>
   <div class="controls">
     <button id="prev-btn"><i class="fa-solid fa-backward"></i><span>이전 수업</span></button>
@@ -58,6 +84,8 @@ $vidArrJson = json_encode($vidArr);
   const vidArr = <?= $vidArrJson; ?>;
   let currentIndex = 0; // 현재 영상 인덱스
 
+
+
   // 영상 요소 참조
   const video = document.getElementById('lecture-video');
   const prevBtn = document.getElementById('prev-btn');
@@ -65,7 +93,10 @@ $vidArrJson = json_encode($vidArr);
   const navBar = document.querySelector('.navbar');
   const hoverBar = document.querySelector('.hidden_hover');
   const asideBtn = document.querySelectorAll('aside > div');
-  const menuItems = document.querySelectorAll(".menu-item");
+
+  const videoWrapper = document.querySelector('.video_wrapper');
+  const activeBtn = document.querySelectorAll('.video_wrapper > ul');
+  const videoIndex = document.querySelectorAll('.video_index > li');
 
   let excuted = false;
   //헤더 호버 이벤트
@@ -86,6 +117,7 @@ $vidArrJson = json_encode($vidArr);
       video.src = vidArr[index]; // 비디오 URL 설정
       video.play(); // 자동 재생
       currentIndex = index; // 현재 인덱스 업데이트
+     
     } else {
       alert('강의가 더 이상 없습니다.');
     }
@@ -99,6 +131,16 @@ $vidArrJson = json_encode($vidArr);
   nextBtn.addEventListener('click', () => {
     loadVideo(currentIndex + 1); // 다음 영상 로드
   });
+  videoIndex.forEach(index =>{
+    index.addEventListener('click', (e)=>{
+      e.preventDefault();
+      let id = e.currentTarget.getAttribute('data-id');
+      console.log(e.currentTarget);
+      loadVideo(id);
+    })
+  })
+  
+
 
   // 페이지 로드 시 첫 번째 영상 자동 재생
   if (vidArr.length > 0) {
@@ -114,6 +156,12 @@ $vidArrJson = json_encode($vidArr);
 
       e.currentTarget.classList.add('active');
       const target = btn.getAttribute("data-target");
+      activeBtn.forEach(item =>{
+
+        item.classList.remove('active');
+      })
+      videoWrapper.querySelector('.video_' + target).classList.add('active');
+
       if (currentTarget === target) {
         // 같은 메뉴를 클릭했을 때 닫기
         e.currentTarget.classList.remove('active');
@@ -129,9 +177,47 @@ $vidArrJson = json_encode($vidArr);
         e.currentTarget.classList.add('active');
         btn.closest('.video').firstElementChild.classList.add('open')
       }
-
     })
   })
+  /*
+  // 비디오가 시작되면 sendWatchEvent 함수 실행
+  video.addEventListener('play', () => {
+    console.log('Video started');
+    sendWatchEvent('start');
+  });
+ // 비디오가 멈추면 sendWatchEvent 함수 실행
+  video.addEventListener('pause', () => {
+    console.log('Video paused');
+    sendWatchEvent('pause');
+  });
+ // 비디오가 끝나면 sendWatchEvent 함수 실행
+  video.addEventListener('ended', () => {
+    console.log('Video ended');
+    sendWatchEvent('completed');
+  });
+
+  const sendWatchEvent = (eventType) => {
+    const lid = '<?= $lid ?>'; // 강의 ID
+    const mid = '<?= $email ?>'; // 사용자 ID
+    let data = JSON.stringify({
+        mid: mid,
+        lid: lid,
+        eventType: eventType,
+        timestamp: new Date().toISOString(),
+      });
+      console.log(data);
+    fetch('lecture_videoCheck.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:data ,
+    }).then(res=> res.json)
+    .then(data=>{
+      console.log(data);
+    }).catch((error) => console.error("Error:", error));
+  };
+  */
 
   videojs(video, {
     controls: true,
