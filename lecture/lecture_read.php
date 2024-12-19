@@ -27,8 +27,13 @@ $lecture_result = $mysqli->query($lecture_sql);
 if($lecture_result){
   $lecture_data = $lecture_result->fetch_object();
 }
-
-
+/*
+$watch_sql = "SELECT DISTINCT lid FROM lecture_watch WHERE mid = '$email' AND event_type = 'completed'";
+$watch_result = $mysqli->query($watch_sql);
+if($watch_result){
+  $watch_data = $watch_result->fetch_object();
+}
+*/
 $vidArrJson = json_encode($vidArr);
 
 ?>
@@ -208,14 +213,9 @@ $vidArrJson = json_encode($vidArr);
       console.log(data);
     fetch('lecture_videoCheck.php', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      
       body:data ,
-    }).then(res=> res.json)
-    .then(data=>{
-      console.log(data);
-    }).catch((error) => console.error("Error:", error));
+    });
   };
   */
 
