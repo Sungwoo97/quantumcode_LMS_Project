@@ -241,7 +241,7 @@ while ($tag_data = $tag_result->fetch_object()) {
         // if($page == $i) {$active = 'active';} else {$active = '';}
         $page == $i ? $active = 'active' : $active = '';
       ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>"><?= $i; ?></a></li>
+        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&cate=<?= $cate ?>"><?= $i; ?></a></li>
       <?php
       }
       $next = $block_end + 1;
@@ -275,7 +275,7 @@ while ($tag_data = $tag_result->fetch_object()) {
         print.innerHTML = data.lectures; // 강의 데이터 업데이트
         pagination.innerHTML = data.pagination; // 페이지네이션 업데이트
         bindPaginationEvents();
-      }).catch((error) => console.error("Error:", error));;
+      }).catch((error) => console.error("Error:", error));
   }
   const bindPaginationEvents = () => {
     const paginationLinks = document.querySelectorAll(".pagination .page-link");
