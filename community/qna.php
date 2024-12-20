@@ -190,24 +190,29 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
           </tr>
         </thead>
         <tbody>
-        <?php foreach ($qnas as $index => $qna): ?>
-          <tr>
-            <th scope="row"><?= $total_items - $start_index - $index ?></th>
-            <td class="post">
-              <a href="#">
-                <?= htmlspecialchars(mb_substr($qna['title'], 0, 11) . (mb_strlen($qna['title']) > 11 ? "..." : "")) ?>
-              </a>
-            </td>
-            <td>
-              <?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?>
-            </td>
-            <td><?= htmlspecialchars($qna['user_id']) ?></td>
-            <td><?= htmlspecialchars($qna['hit']) ?></td>
-            <td><?= htmlspecialchars($qna['likes']) ?></td>
-            <td><?= htmlspecialchars($qna['date']) ?></td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
+  <?php foreach ($qnas as $index => $qna): ?>
+    <tr>
+      <th scope="row"><?= $total_items - $start_index - $index ?></th>
+      <td class="post">
+        <a href="#"
+           data-bs-toggle="modal"
+           data-bs-target="#contentModal"
+           data-id="<?= htmlspecialchars($qna['pid']) ?>" 
+           data-title="<?= htmlspecialchars($qna['title']) ?>" 
+           data-content="<?= htmlspecialchars($qna['content']) ?>">
+          <?= htmlspecialchars(mb_substr($qna['title'], 0, 11) . (mb_strlen($qna['title']) > 11 ? "..." : "")) ?>
+        </a>
+      </td>
+      <td>
+        <?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?>
+      </td>
+      <td><?= htmlspecialchars($qna['user_id']) ?></td>
+      <td><?= htmlspecialchars($qna['hit']) ?></td>
+      <td><?= htmlspecialchars($qna['likes']) ?></td>
+      <td><?= htmlspecialchars($qna['date']) ?></td>
+    </tr>
+  <?php endforeach; ?>
+</tbody>
       </table>
       
       <nav aria-label="Page navigation">
@@ -248,41 +253,90 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
   </div>
 </div>
 
+<!-- 게시물 상세 내용 모달 -->
+<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contentModalLabel">게시물 내용</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 id="modalTitle">제목</h5>
+        <p id="modalContent">내용</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  // 모달 표시
-  // 모달 표시
-  $("#inquiryButton").on("click", function () {
-    const inquiryModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
-    inquiryModal.show();
+// 게시물 상세 보기 모달 표시
+const contentModal = document.getElementById("contentModal");
+contentModal.addEventListener("show.bs.modal", function (event) {
+  const button = event.relatedTarget; // 클릭된 버튼 요소
+  const postId = button.getAttribute("data-id"); // 게시물 ID
+  const title = button.getAttribute("data-title");
+  const content = button.getAttribute("data-content");
+
+  // 모달 내부 요소 업데이트
+  const modalTitle = document.getElementById("modalTitle");
+  const modalContent = document.getElementById("modalContent");
+
+  modalTitle.textContent = title;
+  modalContent.textContent = content;
+
+  // 조회수 증가 요청
+  $.ajax({
+    url: "/qc/community/increase_hit.php", // 조회수 증가 PHP
+    type: "POST",
+    data: { id: postId }, // 게시물 ID 전달
+    success: function (response) {
+      if (response.status === "success") {
+        console.log("조회수 증가 성공:", response.message);
+      } else {
+        console.error("조회수 증가 실패:", response.message);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("조회수 증가 요청 에러:", error);
+    },
   });
+});
 
-  $("#inquiryForm").on("submit", function (e) {
-    e.preventDefault(); // 기본 폼 제출 동작 방지
+// 질문글 쓰기 모달 표시
+$("#inquiryButton").on("click", function () {
+  const inquiryModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
+  inquiryModal.show();
+});
 
-    const formData = new FormData(this); // 폼 데이터를 수집
+// 문의 폼 제출 처리
+$("#inquiryForm").on("submit", function (e) {
+  e.preventDefault(); // 기본 폼 제출 동작 방지
 
-    $.ajax({
-      url: "/qc/community/qna_ok.php",
-      type: "POST",
-      data: formData,
-      processData: false, // FormData 사용 시 필요
-      contentType: false, // FormData 사용 시 필요
-      success: function (response) {
-        console.log(response);
-        if (response.status === "success") {
-          alert(response.message); // 성공 메시지
-          location.reload(); // 페이지 새로고침
-        } else {
-          alert(response.message); // 에러 메시지
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", error);
-        alert("문의 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
-      },
-    });
+  const formData = new FormData(this); // 폼 데이터를 수집
+
+  $.ajax({
+    url: "/qc/community/qna_ok.php",
+    type: "POST",
+    data: formData,
+    processData: false, // FormData 사용 시 필요
+    contentType: false, // FormData 사용 시 필요
+    success: function (response) {
+      console.log(response);
+      if (response.status === "success") {
+        alert(response.message); // 성공 메시지
+        location.reload(); // 페이지 새로고침
+      } else {
+        alert(response.message); // 에러 메시지
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+      alert("문의 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
+    },
   });
-  
+});
 </script>
 
 <?php
