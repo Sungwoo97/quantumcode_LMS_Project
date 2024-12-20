@@ -28,26 +28,34 @@ $memCreatedAt = date("Y-m-d H:i:s");
 $stmt->bind_param("ssssss", $name, $password, $email, $number, $memCreatedAt, $activation_token_hash);
 
 if ($stmt->execute()) {
-  $mail = require __DIR__ . "/mailer.php";
+    $mail = require __DIR__ . "/mailer.php";
 
-  $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
-  $mail->addAddress($_POST["email"]);
-  $mail->Subject = "Account Activation";
-  $mail->Body = <<<END
+    $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
+    $mail->addAddress($_POST["email"]);
+    $mail->Subject = "Account Activation";
+    $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
+    $mail->isHTML(true);      // HTML 메일 설정
+    $mail->Body = <<<END
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>아래 링크를 클릭하여 계정을 활성화하세요:</p>
+    <a href="http://localhost/qc/account/active_account.php?token=$activation_token">여기를 클릭해주세요</a>
+</body>
+</html>
+END;
 
-  <a href="http://localhost/qc/account/active_account.php?token=$activation_token">here</a> 
-  Click There, if you want To Confirm. It is not a SpamMail. From QuantumCode.
+    try {
+        $mail->send();
+    } catch (Exception $e) {
+        echo "메세지가 보내지지 않았습니다.. Mailer error: {$mail->ErrorInfo}";
+        exit();
+    }
 
-  END;
-
-  try {
-      $mail->send();
-    //   echo "메세지가 보내졌습니다. 방금 작성하신 이메일을 확인해주세요.";
-  } catch (Exception $e) {
-      echo "메세지가 보내지지 않았습니다.. Mailer error: {$mail->ErrorInfo}";
-  }
-
-  echo "<!DOCTYPE html>
+    echo "<!DOCTYPE html>
 <html lang='ko'>
 <head>
     <meta charset='UTF-8'>
@@ -125,5 +133,4 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $mysqli->close();
-
-
+?>
