@@ -6,7 +6,7 @@ $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 
-$id = isset($_SESSION['AUID']) ;
+$id = isset($_SESSION['TUNAME']);
 if (!isset($id)) {
   echo "
     <script>
@@ -59,7 +59,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
             <tr scope="row">
               <th scope="row" class="insert_name">강사명</th>
               <td colspan="3">
-                <input type="text" class="form-control" name="userid" id="userid" value="<?= $id ?>" disabled>
+                <input type="text" class="form-control" name="userid" id="userid" value="<?= $_SESSION['TUNAME'] ?>" disabled>
               </td>
             </tr>
             <tr scope="row">
@@ -169,7 +169,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="sub_title" class="bold">강의 요약</label>
-          <textarea class="form-control" placeholder="강의 요약" name="sub_title" id="sub_title"></textarea>
+          <textarea class="form-control" placeholder="강의 요약" name="sub_title" id="sub_title" required></textarea>
         </div>
       </div>
       <div>
@@ -190,11 +190,11 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="objectives" class="bold">강의 목표</label>
-          <textarea class="form-control" placeholder="강의 목표" name="objectives" id="objectives"></textarea>
+          <textarea class="form-control" placeholder="강의 목표" name="objectives" id="objectives" required></textarea>
         </div>
         <div class="d-flex flex-column gap-2">
           <label for="tag" class="bold">강의 태그</label>
-          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag"></textarea>
+          <textarea class="form-control" placeholder="강의 태그" name="tag" id="tag" required></textarea>
         </div>
       </div>
     </div>
