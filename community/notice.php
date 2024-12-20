@@ -33,6 +33,104 @@ $notices = $result->fetch_all(MYSQLI_ASSOC);
 
 <!-- 스타일 -->
 <style>
+  .modal-dialog {
+    max-width: 700px; /* 원하는 너비로 변경 */
+    width: 80%; /* 반응형으로 설정 */
+  }
+
+    /* 모달 외곽 스타일 */
+  .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    overflow: hidden;
+    min-height: 400px; /* 최소 높이 설정 */
+    max-height: 80vh; /* 최대 높이 설정 */
+    
+  }
+
+  /* 헤더 스타일 */
+  .modal-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    border-bottom: none;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .btn-close {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 1;
+  }
+
+  /* 본문 스타일 */
+  .modal-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+  /* 버튼 스타일 */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  /* 푸터 스타일 */
+  .modal-footer {
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-top: none;
+    text-align: right;
+  }
+
+  /* --- */
+   
+  #inquiryButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #inquiryButton:hover {
+    background-color: #0056b3;
+  }
 
   .btn-primary {
     background-color: #007bff;
@@ -43,8 +141,6 @@ $notices = $result->fetch_all(MYSQLI_ASSOC);
     background-color: #0056b3;
     border-color: #0056b3;
   }
-
-
 </style>
 
 <div class="title_box">
