@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-20 06:13
+-- 생성 시간: 24-12-20 06:30
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-20 10:13:12', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-20 14:18:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -577,7 +577,8 @@ INSERT INTO `lecture_order` (`odid`, `mid`, `lid`, `cid`, `total_price`, `status
 (34, 'gwaja97@naver.com', '125', 0, 44000, 1, '2024-12-18 21:53:46'),
 (35, 'gwaja97@naver.com', '128', 0, 55000, 1, '2024-12-18 21:53:50'),
 (36, 'gwaja97@naver.com', '130', 0, 33000, 1, '2024-12-18 21:53:56'),
-(37, 'gwaja97@naver.com', '131', 0, 55000, 1, '2024-12-18 21:54:03');
+(37, 'gwaja97@naver.com', '131', 0, 55000, 1, '2024-12-18 21:54:03'),
+(38, 'haemilyjh@naver.com', '116', 0, 30800, 1, '2024-12-20 14:16:54');
 
 -- --------------------------------------------------------
 
@@ -898,9 +899,7 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0, 0),
 (167, '윤비밀', 'da167be407847fcd149901512e876447efecfd6acf3ce8ee93a8e2a2328b4fec8da94d111959081939a59cc5ba96f89f6d343a37f8063ab7e88039727784a32d', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-20 00:43:15', '2024-12-20 09:43:15', 3, 1, 0),
 (168, '남성우', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'gwaja97@naver.com', NULL, '01022223333', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 04:17:56', '2024-12-18 12:13:21', '2024-12-18 21:13:21', 2, 1, 0),
-(169, '남성우', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'gwaja97@naver.com', NULL, '01022223333', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 04:21:30', '2024-12-18 12:13:21', '2024-12-18 21:13:21', 2, 1, 0),
-(178, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', '2024-12-11', 'bronze', 0, 0, NULL, NULL, NULL, 'Array', NULL, '서울 은평구 불광로 1 (대조동)', NULL, '2024-12-17 19:15:40', '2024-12-20 05:11:03', '2024-12-20 12:48:19', 7, 1, 0),
-(187, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, NULL, NULL, 'kakaoAddr', NULL, '2024-12-18 05:56:25', '2024-12-18 05:56:27', '2024-12-18 14:56:25', 1, 0, 1);
+(169, '남성우', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'gwaja97@naver.com', NULL, '01022223333', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 04:21:30', '2024-12-18 12:13:21', '2024-12-18 21:13:21', 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1122,7 +1121,8 @@ CREATE TABLE `tomembermessages` (
 INSERT INTO `tomembermessages` (`id`, `sender_id`, `receiver_id`, `message_content`, `sender_name`, `sent_at`, `is_read`) VALUES
 (21, 4, 167, 'test', '관리자', '2024-12-13 18:01:49', 1),
 (22, 4, 167, 'test', '관리자', '2024-12-13 18:09:56', 1),
-(23, 4, 167, 'test', '관리자', '2024-12-13 18:13:43', 1);
+(23, 4, 167, 'test', '관리자', '2024-12-13 18:13:43', 1),
+(24, 4, 178, '안녕하세요', '관리자', '2024-12-20 14:18:55', 1);
 
 -- --------------------------------------------------------
 
@@ -1405,7 +1405,7 @@ ALTER TABLE `coupons`
 -- 테이블의 AUTO_INCREMENT `coupons_usercp`
 --
 ALTER TABLE `coupons_usercp`
-  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `ucid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- 테이블의 AUTO_INCREMENT `courses_management`
@@ -1417,7 +1417,7 @@ ALTER TABLE `courses_management`
 -- 테이블의 AUTO_INCREMENT `lecture_cart`
 --
 ALTER TABLE `lecture_cart`
-  MODIFY `cartid` int(11) NOT NULL AUTO_INCREMENT COMMENT '장바구니 고유번호', AUTO_INCREMENT=23;
+  MODIFY `cartid` int(11) NOT NULL AUTO_INCREMENT COMMENT '장바구니 고유번호', AUTO_INCREMENT=24;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_category`
@@ -1441,7 +1441,7 @@ ALTER TABLE `lecture_list`
 -- 테이블의 AUTO_INCREMENT `lecture_order`
 --
 ALTER TABLE `lecture_order`
-  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호', AUTO_INCREMENT=38;
+  MODIFY `odid` int(11) NOT NULL AUTO_INCREMENT COMMENT '주문번호', AUTO_INCREMENT=39;
 
 --
 -- 테이블의 AUTO_INCREMENT `lecture_reply`
@@ -1471,7 +1471,7 @@ ALTER TABLE `members`
 -- 테이블의 AUTO_INCREMENT `memberskakao`
 --
 ALTER TABLE `memberskakao`
-  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `memId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- 테이블의 AUTO_INCREMENT `sales_course`
@@ -1507,7 +1507,7 @@ ALTER TABLE `toadminmessages`
 -- 테이블의 AUTO_INCREMENT `tomembermessages`
 --
 ALTER TABLE `tomembermessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- 테이블의 AUTO_INCREMENT `toteachermessages`
@@ -1519,7 +1519,7 @@ ALTER TABLE `toteachermessages`
 -- 테이블의 AUTO_INCREMENT `user_categories`
 --
 ALTER TABLE `user_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- 덤프된 테이블의 제약사항
