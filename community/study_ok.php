@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo json_encode([
             'status' => 'success',
-            'message' => '문의가 성공적으로 등록되었습니다.'
+            'message' => '글이 성공적으로 등록되었습니다.'
         ]);
     } else {
         echo json_encode([
