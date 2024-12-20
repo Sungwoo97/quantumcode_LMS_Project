@@ -41,7 +41,7 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     width: 80%; /* 반응형으로 설정 */
   }
 
-    /* 모달 외곽 스타일 */
+  /* 모달 외곽 스타일 */
   .modal-content {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -49,7 +49,6 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     overflow: hidden;
     min-height: 400px; /* 최소 높이 설정 */
     max-height: 80vh; /* 최대 높이 설정 */
-    
   }
 
   /* 헤더 스타일 */
@@ -61,7 +60,7 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
   }
 
   .modal-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
 
@@ -77,24 +76,43 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     background-color: #f9f9f9;
   }
 
-  .form-label {
+  #modalContent {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* 댓글 스타일 */
+  #commentSection h6 {
+    font-size: 1.2rem;
     font-weight: bold;
+    margin-bottom: 15px;
     color: #333;
   }
 
-  .form-control {
+  .list-group-item {
+    margin-bottom: 10px; /* 댓글 사이 간격 추가 */
     border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  #commentInput {
+    border-radius: 10px;
     border: 1px solid #ddd;
     padding: 10px;
     font-size: 1rem;
+    resize: none;
+    transition: all 0.3s ease;
   }
 
-  .form-control:focus {
+  #commentInput:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
 
-  /* 버튼 스타일 */
   .btn-primary {
     background-color: #007bff;
     border: none;
@@ -135,6 +153,7 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     background-color: #0056b3;
   }
 
+  /* 댓글 버튼 */
   .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
@@ -185,7 +204,6 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
             <th scope="col" style="width: 30%;">내용</th>
             <th scope="col" style="width: 10%;">글쓴이</th>
             <th scope="col" style="width: 7.5%;">조회</th>
-            <th scope="col" style="width: 7.5%;">답변</th>
             <th scope="col" style="width: 20%;">게시일</th>
           </tr>
         </thead>
@@ -208,7 +226,6 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
       </td>
       <td><?= htmlspecialchars($qna['user_id']) ?></td>
       <td id="hit-<?= $qna['pid'] ?>"><?= htmlspecialchars($qna['hit']) ?></td>
-      <td><?= htmlspecialchars($qna['likes']) ?></td>
       <td><?= htmlspecialchars($qna['date']) ?></td>
     </tr>
   <?php endforeach; ?>
@@ -252,7 +269,6 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
     </div>
   </div>
 </div>
-
 <!-- 게시물 상세 내용 모달 -->
 <div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -264,6 +280,18 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
       <div class="modal-body">
         <h5 id="modalTitle">제목</h5>
         <p id="modalContent">내용</p>
+
+        <hr>
+        <!-- 댓글 영역 -->
+        <div id="commentSection">
+          <h6>댓글</h6>
+          <ul id="commentList" class="list-group mb-3">
+            <!-- 댓글 목록이 동적으로 추가됩니다 -->
+          </ul>
+          <!-- 댓글 입력 -->
+          <textarea id="commentInput" class="form-control mb-2" rows="2" placeholder="댓글을 입력하세요..."></textarea>
+          <button id="addCommentButton" class="btn btn-primary">댓글 추가</button>
+        </div>
       </div>
     </div>
   </div>
@@ -290,13 +318,12 @@ contentModal.addEventListener("show.bs.modal", function (event) {
   // 조회수 증가 요청
   if (postId) {
     $.ajax({
-      url: "/qc/community/increase_hit.php", // 조회수 증가 PHP 파일
+      url: "/qc/community/increase_hit.php",
       type: "POST",
-      data: { id: postId }, // 게시물 ID 전달
+      data: { id: postId },
       success: function (response) {
         if (response.status === "success") {
           console.log("조회수 증가 성공:", response.message);
-          // 조회수 업데이트
           const hitElement = document.getElementById(`hit-${postId}`);
           if (hitElement) {
             hitElement.textContent = parseInt(hitElement.textContent) + 1;
@@ -310,32 +337,98 @@ contentModal.addEventListener("show.bs.modal", function (event) {
       },
     });
   }
+
+  // 댓글 목록 불러오기
+  fetchComments(postId);
+
+  // 댓글 추가 버튼 이벤트 등록
+  document.getElementById("addCommentButton").onclick = function () {
+    addComment(postId);
+  };
 });
 
-// 모달 표시
+// 댓글 목록 불러오기
+function fetchComments(postId) {
+  $.ajax({
+    url: "/qc/community/get_comments.php",
+    type: "GET",
+    data: { post_id: postId },
+    success: function (response) {
+      if (response.status === "success") {
+        const commentList = document.getElementById("commentList");
+        commentList.innerHTML = ""; // 기존 댓글 초기화
+        response.comments.forEach(comment => {
+          const listItem = document.createElement("li");
+          listItem.className = "list-group-item";
+          listItem.textContent = `${comment.content} (작성자: ${comment.user_id}, 작성일: ${comment.created_at})`;
+          commentList.appendChild(listItem);
+        });
+      } else {
+        alert(response.message);
+      }
+    },
+    error: function () {
+      alert("댓글 불러오기 중 오류가 발생했습니다.");
+    },
+  });
+}
+
+// 댓글 추가
+function addComment(postId) {
+  const commentInput = document.getElementById("commentInput");
+  const commentText = commentInput.value.trim();
+
+  if (!commentText) {
+    alert("댓글 내용을 입력해주세요.");
+    return;
+  }
+
+  $.ajax({
+    url: "/qc/community/reply_ok.php", // 댓글 추가 PHP 파일
+    type: "POST",
+    data: {
+      post_id: postId,
+      content: commentText,
+    },
+    success: function (response) {
+      if (response.status === "success") {
+        fetchComments(postId); // 댓글 목록 갱신
+        commentInput.value = ""; // 입력 필드 초기화
+        alert("댓글이 입력되었습니다."); // 성공 메시지
+      } else {
+        alert(response.message);
+      }
+    },
+    error: function () {
+      alert("댓글 추가 중 오류가 발생했습니다.");
+    },
+  });
+}
+
+// 글쓰기 모달 표시
 $("#inquiryButton").on("click", function () {
   const freeModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
   freeModal.show();
 });
 
-// 폼 제출 이벤트 처리
+// 글쓰기 폼 제출 처리
 $("#inquiryForm").on("submit", function (e) {
-  e.preventDefault(); // 기본 폼 제출 동작 방지
+  e.preventDefault();
 
-  const formData = new FormData(this); // 폼 데이터를 수집
+  const formData = new FormData(this);
 
   $.ajax({
-    url: "/qc/community/board_ok.php", // 데이터 전송 대상 URL (free 처리용 PHP 파일)
+    url: "/qc/community/board_ok.php",
     type: "POST",
     data: formData,
-    processData: false, // FormData 사용 시 필요
-    contentType: false, // FormData 사용 시 필요
+    processData: false,
+    contentType: false,
     success: function (response) {
       if (response.status === "success") {
-        alert(response.message); // 성공 메시지
-        location.reload(); // 페이지 새로고침
+        alert(response.message);
+        location.reload();
       } else {
-        alert(response.message); // 에러 메시지
+        alert(response.message);
       }
     },
     error: function () {
