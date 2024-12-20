@@ -190,22 +190,27 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
           </tr>
         </thead>
         <tbody>
-        <?php foreach ($qnas as $index => $qna): ?>
-          <tr>
-            <th scope="row"><?= $total_items - $start_index - $index ?></th>
-            <td class="post">
-              <a href="#">
-                <?= htmlspecialchars(mb_substr($qna['title'], 0, 11) . (mb_strlen($qna['title']) > 11 ? "..." : "")) ?>
-              </a>
-            </td>
-            <td>
-              <?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?>
-            </td>
-            <td><?= htmlspecialchars($qna['user_id']) ?></td>
-            <td><?= htmlspecialchars($qna['hit']) ?></td>
-            <td><?= htmlspecialchars($qna['likes']) ?></td>
-            <td><?= htmlspecialchars($qna['date']) ?></td>
-          </tr>
+          <?php foreach ($qnas as $index => $qna): ?>
+            <tr>
+              <th scope="row"><?= $total_items - $start_index - $index ?></th>
+              <td class="post">
+                <!-- data-bs-toggle 및 data-bs-target 속성 추가 -->
+                <a href="#" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#contentModal" 
+                  data-title="<?= htmlspecialchars($qna['title']) ?>" 
+                  data-content="<?= htmlspecialchars($qna['content']) ?>">
+                  <?= htmlspecialchars(mb_substr($qna['title'], 0, 11) . (mb_strlen($qna['title']) > 11 ? "..." : "")) ?>
+                </a>
+              </td>
+              <td>
+                <?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?>
+              </td>
+              <td><?= htmlspecialchars($qna['user_id']) ?></td>
+              <td><?= htmlspecialchars($qna['hit']) ?></td>
+              <td><?= htmlspecialchars($qna['likes']) ?></td>
+              <td><?= htmlspecialchars($qna['date']) ?></td>
+            </tr>
           <?php endforeach; ?>
         </tbody>
       </table>
@@ -248,9 +253,40 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
   </div>
 </div>
 
+<!-- 게시물 상세 내용 모달 -->
+<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contentModalLabel">게시물 내용</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 id="modalTitle">제목</h5>
+        <p id="modalContent">내용</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  // 모달 표시
-  // 모달 표시
+    // 게시물 상세 보기 모달 표시
+const contentModal = document.getElementById("contentModal");
+contentModal.addEventListener("show.bs.modal", function (event) {
+  const button = event.relatedTarget; // 클릭된 버튼 요소
+  const title = button.getAttribute("data-title");
+  const content = button.getAttribute("data-content");
+
+  // 모달 내부 요소 업데이트
+  const modalTitle = document.getElementById("modalTitle");
+  const modalContent = document.getElementById("modalContent");
+
+  modalTitle.textContent = title;
+  modalContent.textContent = content;
+});
+
+  // 질문글 쓰기 모달 표시
   $("#inquiryButton").on("click", function () {
     const inquiryModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
     inquiryModal.show();
