@@ -5,7 +5,8 @@ $community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.c
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 // print_r($_SESSION); 잘나옴;
-$user_id = $_SESSION['MemEmail'];
+
+// $user_id = $_SESSION['MemEmail'];
 
 // 페이지네이션 설정
 $items_per_page = 10; // 한 페이지에 표시할 항목 수
@@ -193,7 +194,15 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
       <div class="d-flex justify-content-between align-items-center">
         <h6>퀀텀코드에게 문의하세요.</h6>
         <!-- 문의하기 버튼 -->
+         <?php
+          if(isset($_SESSION['MemEmail']))
+
+          {
+          ?>
         <button class="btn btn-primary" id="inquiryButton">문의하기</button>
+        <?php
+        }
+        ?>
       </div>
       <hr>
       <table class="table table-hover text-center">
@@ -204,7 +213,7 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
             <th scope="col" style="width: 30%;">내용</th>
             <th scope="col" style="width: 10%;">글쓴이</th>
             <th scope="col" style="width: 7.5%;">조회</th>
-            <th scope="col" style="width: 7.5%;">답변</th>
+            <th scope="col" style="width: 7.5%;">리플</th>
             <th scope="col" style="width: 20%;">게시일</th>
           </tr>
         </thead>

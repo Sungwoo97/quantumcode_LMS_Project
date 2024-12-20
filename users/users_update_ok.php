@@ -1,107 +1,52 @@
 <?php
-session_start();
-include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/db_connect.php'); // DB 연결 파일
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
-header('Content-Type: application/json');
-
-// 로그인 여부 확인
 if (!isset($_SESSION['MemEmail'])) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => '로그인이 필요합니다.'
-    ]);
+    echo "<script>alert('로그인 후 이용해주세요.'); location.href = '/qc/loginTest2.php';</script>";
     exit;
 }
 
+
+// 세션 데이터 가져오기
 $userEmail = $_SESSION['MemEmail'];
 $memId = $_SESSION['MemId'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Form 데이터 수집
-    $memName = isset($_POST['memName']) ? trim($_POST['memName']) : '';
-    $birth = isset($_POST['birth']) ? trim($_POST['birth']) : '';
-    $memAddr = isset($_POST['memAddr']) ? trim($_POST['memAddr']) : '';
-    $number = isset($_POST['number']) ? trim($_POST['number']) : '';
+// POST 데이터 수집 및 검증
+$memName = trim($_POST['memName']);
+$birth = trim($_POST['birth']);
+$memAddr = trim($_POST['memAddr']);
+$number = trim($_POST['number']);
+$cover_image = $_FILES['cover_image'] ?? '';
 
-    // 파일 업로드 처리
-    $profilePath = null;
-    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/qc/uploads/profiles/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $fileTmpPath = $_FILES['cover_image']['tmp_name'];
-        $fileName = basename($_FILES['cover_image']['name']);
-        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-
-        if (in_array($fileExt, $allowedExtensions)) {
-            $newFileName = $memId . '_' . time() . '.' . $fileExt;
-            $uploadFilePath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $uploadFilePath)) {
-                $profilePath = '/qc/uploads/profiles/' . $newFileName;
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => '프로필 이미지 업로드 실패.'
-                ]);
-                exit;
-            }
-        } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => '허용되지 않은 파일 형식입니다.'
-            ]);
-            exit;
-        }
-    }
-
-    // SQL 업데이트 준비
-    $sql = "UPDATE membersKakao SET memName = ?, birth = ?, memAddr = ?, number = ?";
-
-    if ($profilePath) {
-        $sql .= ", memProfilePath = ?";
-    }
-
-    $sql .= " WHERE memEmail = ?";
-
-    $stmt = $mysqli->prepare($sql);
-
-    if (!$stmt) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => '쿼리 준비 실패: ' . $mysqli->error
-        ]);
-        exit;
-    }
-
-    if ($profilePath) {
-        $stmt->bind_param("ssssss", $memName, $birth, $memAddr, $number, $profilePath, $userEmail);
+// 파일 업로드 처리
+if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_ERR_OK) {
+    $fileUploadResult = fileUpload($_FILES['cover_image'], 'image');
+    if ($fileUploadResult) {
+      $cover_image = $fileUploadResult; // 업로드된 파일 경로를 변수에 저장
     } else {
-        $stmt->bind_param("sssss", $memName, $birth, $memAddr, $number, $userEmail);
+      echo "<script>
+                alert('파일 첨부할 수 없습니다.');
+                history.back();
+            </script>";
+      exit;
     }
+  }
 
-    if ($stmt->execute()) {
-        echo json_encode([
-            'status' => 'success',
-            'message' => '정보가 성공적으로 수정되었습니다.'
-        ]);
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => '정보 수정 실패: ' . $stmt->error
-        ]);
-    }
+// SQL 쿼리 준비
+$sql = "UPDATE membersKakao 
+        SET memName = ?, birth = ?, memAddr = ?, number = ?, memProfilePath = ?
+        WHERE memId = ?";
 
-    $stmt->close();
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("sssssi", $memName, $birth, $memAddr, $number, $cover_image, $memId);
+
+if ($stmt->execute()) {
+    echo "<script>alert('수정이 완료되었습니다.'); location.href = 'http://{$_SERVER['HTTP_HOST']}/qc/users/users_view.php?MemId=" . htmlspecialchars($_SESSION['MemId']) . "';</script>";
 } else {
-    echo json_encode([
-        'status' => 'error',
-        'message' => '잘못된 요청입니다.'
-    ]);
+    echo "<script>alert('수정에 실패하였습니다.'); history.back();</script>";
 }
 
+$stmt->close();
 $mysqli->close();
 ?>
