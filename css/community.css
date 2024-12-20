@@ -204,3 +204,25 @@ span {
 .event button.active:hover {
   background-color: var(--darkBlue);
 }
+
+/* EVENT */
+.tab-content{
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow : none !important;
+}
+.list-unstyled li img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 100%;
+}
+
+.list-unstyled li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  margin-bottom: 1rem;
+}
