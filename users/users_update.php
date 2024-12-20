@@ -37,7 +37,7 @@ $stmt->close();
 <body>
   <div class="container mt-3">
     <h3>나의 정보 수정하기</h3>
-    <form id="user_update" action="user_update_ok.php" method="POST" enctype="multipart/form-data">
+    <form id="user_update" action="users_update_ok.php" method="POST" enctype="multipart/form-data">
       <div class="row">
         <!-- 프로필 섹션 -->
         <div class="col-md-4 text-center">
@@ -96,7 +96,7 @@ $stmt->close();
           </table>
           <div class="text-end">
             <button type="button" class="btn btn-danger">탈퇴하기</button>
-            <button type="button" class="btn btn-primary">저장하기</button>
+            <button type="submit" class="btn btn-primary">저장하기</button>
           </div>
         </div>
       </div>
@@ -148,40 +148,11 @@ document.getElementById("findAddressBtn").addEventListener("click", function() {
   }).open();
 });
 
-$('#user_update .btn-primary').click(function(e) {
-    e.preventDefault(); // 폼의 기본 submit 동작을 중단합니다.
 
-    // FormData 객체를 사용하여 폼 데이터 수집
-    const formData = new FormData($('#user_update')[0]);
-
-    // FormData 내용 확인
-    console.log("FormData 내용 확인:");
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-    }
-
-    $.ajax({
-        url: 'user_update_ok.php', // 데이터 전송 대상 URL
-        type: 'POST', // HTTP 요청 방식
-        data: formData,
-        processData: false, // 파일 업로드 시 필수: 데이터 처리를 하지 않음
-        contentType: false, // 파일 업로드 시 필수: 컨텐츠 타입 설정을 자동 처리
-        success: function(response) {
-            // 서버에서 응답을 성공적으로 받았을 때 실행
-            if (response.status === 'success') {
-                alert('정보가 성공적으로 수정되었습니다.');
-                location.reload(); // 페이지 새로고침
-            } else {
-                alert('정보 수정에 실패했습니다: ' + response.message);
-            }
-        },
-        error: function() {
-            // 서버 연결 실패 시 실행
-            alert('서버와의 연결에 실패했습니다. 다시 시도해주세요.');
-        }
-    });
+$('#user_update').submit(function(e) {
+    
+    return true; // 폼 제출 허용
 });
-
   </script>
 </body>
 </html>

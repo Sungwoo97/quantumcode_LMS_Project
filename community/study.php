@@ -4,7 +4,6 @@ $community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.c
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 // print_r($_SESSION); 잘나옴;
-$user_id = $_SESSION['MemEmail'];
 
 // 페이지네이션 설정
 $items_per_page = 10; // 한 페이지에 표시할 항목 수
@@ -24,7 +23,7 @@ if ($current_page > $total_pages) $current_page = $total_pages;
 
 // 데이터 가져오기
 $start_index = ($current_page - 1) * $items_per_page;
-$sql = "SELECT pid, title, content, user_id, hit, likes, date FROM board WHERE category = 'study' ORDER BY date DESC LIMIT ?, ?";
+$sql = "SELECT pid, title, content, user_id, hit, likes, recruit_status, date FROM board WHERE category = 'study' ORDER BY date DESC LIMIT ?, ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("ii", $start_index, $items_per_page);
 $stmt->execute();
@@ -193,7 +192,15 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
       <div class="d-flex justify-content-between align-items-center">
         <h6>함께 공부할 수강생을 직접 찾아보세요!</h6>
         <!-- 문의하기 버튼 -->
+        <?php
+          if(isset($_SESSION['MemEmail']))
+
+          {
+          ?>
         <button class="btn btn-primary" id="inquiryButton">동료 찾기</button>
+        <?php
+        }
+        ?>
       </div>
       <hr>
       <table class="table table-hover text-center">
@@ -204,7 +211,8 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
             <th scope="col" style="width: 30%;">내용</th>
             <th scope="col" style="width: 10%;">글쓴이</th>
             <th scope="col" style="width: 7.5%;">조회</th>
-            <th scope="col" style="width: 7.5%;">답변</th>
+            <th scope="col" style="width: 7.5%;">리플</th>
+            <th scope="col" style="width: 13%;">모집현황</th>
             <th scope="col" style="width: 20%;">게시일</th>
           </tr>
         </thead>
@@ -213,7 +221,6 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
     <tr>
       <th scope="row"><?= $total_items - $start_index - $index ?></th>
       <td class="post">
-        <!-- data-bs-toggle 및 data-bs-target 속성 추가 -->
         <a href="#" 
           data-bs-toggle="modal" 
           data-bs-target="#contentModal" 
@@ -223,12 +230,31 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
           <?= htmlspecialchars(mb_substr($qna['title'], 0, 11) . (mb_strlen($qna['title']) > 11 ? "..." : "")) ?>
         </a>
       </td>
-      <td>
-        <?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?>
-      </td>
+      <td><?= htmlspecialchars(mb_substr($qna['content'], 0, 18) . (mb_strlen($qna['content']) > 18 ? "..." : "")) ?></td>
       <td><?= htmlspecialchars($qna['user_id']) ?></td>
       <td><?= htmlspecialchars($qna['hit']) ?></td>
       <td><?= htmlspecialchars($qna['likes']) ?></td>
+      <td>
+        <?php
+          // recruit_status 값을 조건에 따라 출력
+          if (isset($qna['recruit_status'])) {
+            echo $qna['recruit_status'] == 0 ? "모집중" : "모집완료";
+          } else {
+            echo "-"; // recruit_status 값이 없는 경우
+          }
+        ?>
+        <!-- 로그인한 사용자와 작성자가 동일하면 마감하기 버튼 표시 -->
+        <?php if ($qna['user_id'] === $email && $qna['recruit_status'] == 0): ?>
+          <form method="post" action="/qc/community/close_recruit.php" style="display:inline;">
+            <input type="hidden" name="pid" value="<?= $qna['pid'] ?>">
+            <?php if ($qna['user_id'] === $email && $qna['recruit_status'] == 0): ?>
+              <button 
+                class="btn btn-sm btn-danger close-recruit-btn" 
+                data-id="<?= $qna['pid'] ?>">마감하기</button>
+            <?php endif; ?>
+          </form>
+        <?php endif; ?>
+      </td>
       <td><?= htmlspecialchars($qna['date']) ?></td>
     </tr>
   <?php endforeach; ?>
@@ -432,6 +458,8 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
       },
     });
   });
+
+  
 </script>
 
 <?php
