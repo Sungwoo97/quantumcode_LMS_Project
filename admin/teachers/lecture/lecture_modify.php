@@ -55,7 +55,7 @@ while ($video_data = $video_result->fetch_object()) {
       <div class="col-4 mb-5">
         <h6>커버 이미지 등록</h6>
         <div class="lecture_coverImg mb-3">
-          <img src="<?=  $lecture_data->cover_image ?>" id="coverImg" alt="">
+          <img src="<?= $lecture_data->cover_image ?>" id="coverImg" alt="">
         </div>
         <div class="input-group">
           <input type="file" class="form-control" accept="image/*" name="cover_image" id="cover_image" value="<?= $lecture_data->cover_image ?>">
@@ -197,7 +197,7 @@ while ($video_data = $video_result->fetch_object()) {
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="sub_title" class="bold">강의 요약</label>
-          <textarea class="form-control" name="sub_title" id="sub_title"><?= $lecture_data->sub_title; ?></textarea>
+          <textarea class="form-control" name="sub_title" id="sub_title" required><?= $lecture_data->sub_title; ?></textarea>
         </div>
       </div>
       <div>
@@ -232,11 +232,11 @@ while ($video_data = $video_result->fetch_object()) {
       <div class="col-8 ">
         <div class="d-flex flex-column gap-2">
           <label for="objectives" class="bold">강의 목표</label>
-          <textarea class="form-control" name="objectives" id="objectives"><?= $lecture_data->learning_obj; ?></textarea>
+          <textarea class="form-control" name="objectives" id="objectives" required><?= $lecture_data->learning_obj; ?></textarea>
         </div>
         <div class="d-flex flex-column gap-2">
           <label for="tag" class="bold">강의 태그</label>
-          <textarea class="form-control" name="tag" id="tag"><?= $lecture_data->lecture_tag; ?></textarea>
+          <textarea class="form-control" name="tag" id="tag" required><?= $lecture_data->lecture_tag; ?></textarea>
         </div>
       </div>
     </div>
