@@ -50,10 +50,12 @@ if ($block_end > $total_page) $block_end = $total_page;
 
 
 
-$sql = "SELECT l.*, t.name 
+$sql = "SELECT l.*, t.name, a.userid 
 FROM lecture_list l 
-JOIN teachers t 
+LEFT JOIN teachers t 
 ON l.t_id = t.id 
+LEFT JOIN admins a
+ON l.t_id = a.userid
 WHERE 1=1 $search
 ORDER BY lcid LIMIT $start_num, $length
 ";
@@ -241,7 +243,7 @@ while ($tag_data = $tag_result->fetch_object()) {
         // if($page == $i) {$active = 'active';} else {$active = '';}
         $page == $i ? $active = 'active' : $active = '';
       ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&cate=<?= $cate ?>"><?= $i; ?></a></li>
+        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&cate=<?= $cate ?>&search_keyword=<?= $search_keyword ?>"><?= $i; ?></a></li>
       <?php
       }
       $next = $block_end + 1;
