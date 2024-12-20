@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-12-18 13:56
+-- 생성 시간: 24-12-20 06:13
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idx`, `userid`, `email`, `username`, `passwd`, `regdate`, `level`, `last_login`, `end_login_date`) VALUES
-(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-18 21:16:41', NULL);
+(4, 'admin', 'admin@shop.com', '관리자', '33275a8aa48ea918bd53a9181aa975f15ab0d0645398f5918a006d08675c1cb27d5c645dbd084eee56e675e25ba4019f2ecea37ca9e2995b49fcb12c096a032e', '2023-01-01 17:12:32', 100, '2024-12-20 10:13:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,8 @@ CREATE TABLE `board` (
   `updated_date` timestamp NULL DEFAULT NULL,
   `hit` int(11) DEFAULT 0,
   `likes` int(11) DEFAULT 0,
-  `category` enum('notice','free','event','qna') NOT NULL,
+  `category` enum('notice','free','event','qna','study') NOT NULL,
+  `recruit_status` tinyint(2) NOT NULL DEFAULT 0,
   `img` varchar(255) NOT NULL,
   `is_img` int(11) DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
@@ -75,26 +76,56 @@ CREATE TABLE `board` (
 -- 테이블의 덤프 데이터 `board`
 --
 
-INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `status`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`, `img`, `is_img`, `start_date`, `end_date`) VALUES
-(116, 'admin', '자주 묻는 질문 게시판 개설.', '게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.', 0, NULL, NULL, '2024-12-18 05:23:42', NULL, 3, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(117, '', 'test', 'etste', 0, NULL, NULL, '2024-12-18 05:28:47', NULL, 1, 0, 'free', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(118, 'admin', '시스템 점검 안내', '시스템 점검이 예정되어 있습니다. 불편을 드려 죄송합니다.', 0, NULL, NULL, '2024-12-17 21:00:00', NULL, 10, 0, 'notice', '', 0, NULL, NULL),
-(119, 'admin', '신규 강의 업데이트', '신규 강의가 추가되었습니다. 자세한 내용은 공지를 참고하세요.', 0, NULL, NULL, '2024-12-17 21:30:00', NULL, 8, 0, 'notice', '', 0, NULL, NULL),
-(120, 'admin', '연말 이벤트 안내', '연말 이벤트가 시작됩니다. 많은 참여 바랍니다.', 0, NULL, NULL, '2024-12-17 22:00:00', NULL, 15, 0, 'notice', '', 0, NULL, NULL),
-(121, 'admin', '서비스 약관 변경', '서비스 약관이 일부 변경되었습니다. 확인 부탁드립니다.', 0, NULL, NULL, '2024-12-17 22:30:00', NULL, 5, 0, 'notice', '', 0, NULL, NULL),
-(122, 'admin', '데이터 백업 안내', '데이터 백업 작업이 진행될 예정입니다.', 0, NULL, NULL, '2024-12-17 23:00:00', NULL, 6, 0, 'notice', '', 0, NULL, NULL),
-(123, 'admin', '1:1 문의 게시판 개설', '1:1 문의 게시판이 새롭게 개설되었습니다.', 0, NULL, NULL, '2024-12-17 23:30:00', NULL, 9, 0, 'notice', '', 0, NULL, NULL),
-(124, 'admin', '추석 연휴 배송 지연', '추석 연휴 기간 동안 배송이 지연될 수 있습니다.', 0, NULL, NULL, '2024-12-18 00:00:00', NULL, 13, 0, 'notice', '', 0, NULL, NULL),
-(125, 'admin', '고객센터 운영 시간 변경', '고객센터 운영 시간이 변경되었습니다.', 0, NULL, NULL, '2024-12-18 00:30:00', NULL, 4, 0, 'notice', '', 0, NULL, NULL),
-(126, 'admin', '서비스 점검 완료', '서비스 점검이 완료되었습니다.', 0, NULL, NULL, '2024-12-18 01:00:00', NULL, 3, 0, 'notice', '', 0, NULL, NULL),
-(127, 'admin', '보안 강화 안내', '보안 시스템이 강화되었습니다.', 0, NULL, NULL, '2024-12-18 01:30:00', NULL, 7, 0, 'notice', '', 0, NULL, NULL),
-(128, 'admin', '신규 이벤트 참여 방법', '신규 이벤트 참여 방법을 안내드립니다.', 0, NULL, NULL, '2024-12-18 02:00:00', NULL, 11, 0, 'notice', '', 0, NULL, NULL),
-(129, 'admin', '회원 가입 이벤트', '회원 가입 이벤트가 시작됩니다.', 0, NULL, NULL, '2024-12-18 02:30:00', NULL, 13, 0, 'notice', '', 0, NULL, NULL),
-(130, 'admin', '긴급 서버 점검', '긴급 서버 점검이 진행 중입니다.', 0, NULL, NULL, '2024-12-18 03:00:00', NULL, 14, 0, 'notice', '', 0, NULL, NULL),
-(131, 'admin', 'FAQ 업데이트', 'FAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.', 0, NULL, NULL, '2024-12-18 03:30:00', NULL, 11, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(132, 'admin', '이용 약관 변경', '이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.', 0, NULL, NULL, '2024-12-18 04:00:00', NULL, 9, 0, 'notice', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(133, 'admin', '코딩이 너무 어려운데 어쩌죠?코딩이 너무 어려운데 어쩌죠?', '123123123123123123123123', 0, NULL, NULL, '2024-12-18 07:37:01', NULL, 1, 0, 'qna', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(134, 'admin', '새로운 강의 빨리 만들어주세요', '새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요', 0, NULL, NULL, '2024-12-18 08:16:55', NULL, 0, 0, 'qna', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `board` (`pid`, `user_id`, `title`, `content`, `status`, `name`, `pw`, `date`, `updated_date`, `hit`, `likes`, `category`, `recruit_status`, `img`, `is_img`, `start_date`, `end_date`) VALUES
+(116, 'admin', '자주 묻는 질문 게시판 개설.', '게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.\r\n게시판의 F&Q가 개설되었습니다. 많은 관심 부탁 드립니다.', 0, NULL, NULL, '2024-12-18 05:23:42', NULL, 3, 0, 'notice', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(117, '', 'test', 'etste', 0, NULL, NULL, '2024-12-18 05:28:47', NULL, 1, 0, 'free', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(118, 'admin', '시스템 점검 안내', '시스템 점검이 예정되어 있습니다. 불편을 드려 죄송합니다.', 0, NULL, NULL, '2024-12-17 21:00:00', NULL, 10, 0, 'notice', 0, '', 0, NULL, NULL),
+(119, 'admin', '신규 강의 업데이트', '신규 강의가 추가되었습니다. 자세한 내용은 공지를 참고하세요.', 0, NULL, NULL, '2024-12-17 21:30:00', NULL, 8, 0, 'notice', 0, '', 0, NULL, NULL),
+(120, 'admin', '연말 이벤트 안내', '연말 이벤트가 시작됩니다. 많은 참여 바랍니다.', 0, NULL, NULL, '2024-12-17 22:00:00', NULL, 15, 0, 'notice', 0, '', 0, NULL, NULL),
+(121, 'admin', '서비스 약관 변경', '서비스 약관이 일부 변경되었습니다. 확인 부탁드립니다.', 0, NULL, NULL, '2024-12-17 22:30:00', NULL, 5, 0, 'notice', 0, '', 0, NULL, NULL),
+(122, 'admin', '데이터 백업 안내', '데이터 백업 작업이 진행될 예정입니다.', 0, NULL, NULL, '2024-12-17 23:00:00', NULL, 6, 0, 'notice', 0, '', 0, NULL, NULL),
+(123, 'admin', '1:1 문의 게시판 개설', '1:1 문의 게시판이 새롭게 개설되었습니다.', 0, NULL, NULL, '2024-12-17 23:30:00', NULL, 9, 0, 'notice', 0, '', 0, NULL, NULL),
+(124, 'admin', '추석 연휴 배송 지연', '추석 연휴 기간 동안 배송이 지연될 수 있습니다.', 0, NULL, NULL, '2024-12-18 00:00:00', NULL, 13, 0, 'notice', 0, '', 0, NULL, NULL),
+(125, 'admin', '고객센터 운영 시간 변경', '고객센터 운영 시간이 변경되었습니다.', 0, NULL, NULL, '2024-12-18 00:30:00', NULL, 4, 0, 'notice', 0, '', 0, NULL, NULL),
+(126, 'admin', '서비스 점검 완료', '서비스 점검이 완료되었습니다.', 0, NULL, NULL, '2024-12-18 01:00:00', NULL, 3, 0, 'notice', 0, '', 0, NULL, NULL),
+(127, 'admin', '보안 강화 안내', '보안 시스템이 강화되었습니다.', 0, NULL, NULL, '2024-12-18 01:30:00', NULL, 7, 0, 'notice', 0, '', 0, NULL, NULL),
+(128, 'admin', '신규 이벤트 참여 방법', '신규 이벤트 참여 방법을 안내드립니다.', 0, NULL, NULL, '2024-12-18 02:00:00', NULL, 11, 0, 'notice', 0, '', 0, NULL, NULL),
+(129, 'admin', '회원 가입 이벤트', '회원 가입 이벤트가 시작됩니다.', 0, NULL, NULL, '2024-12-18 02:30:00', NULL, 13, 0, 'notice', 0, '', 0, NULL, NULL),
+(130, 'admin', '긴급 서버 점검', '긴급 서버 점검이 진행 중입니다.', 0, NULL, NULL, '2024-12-18 03:00:00', NULL, 14, 0, 'notice', 0, '', 0, NULL, NULL),
+(131, 'admin', 'FAQ 업데이트', 'FAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.\r\nFAQ가 새롭게 업데이트되었습니다.', 0, NULL, NULL, '2024-12-18 03:30:00', NULL, 11, 0, 'notice', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(132, 'admin', '이용 약관 변경', '이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.\r\n이용 약관이 일부 변경되었습니다.', 0, NULL, NULL, '2024-12-18 04:00:00', NULL, 9, 0, 'notice', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(133, 'admin', '코딩이 너무 어려운데 어쩌죠?코딩이 너무 어려운데 어쩌죠?', '123123123123123123123123', 0, NULL, NULL, '2024-12-18 07:37:01', NULL, 1, 0, 'qna', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(134, 'admin', '새로운 강의 빨리 만들어주세요', '새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요새로운 강의 빨리 만들어주세요', 0, NULL, NULL, '2024-12-18 08:16:55', NULL, 0, 0, 'qna', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(146, 'haemilyjh@naver.com', '123123', '123123', 0, NULL, NULL, '2024-12-20 00:58:25', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(147, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 00:59:12', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(148, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 00:59:17', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(149, 'haemilyjh@naver.com', '123', '123', 0, NULL, NULL, '2024-12-20 01:00:23', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(150, 'haemilyjh@naver.com', 'test', 'test', 0, NULL, NULL, '2024-12-20 01:01:52', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(151, 'haemilyjh@naver.com', 'test11', 'est111', 0, NULL, NULL, '2024-12-20 01:02:15', NULL, 1, 0, 'qna', 0, '', NULL, NULL, NULL),
+(152, 'haemilyjh@naver.com', 'test11', 'est111', 0, NULL, NULL, '2024-12-20 01:02:27', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL),
+(153, 'haemilyjh@naver.com', 'test123', 't1', 0, NULL, NULL, '2024-12-20 01:02:35', NULL, 2, 0, 'qna', 0, '', NULL, NULL, NULL),
+(154, 'haemilyjh@naver.com', 'teset', '111', 0, NULL, NULL, '2024-12-20 01:03:25', NULL, 1, 0, 'qna', 0, '', NULL, NULL, NULL),
+(155, 'admin', 'free test', '123123', 0, NULL, NULL, '2024-12-20 01:13:45', NULL, 1, 0, 'free', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(156, 'admin', '자유게시판 테스트', '123123123', 0, NULL, NULL, '2024-12-20 01:17:10', NULL, 2, 0, 'free', 0, '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(157, 'haemilyjh@naver.com', '123123', '123123', 0, NULL, NULL, '2024-12-20 01:21:45', NULL, 2, 0, 'free', 0, '', NULL, NULL, NULL),
+(158, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 02:01:53', NULL, 1, 0, 'free', 0, '', NULL, NULL, NULL),
+(159, 'haemilyjh@naver.com', '동료를 모집합니다.', '123123', 0, NULL, NULL, '2024-12-20 02:10:11', NULL, 7, 0, 'study', 1, '', NULL, NULL, NULL),
+(160, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 02:28:09', NULL, 2, 0, 'qna', 0, '', NULL, NULL, NULL),
+(161, 'haemilyjh@naver.com', '1123123', '123123123', 0, NULL, NULL, '2024-12-20 02:30:36', NULL, 6, 0, 'qna', 0, '', NULL, NULL, NULL),
+(162, 'haemilyjh@naver.com', '자바스크립트 좋아하시는 분?', '댓글 달아 주세요', 0, NULL, NULL, '2024-12-20 02:40:44', NULL, 10, 0, 'study', 1, '', NULL, NULL, NULL),
+(163, 'haemilyjh@naver.com', '집에 가고 싶어요', '123123', 0, NULL, NULL, '2024-12-20 02:41:22', NULL, 1, 0, 'free', 0, '', NULL, NULL, NULL),
+(164, 'haemilyjh@naver.com', '제발', '123123123', 0, NULL, NULL, '2024-12-20 02:54:41', NULL, 5, 0, 'qna', 0, '', NULL, NULL, NULL),
+(165, 'haemilyjh@naver.com', '안녕하세요 ㅎㅎ', 'ㅎㅎㅇ', 0, NULL, NULL, '2024-12-20 02:56:24', NULL, 4, 0, 'free', 0, '', NULL, NULL, NULL),
+(166, 'haemilyjh@naver.com', 'test', 'test', 0, NULL, NULL, '2024-12-20 03:23:06', NULL, 2, 0, 'study', 1, '', NULL, NULL, NULL),
+(167, 'haemilyjh@naver.com', 'test', 'steset', 0, NULL, NULL, '2024-12-20 03:23:40', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(168, 'haemilyjh@naver.com', '123', '123', 0, NULL, NULL, '2024-12-20 03:24:54', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(169, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 03:26:22', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(170, 'haemilyjh@naver.com', '123123', '123123', 0, NULL, NULL, '2024-12-20 03:26:32', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(171, 'haemilyjh@naver.com', '123123', '123123', 0, NULL, NULL, '2024-12-20 03:27:51', NULL, 2, 0, 'qna', 0, '', NULL, NULL, NULL),
+(172, 'haemilyjh@naver.com', '123123', '123123', 0, NULL, NULL, '2024-12-20 03:28:12', NULL, 4, 0, 'study', 1, '', NULL, NULL, NULL),
+(173, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 03:30:35', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(174, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 03:31:25', NULL, 0, 0, 'study', 1, '', NULL, NULL, NULL),
+(175, 'haemilyjh@naver.com', '111', '111', 0, NULL, NULL, '2024-12-20 03:40:07', NULL, 0, 0, 'qna', 0, '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,6 +220,42 @@ CREATE TABLE `chats` (
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `comments`
+--
+
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 164, 'haemilyjh@naver.com', '11', '2024-12-20 02:54:46'),
+(2, 164, 'haemilyjh@naver.com', '안녕하세요', '2024-12-20 02:54:51'),
+(3, 165, 'haemilyjh@naver.com', '반가', '2024-12-20 02:56:29'),
+(4, 165, 'haemilyjh@naver.com', '안녕', '2024-12-20 02:56:36'),
+(5, 161, 'haemilyjh@naver.com', '11', '2024-12-20 02:59:01'),
+(6, 160, 'haemilyjh@naver.com', '111', '2024-12-20 02:59:04'),
+(7, 164, 'haemilyjh@naver.com', '123123', '2024-12-20 03:00:12'),
+(8, 164, 'haemilyjh@naver.com', '11', '2024-12-20 03:00:35'),
+(9, 161, 'haemilyjh@naver.com', '11', '2024-12-20 03:03:02'),
+(10, 162, 'haemilyjh@naver.com', '자바스크립트 좋아하세요?', '2024-12-20 03:05:28'),
+(11, 162, 'haemilyjh@naver.com', '마감인가요?', '2024-12-20 03:05:34'),
+(12, 159, 'haemilyjh@naver.com', '원피스인가요?', '2024-12-20 03:07:15'),
+(13, 171, 'haemilyjh@naver.com', '123123', '2024-12-20 03:27:56'),
+(14, 171, 'haemilyjh@naver.com', '123123', '2024-12-20 03:28:01'),
+(15, 165, 'haemilyjh@naver.com', '123123', '2024-12-20 03:28:06'),
+(16, 172, 'haemilyjh@naver.com', '123123123', '2024-12-20 03:29:33');
 
 -- --------------------------------------------------------
 
@@ -829,10 +896,10 @@ INSERT INTO `memberskakao` (`memId`, `memName`, `memPassword`, `memEmail`, `id`,
 (75, '한다솜', '123123', 'user73@example.com', 'id73', '', '1990-01-25', 'gold', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address73', 'Detail73', '2024-01-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0, 0),
 (76, '조재현', '123123', 'user74@example.com', 'id74', '', '1991-02-25', 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address74', 'Detail74', '2024-02-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0, 0),
 (77, '신소율', '123123', 'user75@example.com', 'id75', '2147483647', '1992-03-25', 'silver', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Address75', 'Detail75', '2024-03-24 15:00:00', '2024-11-29 03:13:57', '2024-12-05 16:58:57', 0, 0, 0),
-(167, '윤비밀', 'da167be407847fcd149901512e876447efecfd6acf3ce8ee93a8e2a2328b4fec8da94d111959081939a59cc5ba96f89f6d343a37f8063ab7e88039727784a32d', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-18 03:14:18', '2024-12-18 12:14:18', 2, 1, 0),
+(167, '윤비밀', 'da167be407847fcd149901512e876447efecfd6acf3ce8ee93a8e2a2328b4fec8da94d111959081939a59cc5ba96f89f6d343a37f8063ab7e88039727784a32d', 'haemilyjh@gmail.com', NULL, '123123', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-12 20:04:19', '2024-12-20 00:43:15', '2024-12-20 09:43:15', 3, 1, 0),
 (168, '남성우', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'gwaja97@naver.com', NULL, '01022223333', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 04:17:56', '2024-12-18 12:13:21', '2024-12-18 21:13:21', 2, 1, 0),
 (169, '남성우', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'gwaja97@naver.com', NULL, '01022223333', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 04:21:30', '2024-12-18 12:13:21', '2024-12-18 21:13:21', 2, 1, 0),
-(178, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', NULL, 'bronze', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-17 19:15:40', '2024-12-18 03:16:11', '2024-12-18 12:16:05', 1, 1, 0),
+(178, '윤네이버', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'haemilyjh@naver.com', NULL, '01092188608', '2024-12-11', 'bronze', 0, 0, NULL, NULL, NULL, 'Array', NULL, '서울 은평구 불광로 1 (대조동)', NULL, '2024-12-17 19:15:40', '2024-12-20 05:11:03', '2024-12-20 12:48:19', 7, 1, 0),
 (187, '윤준호', 'kakaoPassword', 'sexydynamite123@kakao.com', NULL, NULL, NULL, 'bronze', 1, 1, NULL, NULL, NULL, NULL, NULL, 'kakaoAddr', NULL, '2024-12-18 05:56:25', '2024-12-18 05:56:27', '2024-12-18 14:56:25', 1, 0, 1);
 
 -- --------------------------------------------------------
@@ -987,7 +1054,7 @@ CREATE TABLE `teachers` (
 INSERT INTO `teachers` (`tid`, `name`, `id`, `birth`, `password`, `email`, `number`, `reg_date`, `cover_image`, `teacher_detail`, `grade`, `last_login`, `notyet`, `main`, `year_sales`, `student_number`, `level`, `lecture_num`) VALUES
 (1, '정승제', 'jungsungjae', '1978-12-14', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'jungsungjae@naver.com', 1099451212, '2024-11-08', '/qc/admin/upload/20241119085443204349.jpg', '코딩 포기자를 위한 자바 1타 강사', 'Gold', '2024-11-20 12:51:51', NULL, '', 1500000, 34, 10, NULL),
 (2, '현우진', 'hyunwonjun', '1987-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'hyunwojin@naver.com', 1032221234, '2024-11-07', '/qc/admin/upload/20241119085548949558.png', '정석대로 가르치는 자바스크립트 1타 강사', 'Silver', '2024-11-20 12:53:24', NULL, '', 1300000, NULL, 10, NULL),
-(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-12-13 11:10:29', NULL, '', 2100000, 68, 10, NULL),
+(3, '곽튜브', 'kwak', '1977-12-09', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'kwak@naver.com', 1052221234, '2024-11-07', '/qc/admin/upload/20241119085632209070.jpg', '7년차 서버개발자입니다\r\n\r\n다양한 강의를 올려보고 싶습니다!\r\n\r\n파이썬, 웹개발, 알고리즘, 개발자 취업 등등..\r\n\r\n여행 유튜브를 운영하고 있습니다\r\n\r\nhttps://www.youtube.com/@JBKWAK \r\n\r\n구경오세요 심심하시면!', 'Vip', '2024-12-20 10:54:11', NULL, '', 2100000, 68, 10, NULL),
 (4, '오해원', 'ohhaewon', '1998-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'ohhaewon@naver.com', 1022221299, '2023-07-17', '/qc/admin/upload/20241120030641125682.jpg', '신나게 가르칩니다.', 'Silver', '2024-11-20 12:54:26', NULL, '', 2300000, 72, 10, NULL),
 (5, '민희진', 'minheejin', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'minheejin@naver.com', 1044221299, '2023-07-19', '/qc/admin/upload/20241120030753809411.jpg', '랩 하듯이 가르칩니다.', 'Silver', '2024-11-20 12:55:11', NULL, '', 1930000, 23, 10, NULL),
 (6, '설민석', 'sulminsuk', '1992-12-12', '263fec58861449aacc1c328a4aff64aff4c62df4a2d50b3f207fa89b6e242c9aa778e7a8baeffef85b6ca6d2e7dc16ff0a760d59c13c238f6bcdc32f8ce9cc62', 'sulminsuk@naver.com', 1044441299, '2023-07-16', '/qc/admin/upload/20241120030830210517.jpg', '연극 하듯이 가르칩니다.', 'Gold', '2024-11-20 12:56:24', NULL, '', 800000, 44, 10, NULL),
@@ -1147,6 +1214,12 @@ ALTER TABLE `chats`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 테이블의 인덱스 `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 테이블의 인덱스 `coupons`
 --
 ALTER TABLE `coupons`
@@ -1290,7 +1363,7 @@ ALTER TABLE `admins`
 -- 테이블의 AUTO_INCREMENT `board`
 --
 ALTER TABLE `board`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 
 --
 -- 테이블의 AUTO_INCREMENT `board_like`
@@ -1315,6 +1388,12 @@ ALTER TABLE `board_re_reply`
 --
 ALTER TABLE `chats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- 테이블의 AUTO_INCREMENT `coupons`
