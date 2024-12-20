@@ -33,6 +33,7 @@ $result = $stmt->get_result();
 $qnas = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 스타일 -->
 <style>
   .modal-dialog {
@@ -249,11 +250,38 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);
 
 <script>
   // 모달 표시
-  document.getElementById("inquiryButton").addEventListener("click", function () {
+  // 모달 표시
+  $("#inquiryButton").on("click", function () {
     const inquiryModal = new bootstrap.Modal(document.getElementById("inquiryModal"));
     inquiryModal.show();
   });
 
+  $("#inquiryForm").on("submit", function (e) {
+    e.preventDefault(); // 기본 폼 제출 동작 방지
+
+    const formData = new FormData(this); // 폼 데이터를 수집
+
+    $.ajax({
+      url: "/qc/community/qna_ok.php",
+      type: "POST",
+      data: formData,
+      processData: false, // FormData 사용 시 필요
+      contentType: false, // FormData 사용 시 필요
+      success: function (response) {
+        console.log(response);
+        if (response.status === "success") {
+          alert(response.message); // 성공 메시지
+          location.reload(); // 페이지 새로고침
+        } else {
+          alert(response.message); // 에러 메시지
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+        alert("문의 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
+      },
+    });
+  });
   
 </script>
 
