@@ -51,6 +51,8 @@ $lecture_cate = $lecture_platforms . $lecture_development . $lecture_technologie
 
 $lecture_videoId = $_POST['lecture_video'];  //추가이미지의 imgid들 11,12,
 $lecture_videoId = rtrim($lecture_videoId, ','); //추가이미지의 imgid들 11,12
+$lecture_videoIds = explode(',',$lecture_videoId );
+$video_titles = $_POST['video_titles'] ?? '';
 
 if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == UPLOAD_ERR_OK) {
   $fileUploadResult = fileUpload($_FILES['cover_image'], 'image');
@@ -112,6 +114,15 @@ if ($result) { //상품이 products테이블에 등록되면
     //테이블 product_image_table에서 imgid의 값이 11,12인 데이터 행에서 pid 값을 $pid로 업데이트
     $update_sql = "UPDATE lecture_video SET lid=$lid WHERE lvid IN ($lecture_videoId)";
     $update_result = $mysqli->query($update_sql);
+    foreach ($lecture_videoIds as $lvid) {
+      $video_title = $video_titles[$lvid];
+      $video_sql = "UPDATE lecture_video SET video_title = '$video_title' WHERE lvid = $lvid";
+      $video_result = $mysqli->query($video_sql);
+  
+      if (!$video_result) {
+          echo "SQL Error on UPDATE: " . $mysqli->error;
+      }
+    }
   }
 }
 /*

@@ -8,11 +8,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $lid = $_GET['lid'];
 $vidArr = [];
+$vidIndex = [];
 $sql = "SELECT * FROM lecture_video WHERE lid = $lid ORDER BY lvid";
 $result = $mysqli->query($sql);
 if (isset($result)) {
   while ($data = $result->fetch_object()) {
     $vidArr[] = $data->video_lecture;
+    $vidIndex[] = $data;
   }
 } else {
   echo
@@ -46,12 +48,19 @@ $vidArrJson = json_encode($vidArr);
     </video>
     <ul class="video_index">
       <?php 
-      if(!empty($vidArr)){
+      if(!empty($vidIndex)){
         $i = 1;
-        foreach($vidArr as $vid){
+        foreach($vidIndex as $vid){
       ?> 
-      <li data-id = <?= $i -1 ?> >
-        <h5><a href="#"> <?= $i ?>강 </a></h5>
+      <li data-id = <?= $i -1 ?> ><a href="#">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0303 7.96967C18.3232 8.26256 18.3232 8.73744 18.0303 9.03033L11.0303 16.0303C10.7374 16.3232 10.2626 16.3232 9.96967 16.0303L5.96967 12.0303C5.67678 11.7374 5.67678 11.2626 5.96967 10.9697C6.26256 10.6768 6.73744 10.6768 7.03033 10.9697L10.5 14.4393L16.9697 7.96967C17.2626 7.67678 17.7374 7.67678 18.0303 7.96967Z" fill="#191B1C"/>
+          </svg> 
+          <div>
+            <h5> <?= $i ?>강 <strong><?= $vid->video_title ?></strong> </h5>
+            <p><?= $vid->video_duration ?></p>
+          </div>
+        </a>
       </li>
        <?php
       $i++;
@@ -61,7 +70,7 @@ $vidArrJson = json_encode($vidArr);
     </ul>
     <ul class="video_desc">
       <li >
-        <p><?= $lecture_data->sub_title ?></p>
+        <h5><?= $lecture_data->sub_title ?></h5>
         <p><?= $lecture_data->learning_obj ?></p>
       </li>
     </ul>
