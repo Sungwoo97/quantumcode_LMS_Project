@@ -113,7 +113,7 @@ if ($lecture_result) { //상품이 products테이블에 등록되면
       if (!$video_result) {
           echo "SQL Error on UPDATE: " . $mysqli->error;
       }
-  }
+    }
   }
 }
 
