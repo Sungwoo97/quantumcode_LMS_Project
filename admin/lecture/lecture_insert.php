@@ -37,6 +37,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
   <Form action="lecture_insert_ok.php" id="lecture_submit" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="lecture_description" name="lecture_description" value="">
     <input type="hidden" name="lecture_video" id="lecture_videoId" value="">
+    <!-- <input type="hidden" name="lecture_videoTitle" id="lecture_videoTitle" value=""> -->
 
     <div class="row lecture">
       <div class="col-4 mb-5">
@@ -177,18 +178,8 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         <h6>강의 상세 설명</h6>
         <div id="desc"></div>
       </div>
-      <div class="col-4 ">
-        <h6>강의 영상 등록</h6>
-        <div class="lecture_video mb-3 d-flex">
-          <!-- <video src="" id="lecture_addVideo"></video> -->
-
-        </div>
-        <input type="file" class="form-control visually-hidden" accept="video/*" name="add_videos[]" id="add_videos" multiple>
-        <button type="button" class="btn btn-primary btn-sm" id="addVideo">영상 추가</button>
-        <div id="addVideos" class="d-flex gap-3"></div>
-
-      </div>
-      <div class="col-8 ">
+      
+      <div class="col-12 ">
         <div class="d-flex flex-column gap-2">
           <label for="objectives" class="bold">강의 목표</label>
           <textarea class="form-control" placeholder="강의 목표" name="objectives" id="objectives" required></textarea>
@@ -199,6 +190,17 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         </div>
       </div>
     </div>
+    <div class="col-12 ">
+        <h6>강의 영상 등록</h6>
+        <div class="lecture_video mb-3 d-flex">
+          <!-- <video src="" id="lecture_addVideo"></video> -->
+
+        </div>
+        <input type="file" class="form-control visually-hidden" accept="video/*" name="add_videos[]" id="add_videos" multiple>
+        <button type="button" class="btn btn-primary btn-sm mb-3" id="addVideo">영상 추가</button>
+        <div id="addVideos" class="d-flex gap-3"></div>
+        <!-- <input type=" text" class="form-control" name="title" id="title" placeholder="강의 영상 이름을 입력해주세요" required> -->
+      </div>
     <div class="mt-3 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">등록</button>
     </div>
@@ -260,11 +262,12 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
 
 
 
-  function attachFile(file) {
+  function attachFile(file, duration) {
 
     let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
     formData.append('savefile', file); //<input type="file" name="savefile" value="file"> 이미지 첨부
-
+    formData.append('duration', duration);
+    console.log(formData);
     $.ajax({
       url: 'lecture_add_video.php',
       data: formData,
@@ -288,10 +291,13 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
         } else { //파일 첨부가 성공하면
           let vidids = $('#lecture_videoId').val() + returned_data.vidid + ',';
           $('#lecture_videoId').val(vidids);
+          // let vidTitles = $('#lecture_videoTitle').val() + returned_data.vidid + ',';
+          // $('#lecture_videoTitle').val(vidids);
           let html = `
-            <div class="card" style="width: 9rem;" id="${returned_data.vidid}">
+            <div class="card" style="width: 18rem;" id="${returned_data.vidid}">
               <video src="${returned_data.savefile}" class="card-img-top" alt="..."> </video>
-              <div class="card-body">                
+              <div class="card-body">
+               <input type="text" class="form-control video-title" placeholder="영상 제목 입력" name="video_titles[${returned_data.vidid}]" data-id="${returned_data.vidid}">                
                 <button type="button" class="btn btn-danger btn-sm">삭제</button>
               </div>
             </div>
@@ -342,11 +348,33 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
 
   $('#add_videos').change(function() {
     let files = $(this).prop('files');
-
+    let videoDetails = [];
     for (let i = 0; i < files.length; i++) {
-      attachFile(files[i]);
-    }
+      let file = files[i];
+      const video = document.createElement('video');
+        video.preload = 'metadata';
 
+        video.onloadedmetadata = function() {
+          window.URL.revokeObjectURL(video.src);
+
+          const duration = video.duration; // 초 단위 길이
+          const formattedDuration = new Date(duration * 1000).toISOString().substr(11, 8); // HH:MM:SS 형식
+
+          // 파일 정보와 길이를 함께 저장
+          videoDetails.push({
+              file: file,
+              duration: formattedDuration,
+          });
+
+          // 모든 파일이 처리되면 attachFile 호출
+          if (videoDetails.length === files.length) {
+              videoDetails.forEach(detail => {
+                  attachFile(detail.file, detail.duration);
+              });
+          }
+      };
+        video.src = URL.createObjectURL(file);
+    }
   });
 
   let lecture_desc = $('#desc');

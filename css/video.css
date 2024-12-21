@@ -76,18 +76,36 @@ body{
 
 }
 .video_index li{
-  padding: 0 20px;
+  padding: 20px 20px;
+  list-style: none;
+}
+.video_index a{
   display: flex;
+  justify-content: start;
   align-items: start;
-  gap: 5px;
+  gap: 20px;
 }
 .video_index li:hover{
   background: #ebebeb;
+}
+.video_index li svg{
+  background: #727272;
+  border-radius: 50%;
+  
+}
+.video_index li.active svg{
+  background: var(--primary);
+  border-radius: 50%;
+  
+}
+.video_index li svg path{
+  fill: #fff;
 }
 .video_index li h5 {
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
+
 }
 .video_index li p {
   font-size: 16px;
@@ -116,6 +134,7 @@ body{
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
+  
 }
 .video_desc li p {
   font-size: 16px;
