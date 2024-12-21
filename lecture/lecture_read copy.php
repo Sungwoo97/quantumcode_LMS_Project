@@ -9,12 +9,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 $lid = $_GET['lid'];
 $vidArr = [];
 $vidIndex = [];
+$vidIdx = [];
 $sql = "SELECT * FROM lecture_video WHERE lid = $lid ORDER BY lvid";
 $result = $mysqli->query($sql);
 if (isset($result)) {
   while ($data = $result->fetch_object()) {
     $vidArr[] = $data->video_lecture;
     $vidIndex[] = $data;
+    $vidIdx[] = ['lvid' => $data->lvid, 'video_lecture' => $data->video_lecture]; // 영상 정보 배열
   }
 } else {
   echo
@@ -24,20 +26,20 @@ if (isset($result)) {
   </script> ";
 }
 
-$lecture_sql = "SELECT sub_title, learning_obj  FROM lecture_list WHERE lid=$lid";
+$lecture_sql = "SELECT * FROM lecture_list WHERE lid=$lid";
 $lecture_result = $mysqli->query($lecture_sql);
 if($lecture_result){
   $lecture_data = $lecture_result->fetch_object();
 }
-/*
+
 $watch_sql = "SELECT DISTINCT lid FROM lecture_watch WHERE mid = '$email' AND event_type = 'completed'";
 $watch_result = $mysqli->query($watch_sql);
 if($watch_result){
   $watch_data = $watch_result->fetch_object();
 }
-*/
-$vidArrJson = json_encode($vidArr);
 
+$vidArrJson = json_encode($vidArr);
+$vidIdxJson = json_encode($vidIdx);
 ?>
 
 <div class="hidden_hover"></div>
@@ -47,12 +49,25 @@ $vidArrJson = json_encode($vidArr);
       <source src="<?= $vidArr[0] ?>" type="video/mp4">
     </video>
     <ul class="video_index">
+      <h2 class="mb-3">강의 목차</h2>
+      <h3><?= $lecture_data->title ?></h3>
+      <p>수강 만료일 : <?= $lecture_data->expiration_day ?></p>
       <?php 
+      $complete = '';
       if(!empty($vidIndex)){
         $i = 1;
         foreach($vidIndex as $vid){
+          $watch_sql = "SELECT DISTINCT lid FROM lecture_watch WHERE mid = '$email' AND event_type = 'completed' AND lvid = $vid->lvid";
+          $watch_result = $mysqli->query($watch_sql);
+          if($watch_result && $watch_result -> num_rows > 0){
+            $complete = 'complete ';
+          }
+          else{
+            $complete = ' ';
+          }
+          
       ?> 
-      <li data-id = <?= $i -1 ?> ><a href="#">
+      <li class="<?= $complete ?>" data-id = <?= $i -1 ?> ><a href="#">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0303 7.96967C18.3232 8.26256 18.3232 8.73744 18.0303 9.03033L11.0303 16.0303C10.7374 16.3232 10.2626 16.3232 9.96967 16.0303L5.96967 12.0303C5.67678 11.7374 5.67678 11.2626 5.96967 10.9697C6.26256 10.6768 6.73744 10.6768 7.03033 10.9697L10.5 14.4393L16.9697 7.96967C17.2626 7.67678 17.7374 7.67678 18.0303 7.96967Z" fill="#191B1C"/>
           </svg> 
@@ -70,6 +85,7 @@ $vidArrJson = json_encode($vidArr);
     </ul>
     <ul class="video_desc">
       <li >
+      <h2 class="mb-3">강의 설명</h2>
         <h5><?= $lecture_data->sub_title ?></h5>
         <p><?= $lecture_data->learning_obj ?></p>
       </li>
@@ -96,12 +112,14 @@ $vidArrJson = json_encode($vidArr);
 <script>
   // 강의 영상 배열 (PHP에서 전달)
   const vidArr = <?= $vidArrJson; ?>;
+  const vidIdx = <?= $vidIdxJson; ?>;
   let currentIndex = 0; // 현재 영상 인덱스
 
 
 
   // 영상 요소 참조
   const video = document.getElementById('lecture-video');
+  const source = video.querySelector('source');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
   const navBar = document.querySelector('.navbar');
@@ -111,6 +129,8 @@ $vidArrJson = json_encode($vidArr);
   const videoWrapper = document.querySelector('.video_wrapper');
   const activeBtn = document.querySelectorAll('.video_wrapper > ul');
   const videoIndex = document.querySelectorAll('.video_index > li');
+
+
 
   let excuted = false;
   //헤더 호버 이벤트
@@ -146,10 +166,16 @@ $vidArrJson = json_encode($vidArr);
     loadVideo(currentIndex + 1); // 다음 영상 로드
   });
   videoIndex.forEach(index =>{
+    
     index.addEventListener('click', (e)=>{
       e.preventDefault();
       let id = e.currentTarget.getAttribute('data-id');
       console.log(e.currentTarget);
+      videoIndex.forEach(idx =>{
+        idx.classList.remove('active');
+      })
+      index.classList.add('active');
+
       loadVideo(id);
     })
   })
@@ -193,17 +219,20 @@ $vidArrJson = json_encode($vidArr);
       }
     })
   })
-  /*
+  
+  const getCurrentLvid = () => vidIdx[currentIndex].lvid;
+
   // 비디오가 시작되면 sendWatchEvent 함수 실행
   video.addEventListener('play', () => {
     console.log('Video started');
     sendWatchEvent('start');
   });
+  /*
  // 비디오가 멈추면 sendWatchEvent 함수 실행
   video.addEventListener('pause', () => {
     console.log('Video paused');
     sendWatchEvent('pause');
-  });
+  });*/
  // 비디오가 끝나면 sendWatchEvent 함수 실행
   video.addEventListener('ended', () => {
     console.log('Video ended');
@@ -213,20 +242,29 @@ $vidArrJson = json_encode($vidArr);
   const sendWatchEvent = (eventType) => {
     const lid = '<?= $lid ?>'; // 강의 ID
     const mid = '<?= $email ?>'; // 사용자 ID
+    const lvid = getCurrentLvid();
     let data = JSON.stringify({
         mid: mid,
         lid: lid,
+        lvid: lvid,
         eventType: eventType,
         timestamp: new Date().toISOString(),
       });
       console.log(data);
     fetch('lecture_videoCheck.php', {
       method: 'POST',
-      
       body:data ,
-    });
+    }).then((response) => response.json())
+    .then((result) => {
+      if (result.status === 'success') {
+        console.log(`LVID ${lvid} 이벤트 저장 성공: ${eventType}`);
+      } else {
+        console.error(`LVID ${lvid} 이벤트 저장 실패:`, result.message);
+      }
+    })
+    .catch((error) => console.error('네트워크 오류:', error));
   };
-  */
+  
 
   videojs(video, {
     controls: true,
