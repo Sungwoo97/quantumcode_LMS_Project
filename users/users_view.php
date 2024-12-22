@@ -16,6 +16,7 @@ $sql = "SELECT * FROM membersKakao WHERE memId = $MemId";
 $result = $mysqli->query($sql); // 쿼리 실행 결과
 $data = $result->fetch_object();
 
+
 ?>
 
 <div class="container mt-5">
@@ -47,56 +48,77 @@ $data = $result->fetch_object();
       <nav>
         <ul>
           <li class="my-2">
-            <a href="#" class="text-decoration-none load-page" data-page="dashboard.php" id="myDashboard">대시보드</a>
+            <!-- 실제 이동 링크 -->
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($MemId); ?>" 
+              class="text-decoration-none">
+              대시보드
+            </a>
           </li>
           <li class="my-2">
-            <a href="#" class="text-decoration-none load-page" data-page="myLectures.php" id="myLectures">수강 중인 강의</a>
+            <a href="#" class="text-decoration-none load-page" data-page="myProgress.php" id="myLectures">수강 관리</a>
           </li>
           <li class="my-2">
             <a href="#" class="text-decoration-none load-page" data-page="myInfo.php" id="myInfo">개인 정보</a>
           </li>
           <li class="my-2">
-            <a href="#" class="text-decoration-none load-page" data-page="myCoupons.php" id="myCoupons">쿠폰</a>
+            <a href="#" class="text-decoration-none load-page" data-page="myCoupons.php" id="myCoupons">나의 쿠폰</a>
+          </li>
+          <li class="my-2">
+            <a href="#" class="text-decoration-none load-page" data-page="myMessages.php" id="myCoupons">나의 쪽지</a>
+          </li>
+          <li class="my-2">
+            <a href="#" class="text-decoration-none load-page" data-page="myWrites.php" id="myCoupons">나의 작성글</a>
+          </li>
+          <li class="my-2">
+            <a href="#" class="text-decoration-none load-page" data-page="myPayments.php" id="myCoupons">결제내역</a>
           </li>
         </ul>
       </nav>
     </div>
 
     <div class="col-9 mb-3" id="main_content">
-      <h4>메뉴를 클릭하면 해당 내용이 여기에 표시됩니다.</h4>
+      <h4>메인메뉴에는 뭐가 들어가면 좋을까???</h4>
     </div>
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll(".load-page"); // 모든 메뉴 링크
-    const mainContent = document.getElementById("main_content"); // 콘텐츠 영역
+    const links = document.querySelectorAll(".load-page");
+    const mainContent = document.getElementById("main_content");
 
     links.forEach(link => {
         link.addEventListener("click", function (event) {
-            event.preventDefault(); // 기본 링크 동작 방지
-            const page = this.getAttribute("data-page"); // data-page 속성 가져오기
+            event.preventDefault();
+            const page = this.getAttribute("data-page");
 
             if (page) {
-                // 페이지 로드 AJAX
                 fetch(page)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("네트워크 접속 안됌");
+                            throw new Error("페이지 로드 실패");
                         }
-                        return response.text(); // 응답 텍스트 변환
+                        return response.text();
                     })
                     .then(html => {
-                        mainContent.innerHTML = html; // 로드한 콘텐츠 삽입
+                        mainContent.innerHTML = html;
                     })
                     .catch(error => {
-                        console.error("에러 로딩 :", error);
-                        mainContent.innerHTML = "<p>콘텐츠를 로드할 수 없습니다. 나중에 다시 시도해주세요.</p>";
+                        console.error("페이지 로드 에러:", error);
+                        mainContent.innerHTML = "<p>콘텐츠를 로드할 수 없습니다.</p>";
                     });
             }
         });
     });
+
+    // URL에 특정 해시값(#myCoupons)이 있는 경우 자동 클릭
+    const hash = window.location.hash;
+    if (hash === "#myCoupons") {
+        const myMessagesLink = document.querySelector('a[data-page="myMessages.php"]');
+        if (myMessagesLink) {
+            myMessagesLink.click();
+        }
+    }
 });
 </script>
 
