@@ -70,7 +70,7 @@ $stmt->fetch();
 $stmt->close();
 
 // 모든 쪽지 가져오기
-$sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ?";
+$sql_all_msgs = "SELECT * FROM tomembermessages WHERE receiver_id = ? ORDER BY sent_at DESC"; // 최신순 정렬 추가
 $stmt = $mysqli->prepare($sql_all_msgs);
 $stmt->bind_param("s", $memId);
 $stmt->execute();
@@ -79,10 +79,9 @@ $result = $stmt->get_result();
 // 쪽지 데이터를 배열로 저장
 $messages = [];
 while ($row = $result->fetch_assoc()) {
-  $messages[] = $row;
+    $messages[] = $row;
 }
 $stmt->close();
-
 
 
 
@@ -305,26 +304,26 @@ if (isset($libVideo_js)) {
                   <div class="modal-body" style="position: relative;">
                     <!-- 쪽지 리스트 -->
                     <ul class="list-group" id="messageList" style="position: absolute; top: 10px; left: 10px; width: 95%; max-height: calc(100% - 20px); overflow-y: auto;">
-                      <?php if (count($messages) > 0): ?>
-                        <?php foreach ($messages as $message): ?>
-                          <li class="list-group-item d-flex flex-column mt-1">
-                            <div class="d-flex justify-content-between align-items-center">
-                              <strong class="text-primary"><?= htmlspecialchars($message['sender_name']); ?></strong>
-                              <small class="text-muted"><?= date("Y-m-d H:i", strtotime($message['sent_at'])); ?></small>
-                            </div>
-                            <p class="mb-1 text-dark"><?= htmlspecialchars($message['message_content']); ?></p>
-                          </li>
-                        <?php endforeach; ?>
-                      <?php else: ?>
-                        <li class="list-group-item text-center">
-                          <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
-                          <span class="text-muted">새로운 쪽지가 없습니다.</span>
-                        </li>
-                      <?php endif; ?>
+                        <?php if (empty($messages)): ?>
+                            <li class="list-group-item text-center">
+                                <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
+                                <span class="text-muted">아직 새로운 쪽지가 없습니다.</span>
+                            </li>
+                        <?php else: ?>
+                            <?php foreach ($messages as $message): ?>
+                                <li class="list-group-item d-flex flex-column mt-1">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong class="text-primary"><?= htmlspecialchars($message['sender_name']); ?></strong>
+                                        <small class="text-muted"><?= date("Y-m-d H:i", strtotime($message['sent_at'])); ?></small>
+                                    </div>
+                                    <p class="mb-1 text-dark"><?= htmlspecialchars($message['message_content']); ?></p>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">모든 쪽지 보기</button> <!--쪽지전체보기로 이동하는 a태그 만들것!!-->
+                    <button type="button" class="btn btn-primary" onclick="redirectToMessages()">모든 쪽지 보기</button> <!--쪽지전체보기로 이동하는 a태그 만들것!!-->
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                   </div>
                 </div>
@@ -416,6 +415,24 @@ if (isset($libVideo_js)) {
 
   <!------- JavaScript -------->
   <script>
+    function redirectToMessages() {
+    const memId = <?= json_encode($_SESSION['MemId']); ?>;
+    const targetUrl = `http://localhost/qc/users/users_view.php?MemId=${memId}`;
+    window.location.href = targetUrl;
+
+    // 페이지 로드 후 "나의 쪽지" 링크 클릭 트리거
+    window.onload = function () {
+        setTimeout(() => {
+            const myMessagesLink = document.querySelector('a[data-page="myMessages.php"]');
+            if (myMessagesLink) {
+                myMessagesLink.click(); // AJAX 링크 강제 클릭
+            } else {
+                console.error("'나의 쪽지' 링크를 찾을 수 없습니다.");
+            }
+        }, 500); // 지연 시간 추가
+    };
+}
+
     document.addEventListener("DOMContentLoaded", function() {
       <?php if ($showModal): ?>
         // 첫 번째 모달 표시
@@ -551,65 +568,61 @@ if (isset($libVideo_js)) {
 
       //안읽은(새) 쪽지가 있을때, 쪽지 모달을 클릭했을때, tomembermessages 테이블의 is_read 컬럼값을 1로 바꿔서 읽음 처리!
       const messageModal = document.getElementById("messageModal");
-      const messageList = document.getElementById("messageList");
+    const messageList = document.getElementById("messageList");
 
-      // 모달이 열릴 때 실행되는 이벤트
-      messageModal.addEventListener("show.bs.modal", function() {
-        // AJAX 요청으로 읽음 처리 및 최신순 쪽지 리스트 가져오기
+    if (!messageModal || !messageList) {
+        console.error("messageModal 또는 messageList 요소가 누락되었습니다.");
+        return;
+    }
+
+    // 모달이 열릴 때 실행
+    messageModal.addEventListener("show.bs.modal", function () {
+        // AJAX 요청으로 쪽지 리스트 가져오기
         fetch("/qc/chat&message/update_read_status.php", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              receiver_id: <?= json_encode($memId); ?>
+                receiver_id: <?= json_encode($memId); ?>
             }),
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              console.log("쪽지 읽음 처리 완료");
+        })
+            .then(response => response.json())
+            .then(data => {
+                messageList.innerHTML = ""; // 기존 리스트 초기화
 
-              // 쪽지 리스트를 최신순으로 렌더링
-              messageList.innerHTML = ""; // 기존 리스트 초기화
-              data.messages.forEach(message => {
-                const listItem = document.createElement("li");
-                listItem.className = "list-group-item d-flex flex-column mt-1";
-                listItem.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-center">
-                        <strong class="text-primary">${message.sender_name}</strong>
-                        <small class="text-muted">${new Date(message.sent_at).toLocaleString()}</small>
-                    </div>
-                    <p class="mb-1 text-dark">${message.message_content}</p>
-                `;
-                messageList.appendChild(listItem);
-              });
-            } else {
-              console.error("쪽지 읽음 처리 실패:", data.error);
-            }
-          })
-          .catch(error => {
-            console.error("AJAX 요청 오류:", error);
-          });
-      });
+                if (data.success && Array.isArray(data.messages)) {
+                    if (data.messages.length === 0) {
+                        // 쪽지가 없을 때
+                        messageList.innerHTML = `
+                            <li class="list-group-item text-center">
+                                <i class="fas fa-envelope-open-text text-secondary mb-2"></i><br>
+                                <span class="text-muted">아직 새로운 쪽지가 없습니다.</span>
+                            </li>`;
+                    } else {
+                        // 쪽지가 있을 때
+                        data.messages.forEach(message => {
+                            const listItem = document.createElement("li");
+                            listItem.className = "list-group-item d-flex flex-column mt-1";
+                            listItem.innerHTML = `
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">${message.sender_name}</strong>
+                                    <small class="text-muted">${new Date(message.sent_at).toLocaleString()}</small>
+                                </div>
+                                <p class="mb-1 text-dark">${message.message_content}</p>`;
+                            messageList.appendChild(listItem);
+                        });
+                    }
+                } else {
+                    console.error("쪽지 데이터 처리 실패:", data.error);
+                }
+            })
+            .catch(error => {
+                console.error("AJAX 요청 오류:", error);
+            });
+    });
 
-      //url 이동했을때 이름 클릭시 url 이동 못하게 만들기
-      const currentURL = window.location.href; // 현재 URL 가져오기
-      const link = document.getElementById("userLink"); // 사용자 링크 요소
 
-      // URL의 파라미터에서 MemId 값 확인
-      const urlParams = new URLSearchParams(window.location.search);
-      const currentMemId = urlParams.get("MemId");
-
-      // PHP에서 세션의 MemId 값 가져오기
-      const sessionMemId = "<?php echo htmlspecialchars($_SESSION['MemId']); ?>";
-
-      // MemId 값과 페이지 경로를 기반으로 비활성화 로직 실행
-      if (currentMemId === sessionMemId) {
-        link.removeAttribute("href"); // href 제거
-        link.style.pointerEvents = "none"; // 클릭 방지
-        link.style.color = "gray"; // 비활성화 스타일 적용
-      }
 
     });
   </script>
