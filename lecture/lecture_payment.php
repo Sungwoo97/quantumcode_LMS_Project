@@ -54,20 +54,12 @@ $sql = "INSERT INTO lecture_order (mid, lid, total_price, cid, status) VALUES ('
 $result = $mysqli->query($sql);
 if (!$result) {
 
-  
 
   echo json_encode(['status' => 'error', 'message' => $stmt->error]);
   exit;
 } else {
   $del_sql = "DELETE FROM lecture_cart WHERE lid IN ($lids)";
   $del_result = $mysqli->query($del_sql);
-  // 총 매출 업데이트
-  $total_sql = "SELECT SUM(total_price) AS total FROM lecture_order";
-  $total_result = $mysqli->query($total_sql);
-  $total = $total_result->fetch_object()->total;
-
-  $sales_sql = "UPDATE sales_management SET total_sales = $total";
-  $sales_result = $mysqli->query($sales_sql);
   $response = [
     'status' => 'success',
     'message' => '구매 완료.',
