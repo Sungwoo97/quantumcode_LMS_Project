@@ -66,6 +66,7 @@ foreach ($monthArr as $month) {
     array_push($month_data, $month_row);
   }
 }
+print_r($month_data);
 
 $current_month = $month_data[0]->sales;
 $previous_month = $month_data[1]->sales;
