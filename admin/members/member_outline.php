@@ -71,19 +71,19 @@ $inc_sales = $month_diff > 0  ? "<span class='blue'>". number_format($month_diff
 
 
 //회원 관련
-$member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
+$member_count_sql = "SELECT COUNT(*) AS total_members FROM memberskakao";
 $member_count = $mysqli->query($member_count_sql); 
 $m_count = $member_count->fetch_object();
 //print_r($m_count); 
 
 //2024에 가입한 회원 수
-$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM members WHERE YEAR(reg_date) = 2024";
+$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2024";
 $member_2024_count = $mysqli->query($member_2024_register); 
 $member_2024 = $member_2024_count->fetch_object();
 // print_r($member_2024);
 
 //2023에 가입한 회원 수
-$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM members WHERE YEAR(reg_date) = 2023";
+$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2023";
 $member_2023_count = $mysqli->query($member_2023_register); 
 $member_2023 = $member_2023_count->fetch_object();
 // print_r($member_2023);
