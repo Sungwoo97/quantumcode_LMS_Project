@@ -45,25 +45,21 @@ try {
         // 이메일 전송
         $mail = require __DIR__ . "/mailer.php";
 
+        $mail->isHTML(true); // 이메일을 HTML 형식으로 설정
+        $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
         $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
         $mail->addAddress($email); // 받는 사람 이메일
-        $mail->Subject = "Password Reset";
+        $mail->Subject = "비밀번호 재설정 요청";
         $mail->Body = <<<END
-
-        <a href="http://localhost/qc/account/reset_password.php?token=$token">here</a> 
-        Click There, if you want To Change Password. It is not a SpamMail. From QuantumCode.
-
-        END;
+            <p>안녕하세요, QuantumCode입니다.</p>
+            <p>비밀번호를 재설정하려면 아래 링크를 클릭해 주세요:</p>
+            <p><a href="http://localhost/qc/account/reset_password.php?token=$token">여기를 클릭하세요</a></p>
+            <p>이 이메일은 스팸메일이 아닙니다. QuantumCode에서 보냈습니다.</p>
+END;
 
         try {
             $mail->send();
-            // echo "메세지가 보내졌습니다. 방금 작성하신 이메일을 확인해주세요.";
-        } catch (Exception $e) {
-            echo "메세지가 보내지지 않았습니다.. Mailer error: {$mail->ErrorInfo}";
-        }
-
-        // 동적 카운트다운 및 리다이렉션
-        echo "<!DOCTYPE html>
+            echo "<!DOCTYPE html>
 <html lang='ko'>
 <head>
     <meta charset='UTF-8'>
@@ -120,21 +116,24 @@ try {
         <p id='countdown'>5초후 로그인 페이지로 이동합니다...</p>
     </div>
     <script>
-        let countdown = 5; // 초기 카운트다운 시간
+        let countdown = 5;
         const countdownElement = document.getElementById('countdown');
         const interval = setInterval(function() {
             countdown--;
             countdownElement.textContent = countdown + '초후 로그인 페이지로 이동합니다...';
             if (countdown <= 0) {
                 clearInterval(interval);
-                window.location.href = '/qc/account/loginTest2.php'; //로그인페이지로 리디렉션
+                window.location.href = '/qc/account/loginTest2.php';
             }
-        }, 1000); // 1초마다 실행
+        }, 1000);
     </script>
 </body>
 </html>";
 
-        exit();
+            exit();
+        } catch (Exception $e) {
+            echo "메세지가 보내지지 않았습니다. Mailer error: {$mail->ErrorInfo}";
+        }
     } else {
         echo "입력하신 이메일이 데이터베이스에 존재하지 않습니다.";
     }
