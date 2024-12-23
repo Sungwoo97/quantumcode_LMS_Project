@@ -103,11 +103,10 @@ ON lo.lid = l.lid
 GROUP BY lo.lid
 ORDER BY member_count DESC";
 $popularCnt_result = $mysqli->query($popularCnt_sql);
-while($popularCnt_row = $popularCnt_result->fetch_object()){
+while ($popularCnt_row = $popularCnt_result->fetch_object()) {
   $popular_data[] = $popularCnt_row->member_count;
   $popular_label[] = $popularCnt_row->title;
 }
-print_r($popularCnt_data);
 
 //매출 상위 5명 강사 
 $sql = "SELECT * 
@@ -300,21 +299,20 @@ $board_result = $mysqli->query($board_sql);
 
 <!-- Chart.js Scripts -->
 <script>
-
   fetch('sales/sales_data.php')
     .then(response => response.json())
     .then(data => {
       const months = data.map(item => item.month);
       const sales = data.map(item => item.sales);
       months.sort((a, b) => {
-        const monthA = parseInt(a, 10);  // '1월'에서 '1'로 변환
-        const monthB = parseInt(b, 10);  // '2월'에서 '2'로 변환
-        return monthA - monthB;  // 숫자 기준으로 정렬
-    });
-    const salesSorted = months.map(month => {
-            const monthData = data.find(item => item.month === month);
-            return monthData ? monthData.sales : 'null';  // 해당 월의 매출 값
-        });
+        const monthA = parseInt(a, 10); // '1월'에서 '1'로 변환
+        const monthB = parseInt(b, 10); // '2월'에서 '2'로 변환
+        return monthA - monthB; // 숫자 기준으로 정렬
+      });
+      const salesSorted = months.map(month => {
+        const monthData = data.find(item => item.month === month);
+        return monthData ? monthData.sales : 'null'; // 해당 월의 매출 값
+      });
       const monthly_data = document.getElementById('monthlyChart');
       new Chart(monthly_data, {
         type: 'bar', // 막대 차트
@@ -495,7 +493,6 @@ $board_result = $mysqli->query($board_sql);
       }
     });
   });
-
 </script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
