@@ -282,7 +282,7 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`cid`, `coupon_name`, `coupon_image`, `coupon_content`, `coupon_type`, `coupon_price`, `coupon_ratio`, `status`, `startdate`, `enddate`, `userid`) VALUES
-(1, '프론트엔드 강의 10% 할인', '/qc/admin/upload/20241120084829512142.png', '프론트엔드 강의 구매 시 10% 할인 적용', 'fixed', 5000, 0, 1, '2024-09-11 00:00:00', '2025-02-06', 'admin'),
+(1, '신규회원 강의 구매 시 5000원 할인', '/qc/admin/upload/20241120084829512142.png', '신규회원 강의 구매 시 5000원 할인', 'fixed', 5000, 0, 1, '2024-09-11 00:00:00', '2025-02-06', 'admin'),
 (2, '첫 강의 무료 쿠폰', '/qc/admin/upload/20241120084958134303.png', '신규 회원 첫 강의 무료 제공', 'percentage', 0, 100, 1, '2023-01-20 00:00:00', '2095-12-31', 'admin'),
 (3, '5만원 이상 구매 시 5천원 할인', '/qc/admin/upload/20241120085051148019.png', '5만원 이상 구매 시 5천원 할인', 'fixed', 5000, 0, 1, '2023-01-20 00:00:00', '2024-12-07', 'admin'),
 (4, '백엔드 강의 패키지 15% 할인', '/qc/admin/upload/20241120085116476668.png', '백엔드 강의 패키지에 대해 15% 할인', 'percentage', 0, 15, 1, '2024-11-13 00:00:00', '2024-11-27', 'admin'),
