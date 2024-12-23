@@ -10,14 +10,119 @@ if (!isset($_SESSION['MemId'])) {
     ";
 }
 
+
+
+
+
+
 $MemId = $_SESSION['MemId']; // print_r($MemId); 
 
 $sql = "SELECT * FROM membersKakao WHERE memId = $MemId"; 
 $result = $mysqli->query($sql); // 쿼리 실행 결과
 $data = $result->fetch_object();
 
+$MemEmail = $_SESSION['MemEmail']; // 사용자 이메일
+
+$sql = "
+    SELECT 
+        o.odid AS order_id,
+        o.total_price,
+        o.status AS order_status,
+        o.createdate AS order_date,
+        l.lid AS lecture_id,
+        l.title AS lecture_title,
+        l.category AS lecture_category,
+        l.cover_image AS lecture_image,
+        l.t_id AS instructor_name,
+        l.tuition AS original_price,
+        l.dis_tuition AS discounted_price,
+        l.sub_title AS lecture_summary,
+        l.difficult AS difficulty,
+        l.expiration_day AS lecture_expiration,
+        COUNT(DISTINCT lw.lvid) AS total_videos,
+        SUM(CASE WHEN lw.event_type = 'completed' THEN 1 ELSE 0 END) AS completed_videos
+    FROM 
+        lecture_order AS o
+    JOIN 
+        lecture_list AS l ON o.lid = l.lid
+    LEFT JOIN 
+        lecture_watch AS lw ON o.lid = lw.lid AND o.mid = lw.mid
+    WHERE 
+        o.mid = ?
+    GROUP BY 
+        o.lid
+";
+
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $MemEmail); // 사용자 이메일 바인딩
+$stmt->execute();
+
+// 결과 가져오기
+$result = $stmt->get_result();
+$lectures = [];
+while ($row = $result->fetch_assoc()) {
+    $lectures[] = $row;
+}
+$stmt->close();
+
+// SQL 쿼리 준비 (쿠폰 정보와 추가 정보 모두 가져오기)
+$sql = "SELECT c.*, cu.use_max_date, cu.usedate, cu.reason
+        FROM coupons_usercp cu
+        JOIN coupons c ON cu.couponid = c.cid
+        WHERE cu.userid = ?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $MemEmail); // 사용자 이메일 바인딩
+$stmt->execute();
+
+
 
 ?>
+
+
+
+<style>
+  body {
+  }
+  .lecture-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+  }
+  .lecture-card:hover {
+    transform: scale(1.02);
+  }
+  .lecture-card img {
+    height: 150px; /* 이미지 높이를 유지 */
+    object-fit: cover;
+  }
+  .lecture-title {
+    font-size: 1rem; /* 제목 크기를 유지 */
+    font-weight: bold;
+    color: #333;
+  }
+  .lecture-category {
+    color: #6c757d;
+    font-size: 0.8rem; /* 카테고리 글씨 크기를 유지 */
+  }
+  .progress {
+    height: 15px; /* 프로그레스 바 높이를 유지 */
+    border-radius: 10px;
+  }
+  .card-body {
+    padding: 8px; /* 패딩 유지 */
+  }
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 33.3333%; /* 너비를 col-md-4 크기로 조정 */
+  }
+  .mb-4 {
+    margin-bottom: 0.5rem; /* 아래 여백 유지 */
+  }
+</style>
+
+
 
 <div class="container mt-5">
   <div class="row">
@@ -77,8 +182,55 @@ $data = $result->fetch_object();
     </div>
 
     <div class="col-9 mb-3" id="main_content">
-      <h4>메인메뉴에는 뭐가 들어가면 좋을까???</h4>
+    <h4>나의 강의 현황</h4>
+    <div class="row">
+      <?php if (!empty($lectures)): ?>
+        <?php foreach ($lectures as $lecture): 
+          $progress = ($lecture['total_videos'] > 0) 
+                      ? round(($lecture['completed_videos'] / $lecture['total_videos']) * 100, 2) 
+                      : 0;
+          $isCompleted = $progress >= 100;
+          $remainingDays = isset($lecture['lecture_expiration']) 
+              ? floor((strtotime($lecture['lecture_expiration']) - time()) / (60 * 60 * 24)) 
+              : null;
+        ?>
+          <div class="col-md-6 mb-4">
+            <div class="card lecture-card">
+              <img src="<?= htmlspecialchars($lecture['lecture_image'] ?: '/qc/img/default-lecture.jpg'); ?>" class="card-img-top" alt="강의 이미지">
+              <div class="card-body">
+                <h5 class="lecture-title"><?= htmlspecialchars($lecture['lecture_title']); ?></h5>
+                <p><strong>강사:</strong> <?= htmlspecialchars($lecture['instructor_name']); ?></p>
+                <p class="text-muted"><strong>난이도:</strong> <?= htmlspecialchars($lecture['difficulty']); ?></p>
+                <p><strong>진도율:</strong> <?= $progress; ?>%</p>
+                <div class="progress mb-2">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: <?= $progress; ?>%;" aria-valuenow="<?= $progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="text-<?= $isCompleted ? 'success' : 'warning'; ?>">
+                  <?= $isCompleted ? '강의 완료' : '수강 중'; ?>
+                </p>
+                <a href="/qc/lecture/lecture_view.php?lid=<?= htmlspecialchars($lecture['lecture_id']); ?>" class="btn btn-primary w-100 mt-3">강의로 이동</a>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p>수강 중인 강의가 없습니다.</p>
+      <?php endif; ?>
     </div>
+
+    <!-- membersKakao 데이터 출력 -->
+    <h4>나의 정보</h4>
+    <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p><strong>이름:</strong> <?= htmlspecialchars($data->memName); ?></p>
+          <p><strong>아이디:</strong> <?= htmlspecialchars($data->memEmail); ?></p>
+          <p><strong>가입일:</strong> <?= htmlspecialchars($data->memCreatedAt); ?></p>
+          <p><strong>전화번호:</strong> <?= htmlspecialchars($data->number); ?></p>
+        </div>
+      </div>
+
+  </div>
   </div>
 </div>
 

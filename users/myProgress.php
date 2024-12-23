@@ -57,6 +57,47 @@ while ($row = $result->fetch_assoc()) {
 // 스테이트먼트 닫기
 $stmt->close();
 ?>
+<style>
+  body {
+  }
+  .lecture-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+  }
+  .lecture-card:hover {
+    transform: scale(1.02);
+  }
+  .lecture-card img {
+    height: 150px; /* 이미지 높이를 유지 */
+    object-fit: cover;
+  }
+  .lecture-title {
+    font-size: 1rem; /* 제목 크기를 유지 */
+    font-weight: bold;
+    color: #333;
+  }
+  .lecture-category {
+    color: #6c757d;
+    font-size: 0.8rem; /* 카테고리 글씨 크기를 유지 */
+  }
+  .progress {
+    height: 15px; /* 프로그레스 바 높이를 유지 */
+    border-radius: 10px;
+  }
+  .card-body {
+    padding: 8px; /* 패딩 유지 */
+  }
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 33.3333%; /* 너비를 col-md-4 크기로 조정 */
+  }
+  .mb-4 {
+    margin-bottom: 0.5rem; /* 아래 여백 유지 */
+  }
+</style>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -65,40 +106,9 @@ $stmt->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>나의 강의 및 수강현황</title>
   <!-- Bootstrap 및 스타일 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .lecture-card {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border: none;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.2s ease-in-out;
-    }
-    .lecture-card:hover {
-      transform: scale(1.02);
-    }
-    .lecture-card img {
-      height: 200px;
-      object-fit: cover;
-    }
-    .lecture-title {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #333;
-    }
-    .lecture-category {
-      color: #6c757d;
-      font-size: 0.9rem;
-    }
-    .progress {
-      height: 20px;
-      border-radius: 10px;
-    }
-  </style>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> -->
+
 </head>
 <body>
   <div class="container mt-4">
