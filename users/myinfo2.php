@@ -4,14 +4,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 // 세션에서 사용자 이메일 가져오기
 if (!isset($_SESSION['MemEmail'])) {
-    echo "<script>alert('로그인 후 이용해주세요.'); location.href = '/qc/index.php';</script>";
-    exit;
+  echo "<script>alert('로그인 후 이용해주세요.'); location.href = '/qc/index.php';</script>";
+  exit;
 }
 
 $userEmail = $_SESSION['MemEmail'];
 $memId = $_SESSION['MemId'];
 // SQL 쿼리 준비
-$sql = "SELECT * FROM membersKakao WHERE memEmail = ?";
+$sql = "SELECT * FROM memberskakao WHERE memEmail = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("s", $userEmail); // 사용자 이메일 바인딩
 $stmt->execute();
@@ -26,6 +26,7 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,16 +53,17 @@ $stmt->close();
     }
   </style>
 </head>
+
 <body>
   <div class="container mt-2">
     <h3>나의 정보 보기</h3>
     <div class="row mt-4">
       <!-- 프로필 섹션 -->
       <div class="col-md-4 text-center">
-      <?php 
-  $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
-?>
-<img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
+        <?php
+        $profileImage = $data['memProfilePath'] ?? '../img/icon-img/no-image.png';
+        ?>
+        <img src="<?= htmlspecialchars($profileImage); ?>" alt="프로필 이미지" class="profile-img mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 25%; border: 2px solid #ccc;">
         <p>등급 : <?= htmlspecialchars($data['grade']); ?></p>
         <p style="font-size: 12px;" class="mt-1">등급은 적립금과 매월 발행되는 쿠폰에 영향을 미칩니다.</p>
       </div>
@@ -113,6 +115,7 @@ $stmt->close();
         </div>
       </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

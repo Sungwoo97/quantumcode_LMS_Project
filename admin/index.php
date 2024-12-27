@@ -129,6 +129,8 @@ while ($data = $result->fetch_object()) {
 
 $board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
 $board_result = $mysqli->query($board_sql);
+
+echo $_SERVER['DOCUMENT_ROOT'];
 ?>
 
 

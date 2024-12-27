@@ -5,61 +5,61 @@ include_once("../admin/inc/dbcon.php");
 $email = $_POST["email"] ?? '';
 
 if (empty($email)) {
-    die("이메일을 입력해주세요.");
+  die("이메일을 입력해주세요.");
 }
 
 try {
-    // 랜덤 토큰 생성 및 해시 처리
-    do {
-        $token = bin2hex(random_bytes(16));
-        $token_hash = hash("sha256", $token);
+  // 랜덤 토큰 생성 및 해시 처리
+  do {
+    $token = bin2hex(random_bytes(16));
+    $token_hash = hash("sha256", $token);
 
-        // 데이터베이스에 동일한 해시가 있는지 확인
-        $check_sql = "SELECT COUNT(*) FROM membersKakao WHERE reset_token_hash = ?";
-        $check_stmt = $mysqli->prepare($check_sql);
-        $check_stmt->bind_param("s", $token_hash);
-        $check_stmt->execute();
-        $check_stmt->bind_result($count);
-        $check_stmt->fetch();
-        $check_stmt->close();
-    } while ($count > 0); // 중복된 토큰이 있을 경우 반복
+    // 데이터베이스에 동일한 해시가 있는지 확인
+    $check_sql = "SELECT COUNT(*) FROM memberskakao WHERE reset_token_hash = ?";
+    $check_stmt = $mysqli->prepare($check_sql);
+    $check_stmt->bind_param("s", $token_hash);
+    $check_stmt->execute();
+    $check_stmt->bind_result($count);
+    $check_stmt->fetch();
+    $check_stmt->close();
+  } while ($count > 0); // 중복된 토큰이 있을 경우 반복
 
-    // 토큰 만료 시간 설정 (30분)
-    $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+  // 토큰 만료 시간 설정 (30분)
+  $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
 
-    // 업데이트 쿼리
-    $sql = "UPDATE membersKakao
+  // 업데이트 쿼리
+  $sql = "UPDATE memberskakao
             SET reset_token_hash = ?,
                 reset_token_expires_at = ?
             WHERE memEmail = ?";
-    $stmt = $mysqli->prepare($sql);
+  $stmt = $mysqli->prepare($sql);
 
-    if (!$stmt) {
-        throw new Exception("쿼리 준비 실패: " . $mysqli->error);
-    }
+  if (!$stmt) {
+    throw new Exception("쿼리 준비 실패: " . $mysqli->error);
+  }
 
-    $stmt->bind_param("sss", $token_hash, $expiry, $email);
-    $stmt->execute();
+  $stmt->bind_param("sss", $token_hash, $expiry, $email);
+  $stmt->execute();
 
-    if ($mysqli->affected_rows > 0) {
-        // 이메일 전송
-        $mail = require __DIR__ . "/mailer.php";
+  if ($mysqli->affected_rows > 0) {
+    // 이메일 전송
+    $mail = require __DIR__ . "/mailer.php";
 
-        $mail->isHTML(true); // 이메일을 HTML 형식으로 설정
-        $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
-        $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
-        $mail->addAddress($email); // 받는 사람 이메일
-        $mail->Subject = "비밀번호 재설정 요청";
-        $mail->Body = <<<END
+    $mail->isHTML(true); // 이메일을 HTML 형식으로 설정
+    $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
+    $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
+    $mail->addAddress($email); // 받는 사람 이메일
+    $mail->Subject = "비밀번호 재설정 요청";
+    $mail->Body = <<<END
             <p>안녕하세요, QuantumCode입니다.</p>
             <p>비밀번호를 재설정하려면 아래 링크를 클릭해 주세요:</p>
             <p><a href="http://localhost/qc/account/reset_password.php?token=$token">여기를 클릭하세요</a></p>
             <p>이 이메일은 스팸메일이 아닙니다. QuantumCode에서 보냈습니다.</p>
 END;
 
-        try {
-            $mail->send();
-            echo "<!DOCTYPE html>
+    try {
+      $mail->send();
+      echo "<!DOCTYPE html>
 <html lang='ko'>
 <head>
     <meta charset='UTF-8'>
@@ -130,16 +130,16 @@ END;
 </body>
 </html>";
 
-            exit();
-        } catch (Exception $e) {
-            echo "메세지가 보내지지 않았습니다. Mailer error: {$mail->ErrorInfo}";
-        }
-    } else {
-        echo "입력하신 이메일이 데이터베이스에 존재하지 않습니다.";
+      exit();
+    } catch (Exception $e) {
+      echo "메세지가 보내지지 않았습니다. Mailer error: {$mail->ErrorInfo}";
     }
+  } else {
+    echo "입력하신 이메일이 데이터베이스에 존재하지 않습니다.";
+  }
 } catch (Exception $e) {
-    echo "오류가 발생했습니다: " . $e->getMessage();
+  echo "오류가 발생했습니다: " . $e->getMessage();
 } finally {
-    $stmt->close();
-    $mysqli->close();
+  $stmt->close();
+  $mysqli->close();
 }

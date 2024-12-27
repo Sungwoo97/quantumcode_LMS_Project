@@ -5,8 +5,8 @@ $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-if(!isset($_SESSION['AUID'])){
-    echo "
+if (!isset($_SESSION['AUID'])) {
+  echo "
       <script>
         alert('관리자로 로그인해주세요');
         location.href = '../index.php';
@@ -18,7 +18,7 @@ if (!isset($memId)) {
   echo "<script>alert('관련 정보가 없습니다.'); location.href = '../members/member_list.php';</script>";
 }
 
-$sql = "SELECT * FROM membersKakao WHERE memId = $memId";  //여기서 memId는 숫자.
+$sql = "SELECT * FROM memberskakao WHERE memId = $memId";  //여기서 memId는 숫자.
 $result = $mysqli->query($sql); //쿼리 실행 결과
 $data = $result->fetch_object();
 
@@ -36,7 +36,7 @@ $data = $result->fetch_object();
       </div>
       <div>
         <h5>이름 : <?= $data->memName; ?></h5>
-        <h6>아이디  : <?= $data->memEmail; ?></h6>
+        <h6>아이디 : <?= $data->memEmail; ?></h6>
       </div>
       <hr>
       <div class="d-flex justify-content-center align-items-center gap-5">
@@ -56,39 +56,39 @@ $data = $result->fetch_object();
       <hr>
       <nav>
         <ul>
-          <?php if (isset($data)) { ?> 
-          <li class="my-2">
-            <a href="teacher_view.php?memId=<?= $data->memId;?>" class="text-decoration-none">홈</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="text-decoration-none"  id="nav_all_lectures">수강 중인 강의</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="text-decoration-none" id="nav_personal_info">개인 정보</a>
-          </li>
-          <?php } ?> 
+          <?php if (isset($data)) { ?>
+            <li class="my-2">
+              <a href="teacher_view.php?memId=<?= $data->memId; ?>" class="text-decoration-none">홈</a>
+            </li>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none" id="nav_all_lectures">수강 중인 강의</a>
+            </li>
+            <li class="my-2">
+              <a href="#" class="text-decoration-none" id="nav_personal_info">개인 정보</a>
+            </li>
+          <?php } ?>
         </ul>
       </nav>
     </div>
     <div class="col-9 mb-3" id="main_content">
       <?php if (isset($lecture_dataArr)) { ?>
-      <h4>현재 진행 중인 강의 TOP4</h4>
-      <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 justify-content-center -->
-        <?php foreach ($lecture_dataArr as $item) { ?> 
-        <div class="card m-3 shadow-lg" style="width: 18rem; height: 22rem; border-radius: 15px; overflow: hidden;"> 
-          <!-- 이미지 섹션 -->
-          <img class="card-img-top" src="<?= $item->cover_image ?>" alt="Card image cap" style="height: 12rem; object-fit: cover;">
-          <!-- 카드 본문 -->
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-primary fw-bold"><?= $item->title ?></h5>
-            <p class="card-text text-muted"><?= $item->description ?></p>
-            <a href="/qc/admin/lecture/lecture_view.php?lid=<?= $item->lid; ?>" class="btn btn-primary mt-auto" style="border-radius: 10px;">
-              해당 강의 보러가기
-            </a>
-          </div>
+        <h4>현재 진행 중인 강의 TOP4</h4>
+        <div class="d-flex flex-wrap"> <!-- Flex 컨테이너 justify-content-center -->
+          <?php foreach ($lecture_dataArr as $item) { ?>
+            <div class="card m-3 shadow-lg" style="width: 18rem; height: 22rem; border-radius: 15px; overflow: hidden;">
+              <!-- 이미지 섹션 -->
+              <img class="card-img-top" src="<?= $item->cover_image ?>" alt="Card image cap" style="height: 12rem; object-fit: cover;">
+              <!-- 카드 본문 -->
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-primary fw-bold"><?= $item->title ?></h5>
+                <p class="card-text text-muted"><?= $item->description ?></p>
+                <a href="/qc/admin/lecture/lecture_view.php?lid=<?= $item->lid; ?>" class="btn btn-primary mt-auto" style="border-radius: 10px;">
+                  해당 강의 보러가기
+                </a>
+              </div>
+            </div>
+          <?php } ?>
         </div>
-        <?php } ?>
-      </div>
       <?php } ?>
       <div class="d-flex justify-content-center mt-4">
         <button id="show_all_lecture" class="btn btn-primary">모든 수강중인 강의 보기</button>

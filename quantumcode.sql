@@ -7,7 +7,7 @@
 -- 서버 버전: 10.4.32-MariaDB
 -- PHP 버전: 8.2.12
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -634,7 +634,7 @@ CREATE TABLE `lecture_reply` (
   `lrid` int(10) NOT NULL,
   `profile_image` varchar(100) DEFAULT NULL COMMENT '강사 프로필 이미지',
   `t_id` varchar(20) NOT NULL COMMENT '강사 이름',
-  `regist_day` date NOT NULL DEFAULT current_timestamp() COMMENT '작성일',
+  `regist_day` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '작성일',
   `comment` text NOT NULL COMMENT '답글'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -658,7 +658,7 @@ CREATE TABLE `lecture_review` (
   `lid` int(20) NOT NULL COMMENT '강의 고유번호',
   `profile_image` varchar(100) NOT NULL COMMENT '회원 프로필 이미지',
   `username` varchar(20) NOT NULL COMMENT '회원이름',
-  `regist_day` date NOT NULL DEFAULT current_timestamp() COMMENT '작성일',
+  `regist_day` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '작성일',
   `review` int(10) NOT NULL COMMENT '평점',
   `comment` text NOT NULL COMMENT '후기'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -806,7 +806,7 @@ CREATE TABLE `members` (
   `password` varchar(222) NOT NULL,
   `email` varchar(45) NOT NULL,
   `number` int(25) NOT NULL,
-  `reg_date` date NOT NULL DEFAULT current_timestamp(),
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
   `member_detail` text DEFAULT NULL,
   `cover_image` varchar(111) DEFAULT NULL,
   `grade` varchar(11) NOT NULL DEFAULT 'bronze',
@@ -1118,7 +1118,7 @@ CREATE TABLE `teachers` (
   `password` varchar(128) NOT NULL,
   `email` varchar(45) NOT NULL,
   `number` int(45) NOT NULL,
-  `reg_date` date NOT NULL DEFAULT current_timestamp(),
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
   `cover_image` varchar(200) DEFAULT NULL,
   `teacher_detail` text DEFAULT NULL,
   `grade` varchar(15) NOT NULL,

@@ -28,13 +28,13 @@ if (isset($result)) {
 
 $lecture_sql = "SELECT * FROM lecture_list WHERE lid=$lid";
 $lecture_result = $mysqli->query($lecture_sql);
-if($lecture_result){
+if ($lecture_result) {
   $lecture_data = $lecture_result->fetch_object();
 }
 
 $watch_sql = "SELECT DISTINCT lid FROM lecture_watch WHERE mid = '$email' AND event_type = 'completed'";
 $watch_result = $mysqli->query($watch_sql);
-if($watch_result){
+if ($watch_result) {
   $watch_data = $watch_result->fetch_object();
 }
 
@@ -52,40 +52,39 @@ $vidIdxJson = json_encode($vidIdx);
       <h2 class="mb-3">강의 목차</h2>
       <h3><?= $lecture_data->title ?></h3>
       <p>수강 만료일 : <?= $lecture_data->expiration_day ?></p>
-      <?php 
+      <?php
       $complete = '';
-      if(!empty($vidIndex)){
+      if (!empty($vidIndex)) {
         $i = 1;
-        foreach($vidIndex as $vid){
+        foreach ($vidIndex as $vid) {
           $watch_sql = "SELECT DISTINCT lid FROM lecture_watch WHERE mid = '$email' AND event_type = 'completed' AND lvid = $vid->lvid";
           $watch_result = $mysqli->query($watch_sql);
-          if($watch_result && $watch_result -> num_rows > 0){
+          if ($watch_result && $watch_result->num_rows > 0) {
             $complete = 'complete ';
-          }
-          else{
+          } else {
             $complete = ' ';
           }
-          
-      ?> 
-      <li class="<?= $complete ?>" data-id = <?= $i -1 ?> ><a href="#">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0303 7.96967C18.3232 8.26256 18.3232 8.73744 18.0303 9.03033L11.0303 16.0303C10.7374 16.3232 10.2626 16.3232 9.96967 16.0303L5.96967 12.0303C5.67678 11.7374 5.67678 11.2626 5.96967 10.9697C6.26256 10.6768 6.73744 10.6768 7.03033 10.9697L10.5 14.4393L16.9697 7.96967C17.2626 7.67678 17.7374 7.67678 18.0303 7.96967Z" fill="#191B1C"/>
-          </svg> 
-          <div>
-            <h5> <?= $i ?>강 <strong><?= $vid->video_title ?></strong> </h5>
-            <p><?= $vid->video_duration ?></p>
-          </div>
-        </a>
-      </li>
-       <?php
-      $i++;
+
+      ?>
+          <li class="<?= $complete ?>" data-id=<?= $i - 1 ?>><a href="#">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0303 7.96967C18.3232 8.26256 18.3232 8.73744 18.0303 9.03033L11.0303 16.0303C10.7374 16.3232 10.2626 16.3232 9.96967 16.0303L5.96967 12.0303C5.67678 11.7374 5.67678 11.2626 5.96967 10.9697C6.26256 10.6768 6.73744 10.6768 7.03033 10.9697L10.5 14.4393L16.9697 7.96967C17.2626 7.67678 17.7374 7.67678 18.0303 7.96967Z" fill="#191B1C" />
+              </svg>
+              <div>
+                <h5> <?= $i ?>강 <strong><?= $vid->video_title ?></strong> </h5>
+                <p><?= $vid->video_duration ?></p>
+              </div>
+            </a>
+          </li>
+      <?php
+          $i++;
         }
       }
       ?>
     </ul>
     <ul class="video_desc">
-      <li >
-      <h2 class="mb-3">강의 설명</h2>
+      <li>
+        <h2 class="mb-3">강의 설명</h2>
         <h5><?= $lecture_data->sub_title ?></h5>
         <p><?= $lecture_data->learning_obj ?></p>
       </li>
@@ -97,7 +96,7 @@ $vidIdxJson = json_encode($vidIdx);
   </div>
   <aside>
     <div class="index" data-target="index">
-      <img src="../img/icon-img/st_book.svg" width="40" alt="">
+      <img src="../img/icon-img/st_Book.svg" width="40" alt="">
       <h5>강의 목차</h5>
     </div>
     <div class="desc" data-target="desc">
@@ -151,7 +150,7 @@ $vidIdxJson = json_encode($vidIdx);
       video.src = vidArr[index]; // 비디오 URL 설정
       video.play(); // 자동 재생
       currentIndex = index; // 현재 인덱스 업데이트
-     
+
     } else {
       alert('강의가 더 이상 없습니다.');
     }
@@ -165,13 +164,13 @@ $vidIdxJson = json_encode($vidIdx);
   nextBtn.addEventListener('click', () => {
     loadVideo(currentIndex + 1); // 다음 영상 로드
   });
-  videoIndex.forEach(index =>{
-    
-    index.addEventListener('click', (e)=>{
+  videoIndex.forEach(index => {
+
+    index.addEventListener('click', (e) => {
       e.preventDefault();
       let id = e.currentTarget.getAttribute('data-id');
       console.log(e.currentTarget);
-      videoIndex.forEach(idx =>{
+      videoIndex.forEach(idx => {
         idx.classList.remove('active');
       })
       index.classList.add('active');
@@ -179,7 +178,7 @@ $vidIdxJson = json_encode($vidIdx);
       loadVideo(id);
     })
   })
-  
+
 
 
   // 페이지 로드 시 첫 번째 영상 자동 재생
@@ -196,7 +195,7 @@ $vidIdxJson = json_encode($vidIdx);
 
       e.currentTarget.classList.add('active');
       const target = btn.getAttribute("data-target");
-      activeBtn.forEach(item =>{
+      activeBtn.forEach(item => {
 
         item.classList.remove('active');
       })
@@ -219,7 +218,7 @@ $vidIdxJson = json_encode($vidIdx);
       }
     })
   })
-  
+
   const getCurrentLvid = () => vidIdx[currentIndex].lvid;
 
   // 비디오가 시작되면 sendWatchEvent 함수 실행
@@ -233,7 +232,7 @@ $vidIdxJson = json_encode($vidIdx);
     console.log('Video paused');
     sendWatchEvent('pause');
   });*/
- // 비디오가 끝나면 sendWatchEvent 함수 실행
+  // 비디오가 끝나면 sendWatchEvent 함수 실행
   video.addEventListener('ended', () => {
     console.log('Video ended');
     sendWatchEvent('completed');
@@ -244,27 +243,27 @@ $vidIdxJson = json_encode($vidIdx);
     const mid = '<?= $email ?>'; // 사용자 ID
     const lvid = getCurrentLvid();
     let data = JSON.stringify({
-        mid: mid,
-        lid: lid,
-        lvid: lvid,
-        eventType: eventType,
-        timestamp: new Date().toISOString(),
-      });
-      console.log(data);
+      mid: mid,
+      lid: lid,
+      lvid: lvid,
+      eventType: eventType,
+      timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    });
+    console.log(data);
     fetch('lecture_videoCheck.php', {
-      method: 'POST',
-      body:data ,
-    }).then((response) => response.json())
-    .then((result) => {
-      if (result.status === 'success') {
-        console.log(`LVID ${lvid} 이벤트 저장 성공: ${eventType}`);
-      } else {
-        console.error(`LVID ${lvid} 이벤트 저장 실패:`, result.message);
-      }
-    })
-    .catch((error) => console.error('네트워크 오류:', error));
+        method: 'POST',
+        body: data,
+      }).then((response) => response.json())
+      .then((result) => {
+        if (result.status === 'success') {
+          console.log(`LVID ${lvid} 이벤트 저장 성공: ${eventType}`);
+        } else {
+          console.error(`LVID ${lvid} 이벤트 저장 실패:`, result.message);
+        }
+      })
+      .catch((error) => console.error('네트워크 오류:', error));
   };
-  
+
 
   videojs(video, {
     controls: true,

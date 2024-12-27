@@ -3,15 +3,15 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 // 세션에서 사용자 이메일 가져오기
 if (!isset($_SESSION['MemEmail'])) {
-    echo "<script>alert('로그인 후 이용해주세요.'); location.href = '/qc/loginTest2.php';</script>";
-    exit;
+  echo "<script>alert('로그인 후 이용해주세요.'); location.href = '/qc/loginTest2.php';</script>";
+  exit;
 }
 
 $userEmail = $_SESSION['MemEmail'];
 $memId = $_SESSION['MemId'];
 
 // SQL 쿼리 준비
-$sql = "SELECT * FROM membersKakao WHERE memEmail = ?";
+$sql = "SELECT * FROM memberskakao WHERE memEmail = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
@@ -24,6 +24,7 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,7 @@ $stmt->close();
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
+
 <body>
   <div class="container mt-3">
     <h3>나의 정보 수정하기</h3>
@@ -60,15 +62,15 @@ $stmt->close();
             <tr>
               <th>생년월일</th>
               <td>
-                <input type="date" class="form-control" name="birth" id="birth" 
-                      value="<?= htmlspecialchars($data['birth']); ?>" >
+                <input type="date" class="form-control" name="birth" id="birth"
+                  value="<?= htmlspecialchars($data['birth']); ?>">
               </td>
             </tr>
             <tr>
               <th>주소</th>
               <td>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="memAddr" id="memAddr" value="<?= htmlspecialchars($data['memAddr']); ?>" >
+                  <input type="text" class="form-control" name="memAddr" id="memAddr" value="<?= htmlspecialchars($data['memAddr']); ?>">
                   <button type="button" class="btn btn-secondary" id="findAddressBtn">주소 찾기</button>
                 </div>
               </td>
@@ -87,7 +89,7 @@ $stmt->close();
             </tr>
             <tr>
               <th>전화번호</th>
-              <td><input type="text" class="form-control" name="number" value="<?= htmlspecialchars($data['number']); ?>" ></td>
+              <td><input type="text" class="form-control" name="number" value="<?= htmlspecialchars($data['number']); ?>"></td>
             </tr>
             <tr>
               <th>등급</th>
@@ -103,58 +105,58 @@ $stmt->close();
     </form>
   </div>
 
-<script>
-  
-//이미지 구현창
-function addCover(file, cover) {
-    let coverImage = file;
-    coverImage.on('change', (e) => {
-      let file = e.target.files[0];
-      let target = cover;
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = (e) => {
-          let attachment = e.target.result;
-          console.log(attachment);
-          if (attachment) {
-            target.attr('src', attachment);
+  <script>
+    //이미지 구현창
+    function addCover(file, cover) {
+      let coverImage = file;
+      coverImage.on('change', (e) => {
+        let file = e.target.files[0];
+        let target = cover;
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = (e) => {
+            let attachment = e.target.result;
+            console.log(attachment);
+            if (attachment) {
+              target.attr('src', attachment);
+            }
           }
+          reader.readAsDataURL(file);
+        } else {
+          target.attr('src', '');
         }
-        reader.readAsDataURL(file);
-      } else {
-        target.attr('src', '');
-      }
-    });
-}
-addCover($('#cover_image'), $('#coverImg'));
-    
-// 카카오 주소 API 활용. 
-document.getElementById("findAddressBtn").addEventListener("click", function() {
-  new daum.Postcode({
-    oncomplete: function(data) {
-      let fullAddress = data.roadAddress;
-      let extraAddress = '';
-
-      if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== '' && data.apartment === 'Y') {
-        extraAddress += (extraAddress !== '' ? ', ' + data.buildingName : data.buildingName);
-      }
-
-      fullAddress += (extraAddress !== '' ? ' (' + extraAddress + ')' : '');
-      document.getElementById("memAddr").value = fullAddress;
+      });
     }
-  }).open();
-});
+    addCover($('#cover_image'), $('#coverImg'));
+
+    // 카카오 주소 API 활용. 
+    document.getElementById("findAddressBtn").addEventListener("click", function() {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          let fullAddress = data.roadAddress;
+          let extraAddress = '';
+
+          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== '' && data.apartment === 'Y') {
+            extraAddress += (extraAddress !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+
+          fullAddress += (extraAddress !== '' ? ' (' + extraAddress + ')' : '');
+          document.getElementById("memAddr").value = fullAddress;
+        }
+      }).open();
+    });
 
 
-$('#user_update').submit(function(e) {
-    
-    return true; // 폼 제출 허용
-});
+    $('#user_update').submit(function(e) {
+
+      return true; // 폼 제출 허용
+    });
   </script>
 </body>
+
 </html>
 
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/footer.php'); ?>

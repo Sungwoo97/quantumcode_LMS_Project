@@ -16,7 +16,7 @@ $activation_token_hash = hash("sha256", $activation_token);
 // VALUES
 // ('$name', '$password', '$email', '$number', '$memCreatedAt', '$activation_token_hash')";
 
-$sql = "INSERT INTO membersKakao
+$sql = "INSERT INTO memberskakao
 (memName, memPassword, memEmail, number, memCreatedAt, account_activation_token)
 VALUES
 (?, ?, ?, ?, ?, ?)";
@@ -39,9 +39,3 @@ if ($member_result) {
 
 
 $mysqli->close();
-?>
-
-
-
-
-
