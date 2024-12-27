@@ -1,65 +1,32 @@
 <?php
+session_start();
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
-$token = $_POST["token"];
-$token_hash = hash("sha256", $token);
+$name = $_POST['name'] ?? '';
+$email = $_POST['email'] ?? '';
+$number = $_POST['number'] ?? '';
+$password = $_POST['password'];
+$password = hash('sha512', $password);
 
-$userpw = $_POST['password'];
-$password = hash('sha512', $userpw);
+// SQL 쿼리에서 memCreatedAt 포함
+$sql = "INSERT INTO memberskakao
+(memName, memPassword, memEmail, number, memCreatedAt)
+VALUES
+(?, ?, ?, ?, ?)";
 
-$mysqli = require __DIR__ . "/database.php";
+$stmt = $mysqli->stmt_init();
 
-$sql = "SELECT * FROM memberskakao
-        WHERE reset_token_hash = ?";
-
-$stmt = $mysqli->prepare($sql);
-
-$stmt->bind_param("s", $token_hash);
-
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-$user = $result->fetch_assoc();
-
-if ($user === null) {
-  die("token not found");
+if (!$stmt->prepare($sql)) {
+  die("SQL error: " . $mysqli->error);
 }
 
-if (strtotime($user["reset_token_expires_at"]) <= time()) {
-  die("token has expired");
-}
+// memCreatedAt에 현재 타임스탬프 제공
+$memCreatedAt = date("Y-m-d H:i:s");
 
-if (strlen($_POST["password"]) < 8) {
-  die("비밀번호는 8자 이상이어야 합니다.");
-}
+$stmt->bind_param("sssss", $name, $password, $email, $number, $memCreatedAt);
 
-if (! preg_match("/[a-z]/i", $_POST["password"])) {
-  die("비밀번호는 문자 한 개 이상을 포함해야 합니다.");
-}
-
-if (! preg_match("/[0-9]/", $_POST["password"])) {
-  die("비밀번호는 숫자 한 개 이상을 포함해야 합니다.");
-}
-
-if ($_POST["password"] !== $_POST["password_confirmation"]) {
-  die("두 비밀번호는 동일해야 합니다.");
-}
-
-
-//다시 토큰 초기화
-$sql = "UPDATE memberskakao
-        SET mempassword = ?,
-            reset_token_hash = NULL,
-            reset_token_expires_at = NULL
-        WHERE memEmail = ?";
-
-$stmt = $mysqli->prepare($sql);
-
-$stmt->bind_param("ss", $password, $user["memEmail"]);
-
-$stmt->execute();
-
-echo "<!DOCTYPE html>
+if ($stmt->execute()) {
+  echo "<!DOCTYPE html>
 <html lang='ko'>
 <head>
     <meta charset='UTF-8'>
@@ -110,8 +77,8 @@ echo "<!DOCTYPE html>
 </head>
 <body>
     <div class='message-box'>
-        <h1>비밀번호 재설정 성공!</h1>
-        <p>로그인 페이지에서 새로운 비밀번호로 로그인 해 주세요!</p>
+        <h1>회원가입 성공!</h1>
+        <p>환영합니다. 로그인을 진행해 주세요.</p>
         <div class='spinner'></div>
         <p id='countdown'>5초후 로그인 페이지로 이동합니다...</p>
     </div>
@@ -129,3 +96,11 @@ echo "<!DOCTYPE html>
     </script>
 </body>
 </html>";
+
+  exit(); // 리다이렉션 후 추가 코드 실행 방지
+} else {
+  echo "회원가입에 실패하였습니다. 다시 시도해 주세요.";
+}
+
+$stmt->close();
+$mysqli->close();
