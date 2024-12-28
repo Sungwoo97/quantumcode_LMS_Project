@@ -74,7 +74,7 @@
       <h5 class="mb-4">퀀텀 코드 회원가입</h5>
 
       <!-- 회원가입 양식 -->
-      <form action="signup_ok.php" method="POST" id="signUp_ok" enctype="multipart/form-data">
+      <form action="signUp_ok.php" method="POST" id="signUp_ok" enctype="multipart/form-data">
         <!-- 이름 -->
         <div class="form-group mb-3">
           <input type="text" class="form-control" name="name" id="name" placeholder="이름(닉네임)을 입력해 주세요." required maxlength="10" style="border-radius: 8px;">
