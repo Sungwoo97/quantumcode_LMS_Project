@@ -87,7 +87,7 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
             </form>
 
             <!-- Sign Up Button -->
-            <a href="signup.php" class="btn btn-light w-100">이메일로 회원가입</a>
+            <a href="signUp.php" class="btn btn-light w-100">이메일로 회원가입</a>
 
             <!-- Footer -->
             <p class="mt-5" style="font-size: 12px;">혹시 아이디 / 비밀번호가 기억이 안나신다면?</p>
