@@ -16,6 +16,7 @@ $sql = "INSERT INTO memberskakao
 VALUES
 (?, ?, ?, ?, ?, ?)";
 
+
 $stmt = $mysqli->stmt_init();
 
 if (!$stmt->prepare($sql)) {
@@ -125,7 +126,7 @@ END;
     </script>
 </body>
 </html>";
-
+  echo $mail;
   exit(); // 리다이렉션 후 추가 코드 실행 방지
 } else {
   echo "이메일이 데이터베이스에 존재하지 않습니다.";
