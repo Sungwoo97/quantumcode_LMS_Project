@@ -57,7 +57,7 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
     <div class="container">
         <div class="login-container text-center">
             <!-- Logo -->
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
              <img src="../img/main_logo1.png" alt="Logo" class="mb-4">
             </a>
 

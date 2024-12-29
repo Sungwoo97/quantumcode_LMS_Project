@@ -17,9 +17,9 @@ $mail->Host = "smtp.naver.com";                // Naver SMTP 서버
 $mail->SMTPAuth = true;                        // SMTP 인증 사용
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL 암호화 사용
 $mail->Port = 465;                             // SSL 포트
-$mail->Username = "haemilyjh";                 // Naver 아이디
-$mail->Password = "dlf2tkatk!@";               // Naver 비밀번호
-$mail->SMTPDebug = 2; // Debug level
+$mail->Username = "gwaja97";                 // Naver 아이디
+$mail->Password = "pulse9871";               // Naver 비밀번호
+
 
 
 $mail->isHtml(true);

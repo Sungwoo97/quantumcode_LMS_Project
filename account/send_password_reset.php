@@ -47,7 +47,7 @@ try {
 
     $mail->isHTML(true); // 이메일을 HTML 형식으로 설정
     $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
-    $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
+    $mail->setFrom("gwaja97@naver.com"); // 발신 이메일
     $mail->addAddress($email); // 받는 사람 이메일
     $mail->Subject = "비밀번호 재설정 요청";
     $mail->Body = <<<END
