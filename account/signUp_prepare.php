@@ -22,7 +22,6 @@ VALUES
 (?, ?, ?, ?, ?, ?)";
 
 
-echo $sql;
 
 $member_result = $mysqli->query($sql);
 if ($member_result) {

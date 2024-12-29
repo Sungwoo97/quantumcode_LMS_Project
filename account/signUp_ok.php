@@ -31,7 +31,7 @@ $stmt->bind_param("ssssss", $name, $password, $email, $number, $memCreatedAt, $a
 if ($stmt->execute()) {
   $mail = require __DIR__ . "/mailer.php";
 
-  $mail->setFrom("haemilyjh@naver.com"); // 발신 이메일
+  $mail->setFrom("gwaja97@naver.com"); // 발신 이메일
   $mail->addAddress($_POST["email"]);
   $mail->Subject = "Account Activation";
   $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
@@ -44,7 +44,7 @@ if ($stmt->execute()) {
 </head>
 <body>
     <p>아래 링크를 클릭하여 계정을 활성화하세요:</p>
-    <a href="http://localhost/qc/account/active_account.php?token=$activation_token">여기를 클릭해주세요</a>
+    <a href="http://3.39.192.39/qc/account/active_account.php?token=$activation_token">여기를 클릭해주세요</a>
 </body>
 </html>
 END;

@@ -9,15 +9,15 @@ $password = hash('sha512', $userpw);
 $lastLoginAt = $_POST['lastLoginAt'] ?? '';
 
 
-
 $sql = "SELECT * FROM memberskakao WHERE memEmail='$email' and mempassword = '$password'";
 $result = $mysqli->query($sql);
 
 $data = $result->fetch_object();
 
+
 //로그인 데이터가 있고, 인증을 통해 토근을 null 로 변경한 경우만.
 //원래는 verified를 0,1로 하려 그랬는데 이게 더 편한거 같아서 이거로. 카톡도 당연히 됌
-if ($data && $data->account_activation_token === NULL) {
+if ($data && is_null($data->account_activation_token)) {
 
   // 마지막 로그인 시간 업데이트
   $update_sql = "UPDATE memberskakao 
@@ -46,6 +46,6 @@ if ($data && $data->account_activation_token === NULL) {
 } else {
   echo "<script>
       alert('아이디 또는 비번이 맞지 않거나 인증이 되지 않았습니다.');
-      location.href='logintest2.php';
+      
   </script>";
 }
