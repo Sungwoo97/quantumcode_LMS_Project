@@ -1,6 +1,6 @@
 <?php
 // 데이터베이스 연결
-$mysqli = new mysqli("localhost", "quantumcode", "12345", "quantumcode");
+$mysqli = new mysqli("3.39.192.39", "quantumcode", "12345", "quantumcode");
 
 if (isset($_GET['token'])) {
     $token = $_GET['token'];

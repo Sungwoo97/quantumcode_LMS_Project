@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
 
 // 데이터베이스 연결
-$mysqli = new mysqli("localhost", "quantumcode", "12345", "quantumcode");
+$mysqli = new mysqli("3.39.192.39", "quantumcode", "12345", "quantumcode");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $memName = $_POST['memName'];
