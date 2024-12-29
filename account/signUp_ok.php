@@ -120,13 +120,12 @@ END;
             countdownElement.textContent = countdown + '초후 로그인 페이지로 이동합니다...';
             if (countdown <= 0) {
                 clearInterval(interval);
-                window.location.href = '/qc/account/logintest2.php'; //로그인페이지로 리디렉션
+                window.location.href = '/qc/account/loginTest2.php'; //로그인페이지로 리디렉션
             }
         }, 1000); // 1초마다 실행
     </script>
 </body>
 </html>";
-  echo $mail;
   exit(); // 리다이렉션 후 추가 코드 실행 방지
 } else {
   echo "이메일이 데이터베이스에 존재하지 않습니다.";
