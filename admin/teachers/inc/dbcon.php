@@ -1,6 +1,6 @@
 <?php
 // 그냥 확인용으로 넣어봄. 확인 후 변경할것
-$hostname = 'localhost';
+$hostname = 'db';        // Docker MySQL 컨테이너 서비스명
 $username = 'quantumcode';
 $dbpassword = '12345';
 $dbname = 'quantumcode';
