@@ -3,6 +3,9 @@ require '../vendor/autoload.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
 
 class ChatServer implements MessageComponentInterface {
     private $clients;
