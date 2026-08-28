@@ -50,7 +50,7 @@ JOIN
 LEFT JOIN 
     lecture_watch AS lw ON o.lid = lw.lid AND o.mid = lw.mid
 WHERE 
-    o.mid = ?
+    o.mid = ? AND o.status = 1
 GROUP BY 
     o.odid, o.total_price, o.status, o.createdate, l.lid, l.title, l.category, l.cover_image, 
     l.t_id, l.tuition, l.dis_tuition, l.sub_title, l.difficult, l.expiration_day;

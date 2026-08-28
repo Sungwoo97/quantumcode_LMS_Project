@@ -31,26 +31,6 @@ while ($row = $result->fetch_object()) {
 $lid = implode(',', $lidArr);
 
 
-$couponArr = [];
-$coupon_sql = "SELECT cu.*, c.*  
-FROM coupons_usercp cu
-JOIN coupons c
-ON c.cid = cu.couponid
-WHERE cu.status = 1
-AND c.status = 1
-AND cu.userid = '$email'
- ";
-// AND cu.use_max_date >=now() 만료일이 있다면 now 함수를 이용하여 조건
-$coupon_result = $mysqli->query($coupon_sql);
-while ($coupon_row = $coupon_result->fetch_object()) {
-  $couponArr[] = $coupon_row;
-}
-
-
-$user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
-$user_result = $mysqli->query($user_sql);
-$user_data = $user_result->fetch_object();
-$callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
 
 
 ?>
@@ -99,48 +79,17 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
       </table>
     </div>
     <div class="col-3 payment">
-      <dl>
-        <dt>신청자</dt>
-        <dd><?= $user_data->memName ?></dd>
-        <dt>이메일</dt>
-        <dd><?= $user_data->memEmail ?></dd>
-        <dt>전화번호</dt>
-        <dd><?= $callnum ?></dd>
-
-        <dt>쿠폰</dt>
-        <dd>
-          <select class="form-select" name="coupon" id="coupon">
-            <option value="0" selected>쿠폰 선택</option>
-            <?php
-            if (!empty($couponArr)) {
-              foreach ($couponArr as $coupon) {
-                $price = 0;
-                if ($coupon->coupon_type === 'fixed') {
-                  $price = $coupon->coupon_price;
-                } else {
-                  $price = $coupon->coupon_ratio;
-                }
-            ?>
-                <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
-            <?php
-              }
-            }
-            ?>
-          </select>
-        </dd>
-      </dl>
       <div class="d-flex justify-content-between">
-        <span class="font">결제 금액</span><span class="normal-font total_payment"> 0 원</span>
+        <span class="font">선택 금액</span><span class="normal-font total_payment"> 0 원</span>
       </div>
       <div class="control m-3">
-        <button type="button" class="payment_btn btn btn-primary w-100">결제하기</button>
+        <button type="button" class="payment_btn btn btn-primary w-100">구매하기</button>
       </div>
     </div>
   </div>
 </div>
 <script>
   const paymentBtn = document.querySelector('.payment_btn');
-  const coupon = document.querySelector('#coupon');
   let total_payment = document.querySelector('.total_payment').innerText;
   let numericValue = total_payment.replace(/[^0-9]/g, '');
   const lec_check = document.querySelectorAll('.table input[type="checkbox"]');
@@ -152,42 +101,14 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
   let priceArr = [];
   var sum_price = 0;
   let lid;
-  let uctotal;
 
-  // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
+  // 선택한 강의만 들고 결제 페이지로 넘어간다
   paymentBtn.addEventListener('click', () => {
-    const ucid = coupon.value;
-    const mid = '<?= $email ?>';
-    // const lid = "<?= $lid ?>";
-    // const total = numericValue;
-    console.log(mid, lid, sum_price);
-    const data = new URLSearchParams({
-      ucid: ucid,
-      lid: lid,
-      mid: mid,
-      total_price: sum_price,
-    });
-    console.log(data);
-    fetch('lecture_payment.php', {
-        method: 'post',
-        body: data,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(result => {
-        console.log('Success:', result);
-        location.reload();
-      })
-      .catch(error => {
-        console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
-      });
+    if (!lid) {
+      alert('구매할 강의를 선택해주세요.');
+      return;
+    }
+    location.href = 'lecture_checkout.php?lid=' + encodeURIComponent(lid);
   })
 
   sel_delete.addEventListener('click', () => {
@@ -224,20 +145,6 @@ $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3
     }
   })
 
-  // 쿠폰 목록을 선택한다면 결제금액에 반영
-  coupon.addEventListener('change', (e) => {
-    let ucid = e.target.value;
-    let ucprice = e.target.options[e.target.selectedIndex].getAttribute('data-price');
-    if (ucid > 0) {
-      sum_price -= Number(ucprice);
-      uctotal = ucprice;
-    } else {
-      sum_price += Number(uctotal);
-      uctotal = null;
-    }
-    document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
-    console.log(ucid, ucprice, uctotal);
-  })
   // 천자리 마다 , 해주는 함수
   function numberFormat(number, thousandSeparator = ',') {
     const integerPart = Math.floor(number).toString(); // 정수 부분만 처리

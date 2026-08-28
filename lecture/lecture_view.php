@@ -60,7 +60,7 @@ switch ($data->difficult) {
     break;
 }
 
-$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = '$email'";
+$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = '$email' AND status = 1";
 
 $buy_result = $mysqli->query($buy_sql);
 if ($buy_result && $buy_result->num_rows > 0) {
@@ -71,29 +71,9 @@ if ($buy_result && $buy_result->num_rows > 0) {
   // 데이터가 없는 경우 추가 작업 수행 (필요하면 이곳에 처리 로직 추가)
 }
 
-$couponArr = [];
-$coupon_sql = "SELECT cu.*, c.*  
-FROM coupons_usercp cu
-JOIN coupons c
-ON c.cid = cu.couponid
-WHERE cu.status = 1
-AND c.status = 1
-AND cu.userid = '$email'
- ";
-//  AND cu.use_max_date >=now()
-$coupon_result = $mysqli->query($coupon_sql);
-while ($coupon_row = $coupon_result->fetch_object()) {
-  $couponArr[] = $coupon_row;
-}
-
 $user_sql = "SELECT * FROM memberskakao WHERE memEmail = '$email'";
 $user_result = $mysqli->query($user_sql);
 $user_data = $user_result->fetch_object();
-if (isset($user_data->number)) {
-  $callnum = substr($user_data->number, 0, 3) . "-" . substr($user_data->number, 3, 4) . "-" . substr($user_data->number, 7);
-} else {
-  $callnum = 0;
-}
 
 $reply = '';
 
@@ -211,8 +191,8 @@ while ($review_data = $review_result->fetch_object()) {
         if (isset($user_data)) {
           if (!$buy_data) {
         ?>
-            <button type="button" class=" btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paybtn">결제하기</button>
-            <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">담기</a>
+            <a href="lecture_checkout.php?lid=<?= $lid ?>" class="btn btn-primary w-100">바로 결제</a>
+            <a href="lecture_cart.php?lid=<?= $lid ?>" class="btn btn-secondary w-100">장바구니 담기</a>
           <?php
           } else {
           ?>
@@ -283,124 +263,10 @@ while ($review_data = $review_result->fetch_object()) {
     <a href="lecture_list.php" class=" btn btn-secondary insert">목록</a>
   </div>
 </div>
-<div class="modal fade view" id="paybtn" tabindex="-1" aria-labelledby="directPay" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="directPay">바로 결제하기</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li>
-            <span>신청자</span>
-            <strong><?= $user_data->memName ?></strong>
-          </li>
-          <li>
-            <span>이메일</span>
-            <strong><?= $user_data->memEmail ?></strong>
-          </li>
-          <li>
-            <span>전화번호</span>
-            <strong><?= $callnum ?></strong>
-          </li>
-        </ul>
-        <div>
-
-          <div>쿠폰</div>
-          <div class="mb-3">
-            <select class="form-select" name="coupon" id="coupon">
-              <option value="0" selected>쿠폰 선택</option>
-              <?php
-              if (!empty($couponArr)) {
-                foreach ($couponArr as $coupon) {
-                  $price = 0;
-                  if ($coupon->coupon_type === 'fixed') {
-                    $price = $coupon->coupon_price;
-                  } else {
-                    $price = $coupon->coupon_ratio;
-                  }
-              ?>
-                  <option value="<?= $coupon->ucid ?>" data-price="<?= $price ?>"><?= $coupon->coupon_name ?> </option>
-              <?php
-                }
-              }
-              ?>
-            </select>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-between">
-          <b class="font">결제 금액</b><b data-price="<?= $value ?>" class="normal-font total_payment"> <?= $value ?> 원</b>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary payment_btn">결제하기</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-  const paymentBtn = document.querySelector('.payment_btn');
-  const coupon = document.querySelector('#coupon');
   let tuition = document.querySelector('.tuition');
   let tuitionOst = tuition.offsetTop;
-  let total_payment = document.querySelector('.total_payment').innerText;
-  let numericValue = total_payment.replace(/[^0-9]/g, '');
-  var sum_price = numericValue;
-  let uctotal;
-
-  // 결제 할때 fetch 함수를 통해 결제한 그 데이터를 저장
-  paymentBtn.addEventListener('click', () => {
-    const ucid = coupon.value;
-    const mid = "<?= $email ?>";
-    const lid = "<?= $lid ?>";
-    const total = numericValue;
-    console.log(mid, lid, sum_price);
-    const data = new URLSearchParams({
-      ucid: ucid,
-      lid: lid,
-      mid: mid,
-      total_price: sum_price,
-    });
-    fetch('lecture_payment.php', {
-        method: 'post',
-        body: data,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(result => {
-        console.log('Success:', result);
-        location.reload();
-      })
-      .catch(error => {
-        console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
-      });
-  })
-
-  // 쿠폰 목록을 선택한다면 결제금액에 반영
-  coupon.addEventListener('change', (e) => {
-    let ucid = e.target.value;
-    let ucprice = e.target.options[e.target.selectedIndex].getAttribute('data-price');
-    if (ucid > 0) {
-      sum_price -= Number(ucprice);
-      uctotal = ucprice;
-    } else {
-      sum_price += Number(uctotal);
-      uctotal = null;
-    }
-    document.querySelector('.total_payment').innerText = numberFormat(sum_price) + '원';
-    console.log(ucid, ucprice, uctotal);
-  })
 
   // 천자리 마다 , 해주는 함수
   function numberFormat(number, thousandSeparator = ',') {

@@ -31,7 +31,7 @@ $sql = "
     ON 
         o.lid = l.lid
     WHERE 
-        o.mid = ?
+        o.mid = ? AND o.status = 1
 ";
 
 $stmt = $mysqli->prepare($sql);
