@@ -82,7 +82,7 @@ ON
     t.id = l.t_id
 WHERE 1=1 $search_where 
 GROUP BY 
-    t.id
+    t.tid
 ORDER BY $orderColumn $ordertype LIMIT $start_num, $list";
 // echo $join_sql;
 

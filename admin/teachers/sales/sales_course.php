@@ -11,7 +11,7 @@ header('Access-Control-Allow-Origin: *');
 $data = [];
 $sql = "SELECT * 
     FROM sales_course
-    GROUP BY course_name, month
+    GROUP BY scid, course_name, month
     ORDER BY month DESC";
 
 $result = $mysqli->query($sql);

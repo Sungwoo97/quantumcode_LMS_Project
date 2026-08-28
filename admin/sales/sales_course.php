@@ -30,7 +30,7 @@ $sql = "SELECT l.title, lo.lid, DATE_FORMAT(lo.createdate, '%c월') AS month, SU
     LEFT JOIN lecture_list l
     ON lo.lid = l.lid
     WHERE lo.lid IN ($top_lid)
-    GROUP BY lo.lid, MONTH(lo.createdate)
+    GROUP BY lo.lid, l.title, MONTH(lo.createdate), DATE_FORMAT(lo.createdate, '%c월')
     ORDER BY MONTH(lo.createdate)
 ";
 
