@@ -8,6 +8,9 @@ $toss_secret_key = 'test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R';
 // 결제 승인 API 주소
 $toss_confirm_url = 'https://api.tosspayments.com/v1/payments/confirm';
 
+// 결제 취소는 주소에 paymentKey 가 들어간다 ($toss_api_base . '/' . $payment_key . '/cancel')
+$toss_api_base = 'https://api.tosspayments.com/v1/payments';
+
 // 결제 결과가 돌아올 주소
 $toss_success_url = "http://{$_SERVER['HTTP_HOST']}/qc/lecture/lecture_payment_ok.php";
 $toss_fail_url = "http://{$_SERVER['HTTP_HOST']}/qc/lecture/lecture_payment_fail.php";

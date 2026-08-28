@@ -11,6 +11,7 @@ $sql = "SELECT
   DATE_FORMAT(createdate, '%c월') AS month,
   SUM(total_price) AS sales
   FROM lecture_order
+  WHERE status = 1
   GROUP BY DATE_FORMAT(createdate, '%c월'), MONTH(createdate)
   ORDER BY MONTH(createdate) DESC LIMIT 6
 ";

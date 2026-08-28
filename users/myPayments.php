@@ -10,6 +10,15 @@ if (!isset($_SESSION['MemEmail'])) {
 
 $userEmail = $_SESSION['MemEmail'];
 
+// lecture_order.status 를 화면에 보여줄 이름으로 바꾸는 표
+$order_status_name = [
+  0 => '결제대기',
+  1 => '완료',
+  2 => '결제실패',
+  3 => '환불완료',
+  4 => '환불요청',
+];
+
 // SQL 쿼리 준비 (회원이 주문한 강의 정보 가져오기)
 $sql = "
     SELECT 
@@ -17,21 +26,29 @@ $sql = "
         o.total_price,
         o.status AS order_status,
         o.createdate AS order_date,
-        l.title AS lecture_title,
-        l.category AS lecture_category,
-        l.t_id AS instructor_name,
-        l.tuition AS original_price,
-        l.dis_tuition AS discounted_price,
-        l.sub_title AS lecture_summary,
-        l.difficult AS difficulty
-    FROM 
+        GROUP_CONCAT(l.title SEPARATOR ', ') AS lecture_title,
+        GROUP_CONCAT(DISTINCT l.category SEPARATOR ', ') AS lecture_category,
+        GROUP_CONCAT(DISTINCT l.t_id SEPARATOR ', ') AS instructor_name,
+        SUM(l.tuition) AS original_price,
+        SUM(l.dis_tuition) AS discounted_price,
+        GROUP_CONCAT(l.sub_title SEPARATOR ' / ') AS lecture_summary,
+        GROUP_CONCAT(DISTINCT l.difficult SEPARATOR ', ') AS difficulty,
+        o.refund_reason,
+        o.refund_date,
+        DATEDIFF(NOW(), o.createdate) AS days_passed,
+        (SELECT COUNT(*) FROM lecture_watch AS lw WHERE lw.mid = o.mid AND FIND_IN_SET(lw.lid, o.lid)) AS watch_count
+    FROM
         lecture_order AS o
-    JOIN 
-        lecture_list AS l 
-    ON 
-        o.lid = l.lid
-    WHERE 
-        o.mid = ? AND o.status = 1
+    JOIN
+        lecture_list AS l
+    ON
+        FIND_IN_SET(l.lid, o.lid)
+    WHERE
+        o.mid = ? AND o.status IN (1, 3, 4)
+    GROUP BY
+        o.odid
+    ORDER BY
+        o.odid DESC
 ";
 
 $stmt = $mysqli->prepare($sql);
@@ -95,8 +112,23 @@ $stmt->close();
                 <hr>
                 <p class="card-text"><strong>주문 ID:</strong> <?= htmlspecialchars($lecture['order_id']); ?></p>
                 <p class="card-text"><strong>실제 결제 금액:</strong> <?= number_format($lecture['total_price']); ?>원</p>
-                <p class="card-text"><strong>주문 상태:</strong> <?= $lecture['order_status'] == 1 ? '완료' : '대기'; ?></p>
+                <p class="card-text"><strong>주문 상태:</strong> <?= $order_status_name[$lecture['order_status']] ?? '대기'; ?></p>
                 <p class="card-text"><strong>주문 날짜:</strong> <?= htmlspecialchars($lecture['order_date']); ?></p>
+
+                <?php if ($lecture['order_status'] == 1) { ?>
+                  <?php if ($lecture['watch_count'] > 0) { ?>
+                    <p class="card-text text-muted">이미 수강을 시작한 강의는 환불할 수 없습니다.</p>
+                  <?php } else if ($lecture['days_passed'] > 7) { ?>
+                    <p class="card-text text-muted">결제 후 7일이 지나 환불할 수 없습니다.</p>
+                  <?php } else { ?>
+                    <button type="button" class="btn btn-outline-danger btn-sm refund_btn" data-odid="<?= $lecture['order_id']; ?>">환불 요청</button>
+                  <?php } ?>
+                <?php } else if ($lecture['order_status'] == 4) { ?>
+                  <p class="card-text text-muted">환불 요청이 접수되었습니다. 관리자 확인 후 처리됩니다.</p>
+                  <p class="card-text"><strong>요청 사유:</strong> <?= htmlspecialchars($lecture['refund_reason']); ?></p>
+                <?php } else if ($lecture['order_status'] == 3) { ?>
+                  <p class="card-text"><strong>환불 완료일:</strong> <?= htmlspecialchars($lecture['refund_date']); ?></p>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -108,5 +140,47 @@ $stmt->close();
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // 환불 요청. 실제 취소는 관리자가 승인할 때 처리된다
+    document.querySelectorAll('.refund_btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const reason = prompt('환불 사유를 입력해주세요.');
+        if (reason === null) {
+          return;
+        }
+        if (reason.trim() === '') {
+          alert('환불 사유를 입력해주세요.');
+          return;
+        }
+
+        const data = new URLSearchParams({
+          odid: button.getAttribute('data-odid'),
+          reason: reason,
+        });
+        fetch('refund_request_ok.php', {
+            method: 'post',
+            body: data,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(result => {
+            alert(result.message);
+            if (result.status === 'success') {
+              location.reload();
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error); // 네트워크나 JSON 변환 에러 처리
+          });
+      })
+    })
+  </script>
 </body>
 </html>

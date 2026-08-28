@@ -235,6 +235,7 @@ if (isset($chart_js)) {
           </h2>
           <ul id="nav_cate_Sales" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/sales_management.php">매출목록</a></li>
+            <li class="accordion-child"><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/sales/order_list.php">주문/환불 관리</a></li>
           </ul>
         </div>
         <div class="accordion-item">

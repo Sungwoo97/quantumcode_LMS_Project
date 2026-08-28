@@ -31,14 +31,14 @@ $sql = "
     SUM(CASE WHEN lw.event_type = 'completed' THEN 1 ELSE 0 END) AS completed_videos
 FROM 
     lecture_order AS o
-JOIN 
-    lecture_list AS l ON o.lid = l.lid
-LEFT JOIN 
-    lecture_watch AS lw ON o.lid = lw.lid AND o.mid = lw.mid
-WHERE 
+JOIN
+    lecture_list AS l ON FIND_IN_SET(l.lid, o.lid)
+LEFT JOIN
+    lecture_watch AS lw ON lw.lid = l.lid AND lw.mid = o.mid
+WHERE
     o.mid = ? AND o.status = 1
-GROUP BY 
-    o.odid, o.total_price, o.status, o.createdate, l.lid, l.title, l.category, l.cover_image, 
+GROUP BY
+    o.odid, o.total_price, o.status, o.createdate, l.lid, l.title, l.category, l.cover_image,
     l.t_id, l.tuition, l.dis_tuition, l.sub_title, l.difficult, l.expiration_day;
 ";
 

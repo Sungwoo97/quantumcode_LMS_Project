@@ -12,10 +12,11 @@ $data = [];
 
 $top_data = [];
 
-$top_sql = "SELECT lo.lid
+$top_sql = "SELECT l.lid
 FROM lecture_order lo
-LEFT JOIN lecture_list l ON lo.lid = l.lid
-GROUP BY lo.lid
+JOIN lecture_list l ON FIND_IN_SET(l.lid, lo.lid)
+WHERE lo.status = 1
+GROUP BY l.lid
 ORDER BY SUM(lo.total_price) DESC
 LIMIT 4";
 $top_result = $mysqli->query($top_sql);
@@ -25,12 +26,12 @@ while ($row = $top_result->fetch_object()){
 
 $top_lid = implode(',' , $top_data);
 
-$sql = "SELECT l.title, lo.lid, DATE_FORMAT(lo.createdate, '%c월') AS month, SUM(lo.total_price) AS total_sales
+$sql = "SELECT l.title, l.lid, DATE_FORMAT(lo.createdate, '%c월') AS month, SUM(lo.total_price) AS total_sales
     FROM lecture_order lo
-    LEFT JOIN lecture_list l
-    ON lo.lid = l.lid
-    WHERE lo.lid IN ($top_lid)
-    GROUP BY lo.lid, l.title, MONTH(lo.createdate), DATE_FORMAT(lo.createdate, '%c월')
+    JOIN lecture_list l
+    ON FIND_IN_SET(l.lid, lo.lid)
+    WHERE lo.status = 1 AND l.lid IN ($top_lid)
+    GROUP BY l.lid, l.title, MONTH(lo.createdate), DATE_FORMAT(lo.createdate, '%c월')
     ORDER BY MONTH(lo.createdate)
 ";
 

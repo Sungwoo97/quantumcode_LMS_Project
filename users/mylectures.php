@@ -29,11 +29,11 @@ $sql = "
         l.expiration_day AS lecture_expiration -- 만료일 추가
     FROM 
         lecture_order AS o
-    JOIN 
-        lecture_list AS l 
-    ON 
-        o.lid = l.lid
-    WHERE 
+    JOIN
+        lecture_list AS l
+    ON
+        FIND_IN_SET(l.lid, o.lid)
+    WHERE
         o.mid = ? AND o.status = 1
 ";
 

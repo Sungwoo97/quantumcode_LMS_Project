@@ -60,7 +60,7 @@ switch ($data->difficult) {
     break;
 }
 
-$buy_sql = "SELECT * FROM lecture_order WHERE lid LIKE '%$lid%' AND mid = '$email' AND status = 1";
+$buy_sql = "SELECT * FROM lecture_order WHERE FIND_IN_SET($lid, lid) AND mid = '$email' AND status = 1";
 
 $buy_result = $mysqli->query($buy_sql);
 if ($buy_result && $buy_result->num_rows > 0) {

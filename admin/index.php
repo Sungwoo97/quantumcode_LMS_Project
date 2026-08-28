@@ -96,11 +96,12 @@ if ($reg2023_M_Number > 0) {
 
 //인기 강의 출력
 $popularCnt_data = [];
-$popularCnt_sql = "SELECT l.title AS title, lo.lid AS lid, COUNT(DISTINCT lo.mid) AS member_count 
+$popularCnt_sql = "SELECT l.title AS title, l.lid AS lid, COUNT(DISTINCT lo.mid) AS member_count
 FROM lecture_order lo
-LEFT JOIN lecture_list l
-ON lo.lid = l.lid
-GROUP BY lo.lid
+JOIN lecture_list l
+ON FIND_IN_SET(l.lid, lo.lid)
+WHERE lo.status = 1
+GROUP BY l.lid, l.title
 ORDER BY member_count DESC";
 $popularCnt_result = $mysqli->query($popularCnt_sql);
 while ($popularCnt_row = $popularCnt_result->fetch_object()) {

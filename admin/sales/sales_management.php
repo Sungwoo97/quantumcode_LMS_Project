@@ -23,7 +23,7 @@ if ($avg_result) {
   $avg_data = $avg_result->fetch_object();
 }
 
-$total_sql = "SELECT SUM(total_price) AS total FROM lecture_order";
+$total_sql = "SELECT SUM(total_price) AS total FROM lecture_order WHERE status = 1";
 $total_result = $mysqli->query($total_sql);
 if ($total_result) {
 $total = $total_result->fetch_object()->total;
@@ -64,7 +64,7 @@ foreach ($monthArr as $month) {
   DATE_FORMAT(createdate, '%c월') AS month,
   SUM(total_price) AS sales
   FROM lecture_order
-  WHERE DATE_FORMAT(createdate, '%c월') = '{$month}월' 
+  WHERE status = 1 AND DATE_FORMAT(createdate, '%c월') = '{$month}월'
   GROUP BY DATE_FORMAT(createdate, '%c월')
   ";
   $month_result = $mysqli->query($month_sql);
