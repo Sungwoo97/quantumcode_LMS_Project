@@ -1,6 +1,6 @@
 <?php
 // 데이터베이스 연결
-$mysqli = new mysqli("db", "quantumcode", "12345", "quantumcode");   // Docker MySQL 컨테이너 서비스명
+$mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASSWORD'), getenv('DB_NAME'));
 
 if (isset($_GET['token'])) {
     $token = $_GET['token'];

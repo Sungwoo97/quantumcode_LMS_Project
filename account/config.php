@@ -2,11 +2,11 @@
 session_start(); // 세션 시작
 // 설정파일 조정 필요
 $kakaoConfig = array(
-	// ![수정필요] @@ 카카오 REST API 키값 , 카카오 개발자 사이트 > 내 애플리케이션 > 요약정보에서 REST API 키값
-	'client_id'=>'***REMOVED***',
+	// 카카오 REST API 키값 - 레포 밖 .env 에 있음 (개발자 사이트 > 내 애플리케이션 > 요약정보)
+	'client_id'=>getenv('KAKAO_CLIENT_ID'),
 
-	// ![수정필요] @@ 카카오 개발자 사이트 > 내 애플리케이션 > 카카오로그인 > 보안 에서 생성가능
-	'client_secret'=>'***REMOVED***',
+	// 카카오 client_secret - 레포 밖 .env 에 있음 (카카오로그인 > 보안 에서 생성)
+	'client_secret'=>getenv('KAKAO_CLIENT_SECRET'),
 
 	// 로그인 인증 URL
 	'login_auth_url'=>'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&state={state}',

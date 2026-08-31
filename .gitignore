@@ -8,3 +8,7 @@ quantumcode/
 
 # DB 덤프 - 실회원 개인정보 포함. 레포 밖에 보관할 것
 *.sql
+
+# 비밀 설정 - 실제 .env 는 레포 밖(docker-compose.yml 옆)에 둔다
+.env
+!.env.example

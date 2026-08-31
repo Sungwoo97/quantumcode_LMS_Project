@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
 
 // 데이터베이스 연결
-$mysqli = new mysqli("db", "quantumcode", "12345", "quantumcode");   // Docker MySQL 컨테이너 서비스명
+$mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASSWORD'), getenv('DB_NAME'));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $memName = $_POST['memName'];
@@ -37,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.naver.com'; // 구글 SMTP 서버
             $mail->SMTPAuth = true;
-            $mail->Username = 'haemilyjh@gmail.com'; // 구글 사용자명
-            $mail->Password = '***REMOVED***'; // 구글 앱 비밀번호
+            $mail->Username = getenv('GMAIL_USERNAME'); // 구글 계정은 레포 밖 .env 에 있음
+            $mail->Password = getenv('GMAIL_APP_PASSWORD'); // 구글 앱 비밀번호
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('haemilyjh@gmail.com', 'Your App'); // 발신자 이메일
+            $mail->setFrom(getenv('GMAIL_USERNAME'), 'Your App'); // 발신자 이메일
             $mail->addAddress($memEmail);
 
             // 인증 링크 생성

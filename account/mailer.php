@@ -13,12 +13,12 @@ $mail = new PHPMailer(true);
 // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
 $mail->isSMTP();                               // SMTP 사용
-$mail->Host = "smtp.naver.com";                // Naver SMTP 서버
+$mail->Host = getenv('MAIL_HOST');             // Naver SMTP 서버
 $mail->SMTPAuth = true;                        // SMTP 인증 사용
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL 암호화 사용
-$mail->Port = 465;                             // SSL 포트
-$mail->Username = "gwaja97";                 // Naver 아이디
-$mail->Password = "***REMOVED***";               // Naver 비밀번호
+$mail->Port = (int) getenv('MAIL_PORT');       // SSL 포트
+$mail->Username = getenv('MAIL_USERNAME');     // 계정 정보는 레포 밖 .env 에 있음
+$mail->Password = getenv('MAIL_PASSWORD');
 
 
 
