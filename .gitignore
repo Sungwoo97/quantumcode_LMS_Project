@@ -2,3 +2,9 @@
 quantumcode/
 
 /vendor/
+
+# AWS 키페어 등 접속 키 - 레포에 올리지 말 것
+/key/
+
+# DB 덤프 - 실회원 개인정보 포함. 레포 밖에 보관할 것
+*.sql

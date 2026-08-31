@@ -36,6 +36,9 @@ if ($stmt->execute()) {
   $mail->Subject = "Account Activation";
   $mail->CharSet = 'UTF-8'; // 문자 인코딩 설정
   $mail->isHTML(true);      // HTML 메일 설정
+  // 인증 메일 링크 (로컬/운영 어디서든 현재 접속 호스트를 따라감)
+  $activation_link = 'http' . (!empty($_SERVER['HTTPS']) ? 's' : null) . '://' . $_SERVER['HTTP_HOST'] . '/qc/account/active_account.php?token=' . $activation_token;
+
   $mail->Body = <<<END
 <!DOCTYPE html>
 <html lang="ko">
@@ -44,7 +47,7 @@ if ($stmt->execute()) {
 </head>
 <body>
     <p>아래 링크를 클릭하여 계정을 활성화하세요:</p>
-    <a href="http://3.39.192.39/qc/account/active_account.php?token=$activation_token">여기를 클릭해주세요</a>
+    <a href="$activation_link">여기를 클릭해주세요</a>
 </body>
 </html>
 END;
