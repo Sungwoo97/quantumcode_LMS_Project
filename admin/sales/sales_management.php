@@ -5,17 +5,13 @@ $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$lecture_sql = "SELECT count(lid) AS cnt FROM lecture_list ";
-$lecuter_result = $mysqli->query($lecture_sql);
-if ($lecuter_result) {
-  $lecture_data = $lecuter_result->fetch_object();
-}
-
-$sum_sql = "SELECT SUM(student_count) AS sc FROM lecture_list ";
-$sum_result = $mysqli->query($sum_sql);
-if ($sum_result) {
-  $sum_data = $sum_result->fetch_object();
-}
+// 실제 수강생 수. 전에는 전체 회원 수를 그대로 '총 수강생' 으로 보여줬다
+$student_sql = "SELECT COUNT(DISTINCT o.mid) AS total_students
+  FROM lecture_order_item oi
+  JOIN lecture_order o ON o.odid = oi.odid
+  WHERE oi.status = 1";
+$student_result = $mysqli->query($student_sql);
+$student_count = $student_result ? $student_result->fetch_object()->total_students : 0;
 
 $avg_sql = "SELECT AVG(review) AS review FROM lecture_review ";
 $avg_result = $mysqli->query($avg_sql);
@@ -28,69 +24,94 @@ $total_result = $mysqli->query($total_sql);
 if ($total_result) {
 $total = $total_result->fetch_object()->total;
 }
-$data_sql = "SELECT * FROM lecture_data";
+// 초를 사람이 읽는 표기로 바꾼다. 영상이 짧으면 '시간 분' 만으로는 전부 0으로 보인다
+function format_duration($seconds) {
+  $seconds = (int) $seconds;
+  if ($seconds >= 3600) {
+    return intdiv($seconds, 3600) . "시간 " . intdiv($seconds % 3600, 60) . "분";
+  }
+  if ($seconds >= 60) {
+    return intdiv($seconds, 60) . "분 " . ($seconds % 60) . "초";
+  }
+  return $seconds . "초";
+}
+
+// 강의 정보. 전에는 lecture_data 라는 고정 6행 표를 뿌렸고 lecture_list 와 연결도 안 돼 있었다.
+// 지금은 영상 목록 / 구매 내역 / 시청 기록에서 뽑는다.
+// '평균 수강 분량' 은 완료한 영상들의 길이 합을 수강생 수로 나눈 값이다.
+// lecture_watch 가 재생 시간을 남기지 않아 실제 시청 시간은 낼 수 없다.
+$data_sql = "SELECT l.title,
+    IFNULL(video.video_count, 0) AS video_count,
+    IFNULL(video.total_seconds, 0) AS total_seconds,
+    DATEDIFF(l.expiration_day, l.regist_day) AS period_days,
+    buyer.student_count,
+    IFNULL(watch.watched_seconds, 0) AS watched_seconds
+  FROM lecture_list l
+  LEFT JOIN (SELECT lid, COUNT(*) AS video_count, SUM(TIME_TO_SEC(video_duration)) AS total_seconds
+             FROM lecture_video GROUP BY lid) video ON video.lid = l.lid
+  JOIN (SELECT oi.lid, COUNT(DISTINCT o.mid) AS student_count
+        FROM lecture_order_item oi
+        JOIN lecture_order o ON o.odid = oi.odid
+        WHERE oi.status = 1
+        GROUP BY oi.lid) buyer ON buyer.lid = l.lid
+  LEFT JOIN (SELECT done.lid, SUM(TIME_TO_SEC(v.video_duration)) AS watched_seconds
+             FROM (SELECT DISTINCT lid, mid, lvid FROM lecture_watch WHERE event_type = 'completed') done
+             JOIN lecture_video v ON v.lvid = done.lvid
+             GROUP BY done.lid) watch ON watch.lid = l.lid
+  ORDER BY buyer.student_count DESC, l.title ASC";
 $data_result = $mysqli->query($data_sql);
 $html = '';
 while ($data_row = $data_result->fetch_object()) {
-  // $data_data[] = $data_row;
-  $time = $data_row->lecture_time;
-  list($hours, $minutes) = explode(":", $time);
-  $lectureTime = intval($hours) . "시간 " . intval($minutes) . "분";
-
-  $time1 = $data_row->lecture_avgwatch;
-  list($hours, $minutes) = explode(":", $time);
-  $lectureAvgwatch = intval($hours) . "시간 " . intval($minutes) . "분";
+  $lectureTime = format_duration($data_row->total_seconds);
+  $lectureAvgwatch = format_duration($data_row->watched_seconds / $data_row->student_count);
+  $periodDays = $data_row->period_days !== null ? $data_row->period_days . "일" : "-";
 
   $html .= " <tr class=\"border-bottom border-secondary-subtitle\">
-        <th>{$data_row->lecture_name}</th>
+        <th>{$data_row->title}</th>
         <td>{$lectureTime}</td>
-        <td>{$data_row->lecture_number}개</td>
-        <td>{$data_row->lecture_date}일</td>
+        <td>{$data_row->video_count}개</td>
+        <td>{$periodDays}</td>
         <td>{$lectureAvgwatch}</td>
       </tr>";
 }
 
 
-$monthArr = [];
-for ($i = 0; $i <= 1; $i++) {
-    $monthArr[] = date("n", strtotime("-{$i} months"));
-}
+// 이번 달과 지난 달 매출. 연도까지 맞춰 봐야 해가 바뀌었을 때 같은 달끼리 섞이지 않는다.
+// 전에는 '%c월' 로만 비교해서 2024년 9월 매출이 2026년 9월 매출로 잡혔다.
+$this_month = date('Y-m');
+$prev_month = date('Y-m', strtotime('-1 month'));
 
-
-$month_data = [];
-
-foreach ($monthArr as $month) {
-  $month_sql = "SELECT 
-  DATE_FORMAT(o.createdate, '%c월') AS month,
+$month_sql = "SELECT DATE_FORMAT(o.createdate, '%Y-%m') AS month,
   SUM(oi.paid_price) AS sales
   FROM lecture_order_item oi
   JOIN lecture_order o ON o.odid = oi.odid
-  WHERE oi.status = 1 AND DATE_FORMAT(o.createdate, '%c월') = '{$month}월'
-  GROUP BY DATE_FORMAT(o.createdate, '%c월')
-  ";
-  $month_result = $mysqli->query($month_sql);
-  if($month_result){
-    while ($month_row = $month_result->fetch_object()) {
-      array_push($month_data, $month_row);
-    }
-
-  }else{
-    die("Query failed: " . $mysqli->error);
-  }
+  WHERE oi.status = 1 AND DATE_FORMAT(o.createdate, '%Y-%m') IN ('$this_month', '$prev_month')
+  GROUP BY DATE_FORMAT(o.createdate, '%Y-%m')";
+$month_result = $mysqli->query($month_sql);
+if (!$month_result) {
+  die("Query failed: " . $mysqli->error);
 }
 
-$current_month = $month_data[0]->sales;
-$previous_month = $month_data[1]->sales;
+// 매출이 없는 달은 행 자체가 안 나오므로 0 으로 채워둔다
+$month_sales = [$this_month => 0, $prev_month => 0];
+while ($month_row = $month_result->fetch_object()) {
+  $month_sales[$month_row->month] = (int) $month_row->sales;
+}
 
+$current_month = $month_sales[$this_month];
+$previous_month = $month_sales[$prev_month];
 $month_diff = $current_month - $previous_month;
-$month_per = floor(($month_diff / $previous_month) * 100);
 
-$inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ({$month_per}%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ({$month_per}%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+// 지난 달 매출이 0이면 증감률을 낼 수 없다 (전에는 0으로 나눠 경고가 났다)
+$rate_text = $previous_month > 0 ? ' (' . floor($month_diff / $previous_month * 100) . '%)' : '';
 
-//회원 관련
-$member_count_sql = "SELECT COUNT(*) AS total_members FROM memberskakao";
-$member_count = $mysqli->query($member_count_sql);
-$m_count = $member_count->fetch_object();
+if ($month_diff > 0) {
+  $inc_sales = "<span class='blue'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-up\"></i></span>";
+} else if ($month_diff < 0) {
+  $inc_sales = "<span class='red'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-down\"></i></span>";
+} else {
+  $inc_sales = "<span>지난 달과 같음</span>";
+}
 
 //강의관련
 $lecture_num = "SELECT COUNT(*) AS total_lectures FROM `lecture_list`";
@@ -120,7 +141,7 @@ $lecture_counts = $lecture_nums->fetch_object();
         <dl>
           <dt>총 수강생</dt>
           <dd>
-            <div><?= $m_count->total_members ?> 명</div>
+            <div><?= number_format($student_count) ?> 명</div>
           </dd>
         </dl>
       </div>
@@ -130,7 +151,7 @@ $lecture_counts = $lecture_nums->fetch_object();
         <dl>
           <dt>평점</dt>
           <dd>
-            <div><?= $avg_data->review ?> 점</div>
+            <div><?= number_format($avg_data->review, 1) ?> 점</div>
           </dd>
         </dl>
       </div>
@@ -207,7 +228,7 @@ $lecture_counts = $lecture_nums->fetch_object();
                   <th scope="col">영상 시간</th>
                   <th scope="col">영상 개수</th>
                   <th scope="col">기간</th>
-                  <th scope="col">평균 시청 시간</th>
+                  <th scope="col">평균 수강 분량</th>
                 </tr>
               </thead>
               <tbody>
@@ -239,17 +260,9 @@ $lecture_counts = $lecture_nums->fetch_object();
   fetch('sales_data.php')
     .then(response => response.json())
     .then(data => {
+      // 서버가 '2024-12' 형식으로 연도까지 붙여 오름차순으로 보내주므로 그대로 쓴다
       const months = data.map(item => item.month);
-      const sales = data.map(item => item.sales);
-      months.sort((a, b) => {
-        const monthA = parseInt(a, 10);  // '1월'에서 '1'로 변환
-        const monthB = parseInt(b, 10);  // '2월'에서 '2'로 변환
-        return monthA - monthB;  // 숫자 기준으로 정렬
-    });
-    const salesSorted = months.map(month => {
-            const monthData = data.find(item => item.month === month);
-            return monthData ? monthData.sales : 'null';  // 해당 월의 매출 값
-        });
+      const salesSorted = data.map(item => item.sales);
       const monthly_data = document.getElementById('monthly_data');
       new Chart(monthly_data, {
         type: 'bar', // 막대 차트
@@ -320,14 +333,10 @@ $lecture_counts = $lecture_nums->fetch_object();
   fetch('sales_course.php')
     .then(response => response.json())
     .then(data => {
+      // 서버가 연도까지 붙여 오름차순으로 보내므로 등장 순서가 곧 시간 순서다
       const months = [...new Set(data.map(item => item.month))];
       const names = [...new Set(data.map(item => item.course_name))];
       const colors = ['#0E5FD9', '#64A2FF', '#0040A1', '#4F38FF'];
-      months.sort((a, b) => {
-        const monthA = parseInt(a, 10);  // '1월'에서 '1'로 변환
-        const monthB = parseInt(b, 10);  // '2월'에서 '2'로 변환
-        return monthA - monthB;  // 숫자 기준으로 정렬
-    });
       const datasets = names.map(course => {
         const sales = months.map(month => {
         // 해당 강의의 각 월에 대한 매출 값 찾기
