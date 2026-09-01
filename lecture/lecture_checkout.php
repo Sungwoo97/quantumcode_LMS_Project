@@ -1,7 +1,7 @@
 <?php
 $title = "결제";
 
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/toss_config.php');

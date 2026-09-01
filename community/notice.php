@@ -1,6 +1,6 @@
 <?php
 $title = "공지사항";
-$community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
+$community_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php'); // DB 연결

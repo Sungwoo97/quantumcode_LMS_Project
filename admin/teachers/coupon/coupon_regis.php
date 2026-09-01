@@ -1,6 +1,6 @@
 <?php
 $title = '쿠폰 등록';
-$coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
+$coupon_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 $id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;

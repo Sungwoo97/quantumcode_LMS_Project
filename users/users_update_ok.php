@@ -42,7 +42,7 @@ $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssssi", $memName, $birth, $memAddr, $number, $cover_image, $memId);
 
 if ($stmt->execute()) {
-  echo "<script>alert('수정이 완료되었습니다.'); location.href = 'http://{$_SERVER['HTTP_HOST']}/qc/users/users_view.php?MemId=" . htmlspecialchars($_SESSION['MemId']) . "';</script>";
+  echo "<script>alert('수정이 완료되었습니다.'); location.href = '//{$_SERVER['HTTP_HOST']}/qc/users/users_view.php?MemId=" . htmlspecialchars($_SESSION['MemId']) . "';</script>";
 } else {
   echo "<script>alert('수정에 실패하였습니다.'); history.back();</script>";
 }

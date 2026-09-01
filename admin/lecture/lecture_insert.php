@@ -1,6 +1,6 @@
 <?php
 $title = '강의 등록';
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
@@ -206,7 +206,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
     </div>
   </Form>
 </div>
-<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
+<script src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
 <script>
   function addCover(file, cover) {
     let coverImage = file;

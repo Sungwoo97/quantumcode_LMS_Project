@@ -17,8 +17,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
-    <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+    <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
+    <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
 
     <!-- 커스텀css... 필요하면 작성하나 비추 -->
     <style>
@@ -35,7 +35,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
             <img src="./img/main_logo1.png" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,8 +65,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
                 <button class="btn btn-outline-success" type="submit">검색</button>
             </form>
             <div class="ms-3">
-                <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
-                <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+                <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
+                <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
             </div>
         </div>
     </div>

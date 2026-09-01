@@ -111,8 +111,8 @@ if ($result && $result->num_rows > 0) {
         </div>
       </div>
       <ul>
-        <li class=\"d-flex align-items-center gap-2\"> <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/review.svg\" alt=\"\"> 5점 </li>
-        <li class=\"like d-flex align-items-center\"><img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/Heart.svg\" width=\"10\" height=\"10\" alt=\"\">500+</li>
+        <li class=\"d-flex align-items-center gap-2\"> <img src=\"//{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/review.svg\" alt=\"\"> 5점 </li>
+        <li class=\"like d-flex align-items-center\"><img src=\"//{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/Heart.svg\" width=\"10\" height=\"10\" alt=\"\">500+</li>
         <li class=\"tag\"> <span> {$item->lecture_tag}</span>  </li>
       </ul>
     </section>";

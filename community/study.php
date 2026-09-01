@@ -1,6 +1,6 @@
 <?php 
 $title = "스터디 모집";
-$community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
+$community_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 // print_r($_SESSION); 잘나옴;
@@ -180,11 +180,11 @@ $qnas = $result->fetch_all(MYSQLI_ASSOC);  //qnas는 그냥 써둔거... 위으 
       <h6>커뮤니티</h6>
       <hr>
       <ul>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php"><li>공지사항<i class="fa-solid fa-chevron-right"></i></li></a>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php"><li>FAQ<i class="fa-solid fa-chevron-right"></i></li></a>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php"><li>QnA<i class="fa-solid fa-chevron-right"></i></li></a>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php"><li>자유게시판<i class="fa-solid fa-chevron-right"></i></li></a>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php" class="active"><li>스터디 모집<i class="fa-solid fa-chevron-right"></i></li></a>
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php"><li>공지사항<i class="fa-solid fa-chevron-right"></i></li></a>
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php"><li>FAQ<i class="fa-solid fa-chevron-right"></i></li></a>
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php"><li>QnA<i class="fa-solid fa-chevron-right"></i></li></a>
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php"><li>자유게시판<i class="fa-solid fa-chevron-right"></i></li></a>
+        <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php" class="active"><li>스터디 모집<i class="fa-solid fa-chevron-right"></i></li></a>
       </ul>
     </aside>
   

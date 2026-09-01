@@ -1,6 +1,6 @@
 <?php
 $title = '수강 관리';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
+// $coupon_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 $id = $_SESSION['AUID'];

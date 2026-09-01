@@ -164,7 +164,7 @@ $event_result = $mysqli->query($sql);
           $prev = $block_start - $block_ct;
           echo "<li class=\"page-item prev\">
               <a class=\"page-link\" href=\"board_list.php?category={$category}&page={$prev}\">
-                  <img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
+                  <img src=\"//{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\">
               </a>
           </li>";
         }
@@ -183,7 +183,7 @@ $event_result = $mysqli->query($sql);
       ?>
       <li class="page-item next">
         <a class="page-link" href="board_list.php?category=<?=$category?>&page=<?= $next;?>">
-          <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
+          <img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next">
         </a>
       </li>
       <?php

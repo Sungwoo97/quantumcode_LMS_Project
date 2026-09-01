@@ -50,10 +50,14 @@ try {
     $mail->setFrom("gwaja97@naver.com"); // 발신 이메일
     $mail->addAddress($email); // 받는 사람 이메일
     $mail->Subject = "비밀번호 재설정 요청";
+    // 재설정 링크는 접속한 호스트를 따라간다 (localhost 하드코딩이면 배포 시 깨진다)
+    $scheme = (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'
+      || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')) ? 'https' : 'http';
+    $reset_link = "{$scheme}://{$_SERVER['HTTP_HOST']}/qc/account/reset_password.php?token={$token}";
     $mail->Body = <<<END
             <p>안녕하세요, QuantumCode입니다.</p>
             <p>비밀번호를 재설정하려면 아래 링크를 클릭해 주세요:</p>
-            <p><a href="http://localhost/qc/account/reset_password.php?token=$token">여기를 클릭하세요</a></p>
+            <p><a href="$reset_link">여기를 클릭하세요</a></p>
             <p>이 이메일은 스팸메일이 아닙니다. QuantumCode에서 보냈습니다.</p>
 END;
 

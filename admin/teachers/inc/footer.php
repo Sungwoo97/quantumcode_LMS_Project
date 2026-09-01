@@ -15,7 +15,7 @@
     dashboardButton.classList.remove("collapsed");
 
     // 바로 페이지 이동
-    window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/teachers/index.php";
+    window.location.href = "//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/teachers/index.php";
   });
 });
     </script>

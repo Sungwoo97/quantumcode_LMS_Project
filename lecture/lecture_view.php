@@ -1,7 +1,7 @@
 <?php
 $title = '강의 보기';
-$reset_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/reset.css\" rel=\"stylesheet\">";
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$reset_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/reset.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 
@@ -153,8 +153,8 @@ while ($review_data = $review_result->fetch_object()) {
         <p class="small-font"><?= $data->learning_obj ?></p>
       </div>
       <ul>
-        <li class=""> <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
-        <li class="like"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" alt="">500+</li>
+        <li class=""> <img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 <span class="text-decoration-underline small-font">수강평 보기</span></li>
+        <li class="like"><img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" alt="">500+</li>
         <li class="tag"><?= !empty($data->lecture_tag) ? "<span> {$data->lecture_tag}</span>" : '' ?> </li>
       </ul>
     </div>

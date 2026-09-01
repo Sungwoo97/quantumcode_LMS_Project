@@ -2,7 +2,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 text-md-start mb-3 mb-md-0">
-            <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
+            <img src="//<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
           </div>
         </div>
 

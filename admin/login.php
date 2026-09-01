@@ -15,8 +15,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
   <!-- Favicon -->
 
   <!-- Core Style CSS -->
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/core-style.css">
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/login.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/core-style.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/css/login.css">
 
   <!-- Bootstrap, jQuery -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">

@@ -175,7 +175,7 @@ $stmt->execute();
         <ul>
           <li class="my-2">
             <!-- 실제 이동 링크 -->
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($MemId); ?>"
+            <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($MemId); ?>"
               class="text-decoration-none">
               대시보드
             </a>

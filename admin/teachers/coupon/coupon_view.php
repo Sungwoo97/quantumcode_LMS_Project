@@ -1,6 +1,6 @@
 <?php
 $title = '쿠폰 상세';
-// $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
+// $coupon_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 
 $id = isset($_SESSION['TUID']) ? $_SESSION['TUID'] : null;
@@ -58,7 +58,7 @@ if($block_end > $total_page ) $block_end = $total_page;
 
 <!-- 임시로 넣은 css 링크(집에서 가져온거랑 달리 연결이 안됨) -->
 <head>
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css?v=<?= time(); ?>">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/css/coupon.css?v=<?= time(); ?>">
 </head>
 
 <div class="view container">

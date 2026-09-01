@@ -1,7 +1,7 @@
 <?php
 $title = "결제 실패";
 
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/order_status.php');
@@ -40,7 +40,7 @@ if ($order_id !== '') {
           <p class="normal-font">오류코드: <?= $fail_code ?></p>
         <?php } ?>
         <div class="control m-3">
-          <a href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-primary w-100" role="button">장바구니로 돌아가기</a>
+          <a href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-primary w-100" role="button">장바구니로 돌아가기</a>
         </div>
       </div>
     </div>

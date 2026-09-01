@@ -113,8 +113,8 @@ if (isset($_SESSION['MemEmail'])) {
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
 
   <!-- favicon -->
 
@@ -140,22 +140,22 @@ if (isset($_SESSION['MemEmail'])) {
 
   ?>
   <!-- Favicon 기본 설정 -->
-  <link rel="apple-touch-icon" sizes="57x57" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-16x16.png">
-  <link rel="manifest" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/manifest.json">
+  <link rel="apple-touch-icon" sizes="57x57" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/img/favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
   <!-- 커스텀css... 필요하면 작성하나 비추 -->
@@ -184,8 +184,8 @@ if (isset($libVideo_js)) {
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-      <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
-        <img src="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
+      <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index.php">
+        <img src="//<?= $_SERVER['HTTP_HOST']; ?>/qc/img/main_logo1.png" alt="Logo">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -194,27 +194,27 @@ if (isset($libVideo_js)) {
         <div class="d-flex gap-3 align-items-center">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown ms-3">
-              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php" id="lectureDropdown" role="button" aria-expanded="false">
+              <a class="nav-link" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php" id="lectureDropdown" role="button" aria-expanded="false">
                 강의
               </a>
               <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0001">프론트엔드</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0002">백엔드</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0003">게임</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0001">프론트엔드</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0002">백엔드</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_list.php?cate=b0003">게임</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">커뮤니티</a>
+              <a class="nav-link" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">커뮤니티</a>
               <ul class="dropdown-menu" aria-labelledby="communityDropdown">
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">공지사항</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php">QnA</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php">자유게시판</a></li>
-                <li><a class="dropdown-item" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/notice.php">공지사항</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/faq.php">FAQ</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/qna.php">QnA</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/board.php">자유게시판</a></li>
+                <li><a class="dropdown-item" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/community/study.php">스터디 모집</a></li>
               </ul> <!-- <= href 알아서 수정바람 -->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/event/event.php">이벤트</a>
+              <a class="nav-link" href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/event/event.php">이벤트</a>
             </li>
           </ul>
           <form class="d-flex search-form">
@@ -246,12 +246,12 @@ if (isset($libVideo_js)) {
 
               <!-- 사용자 이름 표시 -->
               <a id="userLink" 
-                href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" 
+                href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/users/users_view.php?MemId=<?php echo htmlspecialchars($_SESSION['MemId']); ?>" 
                 class="text-primary me-3">
                 <?php echo htmlspecialchars($_SESSION['MUNAME']); ?>님
               </a>
               <!-- 로그아웃 버튼 -->
-              <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
+              <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logout.php" class="btn btn-secondary">로그아웃</a>
             </div>
 
 
@@ -289,7 +289,7 @@ if (isset($libVideo_js)) {
                     ?>
                   </ul>
                   <div class="modal-footer">
-                    <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-custom" role="button">
+                    <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-custom" role="button">
                       보러가기
                     </a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -337,8 +337,8 @@ if (isset($libVideo_js)) {
 
             <!-- 로그인되지 않은 경우 -->
           <?php else: ?>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
+            <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/logintest2.php" class="btn btn-primary">로그인</a>
+            <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/signup.php" class="btn btn-secondary">회원가입</a>
           <?php endif; ?>
   </nav>
   

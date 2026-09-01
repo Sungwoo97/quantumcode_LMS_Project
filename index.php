@@ -1,6 +1,6 @@
 <?php
 
-$main_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/main.css\" rel=\"stylesheet\">";
+$main_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/main.css\" rel=\"stylesheet\">";
 $slick_css = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css\" integrity=\"sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />";
 $slick_js = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js\" integrity=\"sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>";
 
@@ -468,7 +468,7 @@ while ($notice_row = $notice_result->fetch_object()) {
           foreach ($reviewArr as $review) {
       ?>
             <figure class="d-flex align-items-start">
-              <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc<?= $review->profile_image ?>" alt="회원 프로필 이미지">
+              <img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc<?= $review->profile_image ?>" alt="회원 프로필 이미지">
               <figcaption>
                 <div class="d-flex gap-3">
                   <b><?= $review->username ?></b>

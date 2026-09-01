@@ -1,6 +1,6 @@
 <?php 
 $title = "EVENT";
-$community_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
+$community_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/community.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
@@ -42,26 +42,26 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
         <!-- 전체 -->
         <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
           <ul class="list-unstyled">
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/001.png" alt=""></li>
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/002.png" alt=""></li>
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/003.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/001.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/002.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/003.png" alt=""></li>
           </ul>
         </div>
 
         <!-- 추천 이벤트 -->
         <div class="tab-pane fade" id="recommended" role="tabpanel" aria-labelledby="recommended-tab">
           <ul class="list-unstyled">
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/004.png" alt=""></li>
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/005.png" alt=""></li>
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/006.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/004.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/005.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/006.png" alt=""></li>
           </ul>
         </div>
 
         <!-- 종료 임박 -->
         <div class="tab-pane fade" id="imminent" role="tabpanel" aria-labelledby="imminent-tab">
           <ul class="list-unstyled">
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/007.png" alt=""></li>
-            <li><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/008.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/007.png" alt=""></li>
+            <li><img src="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/img/event/008.png" alt=""></li>
           </ul>
         </div>
 

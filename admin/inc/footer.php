@@ -15,7 +15,7 @@
       dashboardButton.classList.remove("collapsed");
 
         setTimeout(() => {
-            window.location.href = "http://<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/index.php";
+            window.location.href = "//<?= $_SERVER['HTTP_HOST']; ?>/qc/admin/index.php";
         }, 500);
         });
     });

@@ -1,6 +1,6 @@
 <?php
 $title = '게시판 글등록';
-$board_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
+$board_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 //관리자가 아닐시 로그인창으로 보내기

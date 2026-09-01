@@ -1,6 +1,6 @@
 <?php
 $title = "강사 목록";
-$teacherOverView_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/teacherOverView.css\" rel=\"stylesheet\">";
+$teacherOverView_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/teacherOverView.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
 if (!isset($_SESSION['AUID'])) {

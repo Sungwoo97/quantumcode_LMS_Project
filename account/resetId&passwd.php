@@ -35,7 +35,7 @@
     <div class="container">
         <div class="reset-container text-center">
             <!-- Logo -->
-            <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
+            <a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/index2.php">
              <img src="../img/main_logo1.png" alt="Logo" class="mb-4">
             </a>
 
@@ -57,7 +57,7 @@
 
             <!-- Footer -->
             <p class="mt-5" style="font-size: 12px;">혹시 이메일이 기억나지 않거나 재설정 링크를 받지 못하셨나요?</p>
-            <p class="mt-1" style="font-size: 12px;"><a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/service.php" 
+            <p class="mt-1" style="font-size: 12px;"><a href="//<?php echo $_SERVER['HTTP_HOST']; ?>/qc/account/service.php" 
             class="text-decoration-none">고객 지원에 문의하기</a></p>
         </div>
     </div>

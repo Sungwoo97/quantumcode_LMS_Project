@@ -1,7 +1,7 @@
 <?php
 $title = "강의 목록";
 
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
@@ -221,8 +221,8 @@ while ($tag_data = $tag_result->fetch_object()) {
           </div>
         </div>
         <ul>
-          <li class="d-flex align-items-center gap-2"> <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 </li>
-          <li class="like d-flex align-items-center"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" width="10" height="10" alt="">500+</li>
+          <li class="d-flex align-items-center gap-2"> <img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/review.svg" alt=""> 5점 </li>
+          <li class="like d-flex align-items-center"><img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/Heart.svg" width="10" height="10" alt="">500+</li>
           <li class="tag"><?= !empty($item->lecture_tag) ? "<span> {$item->lecture_tag}</span>" : '' ?> </li>
         </ul>
       </section>
@@ -235,7 +235,7 @@ while ($tag_data = $tag_result->fetch_object()) {
       <?php
       if ($block_num > 1) {
         $prev = $block_start - $block_ct;
-        echo "<li class=\"page-item\"><a class=\"page-link\" href=\"lecture_list.php?page={$prev}\"><img src=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\"></a></li>";
+        echo "<li class=\"page-item\"><a class=\"page-link\" href=\"lecture_list.php?page={$prev}\"><img src=\"//{$_SERVER['HTTP_HOST']}/qc/admin/img/icon-img/CaretLeft.svg\" alt=\"페이지네이션 prev\"></a></li>";
       }
       ?>
       <?php
@@ -249,7 +249,7 @@ while ($tag_data = $tag_result->fetch_object()) {
       $next = $block_end + 1;
       if ($total_block >  $block_num) {
       ?>
-        <li class="page-item"><a class="page-link" href="lecture_list.php?page=<?= $next; ?>"><img src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next"></a></li>
+        <li class="page-item"><a class="page-link" href="lecture_list.php?page=<?= $next; ?>"><img src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/img/icon-img/CaretRight.svg" alt="페이지네이션 next"></a></li>
       <?php
       }
       ?>

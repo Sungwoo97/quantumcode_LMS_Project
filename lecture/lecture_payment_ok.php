@@ -1,7 +1,7 @@
 <?php
 $title = "결제 완료";
 
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/toss_config.php');
@@ -128,12 +128,12 @@ if ($payment_key === '' || $order_id === '' || $amount <= 0) {
             <dd><?= number_format($amount) ?> 원</dd>
           </dl>
           <div class="control m-3">
-            <a href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/users/mylectures.php" class="btn btn-primary w-100" role="button">내 강의실로 이동</a>
+            <a href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/users/mylectures.php" class="btn btn-primary w-100" role="button">내 강의실로 이동</a>
           </div>
         <?php } else { ?>
           <p class="normal-font mt-3"><?= $result_message ?></p>
           <div class="control m-3">
-            <a href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-secondary w-100" role="button">장바구니로 돌아가기</a>
+            <a href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-secondary w-100" role="button">장바구니로 돌아가기</a>
           </div>
         <?php } ?>
       </div>

@@ -1,6 +1,6 @@
 <?php
 $title = '강의 수정';
-$lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
+$lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
@@ -246,7 +246,7 @@ while ($video_data = $video_result->fetch_object()) {
     </div>
   </Form>
 </div>
-<script src="http://<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
+<script src="//<?= $_SERVER['HTTP_HOST'] ?>/qc/admin/js/common.js"></script>
 <script>
   function addCover(file, cover) {
     let coverImage = file;

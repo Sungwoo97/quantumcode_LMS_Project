@@ -54,8 +54,8 @@ if (empty($coupons)) {
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
-  <link rel="stylesheet" href="http://<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/common.css">
+  <link rel="stylesheet" href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/css/core-style.css">
 
   <style>
     /* 쿠폰 이미지 크기 조정 */
