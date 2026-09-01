@@ -16,7 +16,7 @@ if (!isset($id)) {
 
 
 
-$lid = $_POST['lid'];
+$lid = (int)($_POST['lid'] ?? 0);
 
 $lecture_title = $_POST['title'] ?? '';
 $lecture_platforms = $_POST['platforms'] ?? '';
@@ -113,7 +113,7 @@ if ($result) { //상품이 products테이블에 등록되면
   //추가 이미지가 변동되면
   if ($lecture_videoId) {
     //테이블 product_image_table에서 imgid의 값이 11,12인 데이터 행에서 pid 값을 $pid로 업데이트
-    $update_sql = "UPDATE lecture_video SET lid=$lid WHERE lvid IN ($lecture_videoId)";
+    $update_sql = "UPDATE lecture_video SET lid=$lid WHERE lvid IN (" . implode(',', array_map('intval', explode(',', $lecture_videoId))) . ")";
     $update_result = $mysqli->query($update_sql);
     foreach ($lecture_videoIds as $lvid) {
       $video_title = $video_titles[$lvid];

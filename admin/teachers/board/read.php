@@ -20,8 +20,8 @@ if (isset($_SESSION['AUID'])) {
   $user_id = $_SESSION['TUID'];
 }
 
-$category = isset($_GET['category']) ? $_GET['category'] : 'all';
-$pid = isset($_GET['pid']) ? $_GET['pid'] : null; 
+$category = isset($_GET['category']) ? $mysqli->real_escape_string($_GET['category']) : 'all';
+$pid = isset($_GET['pid']) ? (int) $_GET['pid'] : 0; 
 
 
 

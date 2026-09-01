@@ -3,7 +3,7 @@ $title = '쿠폰 수정';
 $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$cid = $_GET['cid'];
+$cid = (int)($_GET['cid'] ?? 0);
 $sql = "SELECT * FROM coupons WHERE cid = $cid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();

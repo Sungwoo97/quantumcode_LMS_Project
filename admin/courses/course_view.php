@@ -18,7 +18,7 @@ if (!isset($id)) {
 
 $tuition = '';
 $member_data = [];
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 $course_sql = "SELECT * FROM courses_management WHERE lid = $lid";
 $course_result = $mysqli->query($course_sql);
 while ($course_row = $course_result->fetch_object()) {

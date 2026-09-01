@@ -3,7 +3,7 @@ session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 
-$pid = $_POST['pid'];
+$pid = (int)($_POST['pid'] ?? 0);
 $content = $_POST['content'];
 $category=$_POST['category'];
 

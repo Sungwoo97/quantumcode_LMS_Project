@@ -13,7 +13,7 @@ if (!isset($id)) {
   ";
 }
 
-$cid = $_GET['cid'];
+$cid = (int)($_GET['cid'] ?? 0);
 $sql = "SELECT * FROM coupons WHERE cid = $cid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();

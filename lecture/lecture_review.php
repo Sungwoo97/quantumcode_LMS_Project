@@ -4,7 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
 
-$lid = $_POST['lid'] ?? '';
+$lid = (int)($_POST['lid'] ?? 0);
 $username = $_POST['username']?? '';
 $comment = $_POST['comment'] ?? '';
 $img = $_POST['img'];

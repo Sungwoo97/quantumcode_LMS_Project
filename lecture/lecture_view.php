@@ -7,7 +7,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $tuition = '';
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 
 $sql = "SELECT l.*, t.name FROM lecture_list l LEFT JOIN teachers t ON l.t_id = t.id WHERE lid = $lid";
 $result = $mysqli->query($sql);

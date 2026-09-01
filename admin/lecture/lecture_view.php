@@ -18,7 +18,7 @@ if (!isset($id)) {
 
 $tuition = '';
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 
 $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $result = $mysqli->query($sql);

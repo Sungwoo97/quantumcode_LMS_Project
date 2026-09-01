@@ -27,7 +27,7 @@ while ($cate_data = $cate_result->fetch_object()) { //조회된 값들 마다 �
   $cate[] = $cate_data; //$cate1배열에 $data할당
 }
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 $lecture_sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 $lecture_result = $mysqli->query($lecture_sql);
 $lecture_data = $lecture_result->fetch_object();

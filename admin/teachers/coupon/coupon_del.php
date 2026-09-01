@@ -11,7 +11,7 @@ if(!isset($_SESSION['AUID'])){
     </script>
   ";
 }
-$cid = $_GET['cid'];
+$cid = (int)($_GET['cid'] ?? 0);
 if (!isset($cid)) {
   echo "<script>alert('쿠폰정보가 없습니다.'); 
   location.href = 'coupon_list.php';</script>";

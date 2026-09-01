@@ -11,7 +11,7 @@ if (!isset($id)) {
     </script>
   ";
 }
-$lvid = $_POST['lvid'];
+$lvid = (int)($_POST['lvid'] ?? 0);
 $sql = "SELECT * FROM lecture_video WHERE lvid=$lvid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();

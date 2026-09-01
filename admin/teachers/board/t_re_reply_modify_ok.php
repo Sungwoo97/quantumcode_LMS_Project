@@ -5,7 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php'
 $content = $_POST['content'];
 $b_pid = $_POST['b_pid']; //댓글 고유번호
 $r_pid = $_POST['r_pid']; // 댓글고유번호와 같은 대댓글 번호
-$pid = $_POST['pid']; // 대댓글 고유번호
+$pid = (int)($_POST['pid'] ?? 0); // 대댓글 고유번호
 $category = $_POST['category'];
 $board_pid = $_POST['board_pid'];
 

@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php');
 
-$lcid = $_POST['lcid'];
+$lcid = (int)($_POST['lcid'] ?? 0);
 $name = $_POST['name'];
 
 $update_sql = "UPDATE lecture_category SET name = '$name' WHERE lcid = $lcid";

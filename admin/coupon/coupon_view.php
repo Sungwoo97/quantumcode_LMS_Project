@@ -3,7 +3,7 @@ $title = '쿠폰 상세';
 // $coupon_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/admin/css/coupon.css\" rel=\"stylesheet\" >";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
-$cid = $_GET['cid'];
+$cid = (int)($_GET['cid'] ?? 0);
 if (!isset($cid)) {
   echo "<script>alert('쿠폰 정보가 없습니다.'); location.href = '../coupon/coupon_list.php';</script>";
 }

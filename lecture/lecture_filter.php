@@ -2,12 +2,17 @@
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
-$status = $_POST['status'] ?? '';
-$tag = $_POST['tag'] ?? '';
-$plat = $_POST['plat'] ?? '';
-$dev = $_POST['dev'] ?? '';
-$tech = $_POST['tech'] ?? '';
+// 필터 값은 쿼리에 직접 들어가므로 숫자는 (int), 문자열은 이스케이프한다
+$status = (int) ($_POST['status'] ?? 0);
+$tag = $mysqli->real_escape_string($_POST['tag'] ?? '');
+$plat = $mysqli->real_escape_string($_POST['plat'] ?? '');
+$dev = $mysqli->real_escape_string($_POST['dev'] ?? '');
+$tech = (int) ($_POST['tech'] ?? 0);
+// option 은 컬럼명으로 쓰이므로 이스케이프가 안 통한다. 허용된 컬럼만 받는다
 $option = $_POST['option'] ?? '';
+if (!in_array($option, ['ispopular', 'isrecom', 'ispremium', 'isfree'], true)) {
+  $option = '';
+}
 $page = intval($_POST['page'] ?? 1); // 현재 페이지 (기본값 1)
 
 $filter = '';

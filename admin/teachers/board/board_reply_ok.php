@@ -12,7 +12,7 @@ if (!isset($id)) {
   ";
 }
 
-$pid = $_POST['pid'];
+$pid = (int)($_POST['pid'] ?? 0);
 $user_id = $_POST['user_id'] ?? '';
 $content = $_POST['content'];
 $category=$_POST['category'];

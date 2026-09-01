@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 
-$pid = $_GET['pid'];  // 댓글 ID
+$pid = (int)($_GET['pid'] ?? 0);  // 댓글 ID
 $b_pid = $_GET['b_pid'];  // 게시물 ID (댓글이 속한 게시물의 PID)
 $category = $_GET['category'];
 

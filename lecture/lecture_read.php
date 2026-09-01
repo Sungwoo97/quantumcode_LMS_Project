@@ -6,7 +6,7 @@ $libVideo_css = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/aj
 $libVideo_js = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/video.js/8.21.1/video.min.js\" integrity=\"sha512-4ojVomDWDnx2FZyOK/eVZCTut+02zggocT1Cj8S7Y/E31ozUWlU0vZ5+rzVyy+hKZCG6Gt9RJ9elOMS70LBRtQ==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 $vidArr = [];
 $vidIndex = [];
 $vidIdx = [];

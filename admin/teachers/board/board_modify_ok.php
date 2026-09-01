@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php');
 $category = $_POST['category'];
-$pid = $_POST['pid'];
+$pid = (int)($_POST['pid'] ?? 0);
 $title1 = $_POST['title'];  // 제목
 $content = $_POST['content'];  // 내용
 $img = $_POST['old_img'];  // 기존 이미지값 (새 이미지가 없으면 기존값 사용)

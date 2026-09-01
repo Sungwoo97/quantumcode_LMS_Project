@@ -9,7 +9,7 @@ if (isset($_SESSION['MemEmail'])) {
   $memName = $_SESSION['MUNAME'];
 }
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 // $userid = 5;
 
 $sql = "SELECT * FROM lecture_list WHERE lid = $lid";

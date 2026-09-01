@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php');
 
-$lid = $_GET['lid'];
+$lid = (int)($_GET['lid'] ?? 0);
 
 $sql = "SELECT * FROM lecture_list WHERE lid = $lid";
 if (!isset($lid)) {

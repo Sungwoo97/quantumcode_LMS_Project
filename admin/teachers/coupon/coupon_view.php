@@ -13,7 +13,7 @@ if (!isset($id)) {
   ";
 }
 
-$cid = $_GET['cid'];
+$cid = (int)($_GET['cid'] ?? 0);
 if (!isset($cid)) {
   echo "<script>alert('쿠폰 정보가 없습니다.'); location.href = '../coupon/coupon_list.php';</script>";
 }

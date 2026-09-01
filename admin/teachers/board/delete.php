@@ -13,7 +13,7 @@ if (!isset($id)) {
 
 // GET 데이터 수신
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
-$pid=$_GET['pid'];
+$pid=(int)($_GET['pid'] ?? 0);
 
 
 

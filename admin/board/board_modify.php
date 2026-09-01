@@ -13,7 +13,7 @@ if(!isset($_SESSION['AUID'])){
 }
 
 $category = $_GET['category'];
-$pid = $_GET['pid'];
+$pid = (int)($_GET['pid'] ?? 0);
 
 $sql = "SELECT * FROM board WHERE pid = $pid";
 $result = $mysqli->query($sql);

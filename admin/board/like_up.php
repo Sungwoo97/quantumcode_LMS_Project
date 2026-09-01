@@ -20,7 +20,7 @@ if (!isset($user_id)) {
 
 
 
-$pid = $_GET['pid'];
+$pid = (int)($_GET['pid'] ?? 0);
 $category=$_GET['category'];
 
 //같은 유저가 같은 글 추천 중복 방지

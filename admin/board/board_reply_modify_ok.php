@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 $category = $_POST['category'];
-$pid = $_POST['pid'];
+$pid = (int)($_POST['pid'] ?? 0);
 $b_pid = $_POST['b_pid'];
 // echo $pid;
 // echo $b_pid;

@@ -13,8 +13,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 // }
 
 
-$category = isset($_GET['category']) ? $_GET['category'] : 'all';
-$pid = isset($_GET['pid']) ? $_GET['pid'] : null;
+$category = isset($_GET['category']) ? $mysqli->real_escape_string($_GET['category']) : 'all';
+$pid = isset($_GET['pid']) ? (int) $_GET['pid'] : 0;
 
 
 // 추천 쿼리

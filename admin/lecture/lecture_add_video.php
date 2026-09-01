@@ -8,7 +8,7 @@ $id = isset($_SESSION['AUID']) ?  $_SESSION['AUID'] : $_SESSION['TUID'];
 $videoDuration = $_POST['duration'] ?? '';
 
 $fileUploadResult = fileUpload($_FILES['savefile'], 'video');
-// $lid = $_POST['lid'];
+// $lid = (int)($_POST['lid'] ?? 0);
 if ($fileUploadResult) {
   $sql = "INSERT INTO lecture_video (t_id, video_lecture, video_duration) VALUES ('$id' ,'$fileUploadResult', '$videoDuration')";
   $result = $mysqli->query($sql);

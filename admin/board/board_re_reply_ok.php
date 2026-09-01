@@ -4,7 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 
 $r_pid = $_POST['r_pid'];
-$pid = $_POST['pid'];
+$pid = (int)($_POST['pid'] ?? 0);
 $content = $_POST['content'];
 $category=$_POST['category'];
 
