@@ -37,49 +37,62 @@ if ($reg2023_TNumber > 0) {
   $increasePercentage = 0; // 2023년 값이 0일 경우 증가율은 정의할 수 없음
 }
 
-// 매출 관련 SQL
-$manage_sql = "SELECT * FROM sales_management";
-$manage_result = $mysqli->query($manage_sql);
-if ($manage_result) {
-  $manage_data = $manage_result->fetch_object();
-}
+// 매출 관련. 전에는 sales_management / sales_monthly 라는 고정 시드 표를 뿌려서
+// 매출관리 화면(2,926,000원)과 대시보드(12,020,000원)가 서로 다르게 나왔다.
+// 실제 결제 항목(paid_price, status=1)으로 통일한다.
+$total_sql = "SELECT SUM(paid_price) AS total FROM lecture_order_item WHERE status = 1";
+$total_result = $mysqli->query($total_sql);
+$total_sales = $total_result ? (int) $total_result->fetch_object()->total : 0;
 
-$month = date("n");
-for ($i = 2; $i <= 3; $i++) {
-  $monthArr[] = date("n", strtotime("-{$i} months", $month));
-}
+// 이번 달과 지난 달 매출. 연도까지 맞춰 봐야 해가 바뀌었을 때 같은 달끼리 섞이지 않는다
+$this_month = date('Y-m');
+$prev_month = date('Y-m', strtotime('-1 month'));
 
-$month_data = [];
+$month_sql = "SELECT DATE_FORMAT(o.createdate, '%Y-%m') AS month,
+  SUM(oi.paid_price) AS sales
+  FROM lecture_order_item oi
+  JOIN lecture_order o ON o.odid = oi.odid
+  WHERE oi.status = 1 AND DATE_FORMAT(o.createdate, '%Y-%m') IN ('$this_month', '$prev_month')
+  GROUP BY DATE_FORMAT(o.createdate, '%Y-%m')";
+$month_result = $mysqli->query($month_sql);
 
-foreach ($monthArr as $month) {
-  $month_sql = "SELECT  sales FROM sales_monthly WHERE month = '{$month}월' ";
-  $month_result = $mysqli->query($month_sql);
+// 매출이 없는 달은 행이 안 나오므로 0 으로 채워둔다
+$month_sales = [$this_month => 0, $prev_month => 0];
+if ($month_result) {
   while ($month_row = $month_result->fetch_object()) {
-    array_push($month_data, $month_row);
+    $month_sales[$month_row->month] = (int) $month_row->sales;
   }
 }
 
-$current_month = $month_data[0]->sales;
-$previous_month = $month_data[1]->sales;
-
+$current_month = $month_sales[$this_month];
+$previous_month = $month_sales[$prev_month];
 $month_diff = $current_month - $previous_month;
-$month_per = ($month_diff / $previous_month) * 100;
 
-$inc_sales = $month_diff > 0  ? "<span class='blue'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-up\"></i></span>" : "<span class='red'>" . number_format($month_diff) . "원 ($month_per%) <i class=\"fa-solid fa-arrow-down\"></i></span>";
+// 지난 달 매출이 0이면 증감률을 낼 수 없다 (전에는 0으로 나눠 경고가 났다)
+$rate_text = $previous_month > 0 ? ' (' . floor($month_diff / $previous_month * 100) . '%)' : '';
+
+if ($month_diff > 0) {
+  $inc_sales = "<span class='blue'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-up\"></i></span>";
+} else if ($month_diff < 0) {
+  $inc_sales = "<span class='red'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-down\"></i></span>";
+} else {
+  $inc_sales = "<span>지난 달과 같음</span>";
+}
 
 
-//회원 관련. 모든 회원 수
-$member_count_sql = "SELECT COUNT(*) AS total_members FROM members";
+// 회원 관련. 실제 로그인·구매가 쓰는 표는 members(레거시)가 아니라 memberskakao 다.
+// 전에는 members(50명)를 세서 매출/구매자 숫자와 앞뒤가 안 맞았다.
+$member_count_sql = "SELECT COUNT(*) AS total_members FROM memberskakao";
 $member_count = $mysqli->query($member_count_sql);
 $m_count = $member_count->fetch_object();
 
 //2024에 가입한 회원 수
-$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM members WHERE YEAR(reg_date) = 2024";
+$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2024";
 $member_2024_count = $mysqli->query($member_2024_register);
 $member_2024 = $member_2024_count->fetch_object();
 
 //2023에 가입한 회원 수
-$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM members WHERE YEAR(reg_date) = 2023";
+$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2023";
 $member_2023_count = $mysqli->query($member_2023_register);
 $member_2023 = $member_2023_count->fetch_object();
 
@@ -109,29 +122,30 @@ while ($popularCnt_row = $popularCnt_result->fetch_object()) {
   $popular_label[] = $popularCnt_row->title;
 }
 
-//매출 상위 5명 강사 
-$sql = "SELECT * 
-        FROM teachers
-        ORDER BY year_sales DESC
-        LIMIT 5;"; // 상위 5명 제한
+// 매출 상위 5명 강사. 전에는 teachers.year_sales(실제와 무관한 고정 컬럼)를 그대로 썼다.
+// 강사 강의(t_id)에 걸린 실제 결제 항목으로 집계한다.
+$sql = "SELECT t.name, SUM(oi.paid_price) AS sales
+        FROM lecture_order_item oi
+        JOIN lecture_order o ON o.odid = oi.odid
+        JOIN lecture_list l ON l.lid = oi.lid
+        JOIN teachers t ON t.id = l.t_id
+        WHERE oi.status = 1
+        GROUP BY t.id, t.name
+        ORDER BY sales DESC
+        LIMIT 5";
 
 $result = $mysqli->query($sql);
 
 $name = [];
 $sale = [];
 
-// 상위 5명 데이터 추출
 while ($data = $result->fetch_object()) {
   $name[] = $data->name; // x축에 사용할 강사 이름
-  $sale[] = $data->year_sales; // y축에 사용할 매출 데이터
+  $sale[] = (int) $data->sales; // y축에 사용할 매출 데이터
 }
-//print_r($name);Array ( [0] => 권도형 [1] => 이기상 [2] => 장윤정 [3] => 이지영 [4] => 이동진 )
-//print_r($sale)Array ( [0] => 54000000 [1] => 23400000 [2] => 16780000 [3] => 15600000 [4] => 15430000 )
 
 $board_sql = "SELECT * FROM board WHERE category = 'qna' ORDER BY date DESC LIMIT 5";
 $board_result = $mysqli->query($board_sql);
-
-echo $_SERVER['DOCUMENT_ROOT'];
 ?>
 
 
@@ -291,7 +305,7 @@ echo $_SERVER['DOCUMENT_ROOT'];
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
     <h6>월별 매출</h6>
-    <h3 class="text-center mt-3"><?= number_format($manage_data->total_sales) ?>원</h3>
+    <h3 class="text-center mt-3"><?= number_format($total_sales) ?>원</h3>
     <h6 class="text-center text-primary"><?= $inc_sales ?></h6>
     <canvas id="monthlyChart" height="400"></canvas>
   </div>
