@@ -102,9 +102,14 @@
 
     <script>
         // 접속한 호스트를 그대로 따라간다. https 페이지면 wss 로 붙어 혼합콘텐츠를 피한다.
-        // (배포 시 ws 서버를 8080 이 아닌 리버스 프록시 경로로 뺀다면 이 줄만 바꾸면 된다)
+        // 운영에서는 .env 의 WS_PATH(예: /ws)로 리버스 프록시 경로를 지정한다.
+        // 로컬에서는 WS_PATH 가 비어 있어 예전처럼 :8080 으로 직접 붙는다.
         const wsProtocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
-        const conn = new WebSocket(wsProtocol + location.hostname + ':8080');
+        const wsPath = "<?= getenv('WS_PATH') ?: '' ?>";
+        const wsUrl = wsPath
+          ? wsProtocol + location.host + wsPath
+          : wsProtocol + location.hostname + ':8080';
+        const conn = new WebSocket(wsUrl);
         const chatBox = document.getElementById('chat-box');
         const messageInput = document.getElementById('message');
         const sendButton = document.getElementById('send');
