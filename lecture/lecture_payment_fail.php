@@ -4,6 +4,7 @@ $title = "결제 실패";
 $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/order_status.php');
 
 if ($email === '') {
   echo "<script>
@@ -17,10 +18,15 @@ $fail_code = $_GET['code'] ?? '';
 $fail_message = $_GET['message'] ?? '결제가 취소되었습니다.';
 $order_id = $_GET['orderId'] ?? '';
 
-// 결제대기로 남아 있는 주문을 실패로 정리
+// 결제대기로 남아 있는 주문을 실패로 정리. 상태는 항목에 먼저 쓰고 주문으로 파생시킨다
 if ($order_id !== '') {
-  $up_sql = "UPDATE lecture_order SET status = 2 WHERE order_id = '$order_id' AND mid = '$email' AND status = 0";
-  $mysqli->query($up_sql);
+  $wait_sql = "SELECT odid FROM lecture_order WHERE order_id = '$order_id' AND mid = '$email' AND status = 0";
+  $wait_result = $mysqli->query($wait_sql);
+  $wait_row = $wait_result ? $wait_result->fetch_object() : null;
+  if ($wait_row) {
+    $mysqli->query("UPDATE lecture_order_item SET status = 2 WHERE odid = {$wait_row->odid}");
+    sync_order_status($mysqli, $wait_row->odid);
+  }
 }
 ?>
 

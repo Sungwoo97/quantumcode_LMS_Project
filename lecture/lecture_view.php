@@ -60,7 +60,10 @@ switch ($data->difficult) {
     break;
 }
 
-$buy_sql = "SELECT * FROM lecture_order WHERE FIND_IN_SET($lid, lid) AND mid = '$email' AND status = 1";
+// 부분환불이 생기면서 수강 권한은 주문이 아니라 주문 항목으로 판단한다
+$buy_sql = "SELECT o.* FROM lecture_order o
+             JOIN lecture_order_item oi ON oi.odid = o.odid
+             WHERE oi.lid = $lid AND oi.status = 1 AND o.mid = '$email'";
 
 $buy_result = $mysqli->query($buy_sql);
 if ($buy_result && $buy_result->num_rows > 0) {

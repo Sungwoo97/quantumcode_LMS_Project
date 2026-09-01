@@ -46,11 +46,13 @@ $info_sql = "
 FROM 
     lecture_order AS o
 JOIN
-    lecture_list AS l ON FIND_IN_SET(l.lid, o.lid)
+    lecture_order_item AS oi ON oi.odid = o.odid
+JOIN
+    lecture_list AS l ON l.lid = oi.lid
 LEFT JOIN
     lecture_watch AS lw ON lw.lid = l.lid AND lw.mid = o.mid
 WHERE
-    o.mid = ? AND o.status = 1
+    o.mid = ? AND oi.status = 1
 GROUP BY
     o.odid, o.total_price, o.status, o.createdate, l.lid, l.title, l.category, l.cover_image,
     l.t_id, l.tuition, l.dis_tuition, l.sub_title, l.difficult, l.expiration_day;

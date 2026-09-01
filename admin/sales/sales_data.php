@@ -7,13 +7,15 @@ header('Access-Control-Allow-Origin: *');
 
 $data = [];
 
+// 부분환불이 있으면 주문 총액이 과대계상되므로 항목별 결제액으로 합산한다
 $sql = "SELECT 
-  DATE_FORMAT(createdate, '%c월') AS month,
-  SUM(total_price) AS sales
-  FROM lecture_order
-  WHERE status = 1
-  GROUP BY DATE_FORMAT(createdate, '%c월'), MONTH(createdate)
-  ORDER BY MONTH(createdate) DESC LIMIT 6
+  DATE_FORMAT(o.createdate, '%c월') AS month,
+  SUM(oi.paid_price) AS sales
+  FROM lecture_order_item oi
+  JOIN lecture_order o ON o.odid = oi.odid
+  WHERE oi.status = 1
+  GROUP BY DATE_FORMAT(o.createdate, '%c월'), MONTH(o.createdate)
+  ORDER BY MONTH(o.createdate) DESC LIMIT 6
 ";
 
 $result = $mysqli->query($sql);

@@ -30,11 +30,11 @@ $sql = "
     FROM 
         lecture_order AS o
     JOIN
-        lecture_list AS l
-    ON
-        FIND_IN_SET(l.lid, o.lid)
+        lecture_order_item AS oi ON oi.odid = o.odid
+    JOIN
+        lecture_list AS l ON l.lid = oi.lid
     WHERE
-        o.mid = ? AND o.status = 1
+        o.mid = ? AND oi.status = 1
 ";
 
 

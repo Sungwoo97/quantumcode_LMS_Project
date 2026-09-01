@@ -5,6 +5,7 @@ $lecture_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\"
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/toss_config.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/order_status.php');
 
 if ($email === '') {
   echo "<script>
@@ -41,7 +42,8 @@ if ($payment_key === '' || $order_id === '' || $amount <= 0) {
     $result_message = '이미 종료된 주문입니다.';
   } else if ((int) $order_data->total_price !== (int) $amount) {
     // 결제창으로 넘어간 금액이 주문 금액과 다르면 승인하지 않는다
-    $mysqli->query("UPDATE lecture_order SET status = 2 WHERE order_id = '$order_id'");
+    $mysqli->query("UPDATE lecture_order_item SET status = 2 WHERE odid = {$order_data->odid}");
+    sync_order_status($mysqli, $order_data->odid);
     $result_message = '결제 금액이 주문 금액과 일치하지 않습니다.';
   } else {
     // 토스페이먼츠 결제 승인 요청
@@ -72,11 +74,14 @@ if ($payment_key === '' || $order_id === '' || $amount <= 0) {
       $lids = $order_data->lid;
       $ucid = $order_data->cid;
 
-      // 주문 확정
+      // 주문 확정. 결제정보는 주문에 남기고, 상태는 항목에 쓴 뒤 주문으로 파생시킨다
       $up_sql = "UPDATE lecture_order
-                 SET status = 1, payment_key = '$payment_key', pay_method = '$pay_method'
+                 SET payment_key = '$payment_key', pay_method = '$pay_method'
                  WHERE order_id = '$order_id'";
       $mysqli->query($up_sql);
+
+      $mysqli->query("UPDATE lecture_order_item SET status = 1 WHERE odid = {$order_data->odid} AND status = 0");
+      sync_order_status($mysqli, $order_data->odid);
 
       // 쿠폰을 사용완료로 변경, 0은 이미 사용한 쿠폰
       if (!empty($ucid)) {
@@ -95,7 +100,8 @@ if ($payment_key === '' || $order_id === '' || $amount <= 0) {
       $result_title = '결제가 완료되었습니다';
     } else {
       // 승인이 거절되면 주문을 실패로 남긴다
-      $mysqli->query("UPDATE lecture_order SET status = 2 WHERE order_id = '$order_id'");
+      $mysqli->query("UPDATE lecture_order_item SET status = 2 WHERE odid = {$order_data->odid}");
+      sync_order_status($mysqli, $order_data->odid);
       if ($curl_error !== '') {
         $result_message = '결제 서버와 통신하지 못했습니다. (' . $curl_error . ')';
       } else {

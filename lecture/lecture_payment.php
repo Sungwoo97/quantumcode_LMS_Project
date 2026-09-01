@@ -34,8 +34,10 @@ $lids = implode(',', $lidsArray);
 
 $lidArr = [];
 $placeholders = $lids; // lid 값들 문자열로 결합
-// 결제완료(status = 1) 된 주문만 중복으로 본다. 결제대기/실패 건은 다시 살 수 있어야 함
-$sql = "SELECT lid FROM lecture_order WHERE mid = '$mid' AND status = 1 AND lid IN ($placeholders)";
+// 결제완료(status = 1) 된 항목만 중복으로 본다. 결제대기/실패/환불 건은 다시 살 수 있어야 함
+$sql = "SELECT oi.lid FROM lecture_order_item oi
+         JOIN lecture_order o ON o.odid = oi.odid
+         WHERE o.mid = '$mid' AND oi.status = 1 AND oi.lid IN ($placeholders)";
 
 // 쿼리 실행
 $result = $mysqli->query($sql);
@@ -62,10 +64,13 @@ if (!empty($duplicates)) {
 $sum_price = 0;
 $order_name = '강의 결제';
 $lecture_count = 0;
-$price_sql = "SELECT title, tuition, dis_tuition FROM lecture_list WHERE lid IN ($placeholders)";
+$item_prices = []; // 강의별 적용가. 아래에서 주문 항목으로 저장한다
+$price_sql = "SELECT lid, title, tuition, dis_tuition FROM lecture_list WHERE lid IN ($placeholders)";
 $price_result = $mysqli->query($price_sql);
 while ($price_row = $price_result->fetch_object()) {
-  $sum_price += $price_row->dis_tuition > 0 ? $price_row->dis_tuition : $price_row->tuition;
+  $item_price = (int) ($price_row->dis_tuition > 0 ? $price_row->dis_tuition : $price_row->tuition);
+  $item_prices[(int) $price_row->lid] = $item_price;
+  $sum_price += $item_price;
   if ($lecture_count === 0) {
     $order_name = $price_row->title;
   }
@@ -138,6 +143,30 @@ if (!$result) {
   echo json_encode(['status' => 'error', 'message' => $mysqli->error]);
   exit;
 } else {
+  // 주문에 포함된 강의를 항목으로 남긴다. 강의별 매출과 부분환불이 이 표에 기댄다
+  $odid = $mysqli->insert_id;
+
+  // 쿠폰 할인은 주문 단위로 붙으므로 강의 가격 비율대로 안분한다
+  $paid_prices = [];
+  foreach ($item_prices as $item_lid => $item_price) {
+    $paid_prices[$item_lid] = $sum_price > 0 ? (int) floor($item_price * $total_price / $sum_price) : 0;
+  }
+
+  // 절사로 남은 잔액은 가장 비싼 강의에 더해 항목 합계를 결제금액과 정확히 맞춘다
+  $remainder = $total_price - array_sum($paid_prices);
+  if ($remainder !== 0) {
+    $top_lid = array_search(max($item_prices), $item_prices);
+    $paid_prices[$top_lid] += $remainder;
+  }
+
+  $item_stmt = $mysqli->prepare("INSERT INTO lecture_order_item (odid, lid, price, paid_price, status) VALUES (?, ?, ?, ?, 0)");
+  foreach ($item_prices as $item_lid => $item_price) {
+    $item_paid = $paid_prices[$item_lid];
+    $item_stmt->bind_param("iiii", $odid, $item_lid, $item_price, $item_paid);
+    $item_stmt->execute();
+  }
+  $item_stmt->close();
+
   $response = [
     'status' => 'success',
     'message' => '결제창을 엽니다.',

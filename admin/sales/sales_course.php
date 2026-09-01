@@ -12,12 +12,14 @@ $data = [];
 
 $top_data = [];
 
+// 강의별 매출은 주문 총액이 아니라 항목별 결제액(paid_price)으로 낸다.
+// 전에는 주문 총액을 강의마다 통째로 더해 여러 강의 주문이 중복 계산됐다
 $top_sql = "SELECT l.lid
-FROM lecture_order lo
-JOIN lecture_list l ON FIND_IN_SET(l.lid, lo.lid)
-WHERE lo.status = 1
+FROM lecture_order_item oi
+JOIN lecture_list l ON l.lid = oi.lid
+WHERE oi.status = 1
 GROUP BY l.lid
-ORDER BY SUM(lo.total_price) DESC
+ORDER BY SUM(oi.paid_price) DESC
 LIMIT 4";
 $top_result = $mysqli->query($top_sql);
 while ($row = $top_result->fetch_object()){
@@ -26,11 +28,11 @@ while ($row = $top_result->fetch_object()){
 
 $top_lid = implode(',' , $top_data);
 
-$sql = "SELECT l.title, l.lid, DATE_FORMAT(lo.createdate, '%c월') AS month, SUM(lo.total_price) AS total_sales
-    FROM lecture_order lo
-    JOIN lecture_list l
-    ON FIND_IN_SET(l.lid, lo.lid)
-    WHERE lo.status = 1 AND l.lid IN ($top_lid)
+$sql = "SELECT l.title, l.lid, DATE_FORMAT(lo.createdate, '%c월') AS month, SUM(oi.paid_price) AS total_sales
+    FROM lecture_order_item oi
+    JOIN lecture_order lo ON lo.odid = oi.odid
+    JOIN lecture_list l ON l.lid = oi.lid
+    WHERE oi.status = 1 AND l.lid IN ($top_lid)
     GROUP BY l.lid, l.title, MONTH(lo.createdate), DATE_FORMAT(lo.createdate, '%c월')
     ORDER BY MONTH(lo.createdate)
 ";
