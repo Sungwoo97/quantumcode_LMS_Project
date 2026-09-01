@@ -7,9 +7,11 @@ $id = $_POST['id'];
 $password = $_POST['password'];
 $password = hash('sha512',$password);
 
-$sql = "SELECT * FROM teachers WHERE id='$id' and password = '$password'";
-$result = $mysqli->query($sql);
-$data = $result ->fetch_object();
+// 아이디를 쿼리에 직접 넣으면 로그인을 우회할 수 있어 prepared statement 로 바꿈
+$stmt = $mysqli->prepare("SELECT * FROM teachers WHERE id = ? AND password = ?");
+$stmt->bind_param("ss", $id, $password);
+$stmt->execute();
+$data = $stmt->get_result()->fetch_object();
 
 if($data){
   $update_sql = "UPDATE teachers SET last_login = now() WHERE tid = $data->tid";

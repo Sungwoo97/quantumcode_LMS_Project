@@ -9,10 +9,11 @@ $password = hash('sha512', $userpw);
 $lastLoginAt = $_POST['lastLoginAt'] ?? '';
 
 
-$sql = "SELECT * FROM memberskakao WHERE memEmail='$email' and mempassword = '$password'";
-$result = $mysqli->query($sql);
-
-$data = $result->fetch_object();
+// 이메일을 쿼리에 직접 넣으면 로그인을 우회할 수 있어 prepared statement 로 바꿈
+$stmt = $mysqli->prepare("SELECT * FROM memberskakao WHERE memEmail = ? AND memPassword = ?");
+$stmt->bind_param("ss", $email, $password);
+$stmt->execute();
+$data = $stmt->get_result()->fetch_object();
 
 
 //로그인 데이터가 있고, 인증을 통해 토근을 null 로 변경한 경우만.

@@ -1,5 +1,6 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php');
 $category = $_POST['category'];
 $pid = $_POST['pid'];
 $b_pid = $_POST['b_pid'];

@@ -6,9 +6,11 @@ $userid = $_POST['userid'];
 $userpw = $_POST['userpw'];
 $password = hash('sha512',$userpw);
 
-$sql = "SELECT * FROM admins WHERE userid='$userid' and passwd = '$password'";
-$result = $mysqli->query($sql);
-$data = $result ->fetch_object();
+// 아이디를 쿼리에 직접 넣으면 ' OR '1'='1 로 로그인을 우회할 수 있어 prepared statement 로 바꿈
+$stmt = $mysqli->prepare("SELECT * FROM admins WHERE userid = ? AND passwd = ?");
+$stmt->bind_param("ss", $userid, $password);
+$stmt->execute();
+$data = $stmt->get_result()->fetch_object();
 
 if($data){
   $update_sql = "UPDATE admins SET last_login = now() WHERE idx = $data->idx";

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 
 $id = isset($_SESSION['AUID']) ? $_SESSION['AUID']  : $_SESSION['TUID'];
 

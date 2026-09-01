@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/auth_guard.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/common.php');
 
 $name = $_POST['name'] ?? '';

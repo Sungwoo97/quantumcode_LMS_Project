@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/auth_guard.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/common.php');
 
 $coupon_name = $_POST['coupon_name'] ?? '';
