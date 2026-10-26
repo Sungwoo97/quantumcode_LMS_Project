@@ -7,8 +7,11 @@ session_start();
 $mysqli = require __DIR__ . "/database.php";
 
 // 데모 아이디는 결제에 사용할 가상 이메일로 연결한다.
-$email = $_POST['email'] === 'test' ? 'test@example.com' : $_POST['email'];
-$userpw = $_POST['password'];
+$email = is_string($_POST['email'] ?? null) ? $_POST['email'] : '';
+if ($email === 'test') {
+  $email = getenv('DEMO_MODE') === '1' ? 'portfolio01@example.com' : 'test@example.com';
+}
+$userpw = is_string($_POST['password'] ?? null) ? $_POST['password'] : '';
 $password = hash('sha512', $userpw);
 $lastLoginAt = $_POST['lastLoginAt'] ?? '';
 

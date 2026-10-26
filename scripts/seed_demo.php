@@ -7,8 +7,8 @@ if (PHP_SAPI !== 'cli') {
 require_once __DIR__ . '/../inc/demo_seed.php';
 $options = getopt('', ['database:', 'date:']);
 if (getenv('DEMO_MODE') !== '1' || empty($options['database']) || $options['database'] !== getenv('DB_NAME')
-    || empty($options['date']) || strlen(getenv('DEMO_PASSWORD') ?: '') < 8) {
-    fwrite(STDERR, "DEMO_MODE=1, 8자 이상의 DEMO_PASSWORD와 --database=DB_NAME --date=YYYY-MM-DD가 필요합니다.\n");
+    || empty($options['date']) || strlen(getenv('DEMO_PASSWORD') ?: '') < 4) {
+    fwrite(STDERR, "DEMO_MODE=1, 4자 이상의 DEMO_PASSWORD와 --database=DB_NAME --date=YYYY-MM-DD가 필요합니다.\n");
     exit(1);
 }
 $plan = demo_seed_plan($options['date']);

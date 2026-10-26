@@ -5,8 +5,12 @@ require_demo_rate('login');
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 
-$userid = $_POST['userid'];
-$userpw = $_POST['userpw'];
+$userid = is_string($_POST['userid'] ?? null) ? $_POST['userid'] : '';
+// 공개 별칭은 권한이 제한된 체험 계정으로 연결한다.
+if (getenv('DEMO_MODE') === '1' && $userid === 'admin') {
+  $userid = 'portfolio_demo';
+}
+$userpw = is_string($_POST['userpw'] ?? null) ? $_POST['userpw'] : '';
 $password = hash('sha512',$userpw);
 
 // 아이디를 쿼리에 직접 넣으면 ' OR '1'='1 로 로그인을 우회할 수 있어 prepared statement 로 바꿈
