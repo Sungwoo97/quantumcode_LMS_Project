@@ -73,3 +73,13 @@
 .sales .data_table {
   font-size: 1rem;
 }
+
+.sales_chart.sales-lecture-info {
+  height: auto;
+  min-height: 400px;
+}
+
+.sales-lecture-info dd {
+  display: block;
+  overflow-x: auto;
+}

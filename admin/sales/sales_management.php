@@ -63,7 +63,7 @@ $data_sql = "SELECT l.title,
              FROM (SELECT DISTINCT lid, mid, lvid FROM lecture_watch WHERE event_type = 'completed') done
              JOIN lecture_video v ON v.lvid = done.lvid
              GROUP BY done.lid) watch ON watch.lid = l.lid
-  ORDER BY buyer.student_count DESC, l.title ASC";
+  ORDER BY buyer.student_count DESC, l.title ASC, l.lid ASC LIMIT 4";
 $data_result = $mysqli->query($data_sql);
 $html = '';
 while ($data_row = $data_result->fetch_object()) {
@@ -224,7 +224,7 @@ $lecture_counts = $lecture_nums->fetch_object();
       </div>
     </div>
     <div class="col-md-6">
-      <div class="sales_chart">
+      <div class="sales_chart sales-lecture-info">
         <dl>
           <dt>강의 정보</dt>
           <dd>
