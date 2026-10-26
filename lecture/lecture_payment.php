@@ -1,4 +1,10 @@
 <?php
+require_once __DIR__ . '/../inc/payment_boundary.php';
+require_payment_csrf();
+require_once __DIR__ . '/../inc/demo_safety.php';
+require_demo_rate('payment');
+
+
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();

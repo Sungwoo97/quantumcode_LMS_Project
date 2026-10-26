@@ -1,6 +1,7 @@
-<!-- php Mailer를 사용해서 이메일을 보내는 부분 -->
-
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+demo_require_safe_action('mail');
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

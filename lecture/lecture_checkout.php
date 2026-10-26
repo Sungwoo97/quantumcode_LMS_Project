@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../inc/payment_boundary.php';
+
 $title = "결제";
 
 $lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
@@ -196,6 +198,7 @@ $membernum = $user_data ? $user_data->number : '';
           body: data,
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-Token': <?= json_encode(csrf_token()) ?>,
           },
         })
         .then(response => {

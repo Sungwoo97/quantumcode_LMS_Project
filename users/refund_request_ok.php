@@ -1,4 +1,10 @@
 <?php
+require_once __DIR__ . '/../inc/payment_boundary.php';
+require_payment_csrf();
+require_once __DIR__ . '/../inc/demo_safety.php';
+require_demo_rate('payment');
+
+
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
@@ -6,6 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/order_status.php');
+require_once __DIR__ . '/../inc/payment_safety.php';
 
 // 환불을 신청하는 회원은 화면에서 받지 않고 세션에서 가져온다
 $mid = $_SESSION['MemEmail'] ?? '';
@@ -41,7 +48,12 @@ $reason = $mysqli->real_escape_string($reason);
 // 본인 주문인지 확인하면서 환불 가능 여부 판단에 필요한 값을 같이 조회한다.
 // 수강 여부는 주문 전체가 아니라 강의 하나하나로 따진다
 $oiids = implode(',', $oiidArray);
-$item_sql = "SELECT oi.oiid, oi.odid, oi.lid, oi.status, l.title, o.payment_key,
+$lock_result = $mysqli->query('SELECT odid FROM lecture_order_item WHERE oiid=' . (int) $oiidArray[0]);
+$lock_order = $lock_result->fetch_object();
+if ($lock_order) {
+  lock_payment_order($mysqli, (int) $lock_order->odid);
+}
+$item_sql = "SELECT oi.oiid, oi.odid, oi.lid, oi.status, l.title, o.payment_key, o.pay_method, o.order_id,
              DATEDIFF(NOW(), o.createdate) AS days_passed,
              (SELECT COUNT(*) FROM lecture_watch lw WHERE lw.mid = o.mid AND lw.lid = oi.lid) AS watch_count
              FROM lecture_order_item oi
@@ -78,7 +90,7 @@ foreach ($items as $item) {
     echo json_encode(['status' => 'fail', 'message' => "[{$title}] 결제 완료된 강의만 환불할 수 있습니다."]);
     exit;
   }
-  if (empty($item->payment_key)) {
+  if (empty($item->payment_key) && !(getenv('DEMO_MODE') === '1' && is_demo_order($item))) {
     echo json_encode(['status' => 'fail', 'message' => '결제 정보가 없어 환불할 수 없습니다. 관리자에게 문의해주세요.']);
     exit;
   }
@@ -95,14 +107,17 @@ foreach ($items as $item) {
 // 여기서는 요청만 남긴다. 실제 결제 취소는 관리자가 승인할 때 처리
 $up_sql = "UPDATE lecture_order_item SET status = 4, refund_reason = '$reason'
            WHERE oiid IN ($oiids) AND status = 1";
+$mysqli->begin_transaction();
 $up_result = $mysqli->query($up_sql);
 
 if ($up_result && $mysqli->affected_rows > 0) {
   // 관리자 목록이 주문 단위로도 사유를 보여주고 있어 주문에도 같이 남긴다
   $mysqli->query("UPDATE lecture_order SET refund_reason = '$reason' WHERE odid = $odid");
   sync_order_status($mysqli, $odid);
+  $mysqli->commit();
   echo json_encode(['status' => 'success', 'message' => '환불 요청이 접수되었습니다. 관리자 확인 후 처리됩니다.']);
 } else {
+  $mysqli->rollback();
   echo json_encode(['status' => 'error', 'message' => '환불 요청에 실패했습니다.']);
 }
 

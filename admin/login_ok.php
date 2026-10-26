@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+require_demo_rate('login');
+
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/header.php');
 

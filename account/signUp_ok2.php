@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+demo_require_safe_action('account');
+
 
 
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+demo_require_safe_action('account');
+
 try {
   // ![수정필요] 카카오 API 환경설정 파일
   include_once "config.php";

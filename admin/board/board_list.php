@@ -76,7 +76,7 @@ $next = min($total_page, $block_end + 1);
 
 // 종료일이 지난 게시물을 자동으로 삭제
 $event_delete_sql = "DELETE FROM board WHERE category = 'event' AND end_date < NOW()";
-$mysqli->query($event_delete_sql);
+(getenv('DEMO_MODE') === '1' ? true : $mysqli->query($event_delete_sql));
 
 // 이벤트 게시물 목록을 조회
 $event_sql = "SELECT * FROM board WHERE category = 'event'";  // 이벤트 카테고리만 조회

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/payment_boundary.php';
+require_payment_csrf('GET');
+
 $title = "결제 실패";
 
 $lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=\"stylesheet\">";
@@ -18,16 +21,7 @@ $fail_code = $_GET['code'] ?? '';
 $fail_message = $_GET['message'] ?? '결제가 취소되었습니다.';
 $order_id = $_GET['orderId'] ?? '';
 
-// 결제대기로 남아 있는 주문을 실패로 정리. 상태는 항목에 먼저 쓰고 주문으로 파생시킨다
-if ($order_id !== '') {
-  $wait_sql = "SELECT odid FROM lecture_order WHERE order_id = '$order_id' AND mid = '$email' AND status = 0";
-  $wait_result = $mysqli->query($wait_sql);
-  $wait_row = $wait_result ? $wait_result->fetch_object() : null;
-  if ($wait_row) {
-    $mysqli->query("UPDATE lecture_order_item SET status = 2 WHERE odid = {$wait_row->odid}");
-    sync_order_status($mysqli, $wait_row->odid);
-  }
-}
+// 실패 콜백만으로는 PG 승인 여부를 알 수 없으므로 주문 상태를 변경하지 않는다.
 ?>
 
 <div class="container my-5">
@@ -35,9 +29,9 @@ if ($order_id !== '') {
     <div class="col-md-6">
       <div class="payment p-4 text-center">
         <h3 class="font mb-3">결제가 완료되지 않았습니다</h3>
-        <p class="normal-font mt-3"><?= $fail_message ?></p>
+        <p class="normal-font mt-3"><?= htmlspecialchars(is_string($fail_message) ? $fail_message : '', ENT_QUOTES, 'UTF-8') ?></p>
         <?php if ($fail_code !== '') { ?>
-          <p class="normal-font">오류코드: <?= $fail_code ?></p>
+          <p class="normal-font">오류코드: <?= htmlspecialchars(is_string($fail_code) ? $fail_code : '', ENT_QUOTES, 'UTF-8') ?></p>
         <?php } ?>
         <div class="control m-3">
           <a href="//<?= $_SERVER['HTTP_HOST']; ?>/qc/lecture/lecture_order.php" class="btn btn-primary w-100" role="button">장바구니로 돌아가기</a>

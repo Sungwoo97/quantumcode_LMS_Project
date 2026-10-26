@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../../inc/demo_safety.php';
+demo_require_safe_action('management');
+
 $title = '강의 수정';
 $lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/lecture.css\" rel=\"stylesheet\">";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";

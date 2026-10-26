@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+demo_require_safe_action('account');
+
 session_start();
 include_once("../admin/inc/dbcon.php"); // DB 연결
 

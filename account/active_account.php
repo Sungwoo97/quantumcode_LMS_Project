@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+demo_require_safe_action('account');
+
 //토큰을 파라미터로 사용하자
 $token = $_GET["token"];
 

@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../../inc/demo_safety.php';
+
 $title = '글 상세보기';
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
 
@@ -24,7 +26,7 @@ if (!isset($_SESSION['hits'])) {
 
 if (!isset($_SESSION['hits'][$pid])) {
   $hit_sql = "UPDATE board SET hit = hit+1 WHERE pid=$pid";
-  $hit_result = $mysqli->query($hit_sql);
+  $hit_result = (getenv('DEMO_MODE') === '1' ? true : $mysqli->query($hit_sql));
 
   $_SESSION['hits'][$pid] = true;
 };

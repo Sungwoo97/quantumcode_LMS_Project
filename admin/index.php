@@ -1,4 +1,9 @@
 <?php
+require_once __DIR__ . '/../inc/reporting.php';
+$report_period = reporting_period();
+$period_start = $report_period['start'];
+$period_end = $report_period['end'];
+
 $title = '대시보드';
 $admin_index_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/admin_index.css\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
@@ -14,45 +19,44 @@ if (!isset($id)) {
   ";
 }
 
+require_once __DIR__ . '/../inc/reporting.php';
+$report_period = reporting_period();
+$current_year = $report_period['year'];
+$previous_year = $report_period['previous_year'];
 //강사 관련. 모든 강사 수
 $teacher_count_sql = "SELECT COUNT(*) AS total_teachers FROM teachers";
 $teacher_count = $mysqli->query($teacher_count_sql);
 $t_count = $teacher_count->fetch_object();
-//2024에 가입한 강사 수
-$teacher_2024_register = "SELECT COUNT(*) AS total_2024_teachers FROM teachers WHERE YEAR(reg_date) = 2024";
-$teacher_2024_count = $mysqli->query($teacher_2024_register);
-$teacher_2024 = $teacher_2024_count->fetch_object();
-//2023에 가입한 강사 수
-$teacher_2023_register = "SELECT COUNT(*) AS total_2023_teachers FROM teachers WHERE YEAR(reg_date) = 2023";
-$teacher_2023_count = $mysqli->query($teacher_2023_register);
-$teacher_2023 = $teacher_2023_count->fetch_object();
+// 현재 연도에 가입한 강사 수
+$teacher_current_register = "SELECT COUNT(*) AS total_current_teachers FROM teachers WHERE YEAR(reg_date) = $current_year";
+$teacher_current_count = $mysqli->query($teacher_current_register);
+$teacher_current = $teacher_current_count->fetch_object();
+// 이전 연도에 가입한 강사 수
+$teacher_previous_register = "SELECT COUNT(*) AS total_previous_teachers FROM teachers WHERE YEAR(reg_date) = $previous_year";
+$teacher_previous_count = $mysqli->query($teacher_previous_register);
+$teacher_previous = $teacher_previous_count->fetch_object();
 
-$reg2023_TNumber = intval(($teacher_2023->total_2023_teachers)); //9
-$reg2024_TNumber = intval(($teacher_2024->total_2024_teachers)); //13
+$previous_teacher_count = intval(($teacher_previous->total_previous_teachers));
+$current_teacher_count = intval(($teacher_current->total_current_teachers));
 
-if ($reg2023_TNumber > 0) {
-  $increasePercentage = (($reg2024_TNumber - $reg2023_TNumber) / $reg2023_TNumber) * 100;
-  $increasePercentage = round($increasePercentage, 2); // 소수점 두 자리까지 반올림
-} else {
-  $increasePercentage = 0; // 2023년 값이 0일 경우 증가율은 정의할 수 없음
-}
+$increasePercentage = reporting_change($current_teacher_count, $previous_teacher_count);
 
 // 매출 관련. 전에는 sales_management / sales_monthly 라는 고정 시드 표를 뿌려서
 // 매출관리 화면(2,926,000원)과 대시보드(12,020,000원)가 서로 다르게 나왔다.
 // 실제 결제 항목(paid_price, status=1)으로 통일한다.
-$total_sql = "SELECT SUM(paid_price) AS total FROM lecture_order_item WHERE status = 1";
+$total_sql = "SELECT SUM(oi.paid_price) AS total FROM lecture_order_item oi JOIN lecture_order o ON o.odid=oi.odid WHERE oi.status IN (1,4) AND o.createdate >= '$period_start' AND o.createdate < '$period_end'";
 $total_result = $mysqli->query($total_sql);
 $total_sales = $total_result ? (int) $total_result->fetch_object()->total : 0;
 
 // 이번 달과 지난 달 매출. 연도까지 맞춰 봐야 해가 바뀌었을 때 같은 달끼리 섞이지 않는다
-$this_month = date('Y-m');
-$prev_month = date('Y-m', strtotime('-1 month'));
+$this_month = $report_period['month'];
+$prev_month = $report_period['previous_month'];
 
 $month_sql = "SELECT DATE_FORMAT(o.createdate, '%Y-%m') AS month,
   SUM(oi.paid_price) AS sales
   FROM lecture_order_item oi
   JOIN lecture_order o ON o.odid = oi.odid
-  WHERE oi.status = 1 AND DATE_FORMAT(o.createdate, '%Y-%m') IN ('$this_month', '$prev_month')
+  WHERE oi.status IN (1,4) AND DATE_FORMAT(o.createdate, '%Y-%m') IN ('$this_month', '$prev_month')
   GROUP BY DATE_FORMAT(o.createdate, '%Y-%m')";
 $month_result = $mysqli->query($month_sql);
 
@@ -69,14 +73,14 @@ $previous_month = $month_sales[$prev_month];
 $month_diff = $current_month - $previous_month;
 
 // 지난 달 매출이 0이면 증감률을 낼 수 없다 (전에는 0으로 나눠 경고가 났다)
-$rate_text = $previous_month > 0 ? ' (' . floor($month_diff / $previous_month * 100) . '%)' : '';
+$rate_text = ' (' . reporting_change($current_month, $previous_month) . ')';
 
 if ($month_diff > 0) {
   $inc_sales = "<span class='blue'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-up\"></i></span>";
 } else if ($month_diff < 0) {
   $inc_sales = "<span class='red'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-down\"></i></span>";
 } else {
-  $inc_sales = "<span>지난 달과 같음</span>";
+  $inc_sales = "<span>지난 달과 같음{$rate_text}</span>";
 }
 
 
@@ -86,29 +90,25 @@ $member_count_sql = "SELECT COUNT(*) AS total_members FROM memberskakao";
 $member_count = $mysqli->query($member_count_sql);
 $m_count = $member_count->fetch_object();
 
-//2024에 가입한 회원 수
-$member_2024_register = "SELECT COUNT(*) AS total_2024_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2024";
-$member_2024_count = $mysqli->query($member_2024_register);
-$member_2024 = $member_2024_count->fetch_object();
+// 현재 연도에 가입한 회원 수
+$member_current_register = "SELECT COUNT(*) AS total_current_members FROM memberskakao WHERE YEAR(memCreatedAt) = $current_year";
+$member_current_count = $mysqli->query($member_current_register);
+$member_current = $member_current_count->fetch_object();
 
-//2023에 가입한 회원 수
-$member_2023_register = "SELECT COUNT(*) AS total_2023_members FROM memberskakao WHERE YEAR(memCreatedAt) = 2023";
-$member_2023_count = $mysqli->query($member_2023_register);
-$member_2023 = $member_2023_count->fetch_object();
+// 이전 연도에 가입한 회원 수
+$member_previous_register = "SELECT COUNT(*) AS total_previous_members FROM memberskakao WHERE YEAR(memCreatedAt) = $previous_year";
+$member_previous_count = $mysqli->query($member_previous_register);
+$member_previous = $member_previous_count->fetch_object();
 
 //회원수 증가율
-$reg2023_M_Number = intval(($member_2023->total_2023_members));
-$reg2024_M_Number = intval(($member_2024->total_2024_members));
+$previous_member_count = intval(($member_previous->total_previous_members));
+$current_member_count = intval(($member_current->total_current_members));
 
-if ($reg2023_M_Number > 0) {
-  $M_increasePercentage = (($reg2024_M_Number - $reg2023_M_Number) / $reg2023_M_Number) * 100;
-  $M_increasePercentage = round($M_increasePercentage, 2);
-} else {
-  $M_increasePercentage = 0;
-}
+$M_increasePercentage = reporting_change($current_member_count, $previous_member_count);
 
 //인기 강의 출력
-$popularCnt_data = [];
+$popular_data = [];
+$popular_label = [];
 $popularCnt_sql = "SELECT l.title AS title, l.lid AS lid, COUNT(DISTINCT lo.mid) AS member_count
 FROM lecture_order_item oi
 JOIN lecture_order lo ON lo.odid = oi.odid
@@ -129,7 +129,7 @@ $sql = "SELECT t.name, SUM(oi.paid_price) AS sales
         JOIN lecture_order o ON o.odid = oi.odid
         JOIN lecture_list l ON l.lid = oi.lid
         JOIN teachers t ON t.id = l.t_id
-        WHERE oi.status = 1
+        WHERE oi.status IN (1,4) AND o.createdate >= '$period_start' AND o.createdate < '$period_end'
         GROUP BY t.id, t.name
         ORDER BY sales DESC
         LIMIT 5";
@@ -157,26 +157,26 @@ $board_result = $mysqli->query($board_sql);
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
           <h6 class="mb-0 fw-bold text-primary">강사</h6>
-          <small class="ms-2">2024년 11월 기준 전년 대비 증감량</small>
+          <small class="ms-2"><?= $current_year ?>년 / <?= $previous_year ?>년 가입자 비교</small>
         </div>
         <div class="card-body">
           <div class="row text-center">
             <div class="col-4">
               <h6 class="text-primary">전체 강사</h6>
               <p class="mb-0">
-                <span class="text-primary d-block">↑ <?= $increasePercentage ?>%</span>
+                <span class="text-primary d-block"><?= $increasePercentage ?></span>
                 <span class="text-dark d-block">총 <?= $t_count->total_teachers ?> 명</span>
               </p>
             </div>
             <div class="col-4">
               <h6 class="text-primary">신규 강사</h6>
               <?php
-              if ($teacher_2024->total_2024_teachers) {
+              if ($teacher_current->total_current_teachers) {
 
               ?>
                 <p class="mb-0">
                   <span class="text-primary">↑</span>
-                  <span class="text-dark"><?= $teacher_2024->total_2024_teachers ?>명</span>
+                  <span class="text-dark"><?= $teacher_current->total_current_teachers ?>명</span>
                 </p>
               <?php
               }
@@ -197,26 +197,26 @@ $board_result = $mysqli->query($board_sql);
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
           <h6 class="mb-0 fw-bold text-primary">회원</h6>
-          <small class="ms-2">2024년 11월 기준 10월 달 대비 증감량</small>
+          <small class="ms-2"><?= $current_year ?>년 / <?= $previous_year ?>년 가입자 비교</small>
         </div>
         <div class="card-body">
           <div class="row text-center">
             <div class="col-4">
               <h6 class="sub_tt text-primary">전체 회원</h6>
               <p class="mb-0">
-                <span class="text-primary d-block">↑ <?= $M_increasePercentage ?>%</span>
+                <span class="text-primary d-block"><?= $M_increasePercentage ?></span>
                 <span class="text-dark d-block">총 <?= $m_count->total_members ?> 명</span>
               </p>
             </div>
             <div class="col-4">
               <h6 class="text-primary">신규 회원</h6>
               <?php
-              if ($member_2024->total_2024_members) {
+              if ($member_current->total_current_members) {
 
               ?>
                 <p class="mb-0">
                   <span class="text-primary">↑</span>
-                  <span class="text-dark"><?= $member_2024->total_2024_members ?>명</span>
+                  <span class="text-dark"><?= $member_current->total_current_members ?>명</span>
                 </p>
               <?php
               }
@@ -235,7 +235,7 @@ $board_result = $mysqli->query($board_sql);
     <div class="col-md-4 amount_sales">
       <div class="card border-0 shadow-sm p-3">
         <div class="card-header bg-white border-0 pb-2 d-flex">
-          <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
+          <h6 class="mb-0 fw-bold  text-primary">최근 12개월 강사 매출 순위</h6>
         </div>
         <div class="card-body">
           <canvas id="top5TeachersChart"></canvas>
@@ -248,7 +248,7 @@ $board_result = $mysqli->query($board_sql);
 <!-- <div class="col-md-4 amount_sales">
   <div class="card border-0 shadow-sm p-3">
     <div class="card-header bg-white border-0 pb-2 d-flex">
-      <h6 class="mb-0 fw-bold  text-primary">강사 매출 누적 순위</h6>
+      <h6 class="mb-0 fw-bold  text-primary">최근 12개월 강사 매출 순위</h6>
     </div>
     <div class="card-body">
       <canvas id="salesChart" height="150"></canvas>
@@ -304,7 +304,7 @@ $board_result = $mysqli->query($board_sql);
 
   <!-- Revenue Section -->
   <div class="Revenue col-md-4 card p-3 border-0 bg-light">
-    <h6>월별 매출</h6>
+    <h6>최근 12개월 매출</h6>
     <h3 class="text-center mt-3"><?= number_format($total_sales) ?>원</h3>
     <h6 class="text-center text-primary"><?= $inc_sales ?></h6>
     <canvas id="monthlyChart" height="400"></canvas>
@@ -321,15 +321,7 @@ $board_result = $mysqli->query($board_sql);
     .then(data => {
       const months = data.map(item => item.month);
       const sales = data.map(item => item.sales);
-      months.sort((a, b) => {
-        const monthA = parseInt(a, 10); // '1월'에서 '1'로 변환
-        const monthB = parseInt(b, 10); // '2월'에서 '2'로 변환
-        return monthA - monthB; // 숫자 기준으로 정렬
-      });
-      const salesSorted = months.map(month => {
-        const monthData = data.find(item => item.month === month);
-        return monthData ? monthData.sales : 'null'; // 해당 월의 매출 값
-      });
+      const salesSorted = sales;
       const monthly_data = document.getElementById('monthlyChart');
       new Chart(monthly_data, {
         type: 'bar', // 막대 차트

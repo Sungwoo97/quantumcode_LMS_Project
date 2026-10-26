@@ -78,6 +78,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
     <div class="login_container d-flex flex-column justify-content-center align-items-center">
       <h1 class="main_tt">Admin Account</h1>
+<?php include __DIR__ . '/../inc/demo_login_notice.php'; ?>
       <div class="row login_box">
         <form action="login_ok.php" method="POST">
           <div class="form-floating">

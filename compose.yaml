@@ -1,0 +1,40 @@
+services:
+  web:
+    build: ./docker/php
+    env_file: ${QC_ENV_FILE:-../.env}
+    ports:
+      - "127.0.0.1:${QC_HTTP_PORT:-8000}:80"
+    volumes:
+      - .:/var/www/html/qc
+    depends_on:
+      db:
+        condition: service_healthy
+  ws:
+    build: ./docker/php
+    env_file: ${QC_ENV_FILE:-../.env}
+    working_dir: /var/www/html/qc/chat&message
+    command: ["php", "chatSystem.php"]
+    volumes:
+      - .:/var/www/html/qc
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?DB_ROOT_PASSWORD is required}
+      MYSQL_DATABASE: ${DB_NAME:-quantumcode}
+      MYSQL_USER: ${DB_USER:-quantumcode}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+volumes:
+  db_data:

@@ -1,4 +1,9 @@
 <?php
+require_once __DIR__ . '/../../../inc/reporting.php';
+$report_period = reporting_period();
+$period_start = $report_period['start'];
+$period_end = $report_period['end'];
+
 $title = '매출 관리';
 $sales_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
@@ -40,11 +45,12 @@ $avg_sql = "SELECT AVG(r.review) AS review
 $avg_result = $mysqli->query($avg_sql);
 $avg_data = $avg_result->fetch_object();
 
-// 본인 강의 총 매출
+// 본인 강의 최근 12개월 매출
 $total_sql = "SELECT SUM(oi.paid_price) AS total
   FROM lecture_order_item oi
+  JOIN lecture_order o ON o.odid=oi.odid
   JOIN lecture_list l ON l.lid = oi.lid
-  WHERE oi.status = 1 AND l.t_id = '$teacher_id'";
+  WHERE oi.status IN (1,4) AND o.createdate >= '$period_start' AND o.createdate < '$period_end' AND l.t_id = '$teacher_id'";
 $total_result = $mysqli->query($total_sql);
 $total = $total_result ? (int) $total_result->fetch_object()->total : 0;
 
@@ -100,15 +106,17 @@ while ($data_row = $data_result->fetch_object()) {
 }
 
 // 이번 달과 지난 달 매출. 연도까지 맞춰 봐야 해가 바뀌었을 때 같은 달끼리 섞이지 않는다
-$this_month = date('Y-m');
-$prev_month = date('Y-m', strtotime('-1 month'));
+require_once __DIR__ . '/../../../inc/reporting.php';
+$report_period = reporting_period();
+$this_month = $report_period['month'];
+$prev_month = $report_period['previous_month'];
 
 $month_sql = "SELECT DATE_FORMAT(o.createdate, '%Y-%m') AS month,
   SUM(oi.paid_price) AS sales
   FROM lecture_order_item oi
   JOIN lecture_order o ON o.odid = oi.odid
   JOIN lecture_list l ON l.lid = oi.lid
-  WHERE oi.status = 1 AND l.t_id = '$teacher_id'
+  WHERE oi.status IN (1,4) AND l.t_id = '$teacher_id'
     AND DATE_FORMAT(o.createdate, '%Y-%m') IN ('$this_month', '$prev_month')
   GROUP BY DATE_FORMAT(o.createdate, '%Y-%m')";
 $month_result = $mysqli->query($month_sql);
@@ -127,14 +135,14 @@ $previous_month = $month_sales[$prev_month];
 $month_diff = $current_month - $previous_month;
 
 // 지난 달 매출이 0이면 증감률을 낼 수 없다 (전에는 0으로 나눠 경고가 났다)
-$rate_text = $previous_month > 0 ? ' (' . floor($month_diff / $previous_month * 100) . '%)' : '';
+$rate_text = ' (' . reporting_change($current_month, $previous_month) . ')';
 
 if ($month_diff > 0) {
   $inc_sales = "<span class='blue'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-up\"></i></span>";
 } else if ($month_diff < 0) {
   $inc_sales = "<span class='red'>" . number_format($month_diff) . "원{$rate_text} <i class=\"fa-solid fa-arrow-down\"></i></span>";
 } else {
-  $inc_sales = "<span>지난 달과 같음</span>";
+  $inc_sales = "<span>지난 달과 같음{$rate_text}</span>";
 }
 ?>
 
@@ -177,12 +185,12 @@ if ($month_diff > 0) {
     </div>
   </div>
 
-  <!-- 총 매출 섹션 -->
+  <!-- 최근 12개월 매출 섹션 -->
   <div class="row g-4">
     <div class="col-12">
       <div class="sales_box w-100">
         <dl>
-          <dt>총 매출</dt>
+          <dt>최근 12개월 매출</dt>
           <dd>
             <div><?= number_format($total) ?>원 </div>
           </dd>

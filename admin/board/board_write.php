@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../inc/demo_safety.php';
+demo_require_safe_action('management');
+
 $title = '게시판 글등록';
 $board_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/board.css\" rel=\"stylesheet\">";
 

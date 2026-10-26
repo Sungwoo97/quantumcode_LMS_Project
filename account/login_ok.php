@@ -1,9 +1,13 @@
 <?php
+require_once __DIR__ . '/../inc/demo_safety.php';
+require_demo_rate('login');
+
 session_start();
 // include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 $mysqli = require __DIR__ . "/database.php";
 
-$email = $_POST['email'];
+// 데모 아이디는 결제에 사용할 가상 이메일로 연결한다.
+$email = $_POST['email'] === 'test' ? 'test@example.com' : $_POST['email'];
 $userpw = $_POST['password'];
 $password = hash('sha512', $userpw);
 $lastLoginAt = $_POST['lastLoginAt'] ?? '';

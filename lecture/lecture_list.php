@@ -6,19 +6,21 @@ $lecture_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/css/lecture.css\" rel=
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/inc/header.php');
 
 $search = '';
-$search_keyword = $_GET['search_keyword'] ?? '';
-$cate = $_GET['cate'] ?? '';
+$search_keyword = is_string($_GET['search_keyword'] ?? null) ? $_GET['search_keyword'] : '';
+$cate = is_string($_GET['cate'] ?? null) ? $_GET['cate'] : '';
+$search_value = $mysqli->real_escape_string($search_keyword);
+$category_value = $mysqli->real_escape_string($cate);
 $keyword = '';
 
 if ($cate) {
-  $search .= " AND category LIKE '%$cate%' ";
-  $cate_sql = "SELECT * FROM lecture_category WHERE code = '$cate'";
+  $search .= " AND category LIKE '%$category_value%' ";
+  $cate_sql = "SELECT * FROM lecture_category WHERE code = '$category_value'";
   $cate_result = $mysqli->query($cate_sql);
-  $keyword = $cate_result->fetch_object()->name;
+  $keyword = $cate_result->fetch_object()->name ?? $cate;
 }
 
 if ($search_keyword) {
-  $search .= " AND (title LIKE '%$search_keyword%' OR description LIKE '%$search_keyword%')";
+  $search .= " AND (title LIKE '%$search_value%' OR description LIKE '%$search_value%')";
   $keyword = $search_keyword;
 }
 //데이터의 개수 조회
@@ -28,13 +30,10 @@ $page_data = $page_result->fetch_assoc();
 $row_num = $page_data['cnt'];
 
 //페이지네이션 
-if (isset($_GET['page'])) {
-  $page = $_GET['page'];
-} else {
-  $page = 1;
-}
+$page = filter_var($_GET['page'] ?? 1, FILTER_VALIDATE_INT, ['options'=>['min_range'=>1]]) ?: 1;
 
 $length = 12;
+$page = min($page, max(1, (int) ceil($row_num / $length)));
 $start_num = ($page - 1) * $length;
 
 $block_ct = 5;
@@ -114,7 +113,7 @@ while ($tag_data = $tag_result->fetch_object()) {
   <?php
   if ($keyword !== '') {
   ?>
-    <p class="my-3"><?= $keyword ?>의 검색 결과는 총 <?= $row_num ?> 개 입니다</p>
+    <p class="my-3"><?= htmlspecialchars($keyword, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>의 검색 결과는 총 <?= $row_num ?> 개 입니다</p>
   <?php
   }
   ?>
@@ -243,7 +242,7 @@ while ($tag_data = $tag_result->fetch_object()) {
         // if($page == $i) {$active = 'active';} else {$active = '';}
         $page == $i ? $active = 'active' : $active = '';
       ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&cate=<?= $cate ?>&search_keyword=<?= $search_keyword ?>"><?= $i; ?></a></li>
+        <li class="page-item <?= $active; ?>"><a class="page-link" href="lecture_list.php?page=<?= $i; ?>&amp;cate=<?= rawurlencode($cate) ?>&amp;search_keyword=<?= rawurlencode($search_keyword) ?>"><?= $i; ?></a></li>
       <?php
       }
       $next = $block_end + 1;

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../inc/demo_safety.php';
+demo_require_safe_action('baseline');
+
 header('Content-Type: application/json'); // JSON 형식으로 응답
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');

@@ -75,9 +75,10 @@ $login_auth_url = str_replace(array_keys($replace), array_values($replace), $kak
             <hr class="my-4">
 
             <!-- Email Login Form -->
+<?php include __DIR__ . '/../inc/demo_login_notice.php'; ?>
             <form action="login_ok.php" method="POST">
                 <div class="form-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="이메일" required>
+                    <input type="text" class="form-control" name="email" placeholder="이메일 또는 아이디" required>
                 </div>
                 <div class="form-group mb-3 position-relative">
                     <input type="password" class="form-control" name="password" placeholder="비밀번호" required>

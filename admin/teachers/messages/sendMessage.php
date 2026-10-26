@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../../inc/demo_safety.php';
+demo_require_safe_action('management');
+
 $title = "쪽지 관리";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/teachers/inc/header.php');
 

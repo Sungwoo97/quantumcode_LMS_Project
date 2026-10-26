@@ -1,0 +1,20 @@
+<?php
+require_once __DIR__ . '/reporting_test.php';
+$previous_mode = getenv('DEMO_MODE');
+$previous_password = getenv('DEMO_PASSWORD');
+putenv('DEMO_MODE=1');
+putenv('DEMO_PASSWORD=Demo<Password>&2026');
+ob_start();
+require __DIR__ . '/../inc/demo_login_notice.php';
+$html = ob_get_clean();
+check_same(true, str_contains($html, 'portfolio_demo'));
+check_same(true, str_contains($html, 'portfolio01@example.com'));
+check_same(true, str_contains($html, 'Demo&lt;Password&gt;&amp;2026'));
+check_same(false, str_contains($html, 'Demo<Password>'));
+putenv('DEMO_MODE=0');
+ob_start();
+require __DIR__ . '/../inc/demo_login_notice.php';
+check_same('', ob_get_clean());
+$previous_mode === false ? putenv('DEMO_MODE') : putenv('DEMO_MODE=' . $previous_mode);
+$previous_password === false ? putenv('DEMO_PASSWORD') : putenv('DEMO_PASSWORD=' . $previous_password);
+echo "public login notice: OK\n";

@@ -1,5 +1,9 @@
 <?php
-session_start();
+require_once __DIR__ . '/../inc/payment_boundary.php';
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/dbcon.php');
 
 // 세션에서 사용자 이메일 가져오기
@@ -219,6 +223,7 @@ $item_stmt->close();
             body: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-Token': <?= json_encode(csrf_token()) ?>,
             },
           })
           .then(response => {

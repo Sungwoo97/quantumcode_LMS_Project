@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../inc/demo_safety.php';
+demo_require_safe_action('management');
+
 include_once($_SERVER['DOCUMENT_ROOT'].'/qc/admin/inc/dbcon.php');
 
 $ids = json_decode(file_get_contents('php://input'), true);
