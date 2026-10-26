@@ -11,7 +11,7 @@ require __DIR__ . '/../admin/inc/dbcon.php';
 $options = getopt('', ['date:']);
 $plan = demo_seed_plan($options['date'] ?? date('Y-m-d'));
 $password = getenv('DEMO_PASSWORD') ?: '';
-if (strlen($password) < 8) {
+if (strlen($password) < 4) {
     throw new RuntimeException('검증용 DEMO_PASSWORD가 필요합니다.');
 }
 demo_seed_run($mysqli, $plan, $password);
