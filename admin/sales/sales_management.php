@@ -5,7 +5,8 @@ $period_start = $report_period['start'];
 $period_end = $report_period['end'];
 
 $title = '매출 관리';
-$sales_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css\" rel=\"stylesheet\">";
+$sales_css_version = filemtime(__DIR__ . '/../css/sales.css');
+$sales_css = "<link href=\"//{$_SERVER['HTTP_HOST']}/qc/admin/css/sales.css?v={$sales_css_version}\" rel=\"stylesheet\">";
 $chart_js = "<script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>";
 
 include_once($_SERVER['DOCUMENT_ROOT'] . '/qc/admin/inc/header.php');
